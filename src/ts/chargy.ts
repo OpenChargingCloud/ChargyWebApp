@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-import { Buffer }                           from 'node:buffer';
-import { fileTypeFromBuffer }               from 'file-type';
+//import { Buffer }                           from 'node:buffer';
+import { Buffer }                           from 'buffer';
+//import { fileTypeFromBuffer }               from 'file-type';
 
 import { Alfen, AlfenCrypt01 }              from './Alfen'
 import { BSMCrypt01 }                       from './BSMCrypt01'
@@ -173,7 +174,7 @@ export class Chargy {
 
     //#endregion
 
-
+    
     //#region CheckMeterPublicKeySignature(...)
 
     public async CheckMeterPublicKeySignature(chargingStation:  any,
@@ -259,260 +260,7 @@ export class Chargy {
     //#endregion
 
 
-    //#region (private) decompressFiles(FileInfos)
 
-    private async decompressFiles(FileInfos: Array<chargyInterfaces.IFileInfo>): Promise<Array<chargyInterfaces.IFileInfo>> {
-
-        //#region Initial checks
-
-        if (FileInfos == null || FileInfos.length == 0)
-            return FileInfos;
-
-        //const require = createRequire(import.meta.url);
-
-        const decompress       = require('decompress');
-        const decompressTar    = require('decompress-tar');
-        const decompressTargz  = require('decompress-targz');
-        const decompressTarbz2 = require('decompress-tarbz2');
-       // const decompressTarxz  = require('decompress-tarxz'); // Does not compile!
-        const decompressUnzip  = require('decompress-unzip');
-        const decompressGz     = require('decompress-gz');
-        const decompressBzip2  = require('decompress-bzip2');
-
-        //#endregion
-
-        let archiveFound      = false;
-        let expandedFileInfos = new Array<chargyInterfaces.IFileInfo>();
-
-        do
-        {
-
-            archiveFound      = false;
-            expandedFileInfos = new Array<chargyInterfaces.IFileInfo>();
-
-            for (let FileInfo of FileInfos)
-            {
-
-                if (FileInfo.data != null && FileInfo.data.byteLength > 0)
-                {
-
-                    try
-                    {
-
-                        const filetype = await fileTypeFromBuffer(FileInfo.data);
-
-                        if (filetype?.mime == undefined)
-                        {
-
-                            if (FileInfo.name.endsWith(".chargy"))
-                                expandedFileInfos.push({
-                                                      name:       FileInfo.name,
-                                                      data:       FileInfo.data,
-                                                      info:       ".chargy file"
-                                                  });
-
-                            else
-                                expandedFileInfos.push({
-                                                      name:       FileInfo.name,
-                                                      data:       FileInfo.data,
-                                                      exception:  "Unknown file type!"
-                                                  });
-
-                            continue;
-
-                        }
-
-                        else if (filetype.mime.toString() === "text/xml" ||
-                                 filetype.mime.toString() === "application/xml"
-                                 )
-                        {
-                            expandedFileInfos.push({
-                                                  name:  FileInfo.name,
-                                                  data:  FileInfo.data,
-                                                  info:  "XML file"
-                                              });
-                            continue;
-                        }
-
-                        else if (filetype.mime.toString() === "text/json" ||
-                                 filetype.mime.toString() === "application/json"
-                                 )
-                        {
-                            expandedFileInfos.push({
-                                                  name:  FileInfo.name,
-                                                  data:  FileInfo.data,
-                                                  info:  "JSON file"
-                                              });
-                            continue;
-                        }
-
-                        else if (filetype.mime.toString() === "application/zip"     ||
-                                 filetype.mime.toString() === "application/x-bzip2" ||
-                                 filetype.mime.toString() === "application/gzip"    ||
-                                 filetype.mime.toString() === "application/x-tar")
-                        {
-
-                            try
-                            {
-
-                                let compressedFiles:Array<chargyInterfaces.TarInfo> = await decompress(Buffer.from(FileInfo.data),
-                                                                                                       { plugins: [ decompressTar(),
-                                                                                                                    decompressTargz(),
-                                                                                                                    decompressTarbz2(),
-                                                                                                                    //decompressTarxz(),
-                                                                                                                    decompressUnzip(),
-                                                                                                                    decompressGz(),
-                                                                                                                    decompressBzip2()
-                                                                                                                ] });
-
-                                if (compressedFiles.length == 0)
-                                    continue;
-
-                                archiveFound = true;
-
-                                //#region A single compressed file without a path/filename, e.g. within bz2
-
-                                if (compressedFiles.length == 1 && compressedFiles[0]?.path == null)
-                                {
-                                    expandedFileInfos.push({
-                                                          name:  FileInfo.name.substring(0, FileInfo.name.lastIndexOf('.')),
-                                                          data:  compressedFiles[0]?.data
-                                                      });
-                                    continue;
-                                }
-
-                                //#endregion
-
-                                //#region A chargepoint compressed archive file
-
-                                let CTRfile:any    = null;
-                                let dataFile       = "";
-                                let signatureFile  = "";
-
-                                if (compressedFiles.length >= 2)
-                                {
-
-                                    for (let file of compressedFiles)
-                                    {
-                                        if (file.type === "file")
-                                        {
-                                            switch (file.path)
-                                            {
-
-                                                case "secrrct":
-                                                {
-                                                    try
-                                                    {
-                                                        dataFile = new TextDecoder('utf-8').decode(file.data);
-                                                    }
-                                                    catch (Exception)
-                                                    {
-                                                        console.debug("Invalid chargepoint 'secrrct' file!")
-                                                    }
-                                                }
-                                                break;
-
-                                                case "secrrct.sign":
-                                                {
-                                                    try
-                                                    {
-                                                        signatureFile = chargyLib.buf2hex(file.data);
-                                                    }
-                                                    catch (Exception)
-                                                    {
-                                                        console.debug("Invalid chargepoint 'secrrct.sign' file!")
-                                                    }
-                                                }
-                                                break;
-
-                                            }
-                                        }
-
-                                    }
-
-                                    if (dataFile?.     length > 0 &&
-                                        signatureFile?.length > 0)
-                                    {
-                                        try
-                                        {
-
-                                            CTRfile           = JSON.parse(dataFile);
-
-                                            // Save the 'original' JSON with whitespaces for later signature verification!
-                                            CTRfile.original  = btoa(dataFile);
-                                            CTRfile.signature = signatureFile;
-
-                                            expandedFileInfos.push({
-                                                name: FileInfo.name,
-                                                data: new TextEncoder().encode(JSON.stringify(CTRfile))
-                                            });
-
-                                        }
-                                        catch (Exception)
-                                        {
-                                            console.debug("Could not parse chargepoint 'secrrct' file!")
-                                        }
-                                        continue;
-                                    }
-
-                                }
-
-                                //#endregion
-
-                                //#region Multiple files
-
-                                for (let compressedFile of compressedFiles)
-                                {
-                                    if (compressedFile.type === "file")
-                                    {
-                                        expandedFileInfos.push({
-                                                            name: compressedFile.path?.substring(compressedFile.path.lastIndexOf('/') + 1 ?? FileInfo.name),
-                                                            data: compressedFile.data
-                                                        });
-                                    }
-                                }
-
-                                //#endregion
-
-                            }
-                            catch (exception) {
-                                console.log("Error decompressing files: " + exception);
-                            }
-
-                            continue;
-
-                        }
-
-                        // expandedFileInfos.push({
-                        //                       name:  FileInfo.name,
-                        //                       data:  FileInfo.data
-                        //                   });
-
-                    }
-                    catch (exception)
-                    {
-                        expandedFileInfos.push({
-                                              name:       FileInfo.name,
-                                              data:       FileInfo.data,
-                                              exception:  exception
-                                          });
-                    }
-
-                }
-
-            }
-
-            if (archiveFound)
-                FileInfos = expandedFileInfos;
-
-        }
-        while (archiveFound);
-
-        return expandedFileInfos;
-
-    }
-
-    //#endregion
 
     //#region DetectAndConvertContentFormat(FileInfos)
 
@@ -604,35 +352,6 @@ export class Chargy {
                         } catch (error) {
                             console.error(`Error extracting PDF/A-3 attachments: ${error}`);
                         }
-                    }
-
-                }
-
-                //#endregion
-
-                //#region Process compressed files
-
-                else if (fileInfo.type === "application/x-zip-compressed" ||
-                         fileInfo.type === "application/x-compressed"     ||
-                         fileInfo.type === "application/zip"              ||
-                         fileInfo.type === "application/x-bzip2"          ||
-                         fileInfo.type === "application/gzip"             ||
-                         fileInfo.type === "application/x-gzip"           ||
-                         fileInfo.type === "application/x-tar")
-                {
-
-                    try
-                    {
-
-                        const decompressedFiles = await this.decompressFiles([fileInfo]);
-
-                        for (var decompressedFile of decompressedFiles)
-                            expandedFiles.push(decompressedFile);
-
-                    }
-                    catch (exception)
-                    {
-                        console.log("Error decompressing files: " + exception);
                     }
 
                 }

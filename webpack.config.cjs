@@ -4,6 +4,7 @@ module.exports = [
       mode:    'development',
       entry:   './src/ts/chargyApp.ts',
       target:  'electron-renderer',
+      //target:  'web',
       devtool: "eval-source-map",  // Do not use in production!
       //devtool: "source-map",     // Secure, but very slow: Use in production!
       resolve: {

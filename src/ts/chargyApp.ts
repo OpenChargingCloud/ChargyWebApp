@@ -15,6 +15,7 @@
  * limitations under the License.
  */
 
+import * as path from 'path';
 import { Chargy }             from './chargy'
 import * as chargyInterfaces  from './chargyInterfaces'
 import * as chargyLib         from './chargyLib'
@@ -47,13 +48,13 @@ export class ChargyApp {
     public  defaultFeedbackEMail:          string[]            = [];
     public  defaultFeedbackHotline:        string[]            = [];
     public  defaultIssueURL:               string              = "";
-    private ipcRenderer                                        = require('electron').ipcRenderer; // (window as any)?.electron?.ipcRenderer;
-    private commandLineArguments:          Array<string>       = [];
+    //private ipcRenderer                                        = require('electron').ipcRenderer; // (window as any)?.electron?.ipcRenderer;
+    //private commandLineArguments:          Array<string>       = [];
     public  packageJson:                   any                 = {};
     public  i18n:                          any                 = {};
     public  UILanguage:                    string              = "de";
-    private httpPort:                      number              = 0;
-    private httpHost:                      string              = "localhost";
+    // private httpPort:                      number              = 0;
+    // private httpHost:                      string              = "localhost";
 
     private currentAppInfos:               any                 = null;
     private currentVersionInfos:           any                 = null;
@@ -171,18 +172,12 @@ export class ChargyApp {
         this.exportButtonDiv           = document.getElementById('exportButtonDiv')                          as HTMLDivElement;
         this.exportButton              = this.exportButtonDiv.   querySelector("#exportButton")              as HTMLButtonElement;
 
-        this.appVersion                = this.ipcRenderer.sendSync('getAppVersion')     ?? "";
-        this.appEdition                = this.ipcRenderer.sendSync('getAppEdition')     ?? "";
-        this.copyright                 = this.ipcRenderer.sendSync('getCopyright')      ?? "&copy; 2018-2024 GraphDefined GmbH";
         this.versionsURL               = versionsURL                                    ?? "https://open.charging.cloud/chargy/desktop/versions";
         this.defaultIssueURL           = issueURL                                       ?? "https://open.charging.cloud/chargy/desktop/issues";
         this.defaultFeedbackEMail      = feedbackEMail   != undefined ? feedbackEMail   : ["support@open.charging.cloud", "?subject=Chargy%20Support"];
         this.defaultFeedbackHotline    = feedbackHotline != undefined ? feedbackHotline : ["+491728930852",               "+49 172 8930852"];
-        this.commandLineArguments      = this.ipcRenderer.sendSync('getCommandLineArguments');
-        this.packageJson               = this.ipcRenderer.sendSync('getPackageJson');
-        this.i18n                      = this.ipcRenderer.sendSync('getI18N');
-        this.httpHost                  = this.ipcRenderer.sendSync('getHTTPConfig')[0];
-        this.httpPort                  = this.ipcRenderer.sendSync('getHTTPConfig')[1];
+
+        this.loadI18n();
 
         this.elliptic                  = require('elliptic');
         this.moment                    = require('moment');
@@ -358,264 +353,6 @@ export class ChargyApp {
         //#endregion
 
 
-        //#region Calculate application hash
-
-        const appFileNames  = this.ipcRenderer.sendSync('getAppFileNames') ?? [];
-
-        if (Array.isArray(appFileNames) && appFileNames[0] !== "" && appFileNames[1] !== "")
-        {
-            this.calcApplicationHash(appFileNames[0],
-                                     appFileNames[1],
-                                     applicationHash => { 
-                                         this.applicationHash                          = applicationHash;
-                                         this.applicationHashValueDiv.innerHTML        = applicationHash.match(/.{1,8}/g)?.join(" ") ?? "";
-                                     },
-                                     errorMessage => {
-                                         this.applicationHashValueDiv.style.fontStyle  = "italics";
-                                         this.applicationHashValueDiv.innerHTML        = errorMessage;
-                                     });
-        }
-
-        else
-            this.applicationHashValueDiv.innerHTML = "Kann nicht berechnet werden!";
-
-        //#endregion
-
-        //#region Get list of Chargy versions
-
-        let GetListOfVersions = new XMLHttpRequest();
-        GetListOfVersions.open("GET",
-                               this.versionsURL,
-                               true);
-        GetListOfVersions.setRequestHeader('Accept', 'application/json');
-
-        GetListOfVersions.onerror = function() {
-            //console.error('Network error');
-        };
-
-        GetListOfVersions.onreadystatechange = () => {
-
-            // 0 UNSENT | 1 OPENED | 2 HEADERS_RECEIVED | 3 LOADING | 4 DONE
-            if (GetListOfVersions.readyState === XMLHttpRequest.DONE) {
-                switch (GetListOfVersions.status)
-                {
-
-                    case 200: // HTTP 200 - OK
-                        try
-                        {
-
-                            const versionsDiv = this.updateAvailableScreen.querySelector("#versions") as HTMLDivElement;
-                            if (versionsDiv != null)
-                            {
-
-                                this.currentAppInfos = JSON.parse(GetListOfVersions.responseText) as chargyInterfaces.IVersions;
-
-                                for (let version of this.currentAppInfos.versions)
-                                {
-
-                                    const thisVersion    = this.appVersion.split('.');
-                                    const remoteVersion  = version.version.split('.');
-
-                                    //#region Find current version package
-
-                                    if (remoteVersion[0] == thisVersion[0] &&
-                                        remoteVersion[1] == thisVersion[1] &&
-                                        remoteVersion[2] == thisVersion[2])
-                                    {
-
-                                        this.currentVersionInfos = version;
-
-                                        if (this.currentVersionInfos.packages && this.currentVersionInfos.packages.length > 0)
-                                        {
-                                            for (let _package of this.currentVersionInfos.packages)
-                                            {
-                                                if (_package.isInstaller == null &&
-                                                    (_package.platform === process.platform ||
-                                                    (_package.platforms != null && Array.isArray(_package.platforms) && _package.platforms.indexOf(process.platform) > -1)))
-                                                {
-                                                    this.currentPackage = _package;
-                                                }
-                                            }
-                                        }
-
-                                    }
-
-                                    //#endregion
-
-                                    //#region Find newer/updated version
-
-                                    else if (remoteVersion[0] >  thisVersion[0]! ||
-                                            (remoteVersion[0] >= thisVersion[0]! && remoteVersion[1] >  thisVersion[1]!) ||
-                                            (remoteVersion[0] >= thisVersion[0]! && remoteVersion[1] >= thisVersion[1]! && remoteVersion[2] > thisVersion[2]!))
-                                    {
-
-                                        this.updateAvailableButton.style.display = "block";
-
-                                        const versionDiv = versionsDiv.appendChild(document.createElement('div'));
-                                        versionDiv.className = "version";
-
-                                        const headlineDiv = versionDiv.appendChild(document.createElement('div'));
-                                        headlineDiv.className = "headline";
-
-                                        const versionnumberDiv = headlineDiv.appendChild(document.createElement('div'));
-                                        versionnumberDiv.className = "versionnumber";
-                                        versionnumberDiv.innerHTML = "Version " + version.version;
-
-                                        const releaseDateDiv = headlineDiv.appendChild(document.createElement('div'));
-                                        releaseDateDiv.className = "releaseDate";
-                                        releaseDateDiv.innerHTML = chargyLib.parseUTC(version.releaseDate).format("ll");
-
-                                        const descriptionDiv = versionDiv.appendChild(document.createElement('div'));
-                                        descriptionDiv.className = "description";
-                                        descriptionDiv.innerHTML = version.description["de"];
-
-                                        const tagsDiv = versionDiv.appendChild(document.createElement('div'));
-                                        tagsDiv.className = "tags";
-
-                                        for (let tag of version.tags)
-                                        {
-                                            const tagDiv = tagsDiv.appendChild(document.createElement('div'));
-                                            tagDiv.className = "tag";
-                                            tagDiv.innerHTML = tag;
-                                        }
-
-                                        const packagesDiv = versionDiv.appendChild(document.createElement('div'));
-                                        packagesDiv.className = "packages";
-
-                                        for (let versionpackage of version.packages)
-                                        {
-
-                                            const packageDiv = packagesDiv.appendChild(document.createElement('div'));
-                                            packageDiv.className = "package";
-
-                                            const nameDiv = packageDiv.appendChild(document.createElement('div'));
-                                            nameDiv.className = "name";
-                                            nameDiv.innerHTML = versionpackage.name;
-
-                                            if (versionpackage.description &&
-                                                versionpackage.description["de"])
-                                            {
-                                                const descriptionDiv = packageDiv.appendChild(document.createElement('div'));
-                                                descriptionDiv.className = "description";
-                                                descriptionDiv.innerHTML = versionpackage.description["de"];
-                                            }
-
-                                            if (versionpackage.additionalInfo &&
-                                                versionpackage.additionalInfo["de"])
-                                            {
-                                                const additionalInfoDiv = packageDiv.appendChild(document.createElement('div'));
-                                                additionalInfoDiv.className = "additionalInfo";
-                                                additionalInfoDiv.innerHTML = versionpackage.additionalInfo["de"];
-                                            }
-
-
-                                            const cryptoHashesDiv = packageDiv.appendChild(document.createElement('div'));
-                                            cryptoHashesDiv.className = "cryptoHashes";
-
-                                            for (let cryptoHash in versionpackage.cryptoHashes)
-                                            {
-
-                                                const cryptoHashDiv = cryptoHashesDiv.appendChild(document.createElement('div'));
-                                                cryptoHashDiv.className = "cryptoHash";
-
-                                                const cryptoHashNameDiv = cryptoHashDiv.appendChild(document.createElement('div'));
-                                                cryptoHashNameDiv.className = "name";
-                                                cryptoHashNameDiv.innerHTML = cryptoHash;
-
-                                                let value = versionpackage.cryptoHashes[cryptoHash].replace(/\s+/g, '');
-
-                                                if (value.startsWith("0x"))
-                                                    value = value.substring(2);
-
-                                                const cryptoHashValueDiv = cryptoHashDiv.appendChild(document.createElement('div'));
-                                                cryptoHashValueDiv.className = "value";
-                                                cryptoHashValueDiv.innerHTML = value.match(/.{1,8}/g).join(" ");
-
-                                            }
-
-
-                                            const signaturesTextDiv = packageDiv.appendChild(document.createElement('div'));
-                                            signaturesTextDiv.className = "signaturesText";
-                                            signaturesTextDiv.innerHTML = "Die Authentizität diese Software wurde durch folgende digitale Signaturen bestätigt";
-
-                                            const signaturesDiv = packageDiv.appendChild(document.createElement('div'));
-                                            signaturesDiv.className = "signatures";
-
-                                            for (let signature of versionpackage.signatures)
-                                            {
-
-                                                const signatureDiv = signaturesDiv.appendChild(document.createElement('div'));
-                                                signatureDiv.className = "signature";
-
-                                                const signatureCheckDiv = signatureDiv.appendChild(document.createElement('div'));
-                                                signatureCheckDiv.className = "signatureCheck";
-                                                signatureCheckDiv.innerHTML = "<i class=\"fas fa-question-circle fa-question-circle-orange\"></i>";
-
-                                                const authorDiv = signatureDiv.appendChild(document.createElement('div'));
-                                                authorDiv.className = "signer";
-                                                authorDiv.innerHTML = signature.signer;
-
-                                            }
-
-
-                                            if (versionpackage.downloadURLs)
-                                            {
-
-                                                const downloadURLsTextDiv = packageDiv.appendChild(document.createElement('div'));
-                                                downloadURLsTextDiv.className = "downloadURLsText";
-                                                downloadURLsTextDiv.innerHTML = "Diese Software kann über folgende Weblinks runtergeladen werden";
-
-                                                const downloadURLsDiv = packageDiv.appendChild(document.createElement('div'));
-                                                downloadURLsDiv.className = "downloadURLs";
-
-                                                for (let downloadURLName in versionpackage.downloadURLs)
-                                                {
-                                                    const downloadURLDiv = downloadURLsDiv.appendChild(document.createElement('div'));
-                                                    downloadURLDiv.className = "downloadURL";
-                                                    downloadURLDiv.innerHTML = "<a href=\"javascript:OpenLink('" + versionpackage.downloadURLs[downloadURLName] + "')\" title=\"" + versionpackage.downloadURLs[downloadURLName] + "\"><i class=\"fas fa-globe\"></i>" + downloadURLName + "</a>";
-                                                }
-
-                                            }
-
-                                        }
-
-                                    }
-
-                                    //#endregion
-
-                                }
-
-                            }
-
-                        }
-                        catch (exception)
-                        {
-                            // Just do nothing!
-                        }
-                    break;
-
-                    case 401: // HTTP 401 - Unauthorized
-                        {
-                            // Just do nothing!
-                        }
-                    break;
-
-                }
-            }
-
-        }
-
-        GetListOfVersions.send();
-
-        //#endregion
-
-        //#region Verify application signatures
-
-
-
-
-        //#endregion
-
 
         //#region Handle the 'Update available'-button
 
@@ -769,12 +506,12 @@ export class ChargyApp {
             try
             {
 
-                const path = this.ipcRenderer.sendSync('showSaveDialog')
+                // const path = this.ipcRenderer.sendSync('showSaveDialog')
 
-                if (path != null)
-                    require('original-fs').writeFileSync(path,
-                                                         JSON.stringify(this.chargy.currentCTR, null, '\t'),
-                                                         'utf-8');
+                // if (path != null)
+                //     require('original-fs').writeFileSync(path,
+                //                                          JSON.stringify(this.chargy.currentCTR, null, '\t'),
+                //                                          'utf-8');
 
             }
             catch(exception)
@@ -797,7 +534,7 @@ export class ChargyApp {
 
         //#region Modify external links to be opened in the external web browser
 
-        const shell        = require('electron').shell;
+        //const shell        = require('electron').shell;
         const linkButtons  = document.getElementsByClassName('linkButton') as HTMLCollectionOf<HTMLButtonElement>;
 
         for (let i = 0; i < linkButtons.length; i++) {
@@ -810,7 +547,7 @@ export class ChargyApp {
                     ev.preventDefault();
                     const link = linkButton.getAttribute("href");
                     if (link && (link.startsWith("http://") || link.startsWith("https://"))) {
-                        shell.openExternal(link);
+                        //shell.openExternal(link);
                     }
                 }
             }
@@ -834,7 +571,7 @@ export class ChargyApp {
             var files = ev?.target?.files;
 
             if (files != null)
-                this.readFilesFromDisk(files);
+                this.readFilesFromDiskInBrowser(files[0]);
 
         }
 
@@ -863,7 +600,7 @@ export class ChargyApp {
             event.preventDefault();
             (event.currentTarget as HTMLDivElement)?.classList.remove('over');
             if (event.dataTransfer?.files != null)
-                this.readFilesFromDisk(event.dataTransfer.files);
+                this.readFilesFromDiskInBrowser(event.dataTransfer.files[0] as Blob);
         }, false);
 
         //#endregion
@@ -872,245 +609,6 @@ export class ChargyApp {
 
         this.pasteButton.onclick = async (ev: MouseEvent)  => {
             await this.readClipboard();
-        }
-
-        //#endregion
-
-        //#region Handle IPC message "receiveReadClipboard" (Ctrl+V)
-
-        this.ipcRenderer.on('receiveReadClipboard', async (event:any) => {
-            await this.readClipboard();
-        });
-
-        //#endregion
-
-        //#region Handle 'Open file'-events...
-
-        // e.g. on Mac OS X - when app is running
-        this.ipcRenderer.on('receiveFileToOpen', (event:any, filename:string) => {
-            this.readFileFromDisk(filename);
-        });
-
-        this.ipcRenderer.on('receiveFilesToOpen', (event:any, filenames:string[]) => {
-            this.readFilesFromDisk(filenames);
-        });
-
-        //#endregion
-
-        //#region Check command line parameters and 'Open this file with...'-events...
-
-        // ToDo: This is a work around, as events from main.js seem to fire too early!
-
-        // File to open on Mac OS X
-        const filename = this.ipcRenderer.sendSync('getFileToOpen');
-        if (filename !== "")
-            this.readFileFromDisk(filename);
-
-
-        // Open files sent via command line parameters
-        const filteredcommandLineArguments = this.commandLineArguments.filter(parameter => !parameter.startsWith('-'));
-
-        // Stupid workaround via setTimeout
-        if (filteredcommandLineArguments.length > 0)
-            setTimeout(() => this.readFilesFromDisk(filteredcommandLineArguments), 100);
-
-        //#endregion
-
-        //#region Start HTTP API
-
-        if (this.httpPort !== 0)
-        {
-
-            const http            = require('http');
-            const url             = require('url');
-            const chargyHTTP      = new Chargy(this.i18n,
-                                               this.UILanguage,
-                                               require('elliptic'),
-                                               require('moment'),
-                                               require('asn1'),
-                                               require('base32decode'));
-            const maxContentSize  = 20*1024*1024;
-
-            try
-            {
-
-                http.createServer(function (request:any, response:any ) {
-
-                    const requestData = url.parse(request.url, true);
-
-                    if (requestData.pathname === "/verify" || requestData.pathname === "/convert")
-                    {
-
-                        if (request.headers["content-length"] != undefined)
-                        {
-
-                            const contentLength = parseInt(request.headers["content-length"]);
-
-                            if (isNaN(contentLength))
-                            {
-                                response.writeHead(400);
-                                response.write("The size of the transmitted transparency record is invalid!");
-                                response.end();
-                            }
-
-                            else if (contentLength > maxContentSize)
-                            {
-                                response.writeHead(400);
-                                response.write("The size of the transmitted transparency record is too large!");
-                                response.end();
-                            }
-
-                            else
-                            {
-
-                                let binaryData:Array<Buffer>  = [];
-                                let contentSize               = 0;
-
-                                request.on('data', (binaryDataChunk: any) => {
-
-                                    contentSize += binaryDataChunk.length;
-
-                                    if (contentSize > maxContentSize)
-                                    {
-                                        response.writeHead(400, {'Content-Type': 'text/plain'});
-                                        response.write("The size of the transmitted transparency record is too large!");
-                                        response.end();
-                                    }
-
-                                    else
-                                        binaryData.push(binaryDataChunk);
-
-                                })
-
-                                request.on('end', async () => {
-
-                                    let result = await chargyHTTP.DetectAndConvertContentFormat([{
-                                        name: "http request",
-                                        data: Buffer.concat(binaryData)
-                                    }]);
-
-                                    if (chargyInterfaces.IsAChargeTransparencyRecord(result))
-                                    {
-
-                                        response.writeHead(200, {'Content-Type': 'application/json'});
-
-                                        let results = result.chargingSessions?.map((session: any) => session.verificationResult);
-
-                                        if (results != undefined)
-                                        {
-
-                                            let status = new Array<string>();
-
-                                            for (const singleResult of results)
-                                            {
-
-                                                //#region Convert status enum to text
-
-                                                switch (singleResult?.status)
-                                                {
-
-                                                    case 0:
-                                                        status.push("Unknown session format");
-                                                        break;
-
-                                                    case 1:
-                                                        status.push("Invalid session format");
-                                                        break;
-
-                                                    case 2:
-                                                        status.push("Public key not found");
-                                                        break;
-
-                                                    case 3:
-                                                        status.push("Invalid public key");
-                                                        break;
-
-                                                    case 4:
-                                                        status.push("Invalid signature");
-                                                        break;
-
-                                                    case 5:
-                                                        status.push("Valid signature");
-                                                        break;
-
-                                                    case 6:
-                                                        status.push("Inconsistent timestamps");
-                                                        break;
-
-                                                    case 7:
-                                                        status.push("At least two measurements required");
-                                                        break;
-
-                                                    default:
-                                                        status.push("Unknown session format");
-                                                        break;
-
-                                                }
-
-                                                //#endregion
-
-                                            }
-
-                                            if (requestData.pathname === "/verify")
-                                                response.write(JSON.stringify(status.length > 1 ? status : status[0],
-                                                                              null,
-                                                                              requestData.query.pretty !== undefined ? 2 : 0));
-
-                                            else if (requestData.pathname === "/convert")
-                                            {
-
-                                                const stringify = require('safe-stable-stringify');
-
-                                                response.write(stringify(chargyHTTP.currentCTR,
-                                                                         null,
-                                                                         requestData.query.pretty !== undefined ? 2 : 0));
-
-                                            }
-
-                                        }
-
-                                        else
-                                            response.write(JSON.stringify({ "message": "Invalid transparency format!" }));
-
-                                    }
-                                    else
-                                    {
-                                        response.writeHead(400, {'Content-Type': 'application/json'});
-                                        response.write(JSON.stringify({ "message": "Invalid transparency format!" }));
-                                    }
-
-                                    response.end();
-
-                                })
-
-                            }
-
-                        }
-                        else
-                        {
-                            response.writeHead(400, {'Content-Type': 'text/plain'});
-                            response.write("Please upload any kind of transparency record(s) for verification.");
-                            response.end();
-                        }
-
-                    }
-
-                    else
-                    {
-                        response.writeHead(400, {'Content-Type': 'text/plain'});
-                        response.write("Please use POST /verify or /convert for the verification or conversion of transparency records.");
-                        response.end();
-                    }
-
-                }).listen(this.httpPort,
-                          this.httpHost);
-
-            }
-            catch (Exception)
-            {
-                console.log("Could not start HTTP API: " + Exception);
-            }
-
         }
 
         //#endregion
@@ -1130,6 +628,27 @@ export class ChargyApp {
         }).addTo(this.map);
 
     }
+
+
+
+
+
+    private async loadI18n() {
+        try {
+
+            const response = await fetch('i18n.json');
+
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            Object.assign(this.i18n, data);
+
+        } catch (error) {
+            console.error('There has been a problem with fetching "i18n.json":', error);
+        }
+    }
+
 
 
     //#region UpdateFeedbackSection()
@@ -1220,7 +739,7 @@ export class ChargyApp {
         // console.log(text);
         // console.log(context);
 
-        this.ipcRenderer.sendSync('setVerificationResult', result);
+        // this.ipcRenderer.sendSync('setVerificationResult', result);
 
     }
 
@@ -1257,14 +776,59 @@ export class ChargyApp {
 
     //#region readFile(s)FromDisk()
 
-    private readFileFromDisk(file: string|File): void {
+    private stringToArrayBuffer(str: string): ArrayBuffer {
 
-        if (typeof file == 'string')
-            this.readFilesFromDisk([ file ]);
-        else
-            this.readFilesFromDisk([ file.name ]);
+        var buf     = new ArrayBuffer(str.length);
+        var bufView = new Uint8Array(buf);
+
+        for (var i=0, strLen=str.length; i < strLen; i++)
+            bufView[i] = str.charCodeAt(i);
+
+        return buf;
 
     }
+
+    private readFilesFromDiskInBrowser(file: Blob)
+    {
+
+        const reader  = new FileReader();
+        const that    = this;
+
+        reader.onload = function(loadEvent) {
+
+            const fileContent = loadEvent.target?.result; // Hier ist der Inhalt der Datei
+            const filename    = { name: "abc.txt", path: "file://abc.txt", type: "text/plain" };
+
+            let loadedFiles = new Array<chargyInterfaces.IFileInfo>();
+
+            if (typeof(fileContent) === 'string')
+                loadedFiles.push({
+                    "name":  filename.name,
+                    "path":  filename.path,
+                    "type":  filename.type,
+                    "data":  that.stringToArrayBuffer(fileContent)
+                });
+
+            else if (fileContent)
+                loadedFiles.push({
+                    "name":  filename.name,
+                    "path":  filename.path,
+                    "type":  filename.type,
+                    "data":  fileContent
+                });
+
+            that.detectAndConvertContentFormat(loadedFiles);
+
+        };
+
+        reader.onerror = function() {
+            console.error("Beim Lesen der Datei ist ein Fehler aufgetreten.");
+        };
+
+        reader.readAsArrayBuffer(file);
+
+    }
+
 
     private readFilesFromDisk(files: string[]|FileList): void {
         if (files != null && files.length > 0)
@@ -1478,10 +1042,10 @@ export class ChargyApp {
         if (chargyInterfaces.IsAChargeTransparencyRecord(result))
         {
 
-            if (!this.ipcRenderer.sendSync('noGUI'))
-                await this.showChargeTransparencyRecord(result);
+            // if (!this.ipcRenderer.sendSync('noGUI'))
+                 await this.showChargeTransparencyRecord(result);
 
-            this.ipcRenderer.sendSync('setVerificationResult', result.chargingSessions?.map(session => session.verificationResult));
+            // this.ipcRenderer.sendSync('setVerificationResult', result.chargingSessions?.map(session => session.verificationResult));
 
         }
 
