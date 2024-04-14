@@ -37,7 +37,7 @@ module.exports = [
       },
       output: {
         path: __dirname + '/src/build',
-        filename: 'chargyApp-bundle.js'
+        filename: 'chargyWebApp-bundle.js'
       },
       plugins: [
         new webpack.ProvidePlugin({

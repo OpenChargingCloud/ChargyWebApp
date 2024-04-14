@@ -2,13 +2,11 @@
   "name": "chargytransparenzsoftware",
   "version": "1.4.6",
   "description": "Chargy ist eine Transparenzsoftware für das Eichrecht in der Elektromobilität. Hiermit können Endkunden und E-Mobilitäts-Anbieter die Plausibilitäts und Validität von Ladevorgängen überprüfen.",
-  "main": "src/main.cjs",
+  "main": "src/build/chargyWebApp-bundle.js",
   "type": "module",
   "scripts": {
-    "start": "electron .",
-    "pack": "electron-builder --dir",
-    "dist": "electron-builder",
-    "postinstall": "install-app-deps"
+    "build": "webpack --config webpack.config.cjs",
+    "start": "webpack serve --open"
   },
   "repository": "https://github.com/OpenChargingCloud/ChargyDesktopApp",
   "keywords": [
@@ -16,13 +14,16 @@
     "Transparenzsoftware",
     "Transparenz",
     "Eichrecht",
+    "Calibration Law",
     "Elektromobilität",
     "E-Mobilität",
     "E-Mobility",
+    "Digital Certificate of Conformity",
+    "DCoC",
+    "Digital Calibration Certificate",
+    "DCC",
     "Ladestationen",
-    "charging stations",
-    "PTB",
-    "VDE"
+    "charging stations"
   ],
   "author": "GraphDefined GmbH <achim.friedland@graphdefined.com>",
   "license": "AGPL-3.0-or-later",
@@ -33,14 +34,12 @@
     "@types/elliptic": "^6.4.18",
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20.10.8",
-    "electron": "^28.1.2",
-    "electron-builder": "^24.9.1",
-    "electron-localshortcut": "^3.2.1",
     "sass": "^1.69.7",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
     "webpack": "^5.89.0",
-    "webpack-cli": "^4.10.0"
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
     "asn1.js": "^5.4.1",
@@ -64,56 +63,5 @@
     "stream-http": "^3.2.0",
     "url": "^0.11.3",
     "vm-browserify": "^1.1.2"
-  },
-  "build": {
-    "appId": "cloud.charging.c.lichtblick.chargy.desktop",
-    "productName": "Chargy Transparenzsoftware LichtBlick Edition",
-    "copyright": "Copyright © 2018-2024 GraphDefined GmbH",
-    "extraFiles": [
-      "build",
-      "documentation",
-      "appIcons",
-      "versions"
-    ],
-    "fileAssociations": [
-      {
-        "ext": "chargy",
-        "description": "Charge Transparency File",
-        "mimeType": "application/x-chargy",
-        "role": "Viewer"
-      }
-    ],
-    "win": {
-      "target": [
-        "nsis"
-      ],
-      "icon": "src/icons/ENECO_eMobility_Icon.ico"
-    },
-    "nsis": {
-      "perMachine": true,
-      "installerIcon": "src/icons/ENECO_eMobility_Icon.ico",
-      "deleteAppDataOnUninstall": true,
-      "runAfterFinish": true
-    },
-    "linux": {
-      "target": [
-        "deb"
-      ],
-      "icon": "src/icons/ENECO_eMobility_Icon.png"
-    },
-    "mac": {
-      "icon": "./src/icons/ENECO_eMobility_Icon.icns",
-      "category": "public.app-category.utilities",
-      "type": "distribution",
-      "target": [
-        {
-          "target": "default",
-          "arch": [
-            "x64",
-            "arm64"
-          ]
-        }
-      ]
-    }
   }
 }
