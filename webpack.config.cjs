@@ -1,11 +1,9 @@
 const webpack = require('webpack');
 
-// webpack.config.js
-module.exports = [
+module.exports =
     {
       mode:    'development',
       entry:   './src/ts/chargyApp.ts',
-      //target:  'electron-renderer',
       target:  'web',
       devtool: "eval-source-map",  // Do not use in production!
       //devtool: "source-map",     // Secure, but very slow: Use in production!
@@ -36,13 +34,18 @@ module.exports = [
         'base32decode': 'base32-decode'
       },
       output: {
-        path: __dirname + '/src/build',
+        path: __dirname + '/build',
         filename: 'chargyWebApp-bundle.js'
       },
       plugins: [
         new webpack.ProvidePlugin({
           Buffer: ['buffer', 'Buffer'],
         }),
-      ]
-    }
-  ];
+      ],
+      devServer: {
+        host: 'localhost',
+        port:  1608,
+        hot:   true,
+        open:  true
+      }
+    };

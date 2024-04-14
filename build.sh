@@ -1,4 +1,4 @@
 #!/bin/bash
 
-sass src/css/chargy.scss src/css/chargy.css
+sass html/css/chargy.scss html/css/chargy.css
 webpack -c webpack.config.cjs
