@@ -633,16 +633,6 @@ export function CreateDiv2(ParentDiv:        HTMLDivElement,
 }
 
 
-export function OpenExternal(URL: string)
-{
-
-    var shell = require('electron').shell;
-
-    shell.openExternal(URL);
-
-}
-
-
 export interface String {
     isNullOrEmpty():    boolean;
     isNotNullOrEmpty(): boolean;
