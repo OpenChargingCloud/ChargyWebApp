@@ -22,6 +22,7 @@ import * as chargyLib         from './chargyLib'
 
 import Decimal                from 'decimal.js';
 import * as L                 from 'leaflet';
+import './chargy.scss';
 
 // import { debug } from "util";
 // import * as crypto from "crypto";
