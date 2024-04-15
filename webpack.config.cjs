@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const path    = require('path');
 
 module.exports =
     {
@@ -8,7 +9,7 @@ module.exports =
       devtool: "eval-source-map",  // Do not use in production!
       //devtool: "source-map",     // Secure, but very slow: Use in production!
       resolve: {
-        extensions: ["", ".ts", ".js"],
+        extensions: [".ts", ".js"],
         fallback: {
           "fs":           false,
           "original-fs":  false,
@@ -25,7 +26,7 @@ module.exports =
       module: {
         rules: [{
           test: /\.ts$/,
-          //include: /src/,
+          include: path.resolve(__dirname, 'src/ts'),
           use: [{ loader: 'ts-loader' }]
         }]
       },
