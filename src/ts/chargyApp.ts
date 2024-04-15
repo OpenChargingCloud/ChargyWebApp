@@ -15,19 +15,12 @@
  * limitations under the License.
  */
 
-import * as path from 'path';
 import { Chargy }             from './chargy'
 import * as chargyInterfaces  from './chargyInterfaces'
 import * as chargyLib         from './chargyLib'
-
-import Decimal                from 'decimal.js';
 import * as L                 from 'leaflet';
+import Decimal                from 'decimal.js';
 import '../scss/chargy.scss';
-
-// import { debug } from "util";
-// import * as crypto from "crypto";
-// import { readSync } from "fs";
-// import { version } from "punycode";
 
 export class ChargyApp {
 
@@ -44,18 +37,13 @@ export class ChargyApp {
 
     public  appEdition:                    string              = "";
     public  copyright:                     string              = "";
-    public  appVersion:                    string              = "";
     public  versionsURL:                   string              = "";
     public  defaultFeedbackEMail:          string[]            = [];
     public  defaultFeedbackHotline:        string[]            = [];
     public  defaultIssueURL:               string              = "";
-    //private ipcRenderer                                        = require('electron').ipcRenderer; // (window as any)?.electron?.ipcRenderer;
-    //private commandLineArguments:          Array<string>       = [];
     public  packageJson:                   any                 = {};
     public  i18n:                          any                 = {};
     public  UILanguage:                    string              = "de";
-    // private httpPort:                      number              = 0;
-    // private httpHost:                      string              = "localhost";
 
     private currentAppInfos:               any                 = null;
     private currentVersionInfos:           any                 = null;
@@ -117,11 +105,43 @@ export class ChargyApp {
 
     //#endregion
 
-    constructor(versionsURL?:          string,
+    constructor(appEdition?:           string,
+                copyright?:            string,
+                versionsURL?:          string,
                 showFeedbackSection?:  Boolean,
                 feedbackEMail?:        string[],
                 feedbackHotline?:      string[],
                 issueURL?:             string) {
+
+        //#region Set parameters
+
+        this.appEdition                = appEdition          ?? "";
+        this.copyright                 = copyright           ?? "";
+        this.versionsURL               = versionsURL         ?? "https://open.charging.cloud/desktop/versions";
+        this.showFeedbackSection       = showFeedbackSection ?? false;
+        this.defaultFeedbackEMail      = feedbackEMail       ?? [];
+        this.defaultFeedbackHotline    = feedbackHotline     ?? [];
+        this.defaultIssueURL           = issueURL            ?? "";
+
+        //#endregion
+
+        //#region Load external data from web server
+
+        this.loadI18n();
+        this.loadPackageJSON();
+
+        //#endregion
+
+        //#region Load external data from file system
+
+        this.elliptic                  = require('elliptic');
+        this.moment                    = require('moment');
+        this.asn1                      = require('asn1.js');
+        this.base32Decode              = require('base32-decode')
+
+        //#endregion
+
+        //#region Set up the GUI
 
         this.appDiv                    = document.getElementById('app')                                      as HTMLDivElement;
         this.headlineDiv               = document.getElementById('headline')                                 as HTMLDivElement;
@@ -139,7 +159,6 @@ export class ChargyApp {
         this.applicationHashDiv        = document.getElementById('applicationHash')                          as HTMLDivElement;
         this.applicationHashValueDiv   = this.applicationHashDiv.querySelector("#value")                     as HTMLDivElement;
 
-        this.showFeedbackSection       = showFeedbackSection ?? false;
         this.feedbackDiv               = document.getElementById('feedback')                                 as HTMLDivElement;
         this.feedbackMethodsDiv        = this.feedbackDiv.       querySelector("#feedbackMethods")           as HTMLDivElement;
         this.showIssueTrackerButton    = this.feedbackMethodsDiv.querySelector("#showIssueTracker")          as HTMLButtonElement;
@@ -173,18 +192,7 @@ export class ChargyApp {
         this.exportButtonDiv           = document.getElementById('exportButtonDiv')                          as HTMLDivElement;
         this.exportButton              = this.exportButtonDiv.   querySelector("#exportButton")              as HTMLButtonElement;
 
-        this.versionsURL               = versionsURL                                    ?? "https://open.charging.cloud/chargy/desktop/versions";
-        this.defaultIssueURL           = issueURL                                       ?? "https://open.charging.cloud/chargy/desktop/issues";
-        this.defaultFeedbackEMail      = feedbackEMail   != undefined ? feedbackEMail   : ["support@open.charging.cloud", "?subject=Chargy%20Support"];
-        this.defaultFeedbackHotline    = feedbackHotline != undefined ? feedbackHotline : ["+491728930852",               "+49 172 8930852"];
-
-        this.loadI18n();
-        this.loadPackageJSON();
-
-        this.elliptic                  = require('elliptic');
-        this.moment                    = require('moment');
-        this.asn1                      = require('asn1.js');
-        this.base32Decode              = require('base32-decode')
+        //#endregion
 
         this.chargy                    = new Chargy(this.i18n,
                                                     this.UILanguage,
@@ -236,7 +244,7 @@ export class ChargyApp {
                 let   data:any      = {};
 
                 data["timestamp"]                  = new Date().toISOString();
-                data["chargyVersion"]              = this.appVersion;
+                data["chargyVersion"]              = this.packageJson.version;
                 data["platform"]                   = process.platform;
 
                 data["invalidCTR"]                 = (newIssueForm.querySelector("#invalidCTR")                as HTMLInputElement).checked;
@@ -625,13 +633,13 @@ export class ChargyApp {
             const data = await response.json();
             Object.assign(this.packageJson, data);
 
-                //#region Set infos of the about section
+            //#region Set infos of the about section
 
                 (this.softwareInfosDiv. querySelector("#appEdition")             as HTMLSpanElement).innerHTML = this.appEdition;
-                (this.softwareInfosDiv. querySelector("#appVersion")             as HTMLSpanElement).innerHTML = this.appVersion;
+                (this.softwareInfosDiv. querySelector("#appVersion")             as HTMLSpanElement).innerHTML = this.packageJson.version;
                 (this.softwareInfosDiv. querySelector("#copyright")              as HTMLSpanElement).innerHTML = this.copyright;
 
-                (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.appVersion;
+                (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.packageJson.version;
 
             if (this.packageJson.devDependencies)
             {
@@ -684,11 +692,19 @@ export class ChargyApp {
 
         //#region Issue Tracker
 
-        this.showIssueTrackerButton.onclick = (ev: MouseEvent) => {
-            this.issueTrackerDiv.style.display   = 'block';
-            this.privacyStatement.style.display  = "none";
-            this.issueTrackerText.scrollTop = 0;
+        if (this.defaultIssueURL !== "")
+        {
+
+            this.showIssueTrackerButton.style.display = "block";
+
+            this.showIssueTrackerButton.onclick = (ev: MouseEvent) => {
+                this.issueTrackerDiv.style.display    = 'block';
+                this.privacyStatement.style.display   = "none";
+                this.issueTrackerText.scrollTop       = 0;
+            }
         }
+        else
+            this.showIssueTrackerButton.style.display = "none";
 
         //#endregion
 
@@ -698,9 +714,12 @@ export class ChargyApp {
 
         if (feedbackEMail && feedbackEMail.length == 2)
         {
-            this.feedbackEMailAnchor.href       = "mailto:" + feedbackEMail[0] + feedbackEMail[1];
-            this.feedbackEMailAnchor.innerHTML += feedbackEMail[0];
+            this.feedbackEMailAnchor.style.display = "block";
+            this.feedbackEMailAnchor.href          = "mailto:" + feedbackEMail[0] + feedbackEMail[1];
+            this.feedbackEMailAnchor.innerHTML    += feedbackEMail[0];
         }
+        else
+            this.feedbackEMailAnchor.style.display = "none";
 
         //#endregion
 
@@ -710,9 +729,12 @@ export class ChargyApp {
 
         if (feedbackHotline && feedbackHotline.length == 2)
         {
-            this.feedbackHotlineAnchor.href       = "tel:" + feedbackHotline[0];
-            this.feedbackHotlineAnchor.innerHTML += feedbackHotline[1];
+            this.feedbackHotlineAnchor.style.display = "block";
+            this.feedbackHotlineAnchor.href          = "tel:" + feedbackHotline[0];
+            this.feedbackHotlineAnchor.innerHTML    += feedbackHotline[1];
         }
+        else
+            this.feedbackHotlineAnchor.style.display = "none";
 
         //#endregion
 
@@ -980,7 +1002,7 @@ export class ChargyApp {
                 "description":          app.description,
 
                 "version": {
-                    "version":              this.appVersion,
+                    "version":              this.packageJson.version,
                     "releaseDate":          version.releaseDate,
                     "description":          version.description,
                     "tags":                 version.tags,
@@ -2671,14 +2693,15 @@ export class ChargyApp {
 // Remember to set Content-Security-Policy for customer support URLs!
 // Remember to set Customer Privacy Statement!
 // Remember to set Customer Mapbox Access Token and MapId!
-// Remember to set the "applicationEdition" in main.cjs
 
 const app = new ChargyApp(
-                "https://lichtblick.c.charging.cloud/chargy/desktop/versions", //"https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/versions/versions.json",
-                false, // Show Feedback Section
-                ["support.emobility@lichtblick.de", "?subject=Chargy%20Support"],
-                ["+4993219319101",                  "+49 9321 9319 101"],
-                "https://lichtblick.c.charging.cloud/chargy/desktop/issues"
+                "",
+                "&copy; 2018-2024 GraphDefined GmbH",
+                "https://chargy.charging.cloud/desktop/versions", //"https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/versions/versions.json",
+                true, // Show Feedback Section
+                ["support@charging.cloud", "?subject=Chargy%20WebApp%20Support"],
+                undefined, //["+4993219319101",         "+49 9321 9319 101"],
+                "https://chargy.charging.cloud/desktop/issues"
             );
 
 // const app = new ChargyApp("https://chargepoint.charging.cloud/chargy/versions", //"https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/versions/versions.json",
