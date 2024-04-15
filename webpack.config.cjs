@@ -49,24 +49,25 @@ module.exports = {
     new CopyWebpackPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, 'html/css'),
-          to:   path.resolve(__dirname, 'build/css')
+          from:     '*.css',
+          to:       path.resolve(__dirname, 'build/css'),
+          context: 'html/css' // Optional, but helps to flatten the structure!
         },
         {
-          from: path.resolve(__dirname, 'html/images'),
-          to:   path.resolve(__dirname, 'build/images')
+          from:     path.resolve(__dirname, 'html/images'),
+          to:       path.resolve(__dirname, 'build/images')
         },
         {
-          from: path.resolve(__dirname, 'html/webfonts'),
-          to:   path.resolve(__dirname, 'build/webfonts')
+          from:     path.resolve(__dirname, 'html/webfonts'),
+          to:       path.resolve(__dirname, 'build/webfonts')
         },
         {
-          from: path.resolve(__dirname, 'html/i18n.json'),
-          to:   path.resolve(__dirname, 'build/i18n.json')
+          from:     path.resolve(__dirname, 'html/i18n.json'),
+          to:       path.resolve(__dirname, 'build/i18n.json')
         },
         {
-          from: path.resolve(__dirname, 'package.json'),
-          to:   path.resolve(__dirname, 'build/package.json')
+          from:     path.resolve(__dirname, 'package.json'),
+          to:       path.resolve(__dirname, 'build/package.json')
         }
       ]
     })
