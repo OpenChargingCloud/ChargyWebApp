@@ -54,6 +54,11 @@ module.exports = {
           context: 'html/css' // Optional, but helps to flatten the structure!
         },
         {
+          from:     '*.scss',
+          to:       path.resolve(__dirname, 'build/css'),
+          context: 'html/css' // Optional, but helps to flatten the structure!
+        },
+        {
           from:     path.resolve(__dirname, 'html/images'),
           to:       path.resolve(__dirname, 'build/images')
         },
