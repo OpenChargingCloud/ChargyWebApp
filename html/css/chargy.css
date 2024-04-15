@@ -1405,28 +1405,25 @@ body .fullScreen {
 body #app {
   background-color: #ffffff;
 }
+body #app #headline #logo {
+  background-image: url("../images/chargeIT-logo.jpg");
+}
 body #app #headline #windowButtons button:hover {
   color: #b7b7b7;
 }
 body #app #verifyframe #leftbar #input {
-  background-color: #e2e2e2;
+  background-color: #f1f1f1;
 }
 body #app #verifyframe #leftbar #input #inputInfos #buttonsDiv button {
   color: #3a1d27;
-  background-color: #d6e5e1;
+  background: radial-gradient(farthest-corner at 39px 40px, #fbd789 0%, #ed9828 35%, #CC0B12 70%);
 }
 body #app #verifyframe #leftbar #input #inputInfos #buttonsDiv button i {
   font-size: 120%;
 }
 body #app #verifyframe #leftbar #input #inputInfos #buttonsDiv button:hover {
   color: #ffffff;
-  background-color: #5b9787;
-}
-body #app #verifyframe #leftbar #input #chargingSessionScreen #chargingSessions .chargingSession {
-  background-color: #e9e9e9;
-}
-body #app #verifyframe #leftbar #input #chargingSessionScreen #chargingSessions .activated {
-  background-color: #d6e5e1;
+  background: radial-gradient(farthest-corner at 39px 40px, #f9e8c2 0%, #ebad5c 40%, #ed4f54 80%);
 }
 body #app #verifyframe #leftbar #input #chargingSessionReport #chargingSessions .chargingSessions {
   background-color: #dbdbdb;
@@ -1434,81 +1431,17 @@ body #app #verifyframe #leftbar #input #chargingSessionReport #chargingSessions 
 body #app #verifyframe #leftbar #input #chargingSessionReport #chargingSessions .activated {
   background-color: #c4c4c4;
 }
-body #app #verifyframe #leftbar #input #inputButtons #backButton {
-  color: #888888;
-}
-body #app #verifyframe #leftbar #input #inputButtons #backButton:hover {
-  color: #000000;
-}
-body #app #verifyframe #leftbar #input #inputButtons #exportButtonDiv #exportButton {
-  color: #aaaaaa;
-}
-body #app #verifyframe #leftbar #input #inputButtons #exportButtonDiv #exportButton:hover {
-  color: #000000;
-}
-body #app #verifyframe #leftbar #input #aboutScreen .linkButton {
-  background-color: #e2e2e2;
-  font-weight: bold;
-}
-body #app #verifyframe #leftbar #input #aboutScreen .linkButton:hover {
-  color: #777777;
-  background-color: #e9e9e9;
-}
-body #app #verifyframe #leftbar #input #aboutScreen #TOSP a {
-  color: #444444;
-}
 body #app #verifyframe #rightbar {
-  background-color: #e2e2e2;
-}
-body #app #verifyframe #rightbar #detailedInfos {
-  color: #000000;
-}
-body #app #verifyframe #rightbar #detailedInfos .headline {
-  color: #000000;
-}
-body #app #verifyframe #rightbar #detailedInfos .energyMeterInfos .meterManufacturer .meterManufacturerValue a {
-  color: #444444;
-}
-body #app #verifyframe #rightbar #detailedInfos .energyMeterInfos .meterModel .meterModelValue a {
-  color: #444444;
-}
-body #app #verifyframe #rightbar #detailedInfos .measurementValues .measurementValue:hover {
-  background-color: #aaaaaa;
+  background-color: #f1f1f1;
 }
 body #app #verifyframe #rightbar #feedback {
-  display: none;
   color: #34668a;
 }
 body #app #verifyframe #rightbar #feedback #feedbackMethods button:hover, body #app #verifyframe #rightbar #feedback #feedbackMethods a:hover {
   color: #c40546;
 }
-body #app #overlay #overlayText {
-  background-color: #e2e2e2;
-  border: 20px solid #e2e2e2;
-}
-body #app #overlay #overlayText .infoblock .description {
-  background-color: #e2e2e2;
-  font-weight: bold;
-}
-body #app #overlay #overlayText .infoblock .value {
-  background-color: #d0d0d0;
-}
-body #app #overlay #overlayText .footer #overlayLeftButton {
-  color: #888888;
-}
-body #app #overlay #overlayText .footer #overlayLeftButton:hover {
-  color: #000000;
-}
 body #app #issueTracker {
   display: none;
-}
-
-.fa-check-circle {
-  color: #85b4a9;
-}
-
-.leaflet-container a {
-  color: #444444;
 }
 
 /*# sourceMappingURL=chargy.css.map */

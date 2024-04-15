@@ -178,6 +178,7 @@ export class ChargyApp {
         this.defaultFeedbackHotline    = feedbackHotline != undefined ? feedbackHotline : ["+491728930852",               "+49 172 8930852"];
 
         this.loadI18n();
+        this.loadPackageJSON();
 
         this.elliptic                  = require('elliptic');
         this.moment                    = require('moment');
@@ -200,43 +201,6 @@ export class ChargyApp {
 
         // Call it once on application start
         window.dispatchEvent(new Event("resize"));
-
-        //#endregion
-
-        //#region Set infos of the about section
-
-            (this.softwareInfosDiv. querySelector("#appEdition")             as HTMLSpanElement).innerHTML = this.appEdition;
-            (this.softwareInfosDiv. querySelector("#appVersion")             as HTMLSpanElement).innerHTML = this.appVersion;
-            (this.softwareInfosDiv. querySelector("#copyright")              as HTMLSpanElement).innerHTML = this.copyright;
-
-            (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.appVersion;
-
-        if (this.packageJson.devDependencies)
-        {
-            (this.openSourceLibsDiv.querySelector("#electronBuilder")        as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["electron-builder"]?.       replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#electronLocalShortcut")  as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["electron-localshortcut"]?. replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#SASS")                   as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["sass"]?.                   replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#typeScript")             as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["typescript"]?.             replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#webpack")                as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["webpack"]?.                replace(/[^0-9\.]/g, "");
-        }
-
-        if (this.packageJson.dependencies)
-        {
-            (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["elliptic"]?.               replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["moment"]?.                 replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["pdfjs-dist"]?.             replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#decompress")             as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decompress"]?.             replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#decompressBZIP2")        as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decompress-bzip2"]?.       replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#decompressGZ")           as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decompress-gz"]?.          replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["file-type"]?.              replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["asn1.js"]?.                replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["base32-decode"]?.          replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#safeStableStringify")    as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["safe-stable-stringify"]?.  replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["leaflet"]?.                replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["leaflet.awesome-markers"]?.replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#chartJS")                as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["chart.js"]?.               replace(/[^0-9\.]/g, "");
-            (this.openSourceLibsDiv.querySelector("#decimalJS")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decimal.js"]?.             replace(/[^0-9\.]/g, "");
-        }
 
         //#endregion
 
@@ -646,6 +610,59 @@ export class ChargyApp {
 
         } catch (error) {
             console.error('There has been a problem with fetching "i18n.json":', error);
+        }
+    }
+
+    private async loadPackageJSON() {
+        try {
+
+            const response = await fetch('package.json');
+
+            if (!response.ok)
+                throw new Error('Network response was not ok');
+
+            const data = await response.json();
+            Object.assign(this.packageJson, data);
+
+                //#region Set infos of the about section
+
+                (this.softwareInfosDiv. querySelector("#appEdition")             as HTMLSpanElement).innerHTML = this.appEdition;
+                (this.softwareInfosDiv. querySelector("#appVersion")             as HTMLSpanElement).innerHTML = this.appVersion;
+                (this.softwareInfosDiv. querySelector("#copyright")              as HTMLSpanElement).innerHTML = this.copyright;
+
+                (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.appVersion;
+
+            if (this.packageJson.devDependencies)
+            {
+                (this.openSourceLibsDiv.querySelector("#SASS")                   as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["sass"]?.                   replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#typeScript")             as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["typescript"]?.             replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#webpack")                as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["webpack"]?.                replace(/[^0-9\.]/g, "");
+            }
+
+            if (this.packageJson.dependencies)
+            {
+                (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["elliptic"]?.               replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["moment"]?.                 replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["pdfjs-dist"]?.             replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#decompress")             as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decompress"]?.             replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#decompressBZIP2")        as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decompress-bzip2"]?.       replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#decompressGZ")           as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decompress-gz"]?.          replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["file-type"]?.              replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["asn1.js"]?.                replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["base32-decode"]?.          replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#safeStableStringify")    as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["safe-stable-stringify"]?.  replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["leaflet"]?.                replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["leaflet.awesome-markers"]?.replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#chartJS")                as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["chart.js"]?.               replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#decimalJS")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decimal.js"]?.             replace(/[^0-9\.]/g, "");
+            }
+
+            //#endregion
+
+
+
+        } catch (error) {
+            console.error('There has been a problem with fetching "package.json":', error);
         }
     }
 
