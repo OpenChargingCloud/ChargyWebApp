@@ -43,6 +43,17 @@ module.exports = {
         ]
       },
       {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader']
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/fonts/[name][ext][query]' // Path and naming of your fonts
+        }
+      },
+      {
         test: /\.(png|jpe?g|gif)$/i,
         type: 'asset/resource',
         generator: {
@@ -85,10 +96,6 @@ module.exports = {
         {
           from:     path.resolve(__dirname, 'static/images'),
           to:       path.resolve(__dirname, 'build/images')
-        },
-        {
-          from:     path.resolve(__dirname, 'static/webfonts'),
-          to:       path.resolve(__dirname, 'build/webfonts')
         },
         {
           from:     path.resolve(__dirname, 'src/i18n.json'),

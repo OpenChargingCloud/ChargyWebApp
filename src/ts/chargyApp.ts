@@ -20,7 +20,9 @@ import * as chargyInterfaces  from './chargyInterfaces'
 import * as chargyLib         from './chargyLib'
 import * as L                 from 'leaflet';
 import Decimal                from 'decimal.js';
+
 import '../scss/chargy.scss';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 export class ChargyApp {
 
@@ -105,6 +107,8 @@ export class ChargyApp {
 
     //#endregion
 
+    //#region Constructor
+
     constructor(appEdition?:           string,
                 copyright?:            string,
                 versionsURL?:          string,
@@ -141,7 +145,7 @@ export class ChargyApp {
 
         //#endregion
 
-        //#region Set up the GUI
+        //#region GUI setup
 
         this.appDiv                    = document.getElementById('app')                                      as HTMLDivElement;
         this.headlineDiv               = document.getElementById('headline')                                 as HTMLDivElement;
@@ -609,7 +613,7 @@ export class ChargyApp {
 
     }
 
-
+    //#endregion
 
 
 

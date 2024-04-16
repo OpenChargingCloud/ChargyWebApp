@@ -17,434 +17,457 @@
 -->
 <html>
 
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <head>
 
-    <title>Chargy - Transparenzsoftware für die Elektromobilität</title>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <meta name="description" content="Transparenzsoftware für die Elektromobilität">
-    <meta name="author"      content="achim.friedland@graphdefined.com">
-    <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+        <title>Chargy - Transparenzsoftware für die Elektromobilität</title>
 
-    <meta http-equiv="Content-Security-Policy" content="
-    default-src 'self';
-    connect-src 'self' 
-      https://chargy.charging.cloud
-      https://open.charging.cloud/chargy/
-      https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/;
-    img-src 'self' data: https:;
-    script-src 'self' 'unsafe-inline' 'unsafe-eval';
-    style-src 'self' 'unsafe-inline';
-  ">
+        <meta name="description" content="Transparenzsoftware für die Elektromobilität">
+        <meta name="author"      content="achim.friedland@graphdefined.com">
+        <meta name="viewport"    content="width=device-width, initial-scale=1.0">
+
+        <meta http-equiv="Content-Security-Policy" content="
+            default-src 'self';
+            connect-src 'self' 
+            https://chargy.charging.cloud
+            https://open.charging.cloud/chargy/
+            https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/;
+            img-src 'self' data: https:;
+            script-src 'self' 'unsafe-inline' 'unsafe-eval';
+            style-src 'self' 'unsafe-inline';
+        ">
 <!-- style-src 'unsafe-inline' required for leaflet and markers! -->
 <!-- script-src 'unsafe-eval' only required for faster WebPack during development! -->
 
-    <!--<link rel="icon"       href="/favicon.png"                 type="image/png" />-->
-    <link rel="stylesheet" href="css/fontawesome-all.min.css"     type="text/css" />
-    <link rel="stylesheet" href="css/leaflet.css"                 type="text/css" />
-    <link rel="stylesheet" href="css/leaflet.awesome-markers.css" type="text/css" />
-    <link rel="stylesheet" href="css/chargy.css"                  type="text/css" />
+        <!--<link rel="icon"       href="/favicon.png"                 type="image/png" />-->
+        <link rel="stylesheet" href="css/fontawesome-all.min.css"     type="text/css" />
+        <link rel="stylesheet" href="css/leaflet.css"                 type="text/css" />
+        <link rel="stylesheet" href="css/leaflet.awesome-markers.css" type="text/css" />
+        <link rel="stylesheet" href="css/chargy.css"                  type="text/css" />
 
-  </head>
+    </head>
 
-  <body>
+    <body>
 
-    <div id="app">
+        <div id="app">
 
-        <div id="headline">
-            <div id="logo"></div>
-            <div id="windowButtons">
-                <button id="updateAvailableButton"><i class="fas fa-exclamation-circle"></i></button>
-                <button id="aboutButton"          ><i class="far fa-question-circle"   ></i></button>
-                <button id="fullScreenButton"     ><i class="fas fa-expand"            ></i></button>
-                <button id="appQuitButton"        ><i class="fas fa-times"             ></i></button>
+            <div id="headline">
+                <div id="logo"></div>
+                <div id="windowButtons">
+                    <button id="updateAvailableButton"><i class="fas fa-exclamation-circle"></i></button>
+                    <button id="aboutButton"          ><i class="far fa-question-circle"   ></i></button>
+                    <button id="fullScreenButton"     ><i class="fas fa-expand"            ></i></button>
+                    <button id="appQuitButton"        ><i class="fas fa-times"             ></i></button>
+                </div>
             </div>
+
+            <div id="verifyframe">
+
+                <div id="leftbar">
+
+                    <div id="input">
+
+                        <div id="inputInfos">
+
+                            <div id="text">Sie können einen oder mehrere Transparenzdatensätze und deren dazugehörige Public Keys
+                                        zu Ihren Ladevorgängen entweder aus einer Datei laden,
+                                        über die Zwischenablage einfügen oder Drag'n'Drop verwenden...</div>
+
+                            <div id="buttonsDiv">
+                                <button id="fileInputButton"><i class="far fa-folder-open"></i><br />Datensätze<br />laden</button>
+                                <input id="fileInput" type="file" multiple />
+                                <button id="pasteButton"><i class="fas fa-paste"></i><br />Datensätze<br />einfügen</button>
+                            </div>
+
+                            <div id="loadingErrors">
+                                <div id="errorText"></div>
+                            </div>
+
+                        </div>
+
+                        <div id="aboutScreen">
+
+                            <div id="softwareInfos">
+                                <div id="product">
+                                    Chargy Transparenzsoftware - <span id="appEdition"></span> v<span id="appVersion"></span>
+                                </div>
+                                <div id="copyright">
+                                    &copy; 2018-2024 GraphDefined GmbH
+                                </div>
+                            </div>
+
+                            <p>
+                                Diese Software ist Open Source und basiert auf den folgenden Open-Source-Software-Bibliotheken:
+                            </p>
+
+                            <div id="openSourceLibs">
+
+                                <div class="lib">
+                                    <div class="name">Chargy WebApp <span id="chargyVersion"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/blob/master/LICENSE">Copyright &copy; 2018-2024 GraphDefined GmbH<br />AGPL v3 License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">TypeScript <span id="typeScript"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt">Copyright &copy; Microsoft Corporation<br />Apache License v2.0</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">SASS <span id="SASS"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/sass/dart-sass/blob/main/LICENSE">Copyright &copy; 2016, Google Inc.<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">moment <span id="momentJS"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/moment/moment/blob/develop/LICENSE">Copyright &copy; JS Foundation and other contributors<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">elliptic <span id="elliptic"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/indutny/elliptic">Copyright &copy; Fedor Indutny, 2014<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">secp224k1 1.0.0</div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo/blob/master/LICENSE">Copyright &copy; Craig OConnor, Achim Friedland<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">pdfjs-dist <span id="pdfjsdist"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/mozilla/pdfjs-dist/blob/master/LICENSE">Copyright &copy; Mozilla<br />Apache v2.0 License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">decompress <span id="decompress"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/kevva/decompress/blob/master/license">Copyright &copy; Kevin Mårtensson<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">decompress BZIP2 <span id="decompressBZIP2"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/kevva/decompress-bzip2/blob/master/license">Copyright &copy; Kevin Mårtensson<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">decompress GZ <span id="decompressGZ"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/CarlosCarmona/decompress-gz/blob/master/license">Copyright &copy; Carlos Carmona Alcantara<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">File Type <span id="fileType"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/sindresorhus/file-type/blob/main/license">Copyright &copy; Sindre Sorhus<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">asn1.js <span id="asn1JS"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/PeculiarVentures/ASN1.js/blob/master/LICENSE">Copyright &copy; 2015-2019, Peculiar Ventures<br />BSD License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">base32-decode <span id="base32Decode"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/LinusU/base32-decode">Copyright &copy; Linus Unnebäck<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">safe-stable-stringify <span id="safeStableStringify"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/BridgeAR/safe-stable-stringify/blob/main/LICENSE">Copyright &copy; 2018 Ruben Bridgewater<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">leaflet <span id="leafletJS"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/Leaflet/Leaflet/blob/master/LICENSE">Copyright &copy; 2010-2022, Vladimir Agafonkin<br />Copyright &copy; 2010-2011, CloudMade<br />BSD 2-Clause License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">leaflet Awesome Markers <span id="leafletAwesomeMarkers"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/lennardv2/Leaflet.awesome-markers/blob/2.0/develop/LICENSE">Copyright &copy; 2013 L. Voogdt<br />BSD 2-Clause License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">chart.js <span id="chartJS"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/chartjs/Chart.js/blob/master/LICENSE.md">Copyright &copy; 2014-2024Chart.js Contributors<br />Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">decimal.js <span id="decimalJS"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/MikeMcl/decimal.js/blob/master/LICENCE.md">Copyright &copy; 2022 Michael Mclaughlin<br />MIT License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">FontAwesome 6.1.1</div>
+                                    <div class="license"><button class="linkButton" href="https://fontawesome.com/license/free">Copyright &copy; 2022 Fonticons, Inc.<br />Font Awesome Free License</button></div>
+                                </div>
+                                <div class="lib">
+                                    <div class="name">Webpack <span id="webpack"></span></div>
+                                    <div class="license"><button class="linkButton" href="https://github.com/webpack/webpack/blob/main/LICENSE">Copyright JS Foundation and other contributors</button></div>
+                                </div>
+
+                                <!--
+
+                                    webpack
+                                    webpack-cli
+                                    webpack-dev-server
+                                    copy-webpack-plugin
+                                    ts-loader
+                                    css-loader
+                                    sass-loader
+                                    mini-css-extract-plugin
+                                    html-webpack-plugin
+                                    rimraf
+
+                                    path-browserify
+                                    crypto-browserify
+                                    stream-browserify
+                                    stream-http
+                                    url
+                                    vm-browserify
+
+                                -->
+
+                            </div>
+
+                            <p>
+                                Die SHA256/512-Hash-Funktionen werden durch die Crypto API des Web Browsers realisiert.
+                            </p>
+                            <p>
+                                Elliptische Kurven Kryptographie wird durch <button class="linkButton" href="https://github.com/indutny/elliptic">elliptic</button> und einer angepassten Implementierung der <button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo">secp224k1-Kurve</button> realisiert.
+                                Hierbei kommen je nach Verfahren und Ladestations- bzw. Smart-Meter-Hersteller unterschiedliche elliptische Kurven zum Einsatz.
+                            </p>
+                            <p>
+                                Weitere Details zu den internen Datenstrukturen und Abläufen von Chargy gibt es auf <button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/tree/master/documentation">GitHub</button>.
+                            </p>
+
+                            <div id="applicationHash">
+                                <div id="text">SHA-512 Hashwert dieser Software:</div>
+                                <div id="value"><span stlye=\"font-style: italics\">Wird berechnet...</span></div>
+                                <div id="sigHead"></div>
+                                <div id="signatures"></div>
+                            </div>
+
+                            <div id="applicationSignatures">
+                                <div id="text">Digitale Signaturen dieser Software:</div>
+                                <div id="value"><span stlye=\"font-style: italics\">Werden berechnet...</span></div>
+                            </div>
+
+                            <div id="TOSP">
+                                Diese Software ist einer der Gewinner des <a href="https://www.it-leistungsschau.de/programm/TOSP2019/">1.
+                                Th&uuml;ringer Open Source Preises</a> im März 2019. Der Preis wurde verliehen durch
+                                <a href="https://www.itnet-th.de">ITnet Thüringen e.V.</a> and the
+                                <a href="https://www.thueringen.de/th6/tmwwdg/">Thüringer Ministerium für Wirtschaft, Wissenschaft und Digitale Gesellschaft</a>
+                                <!-- This software is one of the winners of the <a href="https://www.it-leistungsschau.de/programm/TOSP2019/')">1st
+                                Thuringian Open Source Prize</a> in March 2019. The prize was awarded by
+                                <a href="https://www.itnet-th.de')">ITnet Thüringen e.V.</a> and the
+                                <a href="https://www.thueringen.de/th6/tmwwdg/')">Thuringian Ministry for Economic Affairs, Science and Digital Society</a>-->
+                                <div id="logos">
+                                    <a id="TMWWDG" href="https://www.thueringen.de/th6/tmwwdg/"><img src="images/TMWWDG.svg"                 alt="Thüringer Ministerium für Wirtschaft, Wissenschaft und Digitale Gesellschaft"></a>
+                                    <a id="ITnet"  href="https://www.itnet-th.de"              ><img src="images/ITnet_Thueringen_small.png" alt="ITnet Thüringen e.V."></a>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div id="updateAvailableScreen">
+
+                            <p>
+                                Ein Update für diese Software ist verfügbar...
+                            </p>
+
+                            <div id="versions"></div>
+
+                        </div>
+
+                        <div id="chargingSessionScreen"></div>
+
+                        <div id="invalidDataSetsScreen"></div>
+
+                        <div id="inputButtons">
+                            <button id="backButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                            <div id="exportButtonDiv">
+                                <button id="exportButton"><i class="fas fa-download"></i> Exportieren</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div id="rightbar">
+
+                    <div id="map"></div>
+
+                    <div id="detailedInfos">
+                    </div>
+
+                    <div id="feedback">
+                        Falsche Daten, falsche Signaturen oder sonstige Fragen?<br />
+                        Treten Sie mit uns in Kontakt:
+                        <div id="feedbackMethods">
+                            <button id="showIssueTracker"><i class="far fa-comments"></i>Mängel melden</button>
+                            <a      id="eMail"   href="mailto:..."><i class="far fa-envelope"></i></a>
+                            <a      id="hotline" href="tel:..."><i class="fas fa-phone fa-rotate-90"></i></a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div id="overlay">
+                <div id="overlayText">
+
+                    <div class="headline">
+
+                        <div class="error"></div>
+
+                        <div class="intro">
+                            Folgende Daten des Ladevorgangs sind <span class="important">mess- und eichrechtsrelevant</span> und damit gemäß <span id="cryptoAlgorithm"></span> Teil der digitalen Signatur:
+                        </div>
+
+                    </div>
+
+                    <div class="data">
+
+                        <div id="cryptoData"></div>
+
+                        <div id="buffer" class="infoblock">
+                            <div class="description">Puffer</div>
+                            <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
+                        </div>
+
+                        <div id="hashedBuffer" class="infoblock">
+                            <div class="description">Hashed Puffer (SHA512)</div>
+                            <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
+                        </div>
+
+                        <div id="publicKey" class="infoblock">
+                            <div class="description">Public Key</div>
+                            <div class="value"><span style="color: rgb(171, 30, 30)">0x0000000000000000000000000000000000000000000000000000000000000000</span></div>
+                            <div class="sigHead"></div>
+                            <div class="signatures"></div>
+                        </div>
+
+                        <div id="signatureExpected" class="infoblock">
+                            <div class="description">Erwartete Signatur</div>
+                            <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
+                        </div>
+
+                        <div id="invalidSignature" class="infoblock errorblock">
+                            <div class="description">Ungültige Signatur</div>
+                            <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
+                        </div>
+
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <div class="footer">
+
+                        <button id="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+
+                        <div id="signatureCheck"></div>
+
+                        <button id="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="issueTracker">
+                <div id="issueTrackerText">
+
+                    <div id="headline">
+                        Sie wollen einen oder mehrere Mängel melden?
+                    </div>
+
+                    <form id="newIssueForm">
+
+                        <div class="label">Bitte wählen sie eine oder mehrere Kategorien...</div>
+                        <input type="checkbox" id="invalidCTR"                value="invalidCTR"> Transparenzdatensatz konnte nicht geladen werden<br>
+                        <input type="checkbox" id="InvalidStationData"        value="InvalidStationData"> Falsche Daten zu einer Ladestation<br>
+                        <input type="checkbox" id="invalidSignatures"         value="invalidSignatures"> Signatur(en) im Transparenzdatensatz sind ungültig<br>
+                        <input type="checkbox" id="invalidCertificates"       value="invalidCertificates"> Fehler bei der Überprüfung von digitalen Zertifikaten<br>
+                        <input type="checkbox" id="transparencenySoftwareBug" value="transparencenySoftwareBug"> Allgemeiner Fehler in der Transparenzsoftware<br>
+                        <input type="checkbox" id="DSGVO"                     value="DSGVO"> Anfrage nach der Datenschutz-Grundverordnung (DSGVO)<br>
+                        <input type="checkbox" id="BITV"                      value="BITV"> Anfrage bezüglich barrierefreier Informationstechnik (BITV 2.0, EU Direktive 2016/2102)<br>
+
+                        <div class="label">Bitte beschreiben Sie die aufgetretenen Fehler oder Probleme ein wenig genauer...</div>
+                        <textarea id="issueDescription"></textarea>
+
+                        <div class="label">Sollen die Daten Ihres Ladevorgangs zur einfacheren Klärung des Problems mit übermittelt werden?</div>
+                        <select id="includeCTR">
+                            <option value="yes">ja</option>
+                            <option value="no" selected>nein</option>
+                        </select>
+
+                        <div class="label">Ihre Kontaktdaten, falls Rückfragen notwendig sein sollten...</div>
+                        <input type="text" id="issueName"  placeholder="Ihr Name"><br /> 
+                        <input type="text" id="issuePhone" placeholder="Ihre Telefonnummer"><br /> 
+                        <input type="text" id="issueEMail" placeholder="Ihre E-Mail Adresse"><br /> 
+
+                        <div id="privacyStatement">
+                            <h1>Datenschutzerklärung für diesen Mängelmelder</h1>
+                            <p>
+                                Wenn Sie unsere Mängelmelder nutzen, werden auf unserem Webserver temporär sogenannte Nutzungsdaten zu statistischen
+                                Zwecken und zur Fehleranalyse in Protokolldateien gespeichert. Persönliche Angaben, die Sie uns übermitteln, behandeln
+                                wir selbstverständlich vertraulich. Wir verwenden Ihre Daten ausschließlich zweckgebunden, um Ihre Anfrage zu bearbeiten.
+                                Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 f) DSGVO. Das berechtigte Interesse seitens unseres
+                                Unternehmens ergibt sich hierbei aus dem Interesse, Anfragen unserer Kunden, Geschäftspartner und Interessenten zu
+                                beantworten und somit die Kundenzufriedenheit zu erhalten und zu fördern.
+                            </p>
+                            <p>
+                                Eine Weitergabe der Daten an Dritte schließen wir grundsätzlich aus.
+                                Ausnahmsweise werden Daten in unserem Auftrag von Auftragsverarbeitern verarbeitet. Diese sind jeweils sorgfältig
+                                ausgesucht, werden von uns zudem auditiert und vertraglich nach Art. 28 DSGVO verpflichtet. Sollten Sie kein
+                                direkter Kunde von uns, sondern ein Roamingkunde sein, so zählen zu den Auftragsverarbeitern auch Roaminganbieter
+                                wie beispielsweise Hubject, Gireve oder e-clearing.net und ihr eigener E-Mobility Provider.
+                            </p>
+                            <p>
+                                Alle personenbezogenen Angaben, die Sie uns gegenüber bei Anfragen zukommen lassen, werden von uns spätestens 6
+                                Monate nach der erteilten finalen Rückantwort an Sie gelöscht, bzw. sicher anonymisiert. Die Aufbewahrung von 6
+                                Monaten erklärt sich aus dem Umstand, dass es vereinzelt vorkommen kann, dass Sie uns nach einer Antwort nochmals
+                                zu der gleichen Sache kontaktieren und wir dann auf die Vorkorrespondenz beziehen können müssen. Die Erfahrung hat
+                                gezeigt, dass in der Regel nach 6 Monaten Rückfragen zu unseren Antworten nicht mehr vorkommen.
+                            </p>
+                            <p>
+                                Sie haben das Recht, nach Art. 15 DSGVO auf Antrag unentgeltlich Auskunft über die bei uns zu Ihrer Person
+                                gespeicherten personenbezogenen Daten zu erhalten. Zusätzlich haben Sie bei Vorliegen der gesetzlichen
+                                Voraussetzungen ein Recht auf Berichtigung (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) und Einschränkung der
+                                Verarbeitung (Art. 18 DSGVO) Ihrer personenbezogenen Daten. Wenden Sie sich bitte in den zuvor genannten
+                                Fällen, bei offenen Fragen oder im Falle von Beschwerden schriftlich oder per E-Mail an den Datenschutzbeauftragten.
+                                Zudem steht Ihnen ein Recht zur Beschwerde bei einer Datenschutz-Aufsichtsbehörde zu. Zuständig ist die
+                                Datenschutz-Aufsichtsbehörde des Bundeslandes, in dem Sie wohnen oder in dem der Verantwortliche seinen Sitz hat.
+                            </p>
+                            <p>
+                                Unser Datenschutzbeauftragter steht Ihnen gerne für Auskünfte oder Anregungen zum Thema Datenschutz zur Verfügung:<br />
+                                <br />
+                                LichtBlick SE<br />
+                                Klostertor 1<br />
+                                20097 Hamburg<br />
+                                <br />
+                                E-Mail: <a href="mailto:datenschutz.eMobility@lichtblick.de">datenschutz.eMobility@lichtblick.de</a>
+
+    <!--                             ChargePoint<br />
+                                Attn: Data Protection Officer<br />
+                                ChargePoint Network (Netherlands) B.V.<br />
+                                Hoogoorddreef 56E<br />
+                                1101BE Amsterdam<br />
+                                Netherlands<br />
+                                <a href="mailto:privacy.eu@chargepoint.com">privacy.eu@chargepoint.com</a>
+                                <br />
+                                Verantwortlicher i.S.d. Art. 4 Ziff. 7 DSGVO<br />
+                                <br />
+                                ChargePoint<br />
+                                Attn: Customer Service<br />
+                                ChargePoint Network (Netherlands) B.V.<br />
+                                Hoogoorddreef 56E<br />
+                                1101BE Amsterdam<br />
+                                Netherlands<br />
+                                Telefon: <a href="tel:+493072621258">+49 (30) 72621258</a><br />
+                                <a href="mailto:sales@chargepoint.com">sales@chargepoint.com</a> -->
+
+                            </p>
+                        </div>
+
+                        <div id="sendIssueBox">
+                            <input id="privacyStatementAccepted" type="checkbox" name="privacyStatementAccepted"><button id="showPrivacyStatement">Datenschutzerklärung</button> gelesen und akzeptiert?<br />
+                            <button id="sendIssueButton" disabled>Mängel melden</button>
+                        </div>
+
+                    </form>
+
+                    <div id="issueBackButtonDiv">
+                        <button id="issueBackButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
 
-        <div id="verifyframe">
-
-            <div id="leftbar">
-
-                <div id="input">
-
-                    <div id="inputInfos">
-
-                        <div id="text">Sie können einen oder mehrere Transparenzdatensätze und deren dazugehörige Public Keys
-                                       zu Ihren Ladevorgängen entweder aus einer Datei laden,
-                                       über die Zwischenablage einfügen oder Drag'n'Drop verwenden...</div>
-
-                        <div id="buttonsDiv">
-                            <button id="fileInputButton"><i class="far fa-folder-open"></i><br />Datensätze<br />laden</button>
-                            <input id="fileInput" type="file" multiple />
-                            <button id="pasteButton"><i class="fas fa-paste"></i><br />Datensätze<br />einfügen</button>
-                        </div>
-
-                        <div id="loadingErrors">
-                            <div id="errorText"></div>
-                        </div>
-
-                    </div>
-
-                    <div id="aboutScreen">
-
-                        <div id="softwareInfos">
-                            <div id="product">
-                                Chargy Transparenzsoftware - <span id="appEdition"></span> v<span id="appVersion"></span>
-                            </div>
-                            <div id="copyright">
-                                &copy; 2018-2024 GraphDefined GmbH
-                            </div>
-                        </div>
-
-                        <p>
-                            Diese Software ist Open Source und basiert auf den folgenden Open-Source-Software-Bibliotheken:
-                        </p>
-
-                        <div id="openSourceLibs">
-
-                            <div class="lib">
-                                <div class="name">Chargy WebApp <span id="chargyVersion"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/blob/master/LICENSE">Copyright &copy; 2018-2024 GraphDefined GmbH<br />AGPL v3 License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">TypeScript <span id="typeScript"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt">Copyright &copy; Microsoft Corporation<br />Apache License v2.0</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">SASS <span id="SASS"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/sass/dart-sass/blob/main/LICENSE">Copyright &copy; 2016, Google Inc.<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">moment <span id="momentJS"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/moment/moment/blob/develop/LICENSE">Copyright &copy; JS Foundation and other contributors<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">elliptic <span id="elliptic"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/indutny/elliptic">Copyright &copy; Fedor Indutny, 2014<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">secp224k1 1.0.0</div>
-                                <div class="license"><button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo/blob/master/LICENSE">Copyright &copy; Craig OConnor, Achim Friedland<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">pdfjs-dist <span id="pdfjsdist"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/mozilla/pdfjs-dist/blob/master/LICENSE">Copyright &copy; Mozilla<br />Apache v2.0 License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">decompress <span id="decompress"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/kevva/decompress/blob/master/license">Copyright &copy; Kevin Mårtensson<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">decompress BZIP2 <span id="decompressBZIP2"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/kevva/decompress-bzip2/blob/master/license">Copyright &copy; Kevin Mårtensson<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">decompress GZ <span id="decompressGZ"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/CarlosCarmona/decompress-gz/blob/master/license">Copyright &copy; Carlos Carmona Alcantara<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">File Type <span id="fileType"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/sindresorhus/file-type/blob/main/license">Copyright &copy; Sindre Sorhus<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">asn1.js <span id="asn1JS"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/PeculiarVentures/ASN1.js/blob/master/LICENSE">Copyright &copy; 2015-2019, Peculiar Ventures<br />BSD License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">base32-decode <span id="base32Decode"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/LinusU/base32-decode">Copyright &copy; Linus Unnebäck<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">safe-stable-stringify <span id="safeStableStringify"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/BridgeAR/safe-stable-stringify/blob/main/LICENSE">Copyright &copy; 2018 Ruben Bridgewater<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">leaflet <span id="leafletJS"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/Leaflet/Leaflet/blob/master/LICENSE">Copyright &copy; 2010-2022, Vladimir Agafonkin<br />Copyright &copy; 2010-2011, CloudMade<br />BSD 2-Clause License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">leaflet Awesome Markers <span id="leafletAwesomeMarkers"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/lennardv2/Leaflet.awesome-markers/blob/2.0/develop/LICENSE">Copyright &copy; 2013 L. Voogdt<br />BSD 2-Clause License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">chart.js <span id="chartJS"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/chartjs/Chart.js/blob/master/LICENSE.md">Copyright &copy; 2014-2024Chart.js Contributors<br />Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">decimal.js <span id="decimalJS"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/MikeMcl/decimal.js/blob/master/LICENCE.md">Copyright &copy; 2022 Michael Mclaughlin<br />MIT License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">FontAwesome 6.1.1</div>
-                                <div class="license"><button class="linkButton" href="https://fontawesome.com/license/free">Copyright &copy; 2022 Fonticons, Inc.<br />Font Awesome Free License</button></div>
-                            </div>
-                            <div class="lib">
-                                <div class="name">Webpack <span id="webpack"></span></div>
-                                <div class="license"><button class="linkButton" href="https://github.com/webpack/webpack/blob/main/LICENSE">Copyright JS Foundation and other contributors</button></div>
-                            </div>
-
-                        </div>
-
-                        <p>
-                            Die SHA256/512-Hash-Funktionen werden durch die Crypto API des Web Browsers realisiert.
-                        </p>
-                        <p>
-                            Elliptische Kurven Kryptographie wird durch <button class="linkButton" href="https://github.com/indutny/elliptic">elliptic</button> und einer angepassten Implementierung der <button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo">secp224k1-Kurve</button> realisiert.
-                            Hierbei kommen je nach Verfahren und Ladestations- bzw. Smart-Meter-Hersteller unterschiedliche elliptische Kurven zum Einsatz.
-                        </p>
-                        <p>
-                            Weitere Details zu den internen Datenstrukturen und Abläufen von Chargy gibt es auf <button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/tree/master/documentation">GitHub</button>.
-                        </p>
-
-                        <div id="applicationHash">
-                            <div id="text">SHA-512 Hashwert dieser Software:</div>
-                            <div id="value"><span stlye=\"font-style: italics\">Wird berechnet...</span></div>
-                            <div id="sigHead"></div>
-                            <div id="signatures"></div>
-                        </div>
-
-                        <div id="applicationSignatures">
-                            <div id="text">Digitale Signaturen dieser Software:</div>
-                            <div id="value"><span stlye=\"font-style: italics\">Werden berechnet...</span></div>
-                        </div>
-
-                        <div id="TOSP">
-                            Diese Software ist einer der Gewinner des <a href="https://www.it-leistungsschau.de/programm/TOSP2019/">1.
-                            Th&uuml;ringer Open Source Preises</a> im März 2019. Der Preis wurde verliehen durch
-                            <a href="https://www.itnet-th.de">ITnet Thüringen e.V.</a> and the
-                            <a href="https://www.thueringen.de/th6/tmwwdg/">Thüringer Ministerium für Wirtschaft, Wissenschaft und Digitale Gesellschaft</a>
-                            <!-- This software is one of the winners of the <a href="https://www.it-leistungsschau.de/programm/TOSP2019/')">1st
-                            Thuringian Open Source Prize</a> in March 2019. The prize was awarded by
-                            <a href="https://www.itnet-th.de')">ITnet Thüringen e.V.</a> and the
-                            <a href="https://www.thueringen.de/th6/tmwwdg/')">Thuringian Ministry for Economic Affairs, Science and Digital Society</a>-->
-                            <div id="logos">
-                                <a id="TMWWDG" href="https://www.thueringen.de/th6/tmwwdg/"><img src="images/TMWWDG.svg"                 alt="Thüringer Ministerium für Wirtschaft, Wissenschaft und Digitale Gesellschaft"></a>
-                                <a id="ITnet"  href="https://www.itnet-th.de"              ><img src="images/ITnet_Thueringen_small.png" alt="ITnet Thüringen e.V."></a>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <div id="updateAvailableScreen">
-
-                        <p>
-                            Ein Update für diese Software ist verfügbar...
-                        </p>
-
-                        <div id="versions"></div>
-
-                    </div>
-
-                    <div id="chargingSessionScreen"></div>
-
-                    <div id="invalidDataSetsScreen"></div>
-
-                    <div id="inputButtons">
-                        <button id="backButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
-                        <div id="exportButtonDiv">
-                            <button id="exportButton"><i class="fas fa-download"></i> Exportieren</button>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div id="rightbar">
-
-                <div id="map"></div>
-
-                <div id="detailedInfos">
-                </div>
-
-                <div id="feedback">
-                    Falsche Daten, falsche Signaturen oder sonstige Fragen?<br />
-                    Treten Sie mit uns in Kontakt:
-                    <div id="feedbackMethods">
-                        <button id="showIssueTracker"><i class="far fa-comments"></i>Mängel melden</button>
-                        <a      id="eMail"   href="mailto:..."><i class="far fa-envelope"></i></a>
-                        <a      id="hotline" href="tel:..."><i class="fas fa-phone fa-rotate-90"></i></a>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div id="overlay">
-            <div id="overlayText">
-
-                <div class="headline">
-
-                    <div class="error"></div>
-
-                    <div class="intro">
-                        Folgende Daten des Ladevorgangs sind <span class="important">mess- und eichrechtsrelevant</span> und damit gemäß <span id="cryptoAlgorithm"></span> Teil der digitalen Signatur:
-                    </div>
-
-                </div>
-
-                <div class="data">
-
-                    <div id="cryptoData"></div>
-
-                    <div id="buffer" class="infoblock">
-                        <div class="description">Puffer</div>
-                        <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
-                    </div>
-
-                    <div id="hashedBuffer" class="infoblock">
-                        <div class="description">Hashed Puffer (SHA512)</div>
-                        <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
-                    </div>
-
-                    <div id="publicKey" class="infoblock">
-                        <div class="description">Public Key</div>
-                        <div class="value"><span style="color: rgb(171, 30, 30)">0x0000000000000000000000000000000000000000000000000000000000000000</span></div>
-                        <div class="sigHead"></div>
-                        <div class="signatures"></div>
-                    </div>
-
-                    <div id="signatureExpected" class="infoblock">
-                        <div class="description">Erwartete Signatur</div>
-                        <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
-                    </div>
-
-                    <div id="invalidSignature" class="infoblock errorblock">
-                        <div class="description">Ungültige Signatur</div>
-                        <div class="value">0x0000000000000000000000000000000000000000000000000000000000000000</div>
-                    </div>
-
-                </div>
-
-                <div class="spacer"></div>
-
-                <div class="footer">
-
-                    <button id="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
-
-                    <div id="signatureCheck"></div>
-
-                    <button id="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
-
-                </div>
-
-            </div>
-        </div>
-
-        <div id="issueTracker">
-            <div id="issueTrackerText">
-
-                <div id="headline">
-                    Sie wollen einen oder mehrere Mängel melden?
-                </div>
-
-                <form id="newIssueForm">
-
-                    <div class="label">Bitte wählen sie eine oder mehrere Kategorien...</div>
-                    <input type="checkbox" id="invalidCTR"                value="invalidCTR"> Transparenzdatensatz konnte nicht geladen werden<br>
-                    <input type="checkbox" id="InvalidStationData"        value="InvalidStationData"> Falsche Daten zu einer Ladestation<br>
-                    <input type="checkbox" id="invalidSignatures"         value="invalidSignatures"> Signatur(en) im Transparenzdatensatz sind ungültig<br>
-                    <input type="checkbox" id="invalidCertificates"       value="invalidCertificates"> Fehler bei der Überprüfung von digitalen Zertifikaten<br>
-                    <input type="checkbox" id="transparencenySoftwareBug" value="transparencenySoftwareBug"> Allgemeiner Fehler in der Transparenzsoftware<br>
-                    <input type="checkbox" id="DSGVO"                     value="DSGVO"> Anfrage nach der Datenschutz-Grundverordnung (DSGVO)<br>
-                    <input type="checkbox" id="BITV"                      value="BITV"> Anfrage bezüglich barrierefreier Informationstechnik (BITV 2.0, EU Direktive 2016/2102)<br>
-
-                    <div class="label">Bitte beschreiben Sie die aufgetretenen Fehler oder Probleme ein wenig genauer...</div>
-                    <textarea id="issueDescription"></textarea>
-
-                    <div class="label">Sollen die Daten Ihres Ladevorgangs zur einfacheren Klärung des Problems mit übermittelt werden?</div>
-                    <select id="includeCTR">
-                        <option value="yes">ja</option>
-                        <option value="no" selected>nein</option>
-                    </select>
-
-                    <div class="label">Ihre Kontaktdaten, falls Rückfragen notwendig sein sollten...</div>
-                    <input type="text" id="issueName"  placeholder="Ihr Name"><br /> 
-                    <input type="text" id="issuePhone" placeholder="Ihre Telefonnummer"><br /> 
-                    <input type="text" id="issueEMail" placeholder="Ihre E-Mail Adresse"><br /> 
-
-                    <div id="privacyStatement">
-                        <h1>Datenschutzerklärung für diesen Mängelmelder</h1>
-                        <p>
-                            Wenn Sie unsere Mängelmelder nutzen, werden auf unserem Webserver temporär sogenannte Nutzungsdaten zu statistischen
-                            Zwecken und zur Fehleranalyse in Protokolldateien gespeichert. Persönliche Angaben, die Sie uns übermitteln, behandeln
-                            wir selbstverständlich vertraulich. Wir verwenden Ihre Daten ausschließlich zweckgebunden, um Ihre Anfrage zu bearbeiten.
-                            Rechtsgrundlage für die Datenverarbeitung ist Art. 6 Abs. 1 f) DSGVO. Das berechtigte Interesse seitens unseres
-                            Unternehmens ergibt sich hierbei aus dem Interesse, Anfragen unserer Kunden, Geschäftspartner und Interessenten zu
-                            beantworten und somit die Kundenzufriedenheit zu erhalten und zu fördern.
-                        </p>
-                        <p>
-                            Eine Weitergabe der Daten an Dritte schließen wir grundsätzlich aus.
-                            Ausnahmsweise werden Daten in unserem Auftrag von Auftragsverarbeitern verarbeitet. Diese sind jeweils sorgfältig
-                            ausgesucht, werden von uns zudem auditiert und vertraglich nach Art. 28 DSGVO verpflichtet. Sollten Sie kein
-                            direkter Kunde von uns, sondern ein Roamingkunde sein, so zählen zu den Auftragsverarbeitern auch Roaminganbieter
-                            wie beispielsweise Hubject, Gireve oder e-clearing.net und ihr eigener E-Mobility Provider.
-                        </p>
-                        <p>
-                            Alle personenbezogenen Angaben, die Sie uns gegenüber bei Anfragen zukommen lassen, werden von uns spätestens 6
-                            Monate nach der erteilten finalen Rückantwort an Sie gelöscht, bzw. sicher anonymisiert. Die Aufbewahrung von 6
-                            Monaten erklärt sich aus dem Umstand, dass es vereinzelt vorkommen kann, dass Sie uns nach einer Antwort nochmals
-                            zu der gleichen Sache kontaktieren und wir dann auf die Vorkorrespondenz beziehen können müssen. Die Erfahrung hat
-                            gezeigt, dass in der Regel nach 6 Monaten Rückfragen zu unseren Antworten nicht mehr vorkommen.
-                        </p>
-                        <p>
-                            Sie haben das Recht, nach Art. 15 DSGVO auf Antrag unentgeltlich Auskunft über die bei uns zu Ihrer Person
-                            gespeicherten personenbezogenen Daten zu erhalten. Zusätzlich haben Sie bei Vorliegen der gesetzlichen
-                            Voraussetzungen ein Recht auf Berichtigung (Art. 16 DSGVO), Löschung (Art. 17 DSGVO) und Einschränkung der
-                            Verarbeitung (Art. 18 DSGVO) Ihrer personenbezogenen Daten. Wenden Sie sich bitte in den zuvor genannten
-                            Fällen, bei offenen Fragen oder im Falle von Beschwerden schriftlich oder per E-Mail an den Datenschutzbeauftragten.
-                            Zudem steht Ihnen ein Recht zur Beschwerde bei einer Datenschutz-Aufsichtsbehörde zu. Zuständig ist die
-                            Datenschutz-Aufsichtsbehörde des Bundeslandes, in dem Sie wohnen oder in dem der Verantwortliche seinen Sitz hat.
-                        </p>
-                        <p>
-                            Unser Datenschutzbeauftragter steht Ihnen gerne für Auskünfte oder Anregungen zum Thema Datenschutz zur Verfügung:<br />
-                            <br />
-                            LichtBlick SE<br />
-                            Klostertor 1<br />
-                            20097 Hamburg<br />
-                            <br />
-                            E-Mail: <a href="mailto:datenschutz.eMobility@lichtblick.de">datenschutz.eMobility@lichtblick.de</a>
-
-<!--                             ChargePoint<br />
-                            Attn: Data Protection Officer<br />
-                            ChargePoint Network (Netherlands) B.V.<br />
-                            Hoogoorddreef 56E<br />
-                            1101BE Amsterdam<br />
-                            Netherlands<br />
-                            <a href="mailto:privacy.eu@chargepoint.com">privacy.eu@chargepoint.com</a>
-                            <br />
-                            Verantwortlicher i.S.d. Art. 4 Ziff. 7 DSGVO<br />
-                            <br />
-                            ChargePoint<br />
-                            Attn: Customer Service<br />
-                            ChargePoint Network (Netherlands) B.V.<br />
-                            Hoogoorddreef 56E<br />
-                            1101BE Amsterdam<br />
-                            Netherlands<br />
-                            Telefon: <a href="tel:+493072621258">+49 (30) 72621258</a><br />
-                            <a href="mailto:sales@chargepoint.com">sales@chargepoint.com</a> -->
-
-                        </p>
-                    </div>
-
-                    <div id="sendIssueBox">
-                        <input id="privacyStatementAccepted" type="checkbox" name="privacyStatementAccepted"><button id="showPrivacyStatement">Datenschutzerklärung</button> gelesen und akzeptiert?<br />
-                        <button id="sendIssueButton" disabled>Mängel melden</button>
-                    </div>
-
-                </form>
-
-                <div id="issueBackButtonDiv">
-                    <button id="issueBackButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-  </body>
+    </body>
 
 </html>
