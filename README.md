@@ -26,6 +26,21 @@ If you need help with the Chargy Transparency Software or want to include your s
 This software is also available as [DesktopApp](https://github.com/OpenChargingCloud/ChargyDesktopApp).
 
 
+## Installation
+
+Assuming you have a current Node.js (~v21.7) installation you can just clone this git repository, install all the JavaScript dependencies, compile it and run the webpack development server...
+
+```
+git clone https://github.com/OpenChargingCloud/ChargyWebApp.git
+cd ChargyWebApp
+npm install
+npm run build
+npm start
+```
+
+Your prefered web browser should automagically open http://localhost:1608
+
+
 ## Future
 
 The development of version **v1.5** already started and will focus on enhanced security concepts, more digital certificates and pricing information.
