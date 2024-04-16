@@ -506,21 +506,22 @@ export class ChargyApp {
 
         //#region Modify external links to be opened in the external web browser
 
-        //const shell        = require('electron').shell;
         const linkButtons  = document.getElementsByClassName('linkButton') as HTMLCollectionOf<HTMLButtonElement>;
 
         for (let i = 0; i < linkButtons.length; i++) {
 
             const linkButton = linkButtons[i];
 
-            if (linkButton != null)
+            if (linkButton)
             {
                 linkButton.onclick = function (this: GlobalEventHandlers, ev: MouseEvent) {
+
                     ev.preventDefault();
                     const link = linkButton.getAttribute("href");
-                    if (link && (link.startsWith("http://") || link.startsWith("https://"))) {
-                        //shell.openExternal(link);
-                    }
+
+                    if (link && (link.startsWith("http://") || link.startsWith("https://")))
+                        window.open(link, '_blank');
+
                 }
             }
 
