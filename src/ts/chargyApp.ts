@@ -117,7 +117,7 @@ export class ChargyApp {
 
         this.appEdition                = appEdition          ?? "";
         this.copyright                 = copyright           ?? "";
-        this.versionsURL               = versionsURL         ?? "https://open.charging.cloud/desktop/versions";
+        this.versionsURL               = versionsURL         ?? "https://chargy.charging.cloud/apps/web/versions";
         this.showFeedbackSection       = showFeedbackSection ?? false;
         this.defaultFeedbackEMail      = feedbackEMail       ?? [];
         this.defaultFeedbackHotline    = feedbackHotline     ?? [];
@@ -132,7 +132,7 @@ export class ChargyApp {
 
         //#endregion
 
-        //#region Load external data from file system
+        //#region Load JavaScript libraries
 
         this.elliptic                  = require('elliptic');
         this.moment                    = require('moment');
@@ -324,7 +324,6 @@ export class ChargyApp {
         }
 
         //#endregion
-
 
 
         //#region Handle the 'Update available'-button
@@ -600,6 +599,13 @@ export class ChargyApp {
             accessToken:  'pk.eyJ1IjoiYWh6ZiIsImEiOiJOdEQtTkcwIn0.Cn0iGqUYyA6KPS8iVjN68w'
         }).addTo(this.map);
 
+
+        //#region Calculate application hash
+
+        this.calcApplicationHash();
+
+        //#endregion
+
     }
 
 
@@ -674,6 +680,8 @@ export class ChargyApp {
             console.error('There has been a problem with fetching "package.json":', error);
         }
     }
+
+
 
 
 
@@ -936,49 +944,30 @@ export class ChargyApp {
 
     //#region calcApplicationHash(...)
 
-    private calcApplicationHash(filename1: string,
-                                filename2: string,
-                                onSuccess: (applicationHash: string) => void,
-                                OnError:   (errorMessage:    string) => void)
+    private async calcApplicationHash()
     {
 
-        const fs                       = require('original-fs');
-        const sha512a                  = require('crypto').createHash('sha512');
-        const stream1                  = fs.createReadStream(filename1);
-        const applicationHashValueDiv  = this.applicationHashValueDiv;
+        const files = [
+            'index.html',
+            'css/chargy.css',
+            'chargyWebApp-bundle.js',
+            'i18n.json',
+            'package.json'
+        ];
 
-        stream1.on('data', function(data: any) {
-            sha512a.update(data)
-        })
+        try
+        {
 
-        stream1.on('error', function() {
-            OnError("File '" + filename1 + "' not found!");
-        })
+            const hashes        = await Promise.all(files.map(url => chargyLib.hashFile(url)));
+            const combinedHash  = await crypto.subtle.digest('SHA-512', chargyLib.ConcatenateBuffers(hashes));
 
-        stream1.on('end', function() {
+            this.applicationHash                    = chargyLib.buf2hex(combinedHash);
+            this.applicationHashValueDiv.innerHTML  = this.applicationHash.match(/.{1,8}/g)?.join(" ") ?? "";
 
-            const sha512b  = require('crypto').createHash('sha512');
-            const stream2  = fs.createReadStream(filename2);
-
-            stream2.on('data', function(data: any) {
-                sha512b.update(data)
-            })
-
-            stream2.on('error', function() {
-                OnError("File '" + filename2 + "' not found!");
-            })
-
-            stream2.on('end', function() {
-
-                var sha512hash = require('crypto').createHash('sha512');
-                sha512hash.update(sha512a.digest('hex'));
-                sha512hash.update(sha512b.digest('hex'));
-
-                onSuccess(sha512hash.digest('hex'));
-
-            })
-
-        })
+        } catch (error) {
+            console.error(`An error occurred: ${error}`);
+            return "";
+        }
 
     }
 
@@ -2697,7 +2686,7 @@ export class ChargyApp {
 const app = new ChargyApp(
                 "",
                 "&copy; 2018-2024 GraphDefined GmbH",
-                "https://chargy.charging.cloud/desktop/versions", //"https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/versions/versions.json",
+                "https://chargy.charging.cloud/apps/web/versions",
                 true, // Show Feedback Section
                 ["support@charging.cloud", "?subject=Chargy%20WebApp%20Support"],
                 undefined, //["+4993219319101",         "+49 9321 9319 101"],

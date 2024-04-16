@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-import * as exp from 'node:constants';
 import * as chargyInterfaces  from './chargyInterfaces'
 import Decimal                from 'decimal.js';
 
@@ -259,7 +258,10 @@ export function createHexString(arr: Iterable<number>) {
 }
 
 export function buf2hex(buffer: ArrayBuffer) {
-    return Array.prototype.map.call(new Uint8Array(buffer), (x:number) => ('00' + x.toString(16)).slice(-2)).join('');
+    //return Array.prototype.map.call(new Uint8Array(buffer), (x:number) => ('00' + x.toString(16)).slice(-2)).join('');
+    return Array.from(new Uint8Array(buffer))
+        .map(byte => byte.toString(16).padStart(2, '0'))
+        .join('');
 }
 
 export function hexToArrayBuffer(hex: string): ArrayBuffer {
@@ -277,6 +279,43 @@ export function hexToArrayBuffer(hex: string): ArrayBuffer {
     return view.buffer
 
 }
+
+
+export async function hashFile(url: string): Promise<ArrayBuffer>
+{
+    try
+    {
+
+        const response = await fetch(url);
+
+        if (!response.ok)
+            throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+
+        return await crypto.subtle.digest('SHA-512', await response.arrayBuffer());
+
+    } catch (error) {
+        console.error(`Error fetching or hashing ${url}: ${error}`);
+        return new ArrayBuffer(0);
+    }
+}
+
+export function ConcatenateBuffers(buffers: ArrayBuffer[]): ArrayBuffer {
+
+    const totalLength  = buffers.reduce((acc, value) => acc + value.byteLength, 0);
+    const result       = new Uint8Array(totalLength);
+    let   length       = 0;
+
+    for (const buffer of buffers) {
+        result.set(new Uint8Array(buffer), length);
+        length += buffer.byteLength;
+    }
+
+    return result.buffer;
+
+}
+
+
+
 
 export function intFromBytes(x: number[]){
 
