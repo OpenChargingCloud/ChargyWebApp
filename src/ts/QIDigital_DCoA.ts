@@ -17,33 +17,10 @@
 
 import * as chargyInterfaces  from './chargyInterfaces'
 
-export class Mennekes {
 
-    //#region tryToParseMennekesXML(XMLDocument)
-
-    public async tryToParseMennekesXML(XMLDocument: Document) : Promise<chargyInterfaces.IChargeTransparencyRecord|chargyInterfaces.ISessionCryptoResult>
-    {
-
-        try
-        {
-
-            return {
-                status:    chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
-                certainty: 0
-            }
-
-        }
-        catch (exception)
-        {
-            return {
-                status:    chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
-                message:   "Exception occured: " + (exception instanceof Error ? exception.message : exception),
-                certainty: 0
-            }
-        }
-
-    }
-
-    //#endregion
-
+export interface ICertificateOfAccreditation {
+    "@id":                          string;
+    "@context"?:                    string|Array<string>,
+    signatures?:                    Array<chargyInterfaces.ISignatureRS>
 }
+

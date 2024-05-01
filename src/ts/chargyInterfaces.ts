@@ -1,6 +1,6 @@
 ﻿/*
  * Copyright (c) 2018-2024 GraphDefined GmbH <achim.friedland@graphdefined.com>
- * This file is part of Chargy Desktop App <https://github.com/OpenChargingCloud/ChargyDesktopApp>
+ * This file is part of Chargy WebApp <https://github.com/OpenChargingCloud/ChargyWebApp>
  *
  * Licensed under the Affero GPL license, Version 3.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -781,7 +781,7 @@ export interface IVersionSignature {
 }
 
 export interface IMultilanguageText {
-    [key: string]: string;
+    [key: string]:  string;
 }
 
 export interface IResult {

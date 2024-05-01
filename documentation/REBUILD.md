@@ -1,4 +1,4 @@
-# Rebuilding the Chargy Desktop App
+# Rebuilding the Chargy WebApp
 
 ## Download latest Electron Example
 ```
