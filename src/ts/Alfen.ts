@@ -343,6 +343,8 @@ export class Alfen  {
                      }
                  ],
 
+                 "chargingTariffs":  ContainerInfos.chargingTariffs,
+
                  "chargingSessions": [
 
                      {
@@ -358,10 +360,11 @@ export class Alfen  {
                              "@id":                      common.UID,
                          },
 
-                         "costs":                        ContainerInfos.chargingCosts,
+                         "chargingTariffs":              ContainerInfos.chargingTariffs,
+                         "chargingPeriods":              ContainerInfos.chargingPeriods,
+                         "totalCosts":                   ContainerInfos.totalCosts,
 
                          "measurements": [
-
                              {
 
                                  "energyMeterId":        common.MeterId,
@@ -386,7 +389,6 @@ export class Alfen  {
                                  "values": [ ]
 
                              }
-
                          ]
 
                      }

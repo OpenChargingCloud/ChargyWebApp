@@ -531,10 +531,22 @@
     },
 
 
+    "Charging Tariffs": {
+        "de": "Ladetarife",
+        "en": "Charging Tariffs"
+    },
 
-    "Costs and Tariffs": {
-        "de": "Kosten und Tarife",
-        "en": "Costs and Tariffs"
+    "Charging Tariff Id": {
+        "de": "Ladetarif-Id",
+        "en": "Charging Tariff Id"
+    },
+
+
+
+
+    "Total Costs": {
+        "de": "Gesamtkosten",
+        "en": "Total Costs"
     },
 
     "Total": {
@@ -731,6 +743,83 @@
     "End value": {
         "de": "Endwert",
         "en": "End value"
+    },
+
+
+    "Adapter Id": {
+        "de": "Adapter-Id",
+        "en": "Adapter Id"
+    },
+
+    "Adapter Firmware Version": {
+        "de": "Adapter-Firmware-Version",
+        "en": "Adapter Firmware Version"
+    },
+
+    "Adapter Firmware Checksum": {
+        "de": "Adapter-Firmware-Checksumme",
+        "en": "Adapter Firmware Checksum"
+    },
+
+    "Meter number": {
+        "de": "Zählernummer",
+        "en": "Meter number"
+    },
+
+    "Meter status": {
+        "de": "Zählerstatus",
+        "en": "Meter status"
+    },
+
+    "Adapter status": {
+        "de": "Adapterstatus",
+        "en": "Adapter status"
+    },
+
+    "Seconds index": {
+        "de": "Sekundenindex",
+        "en": "Seconds index"
+    },
+
+    "Timestamp": {
+        "de": "Zeitstempel",
+        "en": "Timestamp"
+    },
+
+    "Unit (encoded)": {
+        "de": "Einheit (kodiert)",
+        "en": "Unit (encoded)"
+    },
+
+    "Scaling": {
+        "de": "Skalierung",
+        "en": "Scaling"
+    },
+
+    "Measurement Value": {
+        "de": "Messwert",
+        "en": "Measurement Value"
+    },
+
+    "Authorization": {
+        "de": "Autorisierung",
+        "en": "Authorization"
+    },
+
+    "SessionId": {
+        "de": "SessionId",
+        "en": "SessionId"
+    },
+
+    "Pagination counter": {
+        "de": "Paginierungszähler",
+        "en": "Pagination counter"
+    },
+
+
+    "Charging Periods": {
+        "de": "Ladeperioden",
+        "en": "Charging Periods"
     }
 
 }

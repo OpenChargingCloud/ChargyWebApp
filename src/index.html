@@ -42,7 +42,7 @@
 <!-- script-src 'unsafe-eval' only required for faster WebPack during development! -->
 
         <!--<link rel="icon"       href="/favicon.png"                 type="image/png" />-->
-        <link rel="stylesheet" href="css/fontawesome-all.min.css"     type="text/css" />
+        <!-- <link rel="stylesheet" href="css/fontawesome-all.min.css"     type="text/css" /> -->
         <link rel="stylesheet" href="css/leaflet.css"                 type="text/css" />
         <link rel="stylesheet" href="css/leaflet.awesome-markers.css" type="text/css" />
         <link rel="stylesheet" href="css/chargy.css"                  type="text/css" />
@@ -295,8 +295,70 @@
 
             </div>
 
-            <div id="overlay">
-                <div id="overlayText">
+            <div id="chargingTariffDetails" class="overlay">
+                <div class="overlayText">
+
+                    <div class="headline">
+
+                        <div class="error"></div>
+
+                        <div class="intro">
+                            Tariff informations:
+                        </div>
+
+                    </div>
+
+                    <div class="data">
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <div class="footer">
+
+                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+
+                        <div id="signatureCheck"></div>
+
+                        <button class="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="chargingPeriodDetails" class="overlay">
+                <div class="overlayText">
+
+                    <div class="headline">
+
+                        <div class="error"></div>
+
+                        <div class="intro">
+                            Charging Period
+                        </div>
+
+                    </div>
+
+                    <div class="data">
+                    </div>
+
+                    <div class="spacer"></div>
+
+                    <div class="footer">
+
+                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+
+                        <div id="signatureCheck"></div>
+
+                        <button class="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="measurementsDetails" class="overlay">
+                <div class="overlayText">
 
                     <div class="headline">
 
@@ -345,19 +407,19 @@
 
                     <div class="footer">
 
-                        <button id="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
 
                         <div id="signatureCheck"></div>
 
-                        <button id="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+                        <button class="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
 
                     </div>
 
                 </div>
             </div>
 
-            <div id="issueTracker">
-                <div id="issueTrackerText">
+            <div id="issueTracker" class="overlay">
+                <div class="overlayText">
 
                     <div id="headline">
                         Sie wollen einen oder mehrere Mängel melden?
@@ -459,8 +521,8 @@
 
                     </form>
 
-                    <div id="issueBackButtonDiv">
-                        <button id="issueBackButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                    <div class="footer">
+                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
                     </div>
 
                 </div>
