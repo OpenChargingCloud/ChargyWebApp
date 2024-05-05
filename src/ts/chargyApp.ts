@@ -73,6 +73,8 @@ export class ChargyApp {
     private aboutScreenDiv:                     HTMLDivElement;
     private applicationHashDiv:                 HTMLDivElement;
     private applicationHashValueDiv:            HTMLDivElement;
+    private softwareInfosDiv:                   HTMLDivElement;
+    private openSourceLibsDiv:                  HTMLDivElement;
     private chargingSessionScreenDiv:           HTMLDivElement;
     private invalidDataSetsScreenDiv:           HTMLDivElement;
     private inputButtonsDiv:                    HTMLDivElement;
@@ -86,31 +88,31 @@ export class ChargyApp {
     private errorTextDiv:                       HTMLDivElement;
     private feedbackDiv:                        HTMLDivElement;
 
-    private chargingTariffDetailsDiv:           HTMLDivElement;
-    private chargingTariffDetailsLeftButton:    HTMLButtonElement;
-
-    private chargingPeriodDetailsDiv:            HTMLDivElement;
-    private chargingPeriodDetailsLeftButton:     HTMLButtonElement;
-
-    private measurementsDetailsDiv:             HTMLDivElement;
-    private measurementsDetailsLeftButton:      HTMLButtonElement;
-//    private measurementsDetailsButton:          HTMLButtonElement;
-    private issueTrackerDiv:                    HTMLDivElement;
-    private privacyStatement:                   HTMLDivElement;
-
     private showFeedbackSection:                Boolean;
     private feedbackMethodsDiv:                 HTMLDivElement;
     private feedbackEMailAnchor:                HTMLAnchorElement;
     private feedbackHotlineAnchor:              HTMLAnchorElement;
     private showIssueTrackerButton:             HTMLButtonElement;
     private issueTrackerText:                   HTMLDivElement;
-    private sendIssueButton:                    HTMLButtonElement;
-    private issueTrackerLeftButton:             HTMLButtonElement;
 
+    private chargingTariffDetailsDiv:           HTMLDivElement;
+    private chargingTariffDetailsLeftButton:    HTMLButtonElement;
+
+    private chargingPeriodDetailsDiv:           HTMLDivElement;
+    private chargingPeriodDetailsLeftButton:    HTMLButtonElement;
+
+    private measurementsDetailsDiv:             HTMLDivElement;
+    private measurementsDetailsLeftButton:      HTMLButtonElement;
+
+    private issueTrackerDiv:                    HTMLDivElement;
+    private issueTrackerLeftButton:             HTMLButtonElement;
+    private privacyStatement:                   HTMLDivElement;
     private showPrivacyStatement:               HTMLButtonElement;
     private privacyStatementAccepted:           HTMLInputElement;
-    private softwareInfosDiv:                   HTMLDivElement;
-    private openSourceLibsDiv:                  HTMLDivElement;
+    private sendIssueButton:                    HTMLButtonElement;
+
+    private pkiDetailsDiv:                      HTMLDivElement;
+    private pkiDetailsLeftButton:               HTMLButtonElement;
 
     //#endregion
 
@@ -213,6 +215,12 @@ export class ChargyApp {
                                                             this.issueTrackerDiv.style.display = 'none';
                                                         }
 
+        this.pkiDetailsDiv                            = document.getElementById('pkiDetails')                               as HTMLDivElement;
+        this.pkiDetailsLeftButton                     = this.pkiDetailsDiv.querySelector(".overlayLeftButton")              as HTMLButtonElement;
+        this.pkiDetailsLeftButton.onclick             = () => {
+                                                            this.pkiDetailsDiv.style.display = 'none';
+                                                        }
+
         this.fileInputButton                          = document.getElementById('fileInputButton')                          as HTMLButtonElement;
         this.pasteButton                              = document.getElementById('pasteButton')                              as HTMLButtonElement;
 
@@ -224,12 +232,15 @@ export class ChargyApp {
 
         //#endregion
 
-        this.chargy                                   = new Chargy(this.i18n,
-                                                                   this.UILanguage,
-                                                                   this.elliptic,
-                                                                   this.moment,
-                                                                   this.asn1,
-                                                                   this.base32Decode);
+        this.chargy                                   = new Chargy(
+                                                            this.i18n,
+                                                            this.UILanguage,
+                                                            this.elliptic,
+                                                            this.moment,
+                                                            this.asn1,
+                                                            this.base32Decode,
+                                                            this.showPKIDetails.bind(this)
+                                                        );
 
 
         //#region OnWindowResize
@@ -630,6 +641,7 @@ export class ChargyApp {
     //#endregion
 
 
+    //#region (private) loadI18n()
 
     private async loadI18n() {
         try {
@@ -646,6 +658,10 @@ export class ChargyApp {
             console.error('There has been a problem with fetching "i18n.json":', error);
         }
     }
+
+    //#endregion
+
+    //#region (private) loadPackageJSON()
 
     private async loadPackageJSON() {
         try {
@@ -700,8 +716,7 @@ export class ChargyApp {
         }
     }
 
-
-
+    //#endregion
 
 
     //#region UpdateFeedbackSection()
@@ -961,7 +976,7 @@ export class ChargyApp {
     //#endregion
 
 
-    //#region calcApplicationHash(...)
+    //#region calcApplicationHash           (...)
 
     private async calcApplicationHash()
     {
@@ -992,7 +1007,7 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region checkApplicationHashSignature(...)
+    //#region checkApplicationHashSignature (...)
 
     private checkApplicationHashSignature(app:        any,
                                           version:    any,
@@ -1064,7 +1079,7 @@ export class ChargyApp {
     //#endregion
 
 
-    //#region detectAndConvertContentFormat(FileInfos)
+    //#region detectAndConvertContentFormat (FileInfos)
 
     private async detectAndConvertContentFormat(FileInfos: Array<chargyInterfaces.IFileInfo>|chargyInterfaces.IFileInfo|string) {
 
@@ -1108,7 +1123,7 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region showChargeTransparencyRecord(CTR)
+    //#region showChargeTransparencyRecord  (CTR)
 
     private async showChargeTransparencyRecord(CTR: chargyInterfaces.IChargeTransparencyRecord)
     {
@@ -1984,7 +1999,7 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region showChargingSessionDetails
+    //#region showChargingSessionDetails    (chargingSession)
 
     private async showChargingSessionDetails(chargingSession: chargyInterfaces.IChargingSession)
     {
@@ -2715,7 +2730,7 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region showChargingTariffDetails
+    //#region showChargingTariffDetails     (measurementValue)
 
     private showChargingTariffDetails(measurementValue:  chargyInterfaces.IChargingTariff) : void
     {
@@ -2787,7 +2802,7 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region showChargingPeriodDetails
+    //#region showChargingPeriodDetails     (chargingPeriod)
 
     private showChargingPeriodDetails(chargingPeriod:  chargyInterfaces.IChargingPeriod) : void
     {
@@ -2859,7 +2874,7 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region showMeasurementCryptoDetails
+    //#region showMeasurementCryptoDetails  (measurementValue)
 
     private showMeasurementCryptoDetails(measurementValue:  chargyInterfaces.IMeasurementValue) : void
     {
@@ -2926,6 +2941,78 @@ export class ChargyApp {
                                                 signatureExpectedDiv,
 
                                                 signatureCheckDiv);
+
+    }
+
+    //#endregion
+
+    //#region showPKIDetails                (pkiData)
+
+    private showPKIDetails(pkiData:  any) : void
+    {
+
+        function doError(text: String)
+        {
+            errorDiv.innerHTML          = '<i class="fas fa-times-circle"></i> ' + text;
+            introDiv.style.display      = "none";
+        }
+
+        //#region Headline
+
+        const headlineDiv               = this.pkiDetailsDiv.querySelector('.headline')  as HTMLDivElement;
+        const errorDiv                  = headlineDiv.       querySelector('.error')     as HTMLDivElement;
+        const introDiv                  = headlineDiv.       querySelector('.intro')     as HTMLDivElement;
+        errorDiv.innerHTML              = "";
+        introDiv.style.display          = "block";
+
+        //#endregion
+
+        // if (!measurementValue?.measurement ||
+        //     !measurementValue.method)
+        // {
+        //     doError(this.chargy.GetLocalizedMessage("Unknown meter data record format!"));
+        //     return;
+        // }
+
+        //#region Show data and result on overlay
+
+        this.pkiDetailsDiv.style.display = 'block';
+
+        // const dataDiv                   = this.overlayDiv.querySelector('.data')                      as HTMLDivElement;
+        // const cryptoDataDiv             = dataDiv.        querySelector('#cryptoData')                as HTMLDivElement;
+        // const bufferDiv                 = dataDiv.        querySelector('#buffer .value')             as HTMLDivElement;
+        // const hashedBufferDiv           = dataDiv.        querySelector('#hashedBuffer .value')       as HTMLDivElement;
+        // const publicKeyDiv              = dataDiv.        querySelector('#publicKey .value')          as HTMLDivElement;
+        // const signatureExpectedDiv      = dataDiv.        querySelector('#signatureExpected .value')  as HTMLDivElement;
+
+        // cryptoDataDiv.innerHTML         = '';
+        // bufferDiv.innerHTML             = '';
+        // hashedBufferDiv.innerHTML       = '<span class="error">0x00000000000000000000000000000000000</stlye>';
+        // publicKeyDiv.innerHTML          = '<span class="error">0x00000000000000000000000000000000000</stlye>';
+        // signatureExpectedDiv.innerHTML  = '<span class="error">0x00000000000000000000000000000000000</stlye>';
+
+        //#endregion
+
+        //#region Footer
+
+        //const footerDiv                 = this.measurementsDetailsDiv.querySelector('.footer')                    as HTMLDivElement;
+        //const signatureCheckDiv         = footerDiv.      querySelector('#signatureCheck')            as HTMLDivElement;
+
+        //signatureCheckDiv.innerHTML     = '';
+
+        //#endregion
+
+        // measurementValue.method.ViewMeasurement(measurementValue,
+        //                                         errorDiv,
+        //                                         introDiv,
+
+        //                                         cryptoDataDiv,
+        //                                         bufferDiv,
+        //                                         hashedBufferDiv,
+        //                                         publicKeyDiv,
+        //                                         signatureExpectedDiv,
+
+        //                                         signatureCheckDiv);
 
     }
 
