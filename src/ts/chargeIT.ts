@@ -1137,6 +1137,7 @@ export class ChargeIT {
                 const meterInfo_publicKeyEncoding                = SomeJSON.meterInfo?.publicKeyEncoding;
                 const meterInfo_signatureFormat                  = SomeJSON.meterInfo?.signatureFormat;
                 const meterInfo_signatureEncoding                = SomeJSON.meterInfo?.signatureEncoding;
+                const meterInfo_publicKeySignatures              = SomeJSON.meterInfo?.publicKeySignatures;
 
                 const connectorInfo                              = SomeJSON.connectorInfo;
                 const connectorInfo_type                         = SomeJSON.connectorInfo?.type;
@@ -1622,11 +1623,11 @@ export class ChargeIT {
                                                 geoLocation:      { "lat":    geoLocation_lat, "lng":        geoLocation_lon },
                                                 address:          { "street": address_street,  "postalCode": address_zipCode, "city": address_town, "country": address_country }
                                              },
-                                            energyMeter:          meterInfo,
-                                            connector:            connectorInfo,
-                                            chargingTariffs:      chargingTariffs,
-                                            chargingPeriods:      chargingPeriods,
-                                            totalCosts:           totalCosts
+                                             energyMeter:          meterInfo,
+                                             connector:            connectorInfo,
+                                             chargingTariffs:      chargingTariffs,
+                                             chargingPeriods:      chargingPeriods,
+                                             totalCosts:           totalCosts
                                          });
 
                 }
