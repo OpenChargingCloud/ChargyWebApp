@@ -114,6 +114,7 @@ module.exports = {
     },
     port:  1608,
     hot:   true,
+    allowedHosts: ['.chargeit-mobility.com'],
     open:  true
   }
 };
