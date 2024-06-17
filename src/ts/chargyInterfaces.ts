@@ -286,6 +286,10 @@ export interface IEVSE
     connectors?:                Array<IConnector>;
 }
 
+export interface IPublicKeySignature extends ISignatureRS {
+    
+}
+
 export interface IMeter
 {
     "@id":                      string;
@@ -306,6 +310,7 @@ export interface IMeter
     signatureInfos?:            ISignatureInfos;
     signatureFormat?:           string;
     publicKeys?:                Array<IPublicKey>;
+    publicKeySignatures?:       Array<IPublicKeySignature>;
 }
 
 export interface IConnector {
@@ -912,3 +917,5 @@ export interface IParkingTariff {
     signatures?:                Array<ISignatureRS>
 
 }
+
+export type ShowPKIDetailsFunction = (pkiData: any) => void;

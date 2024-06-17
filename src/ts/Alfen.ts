@@ -79,9 +79,9 @@ export class Alfen  {
                     UnitEncoded:        0,
                     Scalar:             "",
                     UID:                "",
-                    InternalSessionId:          0,
+                    InternalSessionId:  0,
                     dataSets:           [] as any[]
-            };
+                };
 
             let signedValues:string[] = [];
             if (typeof (Content) === 'string')
@@ -333,7 +333,8 @@ export class Alfen  {
                                                          "format":                   "DER",
                                                          "encoding":                 "base32"
                                                      }
-                                                 ]
+                                                 ],
+                                                 "publicKeySignatures":      ContainerInfos.energyMeter?.publicKeySignatures
                                              }
                                          ]
                                      }
@@ -622,14 +623,14 @@ export class AlfenCrypt01 extends ACrypt {
                         try
                         {
 
-                            cryptoResult.publicKey            = meter.publicKeys[0]?.value?.toLowerCase();
+                            cryptoResult.publicKey            = meter.publicKeys[0]?.value;
                             cryptoResult.publicKeyFormat      = meter.publicKeys[0]?.format;
                             cryptoResult.publicKeySignatures  = meter.publicKeys[0]?.signatures;
 
                             try
                             {
 
-                                const publicKey  = chargyLib.buf2hex(this.chargy.base32Decode(cryptoResult.publicKey?.toUpperCase(), 'RFC4648'));
+                                const publicKey  = chargyLib.buf2hex(this.chargy.base32Decode(cryptoResult.publicKey, 'RFC4648'));
                                 let   result     = false;
 
                                 switch (meter?.publicKeys[0]?.algorithm ?? "")
