@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf ./build",
     "sbom": "cyclonedx-npm --output-format json --output-file sbom.json",
-    "build": "npm run clean && webpack --config webpack.config.cjs",
+    "build": "npm run clean && npm run sbom && webpack --config webpack.config.cjs",
     "start": "webpack serve --open"
   },
   "keywords": [

@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.4",
   "version": 1,
-  "serialNumber": "urn:uuid:6520b901-5d43-4cd4-b21e-f8e141a91038",
+  "serialNumber": "urn:uuid:2f3ad7e4-6060-4caa-b384-0aa9e98afb32",
   "metadata": {
-    "timestamp": "2024-11-20T23:25:01.658Z",
+    "timestamp": "2024-11-20T23:36:21.837Z",
     "tools": [
       {
         "name": "npm",
@@ -150,62 +150,6 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "commander",
-          "version": "10.0.1",
-          "bom-ref": "@cyclonedx/cyclonedx-npm@1.19.3|commander@10.0.1",
-          "author": "TJ Holowaychuk",
-          "description": "the complete solution for node.js command-line programs",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/commander@10.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/tj/commander.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/commander/-/commander-10.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "cb8320dad5ec8699446d21b3c7b6a6ccfc0a28e086ba84913ff0a311dc3093414e1a551baba94aba8c83653359926c47749b69e7885d7d8fc952b74bed77ddba"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@cyclonedx/cyclonedx-npm/node_modules/commander"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        }
       ]
     },
     {
@@ -260,63 +204,6 @@
         {
           "name": "cdx:npm:package:development",
           "value": "true"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "ajv-formats",
-          "version": "3.0.1",
-          "bom-ref": "@cyclonedx/cyclonedx-library@6.13.0|ajv-formats@3.0.1",
-          "author": "Evgeny Poberezkin",
-          "description": "Format validation for Ajv v7+",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ajv-formats@3.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/ajv-validator/ajv-formats.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/ajv-validator/ajv-formats#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/ajv-validator/ajv-formats/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-3.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "f2252a979d04511fae51c7514371c3a9ae84572a3776870bf20e5627714d7169aeeb621b90652e7bfa44c8b056f1518a2ae7133e0a9e92ce1f214d43038ca8c1"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@cyclonedx/cyclonedx-library/node_modules/ajv-formats"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
         }
       ]
     },
@@ -373,63 +260,6 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "punycode",
-          "version": "2.3.1",
-          "bom-ref": "ajv-formats-draft2019@1.6.1|punycode@2.3.1",
-          "author": "Mathias Bynens",
-          "description": "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms.",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/punycode@2.3.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mathiasbynens/punycode.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mths.be/punycode",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mathiasbynens/punycode.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "bd8b7b503d54f5683ad77f2c84bb4b3af740bbef03b02fe2945b44547707fb0c9d712a4d136d007d239db9fe8c91115a84be4563b5f5a14ee7295645b5fabc16"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/ajv-formats-draft2019/node_modules/punycode"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        }
       ]
     },
     {
@@ -479,6 +309,60 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ajv"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "punycode",
+      "version": "2.3.1",
+      "bom-ref": "punycode@2.3.1",
+      "author": "Mathias Bynens",
+      "description": "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/punycode@2.3.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/mathiasbynens/punycode.js.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://mths.be/punycode",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/mathiasbynens/punycode.js/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "bd8b7b503d54f5683ad77f2c84bb4b3af740bbef03b02fe2945b44547707fb0c9d712a4d136d007d239db9fe8c91115a84be4563b5f5a14ee7295645b5fabc16"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/punycode"
         },
         {
           "name": "cdx:npm:package:development",
@@ -1090,61 +974,60 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ajv-formats",
+      "version": "3.0.1",
+      "bom-ref": "ajv-formats@3.0.1",
+      "author": "Evgeny Poberezkin",
+      "description": "Format validation for Ajv v7+",
+      "scope": "optional",
+      "licenses": [
         {
-          "type": "library",
-          "name": "punycode",
-          "version": "2.3.1",
-          "bom-ref": "uri-js@4.4.1|punycode@2.3.1",
-          "author": "Mathias Bynens",
-          "description": "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms.",
-          "licenses": [
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/ajv-formats@3.0.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/ajv-validator/ajv-formats.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/ajv-validator/ajv-formats#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/ajv-validator/ajv-formats/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-3.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
             {
-              "license": {
-                "id": "MIT"
-              }
+              "alg": "SHA-512",
+              "content": "f2252a979d04511fae51c7514371c3a9ae84572a3776870bf20e5627714d7169aeeb621b90652e7bfa44c8b056f1518a2ae7133e0a9e92ce1f214d43038ca8c1"
             }
           ],
-          "purl": "pkg:npm/punycode@2.3.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mathiasbynens/punycode.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mths.be/punycode",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mathiasbynens/punycode.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/punycode/-/punycode-2.3.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "bd8b7b503d54f5683ad77f2c84bb4b3af740bbef03b02fe2945b44547707fb0c9d712a4d136d007d239db9fe8c91115a84be4563b5f5a14ee7295645b5fabc16"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/uri-js/node_modules/punycode"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/ajv-formats"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -1636,6 +1519,60 @@
     },
     {
       "type": "library",
+      "name": "commander",
+      "version": "10.0.1",
+      "bom-ref": "commander@10.0.1",
+      "author": "TJ Holowaychuk",
+      "description": "the complete solution for node.js command-line programs",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/commander@10.0.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/tj/commander.js.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/tj/commander.js#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/tj/commander.js/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/commander/-/commander-10.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "cb8320dad5ec8699446d21b3c7b6a6ccfc0a28e086ba84913ff0a311dc3093414e1a551baba94aba8c83653359926c47749b69e7885d7d8fc952b74bed77ddba"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/commander"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "normalize-package-data",
       "version": "6.0.2",
       "bom-ref": "normalize-package-data@6.0.2",
@@ -1740,61 +1677,59 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
+      ]
+    },
+    {
+      "type": "library",
+      "name": "lru-cache",
+      "version": "10.4.3",
+      "bom-ref": "lru-cache@10.4.3",
+      "author": "Isaac Z. Schlueter",
+      "description": "A cache object that deletes the least-recently-used items.",
+      "licenses": [
         {
-          "type": "library",
-          "name": "lru-cache",
-          "version": "10.4.3",
-          "bom-ref": "hosted-git-info@7.0.2|lru-cache@10.4.3",
-          "author": "Isaac Z. Schlueter",
-          "description": "A cache object that deletes the least-recently-used items.",
-          "licenses": [
+          "license": {
+            "id": "ISC"
+          }
+        }
+      ],
+      "purl": "pkg:npm/lru-cache@10.4.3",
+      "externalReferences": [
+        {
+          "url": "git://github.com/isaacs/node-lru-cache.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/isaacs/node-lru-cache#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/isaacs/node-lru-cache/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
+          "type": "distribution",
+          "hashes": [
             {
-              "license": {
-                "id": "ISC"
-              }
+              "alg": "SHA-512",
+              "content": "24d03365c5eb0ade365462ee633d337c0cc37c0bc9596e807d8943050c835790c2948da6e6c0262be3883bbb39f577ec46c587a74da3009ad169d3d1193b7a49"
             }
           ],
-          "purl": "pkg:npm/lru-cache@10.4.3",
-          "externalReferences": [
-            {
-              "url": "git://github.com/isaacs/node-lru-cache.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/isaacs/node-lru-cache#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/isaacs/node-lru-cache/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-10.4.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "24d03365c5eb0ade365462ee633d337c0cc37c0bc9596e807d8943050c835790c2948da6e6c0262be3883bbb39f577ec46c587a74da3009ad169d3d1193b7a49"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/hosted-git-info/node_modules/lru-cache"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/lru-cache"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -4825,6 +4760,62 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "ajv-formats",
+          "version": "2.1.1",
+          "bom-ref": "schema-utils@4.2.0|ajv-formats@2.1.1",
+          "author": "Evgeny Poberezkin",
+          "description": "Format validation for Ajv v7+",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ajv-formats@2.1.1",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/ajv-validator/ajv-formats.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/ajv-validator/ajv-formats#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/ajv-validator/ajv-formats/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-2.1.1.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "5b1d0ac79da1c44ec2d7c8643048206251227ea599b58691828b89a2bf9631d3e743210ad77be0116c9536ea7b4a879ea0b32caf891fe61e9d396d75235e4c50"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/schema-utils/node_modules/ajv-formats"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        }
       ]
     },
     {
@@ -4874,60 +4865,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@types/json-schema"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ajv-formats",
-      "version": "2.1.1",
-      "bom-ref": "ajv-formats@2.1.1",
-      "author": "Evgeny Poberezkin",
-      "description": "Format validation for Ajv v7+",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ajv-formats@2.1.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ajv-validator/ajv-formats.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ajv-validator/ajv-formats#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ajv-validator/ajv-formats/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/ajv-formats/-/ajv-formats-2.1.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "5b1d0ac79da1c44ec2d7c8643048206251227ea599b58691828b89a2bf9631d3e743210ad77be0116c9536ea7b4a879ea0b32caf891fe61e9d396d75235e4c50"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ajv-formats"
         },
         {
           "name": "cdx:npm:package:development",
@@ -11431,6 +11368,62 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "commander",
+          "version": "8.3.0",
+          "bom-ref": "html-minifier-terser@6.1.0|commander@8.3.0",
+          "author": "TJ Holowaychuk",
+          "description": "the complete solution for node.js command-line programs",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/commander@8.3.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/tj/commander.js.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/tj/commander.js#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/tj/commander.js/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/commander/-/commander-8.3.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "3a44cbf6e99ff877b60d9914abc7fc27da1fef22fa449288db875521306635f6419ab8bdcd8650aca92e5e22a1c9f3d2bbcb5486754107588a5debef9e54785b"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/html-minifier-terser/node_modules/commander"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        }
       ]
     },
     {
@@ -11804,60 +11797,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/source-map"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "commander",
-      "version": "8.3.0",
-      "bom-ref": "commander@8.3.0",
-      "author": "TJ Holowaychuk",
-      "description": "the complete solution for node.js command-line programs",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/commander@8.3.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/tj/commander.js.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/tj/commander.js#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/tj/commander.js/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/commander/-/commander-8.3.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "3a44cbf6e99ff877b60d9914abc7fc27da1fef22fa449288db875521306635f6419ab8bdcd8650aca92e5e22a1c9f3d2bbcb5486754107588a5debef9e54785b"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/commander"
         },
         {
           "name": "cdx:npm:package:development",
@@ -14873,6 +14812,57 @@
       "components": [
         {
           "type": "library",
+          "name": "chownr",
+          "version": "1.1.4",
+          "bom-ref": "tar-fs@2.1.1|chownr@1.1.4",
+          "author": "Isaac Z. Schlueter",
+          "description": "like `chown -R`",
+          "scope": "optional",
+          "licenses": [
+            {
+              "license": {
+                "id": "ISC"
+              }
+            }
+          ],
+          "purl": "pkg:npm/chownr@1.1.4",
+          "externalReferences": [
+            {
+              "url": "git://github.com/isaacs/chownr.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/isaacs/chownr#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/isaacs/chownr/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/chownr/-/chownr-1.1.4.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "8c9d1bab36b296626d567360cd37923acf033dabe96d8804aff6f460bf3fd863b7c4912122716684a3149c42508d9ba62bb297185854cbcf4faec25695a90156"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/tar-fs/node_modules/chownr"
+            }
+          ]
+        },
+        {
+          "type": "library",
           "name": "tar-stream",
           "version": "2.2.0",
           "bom-ref": "tar-fs@2.1.1|tar-stream@2.2.0",
@@ -15072,57 +15062,6 @@
               "value": "node_modules/tar-fs/node_modules/readable-stream"
             }
           ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "chownr",
-      "version": "1.1.4",
-      "bom-ref": "chownr@1.1.4",
-      "author": "Isaac Z. Schlueter",
-      "description": "like `chown -R`",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
-      "purl": "pkg:npm/chownr@1.1.4",
-      "externalReferences": [
-        {
-          "url": "git://github.com/isaacs/chownr.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/isaacs/chownr#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/isaacs/chownr/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/chownr/-/chownr-1.1.4.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "8c9d1bab36b296626d567360cd37923acf033dabe96d8804aff6f460bf3fd863b7c4912122716684a3149c42508d9ba62bb297185854cbcf4faec25695a90156"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/chownr"
         }
       ]
     },
@@ -15591,6 +15530,62 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "signal-exit",
+          "version": "4.1.0",
+          "bom-ref": "foreground-child@3.3.0|signal-exit@4.1.0",
+          "author": "Ben Coe",
+          "description": "when you want to fire an event no matter how a process exits.",
+          "licenses": [
+            {
+              "license": {
+                "id": "ISC"
+              }
+            }
+          ],
+          "purl": "pkg:npm/signal-exit@4.1.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/tapjs/signal-exit.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/tapjs/signal-exit#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/tapjs/signal-exit/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6f3c99d5ef3cc3d3b588d25b2a73a5bd84eb58f0e5e3a3b56c6d03dd7227bfef6d90faf1acdf235144e21650e4926296827d4ce827c8035dd2b86a8e6bd2a8af"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/foreground-child/node_modules/signal-exit"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        }
       ]
     },
     {
@@ -15640,60 +15635,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/cross-spawn"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "signal-exit",
-      "version": "4.1.0",
-      "bom-ref": "signal-exit@4.1.0",
-      "author": "Ben Coe",
-      "description": "when you want to fire an event no matter how a process exits.",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
-      ],
-      "purl": "pkg:npm/signal-exit@4.1.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/tapjs/signal-exit.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/tapjs/signal-exit#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/tapjs/signal-exit/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "6f3c99d5ef3cc3d3b588d25b2a73a5bd84eb58f0e5e3a3b56c6d03dd7227bfef6d90faf1acdf235144e21650e4926296827d4ce827c8035dd2b86a8e6bd2a8af"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/signal-exit"
         },
         {
           "name": "cdx:npm:package:development",
@@ -15810,6 +15751,114 @@
         }
       ],
       "components": [
+        {
+          "type": "library",
+          "name": "string-width",
+          "version": "5.1.2",
+          "bom-ref": "@isaacs/cliui@8.0.2|string-width@5.1.2",
+          "author": "Sindre Sorhus",
+          "description": "Get the visual width of a string - the number of columns required to display it",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/string-width@5.1.2",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/sindresorhus/string-width.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/sindresorhus/string-width#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/sindresorhus/string-width/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "1e72ce091def8dc63c6dea0d2ed723679fe7c67d9a7e6304ea586b0eb79ba24a8c6a9f976de5bc9fd4d7a4f0cea9d18ae6a708de84f418a4d6eb00bb10c895a8"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@isaacs/cliui/node_modules/string-width"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "emoji-regex",
+          "version": "9.2.2",
+          "bom-ref": "@isaacs/cliui@8.0.2|emoji-regex@9.2.2",
+          "author": "Mathias Bynens",
+          "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/emoji-regex@9.2.2",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://mths.be/emoji-regex",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/mathiasbynens/emoji-regex/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "2f5f03689b17494936fb8da9bfc98bb398c94f686a164144e23db5c0e9a06d4aac67684bef636c514efce60f515e0a37b3464d815978d93887a7766d3affd5ca"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@isaacs/cliui/node_modules/emoji-regex"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
         {
           "type": "library",
           "name": "strip-ansi",
@@ -15972,61 +16021,59 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
+      ]
+    },
+    {
+      "type": "library",
+      "name": "emoji-regex",
+      "version": "8.0.0",
+      "bom-ref": "emoji-regex@8.0.0",
+      "author": "Mathias Bynens",
+      "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
+      "licenses": [
         {
-          "type": "library",
-          "name": "emoji-regex",
-          "version": "8.0.0",
-          "bom-ref": "string-width@4.2.3|emoji-regex@8.0.0",
-          "author": "Mathias Bynens",
-          "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
-          "licenses": [
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/emoji-regex@8.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://mths.be/emoji-regex",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/mathiasbynens/emoji-regex/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
             {
-              "license": {
-                "id": "MIT"
-              }
+              "alg": "SHA-512",
+              "content": "3128d8cdc58d380d1ec001e9cf4331a5816fc20eb28f2d4d1b7c6d7a8ab3eb8e150a8fd13e09ebd7f186b7e89cde2253cd0f04bb74dd335e126b09d5526184e8"
             }
           ],
-          "purl": "pkg:npm/emoji-regex@8.0.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mths.be/emoji-regex",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mathiasbynens/emoji-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "3128d8cdc58d380d1ec001e9cf4331a5816fc20eb28f2d4d1b7c6d7a8ab3eb8e150a8fd13e09ebd7f186b7e89cde2253cd0f04bb74dd335e126b09d5526184e8"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width-cjs/node_modules/emoji-regex"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/emoji-regex"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -16086,170 +16133,6 @@
     },
     {
       "type": "library",
-      "name": "string-width",
-      "version": "5.1.2",
-      "bom-ref": "string-width@5.1.2",
-      "author": "Sindre Sorhus",
-      "description": "Get the visual width of a string - the number of columns required to display it",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/string-width@5.1.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/string-width.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/string-width#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/string-width/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "1e72ce091def8dc63c6dea0d2ed723679fe7c67d9a7e6304ea586b0eb79ba24a8c6a9f976de5bc9fd4d7a4f0cea9d18ae6a708de84f418a4d6eb00bb10c895a8"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/string-width"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "strip-ansi",
-          "version": "7.1.0",
-          "bom-ref": "string-width@5.1.2|strip-ansi@7.1.0",
-          "author": "Sindre Sorhus",
-          "description": "Strip ANSI escape codes from a string",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/strip-ansi@7.1.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/strip-ansi.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/strip-ansi#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/strip-ansi/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.1.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "8aae9e55523ae274104d162ad8ab44836776b94ecb125853270b07e18cc81d9b21c658199acff021ce15a03413946fc8bd522b04a1b4e82ad99e9d2abfb86471"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width/node_modules/strip-ansi"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "6.1.0",
-          "bom-ref": "string-width@5.1.2|ansi-regex@6.1.0",
-          "author": "Sindre Sorhus",
-          "description": "Regular expression for matching ANSI escape codes",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@6.1.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/ansi-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.1.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "ec7497e1041be02b297222e9545c3245eefd3b7c6c2190c32c4476d6411143bd6868fa1d17c8cbef6e408093050186e8a08aa8949a112ee33cd52a5e524a64bc"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width/node_modules/ansi-regex"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "eastasianwidth",
       "version": "0.2.0",
       "bom-ref": "eastasianwidth@0.2.0",
@@ -16304,63 +16187,9 @@
     },
     {
       "type": "library",
-      "name": "emoji-regex",
-      "version": "9.2.2",
-      "bom-ref": "emoji-regex@9.2.2",
-      "author": "Mathias Bynens",
-      "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/emoji-regex@9.2.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://mths.be/emoji-regex",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/mathiasbynens/emoji-regex/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "2f5f03689b17494936fb8da9bfc98bb398c94f686a164144e23db5c0e9a06d4aac67684bef636c514efce60f515e0a37b3464d815978d93887a7766d3affd5ca"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/emoji-regex"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "strip-ansi",
       "version": "6.0.1",
-      "bom-ref": "BomRef.64cftg8cudo.t6b0b4bii4o",
+      "bom-ref": "BomRef.cg5e1rb53v.5jnpuptfhho",
       "author": "Sindre Sorhus",
       "description": "Strip ANSI escape codes from a string",
       "licenses": [
@@ -16462,116 +16291,6 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "string-width",
-          "version": "4.2.3",
-          "bom-ref": "wrap-ansi@7.0.0|string-width@4.2.3",
-          "author": "Sindre Sorhus",
-          "description": "Get the visual width of a string - the number of columns required to display it",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/string-width@4.2.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/string-width.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/string-width#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/string-width/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "c0ac90450a63274b08a7ad84ad265d1ac8cc256b1aa79a1136284786ee86ec954effd8c807a5327af2feb57b8eaab9e0f23fdcc4a4d6c96530bd24eb8a2673fe"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/string-width"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "emoji-regex",
-          "version": "8.0.0",
-          "bom-ref": "wrap-ansi@7.0.0|emoji-regex@8.0.0",
-          "author": "Mathias Bynens",
-          "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/emoji-regex@8.0.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mths.be/emoji-regex",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mathiasbynens/emoji-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "3128d8cdc58d380d1ec001e9cf4331a5816fc20eb28f2d4d1b7c6d7a8ab3eb8e150a8fd13e09ebd7f186b7e89cde2253cd0f04bb74dd335e126b09d5526184e8"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/emoji-regex"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        }
       ]
     },
     {
@@ -16621,6 +16340,60 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ansi-styles"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "string-width",
+      "version": "4.2.3",
+      "bom-ref": "BomRef.o6ltq4kt1n.p277ciskgl8",
+      "author": "Sindre Sorhus",
+      "description": "Get the visual width of a string - the number of columns required to display it",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/string-width@4.2.3",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/sindresorhus/string-width.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/sindresorhus/string-width#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/sindresorhus/string-width/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "c0ac90450a63274b08a7ad84ad265d1ac8cc256b1aa79a1136284786ee86ec954effd8c807a5327af2feb57b8eaab9e0f23fdcc4a4d6c96530bd24eb8a2673fe"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/string-width"
         },
         {
           "name": "cdx:npm:package:development",
@@ -16729,6 +16502,114 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/wrap-ansi/node_modules/ansi-styles"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "string-width",
+          "version": "5.1.2",
+          "bom-ref": "wrap-ansi@8.1.0|string-width@5.1.2",
+          "author": "Sindre Sorhus",
+          "description": "Get the visual width of a string - the number of columns required to display it",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/string-width@5.1.2",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/sindresorhus/string-width.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/sindresorhus/string-width#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/sindresorhus/string-width/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "1e72ce091def8dc63c6dea0d2ed723679fe7c67d9a7e6304ea586b0eb79ba24a8c6a9f976de5bc9fd4d7a4f0cea9d18ae6a708de84f418a4d6eb00bb10c895a8"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/wrap-ansi/node_modules/string-width"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "emoji-regex",
+          "version": "9.2.2",
+          "bom-ref": "wrap-ansi@8.1.0|emoji-regex@9.2.2",
+          "author": "Mathias Bynens",
+          "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/emoji-regex@9.2.2",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://mths.be/emoji-regex",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/mathiasbynens/emoji-regex/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "2f5f03689b17494936fb8da9bfc98bb398c94f686a164144e23db5c0e9a06d4aac67684bef636c514efce60f515e0a37b3464d815978d93887a7766d3affd5ca"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/wrap-ansi/node_modules/emoji-regex"
             },
             {
               "name": "cdx:npm:package:development",
@@ -17168,59 +17049,61 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "lru-cache",
-      "version": "11.0.2",
-      "bom-ref": "lru-cache@11.0.2",
-      "author": "Isaac Z. Schlueter",
-      "description": "A cache object that deletes the least-recently-used items.",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC"
-          }
-        }
       ],
-      "purl": "pkg:npm/lru-cache@11.0.2",
-      "externalReferences": [
+      "components": [
         {
-          "url": "git://github.com/isaacs/node-lru-cache.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/isaacs/node-lru-cache#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/isaacs/node-lru-cache/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
+          "type": "library",
+          "name": "lru-cache",
+          "version": "11.0.2",
+          "bom-ref": "path-scurry@2.0.0|lru-cache@11.0.2",
+          "author": "Isaac Z. Schlueter",
+          "description": "A cache object that deletes the least-recently-used items.",
+          "licenses": [
             {
-              "alg": "SHA-512",
-              "content": "d76dea1d17c9066a368d70dba3f6b960e42b2681c5fc63504cbcd0e7e21d2b9a56a5c78ad7bc9173aa33956776e45c6f18a41b214b3dd5f0c59179831d329cc8"
+              "license": {
+                "id": "ISC"
+              }
             }
           ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/lru-cache"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
+          "purl": "pkg:npm/lru-cache@11.0.2",
+          "externalReferences": [
+            {
+              "url": "git://github.com/isaacs/node-lru-cache.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/isaacs/node-lru-cache#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/isaacs/node-lru-cache/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.0.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "d76dea1d17c9066a368d70dba3f6b960e42b2681c5fc63504cbcd0e7e21d2b9a56a5c78ad7bc9173aa33956776e45c6f18a41b214b3dd5f0c59179831d329cc8"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/path-scurry/node_modules/lru-cache"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
         }
       ]
     },
@@ -18875,55 +18758,57 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/url"
         }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "punycode",
-      "version": "1.4.1",
-      "bom-ref": "punycode@1.4.1",
-      "author": "Mathias Bynens",
-      "description": "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
       ],
-      "purl": "pkg:npm/punycode@1.4.1",
-      "externalReferences": [
+      "components": [
         {
-          "url": "git+https://github.com/bestiejs/punycode.js.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://mths.be/punycode",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/bestiejs/punycode.js/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/punycode/-/punycode-1.4.1.tgz",
-          "type": "distribution",
-          "hashes": [
+          "type": "library",
+          "name": "punycode",
+          "version": "1.4.1",
+          "bom-ref": "url@0.11.4|punycode@1.4.1",
+          "author": "Mathias Bynens",
+          "description": "A robust Punycode converter that fully complies to RFC 3492 and RFC 5891, and works on nearly all JavaScript platforms.",
+          "licenses": [
             {
-              "alg": "SHA-512",
-              "content": "8e660d1255bbcaf3bb4d5df70a34a6bd2884db2728ddb576733bbf3b30ca74c35565059fc426e55112e17fee3bb32411067b637cb75dfc7d1e82bcc81bea1a15"
+              "license": {
+                "id": "MIT"
+              }
             }
           ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/punycode"
+          "purl": "pkg:npm/punycode@1.4.1",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/bestiejs/punycode.js.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://mths.be/punycode",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/bestiejs/punycode.js/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/punycode/-/punycode-1.4.1.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "8e660d1255bbcaf3bb4d5df70a34a6bd2884db2728ddb576733bbf3b30ca74c35565059fc426e55112e17fee3bb32411067b637cb75dfc7d1e82bcc81bea1a15"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/url/node_modules/punycode"
+            }
+          ]
         }
       ]
     },
@@ -19776,62 +19661,6 @@
         {
           "name": "cdx:npm:package:development",
           "value": "true"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "commander",
-          "version": "10.0.1",
-          "bom-ref": "webpack-cli@5.1.4|commander@10.0.1",
-          "author": "TJ Holowaychuk",
-          "description": "the complete solution for node.js command-line programs",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/commander@10.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/tj/commander.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/commander/-/commander-10.0.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "cb8320dad5ec8699446d21b3c7b6a6ccfc0a28e086ba84913ff0a311dc3093414e1a551baba94aba8c83653359926c47749b69e7885d7d8fc952b74bed77ddba"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/webpack-cli/node_modules/commander"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
         }
       ]
     },
@@ -23401,6 +23230,115 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "debug",
+          "version": "2.6.9",
+          "bom-ref": "compression@1.7.5|debug@2.6.9",
+          "author": "TJ Holowaychuk",
+          "description": "small debugging utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/debug@2.6.9",
+          "externalReferences": [
+            {
+              "url": "git://github.com/visionmedia/debug.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/compression/node_modules/debug"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "ms",
+          "version": "2.0.0",
+          "bom-ref": "compression@1.7.5|ms@2.0.0",
+          "description": "Tiny milisecond conversion utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ms@2.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/zeit/ms.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/zeit/ms#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/zeit/ms/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/compression/node_modules/ms"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        }
       ]
     },
     {
@@ -23556,113 +23494,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/mime-db"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "debug",
-      "version": "2.6.9",
-      "bom-ref": "debug@2.6.9",
-      "author": "TJ Holowaychuk",
-      "description": "small debugging utility",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/debug@2.6.9",
-      "externalReferences": [
-        {
-          "url": "git://github.com/visionmedia/debug.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/visionmedia/debug#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/visionmedia/debug/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/debug"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ms",
-      "version": "2.0.0",
-      "bom-ref": "ms@2.0.0",
-      "description": "Tiny milisecond conversion utility",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ms@2.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/zeit/ms.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/zeit/ms#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/zeit/ms/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ms"
         },
         {
           "name": "cdx:npm:package:development",
@@ -23939,6 +23770,113 @@
         }
       ],
       "components": [
+        {
+          "type": "library",
+          "name": "debug",
+          "version": "2.6.9",
+          "bom-ref": "express@4.21.1|debug@2.6.9",
+          "author": "TJ Holowaychuk",
+          "description": "small debugging utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/debug@2.6.9",
+          "externalReferences": [
+            {
+              "url": "git://github.com/visionmedia/debug.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/express/node_modules/debug"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "ms",
+          "version": "2.0.0",
+          "bom-ref": "express@4.21.1|ms@2.0.0",
+          "description": "Tiny milisecond conversion utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ms@2.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/zeit/ms.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/zeit/ms#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/zeit/ms/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/express/node_modules/ms"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
         {
           "type": "library",
           "name": "qs",
@@ -24262,6 +24200,113 @@
         }
       ],
       "components": [
+        {
+          "type": "library",
+          "name": "debug",
+          "version": "2.6.9",
+          "bom-ref": "body-parser@1.20.3|debug@2.6.9",
+          "author": "TJ Holowaychuk",
+          "description": "small debugging utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/debug@2.6.9",
+          "externalReferences": [
+            {
+              "url": "git://github.com/visionmedia/debug.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/body-parser/node_modules/debug"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "ms",
+          "version": "2.0.0",
+          "bom-ref": "body-parser@1.20.3|ms@2.0.0",
+          "description": "Tiny milisecond conversion utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ms@2.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/zeit/ms.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/zeit/ms#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/zeit/ms/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/body-parser/node_modules/ms"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
         {
           "type": "library",
           "name": "qs",
@@ -25174,6 +25219,115 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "debug",
+          "version": "2.6.9",
+          "bom-ref": "finalhandler@1.3.1|debug@2.6.9",
+          "author": "TJ Holowaychuk",
+          "description": "small debugging utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/debug@2.6.9",
+          "externalReferences": [
+            {
+              "url": "git://github.com/visionmedia/debug.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/finalhandler/node_modules/debug"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "ms",
+          "version": "2.0.0",
+          "bom-ref": "finalhandler@1.3.1|ms@2.0.0",
+          "description": "Tiny milisecond conversion utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ms@2.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/zeit/ms.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/zeit/ms#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/zeit/ms/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/finalhandler/node_modules/ms"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        }
       ]
     },
     {
@@ -25931,6 +26085,115 @@
       "components": [
         {
           "type": "library",
+          "name": "debug",
+          "version": "2.6.9",
+          "bom-ref": "send@0.19.0|debug@2.6.9",
+          "author": "TJ Holowaychuk",
+          "description": "small debugging utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/debug@2.6.9",
+          "externalReferences": [
+            {
+              "url": "git://github.com/visionmedia/debug.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/send/node_modules/debug"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ],
+          "components": [
+            {
+              "type": "library",
+              "name": "ms",
+              "version": "2.0.0",
+              "bom-ref": "send@0.19.0|debug@2.6.9|ms@2.0.0",
+              "description": "Tiny milisecond conversion utility",
+              "licenses": [
+                {
+                  "license": {
+                    "id": "MIT"
+                  }
+                }
+              ],
+              "purl": "pkg:npm/ms@2.0.0",
+              "externalReferences": [
+                {
+                  "url": "git+https://github.com/zeit/ms.git",
+                  "type": "vcs",
+                  "comment": "as detected from PackageJson property \"repository.url\""
+                },
+                {
+                  "url": "https://github.com/zeit/ms#readme",
+                  "type": "website",
+                  "comment": "as detected from PackageJson property \"homepage\""
+                },
+                {
+                  "url": "https://github.com/zeit/ms/issues",
+                  "type": "issue-tracker",
+                  "comment": "as detected from PackageJson property \"bugs.url\""
+                },
+                {
+                  "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+                  "type": "distribution",
+                  "hashes": [
+                    {
+                      "alg": "SHA-512",
+                      "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
+                    }
+                  ],
+                  "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+                }
+              ],
+              "properties": [
+                {
+                  "name": "cdx:npm:package:path",
+                  "value": "node_modules/send/node_modules/debug/node_modules/ms"
+                },
+                {
+                  "name": "cdx:npm:package:development",
+                  "value": "true"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "library",
           "name": "encodeurl",
           "version": "1.0.2",
           "bom-ref": "send@0.19.0|encodeurl@1.0.2",
@@ -25975,59 +26238,6 @@
             {
               "name": "cdx:npm:package:path",
               "value": "node_modules/send/node_modules/encodeurl"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ms",
-          "version": "2.1.3",
-          "bom-ref": "send@0.19.0|ms@2.1.3",
-          "description": "Tiny millisecond conversion utility",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ms@2.1.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/vercel/ms.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/vercel/ms#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/vercel/ms/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/send/node_modules/ms"
             },
             {
               "name": "cdx:npm:package:development",
@@ -26084,6 +26294,59 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/mime"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ms",
+      "version": "2.1.3",
+      "bom-ref": "ms@2.1.3",
+      "description": "Tiny millisecond conversion utility",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/ms@2.1.3",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/vercel/ms.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/vercel/ms#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/vercel/ms/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/ms"
         },
         {
           "name": "cdx:npm:package:development",
@@ -27771,6 +28034,113 @@
       "components": [
         {
           "type": "library",
+          "name": "debug",
+          "version": "2.6.9",
+          "bom-ref": "serve-index@1.9.1|debug@2.6.9",
+          "author": "TJ Holowaychuk",
+          "description": "small debugging utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/debug@2.6.9",
+          "externalReferences": [
+            {
+              "url": "git://github.com/visionmedia/debug.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/visionmedia/debug/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/debug/-/debug-2.6.9.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "6c2ec496b7496899cf6c03fed44a2d62fa99b1bdde725e708ba05f8ba0494d470da30a7a72fb298348d7ce74532838e6fc4ec076014155e00f54c35c286b0730"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/serve-index/node_modules/debug"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "ms",
+          "version": "2.0.0",
+          "bom-ref": "serve-index@1.9.1|ms@2.0.0",
+          "description": "Tiny milisecond conversion utility",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ms@2.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/zeit/ms.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/zeit/ms#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/zeit/ms/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ms/-/ms-2.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4e9a7ad0fe885090d3b8eabfe59f1c76c93326e8dfc2a7ce4e4af02308fb211212a679099d3e92c89e0f08f9c63281630bd75d85a979295218b40b7dee2c74e4"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/serve-index/node_modules/ms"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            }
+          ]
+        },
+        {
+          "type": "library",
           "name": "http-errors",
           "version": "1.6.3",
           "bom-ref": "serve-index@1.9.1|http-errors@1.6.3",
@@ -28468,114 +28838,59 @@
           "name": "cdx:npm:package:development",
           "value": "true"
         }
-      ],
-      "components": [
+      ]
+    },
+    {
+      "type": "library",
+      "name": "debug",
+      "version": "4.3.7",
+      "bom-ref": "debug@4.3.7",
+      "author": "Josh Junon",
+      "description": "Lightweight debugging utility for Node.js and the browser",
+      "licenses": [
         {
-          "type": "library",
-          "name": "debug",
-          "version": "4.3.7",
-          "bom-ref": "spdy@4.0.2|debug@4.3.7",
-          "author": "Josh Junon",
-          "description": "Lightweight debugging utility for Node.js and the browser",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/debug@4.3.7",
-          "externalReferences": [
-            {
-              "url": "git://github.com/debug-js/debug.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/debug-js/debug#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/debug-js/debug/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "12bda773f1fb46b3176411421229ba4c298c934d99f2f2c2d916e2d4a101820a68d1f4ba9744b59e76a9c26222df25bff863896a9d4aae0e30d0783cd280aa81"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/spdy/node_modules/debug"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/debug@4.3.7",
+      "externalReferences": [
+        {
+          "url": "git://github.com/debug-js/debug.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "type": "library",
-          "name": "ms",
-          "version": "2.1.3",
-          "bom-ref": "spdy@4.0.2|ms@2.1.3",
-          "description": "Tiny millisecond conversion utility",
-          "licenses": [
+          "url": "https://github.com/debug-js/debug#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/debug-js/debug/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz",
+          "type": "distribution",
+          "hashes": [
             {
-              "license": {
-                "id": "MIT"
-              }
+              "alg": "SHA-512",
+              "content": "12bda773f1fb46b3176411421229ba4c298c934d99f2f2c2d916e2d4a101820a68d1f4ba9744b59e76a9c26222df25bff863896a9d4aae0e30d0783cd280aa81"
             }
           ],
-          "purl": "pkg:npm/ms@2.1.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/vercel/ms.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/vercel/ms#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/vercel/ms/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/spdy/node_modules/ms"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/debug"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
         }
       ]
     },
@@ -28795,113 +29110,6 @@
         }
       ],
       "components": [
-        {
-          "type": "library",
-          "name": "debug",
-          "version": "4.3.7",
-          "bom-ref": "spdy-transport@3.0.0|debug@4.3.7",
-          "author": "Josh Junon",
-          "description": "Lightweight debugging utility for Node.js and the browser",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/debug@4.3.7",
-          "externalReferences": [
-            {
-              "url": "git://github.com/debug-js/debug.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/debug-js/debug#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/debug-js/debug/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/debug/-/debug-4.3.7.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "12bda773f1fb46b3176411421229ba4c298c934d99f2f2c2d916e2d4a101820a68d1f4ba9744b59e76a9c26222df25bff863896a9d4aae0e30d0783cd280aa81"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/spdy-transport/node_modules/debug"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ms",
-          "version": "2.1.3",
-          "bom-ref": "spdy-transport@3.0.0|ms@2.1.3",
-          "description": "Tiny millisecond conversion utility",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ms@2.1.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/vercel/ms.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/vercel/ms#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/vercel/ms/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ms/-/ms-2.1.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "e85973b9b4cb646dc9d9afcd542025784863ceae68c601f268253dc985ef70bb2fa1568726afece715c8ebf5d73fab73ed1f7100eb479d23bfb57b45dd645394"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/spdy-transport/node_modules/ms"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            }
-          ]
-        },
         {
           "type": "library",
           "name": "readable-stream",
@@ -32262,20 +32470,17 @@
       "ref": "@cyclonedx/cyclonedx-npm@1.19.3",
       "dependsOn": [
         "@cyclonedx/cyclonedx-library@6.13.0",
-        "@cyclonedx/cyclonedx-npm@1.19.3|commander@10.0.1",
+        "commander@10.0.1",
         "normalize-package-data@6.0.2",
         "packageurl-js@1.2.1",
         "xmlbuilder2@3.1.1"
       ]
     },
     {
-      "ref": "@cyclonedx/cyclonedx-npm@1.19.3|commander@10.0.1"
-    },
-    {
       "ref": "@cyclonedx/cyclonedx-library@6.13.0",
       "dependsOn": [
         "ajv-formats-draft2019@1.6.1",
-        "@cyclonedx/cyclonedx-library@6.13.0|ajv-formats@3.0.1",
+        "ajv-formats@3.0.1",
         "ajv@8.17.1",
         "packageurl-js@1.2.1",
         "spdx-expression-parse@4.0.0",
@@ -32283,23 +32488,14 @@
       ]
     },
     {
-      "ref": "@cyclonedx/cyclonedx-library@6.13.0|ajv-formats@3.0.1",
-      "dependsOn": [
-        "ajv@8.17.1"
-      ]
-    },
-    {
       "ref": "ajv-formats-draft2019@1.6.1",
       "dependsOn": [
         "ajv@8.17.1",
-        "ajv-formats-draft2019@1.6.1|punycode@2.3.1",
+        "punycode@2.3.1",
         "schemes@1.4.0",
         "smtp-address-parser@1.1.0",
         "uri-js@4.4.1"
       ]
-    },
-    {
-      "ref": "ajv-formats-draft2019@1.6.1|punycode@2.3.1"
     },
     {
       "ref": "ajv@8.17.1",
@@ -32309,6 +32505,9 @@
         "json-schema-traverse@1.0.0",
         "require-from-string@2.0.2"
       ]
+    },
+    {
+      "ref": "punycode@2.3.1"
     },
     {
       "ref": "schemes@1.4.0",
@@ -32359,11 +32558,14 @@
     {
       "ref": "uri-js@4.4.1",
       "dependsOn": [
-        "uri-js@4.4.1|punycode@2.3.1"
+        "punycode@2.3.1"
       ]
     },
     {
-      "ref": "uri-js@4.4.1|punycode@2.3.1"
+      "ref": "ajv-formats@3.0.1",
+      "dependsOn": [
+        "ajv@8.17.1"
+      ]
     },
     {
       "ref": "fast-deep-equal@3.1.3"
@@ -32403,6 +32605,9 @@
       ]
     },
     {
+      "ref": "commander@10.0.1"
+    },
+    {
       "ref": "normalize-package-data@6.0.2",
       "dependsOn": [
         "hosted-git-info@7.0.2",
@@ -32413,11 +32618,11 @@
     {
       "ref": "hosted-git-info@7.0.2",
       "dependsOn": [
-        "hosted-git-info@7.0.2|lru-cache@10.4.3"
+        "lru-cache@10.4.3"
       ]
     },
     {
-      "ref": "hosted-git-info@7.0.2|lru-cache@10.4.3"
+      "ref": "lru-cache@10.4.3"
     },
     {
       "ref": "semver@7.6.3"
@@ -32708,19 +32913,19 @@
       "ref": "schema-utils@4.2.0",
       "dependsOn": [
         "@types/json-schema@7.0.15",
-        "ajv-formats@2.1.1",
+        "schema-utils@4.2.0|ajv-formats@2.1.1",
         "ajv-keywords@5.1.0",
         "ajv@8.17.1"
       ]
     },
     {
-      "ref": "@types/json-schema@7.0.15"
-    },
-    {
-      "ref": "ajv-formats@2.1.1",
+      "ref": "schema-utils@4.2.0|ajv-formats@2.1.1",
       "dependsOn": [
         "ajv@8.17.1"
       ]
+    },
+    {
+      "ref": "@types/json-schema@7.0.15"
     },
     {
       "ref": "ajv-keywords@5.1.0",
@@ -33507,12 +33712,15 @@
       "dependsOn": [
         "camel-case@4.1.2",
         "clean-css@5.3.3",
-        "commander@8.3.0",
+        "html-minifier-terser@6.1.0|commander@8.3.0",
         "he@1.2.0",
         "param-case@3.0.4",
         "relateurl@0.2.7",
         "terser@5.36.0"
       ]
+    },
+    {
+      "ref": "html-minifier-terser@6.1.0|commander@8.3.0"
     },
     {
       "ref": "camel-case@4.1.2",
@@ -33552,9 +33760,6 @@
     },
     {
       "ref": "source-map@0.6.1"
-    },
-    {
-      "ref": "commander@8.3.0"
     },
     {
       "ref": "he@1.2.0"
@@ -33853,11 +34058,14 @@
     {
       "ref": "tar-fs@2.1.1",
       "dependsOn": [
-        "chownr@1.1.4",
+        "tar-fs@2.1.1|chownr@1.1.4",
         "mkdirp-classic@0.5.3",
         "pump@3.0.2",
         "tar-fs@2.1.1|tar-stream@2.2.0"
       ]
+    },
+    {
+      "ref": "tar-fs@2.1.1|chownr@1.1.4"
     },
     {
       "ref": "tar-fs@2.1.1|tar-stream@2.2.0",
@@ -33891,9 +34099,6 @@
         "string_decoder@1.1.1",
         "util-deprecate@1.0.2"
       ]
-    },
-    {
-      "ref": "chownr@1.1.4"
     },
     {
       "ref": "tunnel-agent@0.6.0",
@@ -33946,8 +34151,11 @@
       "ref": "foreground-child@3.3.0",
       "dependsOn": [
         "cross-spawn@7.0.6",
-        "signal-exit@4.1.0"
+        "foreground-child@3.3.0|signal-exit@4.1.0"
       ]
+    },
+    {
+      "ref": "foreground-child@3.3.0|signal-exit@4.1.0"
     },
     {
       "ref": "cross-spawn@7.0.6",
@@ -33956,9 +34164,6 @@
         "shebang-command@2.0.0",
         "which@2.0.2"
       ]
-    },
-    {
-      "ref": "signal-exit@4.1.0"
     },
     {
       "ref": "jackspeak@4.0.2",
@@ -33970,12 +34175,23 @@
       "ref": "@isaacs/cliui@8.0.2",
       "dependsOn": [
         "string-width@4.2.3",
-        "string-width@5.1.2",
-        "BomRef.64cftg8cudo.t6b0b4bii4o",
+        "@isaacs/cliui@8.0.2|string-width@5.1.2",
+        "BomRef.cg5e1rb53v.5jnpuptfhho",
         "@isaacs/cliui@8.0.2|strip-ansi@7.1.0",
         "wrap-ansi@7.0.0",
         "wrap-ansi@8.1.0"
       ]
+    },
+    {
+      "ref": "@isaacs/cliui@8.0.2|string-width@5.1.2",
+      "dependsOn": [
+        "eastasianwidth@0.2.0",
+        "@isaacs/cliui@8.0.2|emoji-regex@9.2.2",
+        "@isaacs/cliui@8.0.2|strip-ansi@7.1.0"
+      ]
+    },
+    {
+      "ref": "@isaacs/cliui@8.0.2|emoji-regex@9.2.2"
     },
     {
       "ref": "@isaacs/cliui@8.0.2|strip-ansi@7.1.0",
@@ -33989,42 +34205,22 @@
     {
       "ref": "string-width@4.2.3",
       "dependsOn": [
-        "string-width@4.2.3|emoji-regex@8.0.0",
+        "emoji-regex@8.0.0",
         "is-fullwidth-code-point@3.0.0",
         "strip-ansi@6.0.1"
       ]
     },
     {
-      "ref": "string-width@4.2.3|emoji-regex@8.0.0"
+      "ref": "emoji-regex@8.0.0"
     },
     {
       "ref": "is-fullwidth-code-point@3.0.0"
     },
     {
-      "ref": "string-width@5.1.2",
-      "dependsOn": [
-        "eastasianwidth@0.2.0",
-        "emoji-regex@9.2.2",
-        "string-width@5.1.2|strip-ansi@7.1.0"
-      ]
-    },
-    {
-      "ref": "string-width@5.1.2|strip-ansi@7.1.0",
-      "dependsOn": [
-        "string-width@5.1.2|ansi-regex@6.1.0"
-      ]
-    },
-    {
-      "ref": "string-width@5.1.2|ansi-regex@6.1.0"
-    },
-    {
       "ref": "eastasianwidth@0.2.0"
     },
     {
-      "ref": "emoji-regex@9.2.2"
-    },
-    {
-      "ref": "BomRef.64cftg8cudo.t6b0b4bii4o",
+      "ref": "BomRef.cg5e1rb53v.5jnpuptfhho",
       "dependsOn": [
         "ansi-regex@5.0.1"
       ]
@@ -34033,20 +34229,9 @@
       "ref": "wrap-ansi@7.0.0",
       "dependsOn": [
         "ansi-styles@4.3.0",
-        "wrap-ansi@7.0.0|string-width@4.2.3",
+        "BomRef.o6ltq4kt1n.p277ciskgl8",
         "strip-ansi@6.0.1"
       ]
-    },
-    {
-      "ref": "wrap-ansi@7.0.0|string-width@4.2.3",
-      "dependsOn": [
-        "wrap-ansi@7.0.0|emoji-regex@8.0.0",
-        "is-fullwidth-code-point@3.0.0",
-        "strip-ansi@6.0.1"
-      ]
-    },
-    {
-      "ref": "wrap-ansi@7.0.0|emoji-regex@8.0.0"
     },
     {
       "ref": "ansi-styles@4.3.0",
@@ -34055,15 +34240,34 @@
       ]
     },
     {
+      "ref": "BomRef.o6ltq4kt1n.p277ciskgl8",
+      "dependsOn": [
+        "emoji-regex@8.0.0",
+        "is-fullwidth-code-point@3.0.0",
+        "strip-ansi@6.0.1"
+      ]
+    },
+    {
       "ref": "wrap-ansi@8.1.0",
       "dependsOn": [
         "wrap-ansi@8.1.0|ansi-styles@6.2.1",
-        "string-width@5.1.2",
+        "wrap-ansi@8.1.0|string-width@5.1.2",
         "wrap-ansi@8.1.0|strip-ansi@7.1.0"
       ]
     },
     {
       "ref": "wrap-ansi@8.1.0|ansi-styles@6.2.1"
+    },
+    {
+      "ref": "wrap-ansi@8.1.0|string-width@5.1.2",
+      "dependsOn": [
+        "eastasianwidth@0.2.0",
+        "wrap-ansi@8.1.0|emoji-regex@9.2.2",
+        "wrap-ansi@8.1.0|strip-ansi@7.1.0"
+      ]
+    },
+    {
+      "ref": "wrap-ansi@8.1.0|emoji-regex@9.2.2"
     },
     {
       "ref": "wrap-ansi@8.1.0|strip-ansi@7.1.0",
@@ -34098,12 +34302,12 @@
     {
       "ref": "path-scurry@2.0.0",
       "dependsOn": [
-        "lru-cache@11.0.2",
+        "path-scurry@2.0.0|lru-cache@11.0.2",
         "minipass@7.1.2"
       ]
     },
     {
-      "ref": "lru-cache@11.0.2"
+      "ref": "path-scurry@2.0.0|lru-cache@11.0.2"
     },
     {
       "ref": "safe-stable-stringify@2.5.0"
@@ -34274,12 +34478,12 @@
     {
       "ref": "url@0.11.4",
       "dependsOn": [
-        "punycode@1.4.1",
+        "url@0.11.4|punycode@1.4.1",
         "qs@6.13.1"
       ]
     },
     {
-      "ref": "punycode@1.4.1"
+      "ref": "url@0.11.4|punycode@1.4.1"
     },
     {
       "ref": "qs@6.13.1",
@@ -34385,7 +34589,7 @@
         "@webpack-cli/info@2.0.2",
         "@webpack-cli/serve@2.0.5",
         "colorette@2.0.20",
-        "webpack-cli@5.1.4|commander@10.0.1",
+        "commander@10.0.1",
         "cross-spawn@7.0.6",
         "envinfo@7.14.0",
         "fastest-levenshtein@1.0.16",
@@ -34395,9 +34599,6 @@
         "webpack-merge@5.10.0",
         "webpack@5.96.1"
       ]
-    },
-    {
-      "ref": "webpack-cli@5.1.4|commander@10.0.1"
     },
     {
       "ref": "@discoveryjs/json-ext@0.5.7"
@@ -34781,12 +34982,21 @@
       "dependsOn": [
         "bytes@3.1.2",
         "compressible@2.0.18",
-        "debug@2.6.9",
+        "compression@1.7.5|debug@2.6.9",
         "negotiator@0.6.4",
         "on-headers@1.0.2",
         "safe-buffer@5.2.1",
         "vary@1.1.2"
       ]
+    },
+    {
+      "ref": "compression@1.7.5|debug@2.6.9",
+      "dependsOn": [
+        "compression@1.7.5|ms@2.0.0"
+      ]
+    },
+    {
+      "ref": "compression@1.7.5|ms@2.0.0"
     },
     {
       "ref": "bytes@3.1.2"
@@ -34799,15 +35009,6 @@
     },
     {
       "ref": "mime-db@1.52.0"
-    },
-    {
-      "ref": "debug@2.6.9",
-      "dependsOn": [
-        "ms@2.0.0"
-      ]
-    },
-    {
-      "ref": "ms@2.0.0"
     },
     {
       "ref": "negotiator@0.6.4"
@@ -34831,7 +35032,7 @@
         "content-type@1.0.5",
         "cookie-signature@1.0.6",
         "cookie@0.7.1",
-        "debug@2.6.9",
+        "express@4.21.1|debug@2.6.9",
         "depd@2.0.0",
         "encodeurl@2.0.0",
         "escape-html@1.0.3",
@@ -34856,6 +35057,15 @@
         "utils-merge@1.0.1",
         "vary@1.1.2"
       ]
+    },
+    {
+      "ref": "express@4.21.1|debug@2.6.9",
+      "dependsOn": [
+        "express@4.21.1|ms@2.0.0"
+      ]
+    },
+    {
+      "ref": "express@4.21.1|ms@2.0.0"
     },
     {
       "ref": "express@4.21.1|qs@6.13.0",
@@ -34887,7 +35097,7 @@
       "dependsOn": [
         "bytes@3.1.2",
         "content-type@1.0.5",
-        "debug@2.6.9",
+        "body-parser@1.20.3|debug@2.6.9",
         "depd@2.0.0",
         "destroy@1.2.0",
         "http-errors@2.0.0",
@@ -34898,6 +35108,15 @@
         "type-is@1.6.18",
         "unpipe@1.0.0"
       ]
+    },
+    {
+      "ref": "body-parser@1.20.3|debug@2.6.9",
+      "dependsOn": [
+        "body-parser@1.20.3|ms@2.0.0"
+      ]
+    },
+    {
+      "ref": "body-parser@1.20.3|ms@2.0.0"
     },
     {
       "ref": "body-parser@1.20.3|qs@6.13.0",
@@ -34979,7 +35198,7 @@
     {
       "ref": "finalhandler@1.3.1",
       "dependsOn": [
-        "debug@2.6.9",
+        "finalhandler@1.3.1|debug@2.6.9",
         "encodeurl@2.0.0",
         "escape-html@1.0.3",
         "on-finished@2.4.1",
@@ -34987,6 +35206,15 @@
         "statuses@2.0.1",
         "unpipe@1.0.0"
       ]
+    },
+    {
+      "ref": "finalhandler@1.3.1|debug@2.6.9",
+      "dependsOn": [
+        "finalhandler@1.3.1|ms@2.0.0"
+      ]
+    },
+    {
+      "ref": "finalhandler@1.3.1|ms@2.0.0"
     },
     {
       "ref": "parseurl@1.3.3"
@@ -35034,7 +35262,7 @@
     {
       "ref": "send@0.19.0",
       "dependsOn": [
-        "debug@2.6.9",
+        "send@0.19.0|debug@2.6.9",
         "depd@2.0.0",
         "destroy@1.2.0",
         "send@0.19.0|encodeurl@1.0.2",
@@ -35043,20 +35271,29 @@
         "fresh@0.5.2",
         "http-errors@2.0.0",
         "mime@1.6.0",
-        "send@0.19.0|ms@2.1.3",
+        "ms@2.1.3",
         "on-finished@2.4.1",
         "range-parser@1.2.1",
         "statuses@2.0.1"
       ]
     },
     {
+      "ref": "send@0.19.0|debug@2.6.9",
+      "dependsOn": [
+        "send@0.19.0|debug@2.6.9|ms@2.0.0"
+      ]
+    },
+    {
+      "ref": "send@0.19.0|debug@2.6.9|ms@2.0.0"
+    },
+    {
       "ref": "send@0.19.0|encodeurl@1.0.2"
     },
     {
-      "ref": "send@0.19.0|ms@2.1.3"
+      "ref": "mime@1.6.0"
     },
     {
-      "ref": "mime@1.6.0"
+      "ref": "ms@2.1.3"
     },
     {
       "ref": "serve-static@1.16.2",
@@ -35210,12 +35447,21 @@
       "dependsOn": [
         "accepts@1.3.8",
         "batch@0.6.1",
-        "debug@2.6.9",
+        "serve-index@1.9.1|debug@2.6.9",
         "escape-html@1.0.3",
         "serve-index@1.9.1|http-errors@1.6.3",
         "mime-types@2.1.35",
         "parseurl@1.3.3"
       ]
+    },
+    {
+      "ref": "serve-index@1.9.1|debug@2.6.9",
+      "dependsOn": [
+        "serve-index@1.9.1|ms@2.0.0"
+      ]
+    },
+    {
+      "ref": "serve-index@1.9.1|ms@2.0.0"
     },
     {
       "ref": "serve-index@1.9.1|http-errors@1.6.3",
@@ -35275,7 +35521,7 @@
     {
       "ref": "spdy@4.0.2",
       "dependsOn": [
-        "spdy@4.0.2|debug@4.3.7",
+        "debug@4.3.7",
         "handle-thing@2.0.1",
         "http-deceiver@1.2.7",
         "select-hose@2.0.0",
@@ -35283,13 +35529,10 @@
       ]
     },
     {
-      "ref": "spdy@4.0.2|debug@4.3.7",
+      "ref": "debug@4.3.7",
       "dependsOn": [
-        "spdy@4.0.2|ms@2.1.3"
+        "ms@2.1.3"
       ]
-    },
-    {
-      "ref": "spdy@4.0.2|ms@2.1.3"
     },
     {
       "ref": "handle-thing@2.0.1"
@@ -35303,22 +35546,13 @@
     {
       "ref": "spdy-transport@3.0.0",
       "dependsOn": [
-        "spdy-transport@3.0.0|debug@4.3.7",
+        "debug@4.3.7",
         "detect-node@2.1.0",
         "hpack.js@2.1.6",
         "obuf@1.1.2",
         "spdy-transport@3.0.0|readable-stream@3.6.2",
         "wbuf@1.7.3"
       ]
-    },
-    {
-      "ref": "spdy-transport@3.0.0|debug@4.3.7",
-      "dependsOn": [
-        "spdy-transport@3.0.0|ms@2.1.3"
-      ]
-    },
-    {
-      "ref": "spdy-transport@3.0.0|ms@2.1.3"
     },
     {
       "ref": "spdy-transport@3.0.0|readable-stream@3.6.2",
