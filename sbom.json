@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.4",
   "version": 1,
-  "serialNumber": "urn:uuid:2f3ad7e4-6060-4caa-b384-0aa9e98afb32",
+  "serialNumber": "urn:uuid:557ed53c-19dd-43ce-8199-cdc97f04334f",
   "metadata": {
-    "timestamp": "2024-11-20T23:36:21.837Z",
+    "timestamp": "2024-11-22T14:38:10.747Z",
     "tools": [
       {
         "name": "npm",
@@ -16189,7 +16189,7 @@
       "type": "library",
       "name": "strip-ansi",
       "version": "6.0.1",
-      "bom-ref": "BomRef.cg5e1rb53v.5jnpuptfhho",
+      "bom-ref": "BomRef.aa8rgfdl3jo.tea6u54lr6g",
       "author": "Sindre Sorhus",
       "description": "Strip ANSI escape codes from a string",
       "licenses": [
@@ -16351,7 +16351,7 @@
       "type": "library",
       "name": "string-width",
       "version": "4.2.3",
-      "bom-ref": "BomRef.o6ltq4kt1n.p277ciskgl8",
+      "bom-ref": "BomRef.utu4177jio8.5rersp3b7t",
       "author": "Sindre Sorhus",
       "description": "Get the visual width of a string - the number of columns required to display it",
       "licenses": [
@@ -17432,10 +17432,10 @@
     },
     {
       "type": "library",
-      "name": "watcher-win32-x64",
+      "name": "watcher-linux-x64-glibc",
       "group": "@parcel",
       "version": "2.5.0",
-      "bom-ref": "@parcel/watcher-win32-x64@2.5.0",
+      "bom-ref": "@parcel/watcher-linux-x64-glibc@2.5.0",
       "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "scope": "optional",
       "licenses": [
@@ -17445,7 +17445,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40parcel/watcher-win32-x64@2.5.0",
+      "purl": "pkg:npm/%40parcel/watcher-linux-x64-glibc@2.5.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/parcel-bundler/watcher.git",
@@ -17463,12 +17463,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@parcel/watcher-win32-x64/-/watcher-win32-x64-2.5.0.tgz",
+          "url": "https://registry.npmjs.org/@parcel/watcher-linux-x64-glibc/-/watcher-linux-x64-glibc-2.5.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "94faf1bdef76cc41dd81e7dfdda8aee200ce22de2eeec25885aeb06dd1190c20d486d8d3b0e322689cc6e65318e069161fca747cc98ed8fa6ae46e575c6f8343"
+              "content": "77d00e92eb325c0464143eba4bace5197cb3c7946f63e7214cff49a74ca94930bd778973c91b3da2f19fffcd150b18ca75d714be7b06c021d6b85d84a0f8168f"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -17477,7 +17477,62 @@
       "properties": [
         {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/@parcel/watcher-win32-x64"
+          "value": "node_modules/@parcel/watcher-linux-x64-glibc"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "watcher-linux-x64-musl",
+      "group": "@parcel",
+      "version": "2.5.0",
+      "bom-ref": "@parcel/watcher-linux-x64-musl@2.5.0",
+      "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
+      "scope": "optional",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40parcel/watcher-linux-x64-musl@2.5.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/parcel-bundler/watcher.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/parcel-bundler/watcher#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/parcel-bundler/watcher/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@parcel/watcher-linux-x64-musl/-/watcher-linux-x64-musl-2.5.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "8aa382f86a130e817293f5584851f08c7858ae4f1b9635bacce84fba18b9b7dba5aa262ad6da201890797b73f06151457de56073aa5bcf725d4320e806ccd568"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@parcel/watcher-linux-x64-musl"
         },
         {
           "name": "cdx:npm:package:development",
@@ -34176,7 +34231,7 @@
       "dependsOn": [
         "string-width@4.2.3",
         "@isaacs/cliui@8.0.2|string-width@5.1.2",
-        "BomRef.cg5e1rb53v.5jnpuptfhho",
+        "BomRef.aa8rgfdl3jo.tea6u54lr6g",
         "@isaacs/cliui@8.0.2|strip-ansi@7.1.0",
         "wrap-ansi@7.0.0",
         "wrap-ansi@8.1.0"
@@ -34220,7 +34275,7 @@
       "ref": "eastasianwidth@0.2.0"
     },
     {
-      "ref": "BomRef.cg5e1rb53v.5jnpuptfhho",
+      "ref": "BomRef.aa8rgfdl3jo.tea6u54lr6g",
       "dependsOn": [
         "ansi-regex@5.0.1"
       ]
@@ -34229,7 +34284,7 @@
       "ref": "wrap-ansi@7.0.0",
       "dependsOn": [
         "ansi-styles@4.3.0",
-        "BomRef.o6ltq4kt1n.p277ciskgl8",
+        "BomRef.utu4177jio8.5rersp3b7t",
         "strip-ansi@6.0.1"
       ]
     },
@@ -34240,7 +34295,7 @@
       ]
     },
     {
-      "ref": "BomRef.o6ltq4kt1n.p277ciskgl8",
+      "ref": "BomRef.utu4177jio8.5rersp3b7t",
       "dependsOn": [
         "emoji-regex@8.0.0",
         "is-fullwidth-code-point@3.0.0",
@@ -34335,7 +34390,8 @@
     {
       "ref": "@parcel/watcher@2.5.0",
       "dependsOn": [
-        "@parcel/watcher-win32-x64@2.5.0",
+        "@parcel/watcher-linux-x64-glibc@2.5.0",
+        "@parcel/watcher-linux-x64-musl@2.5.0",
         "@parcel/watcher@2.5.0|detect-libc@1.0.3",
         "is-glob@4.0.3",
         "micromatch@4.0.8",
@@ -34346,7 +34402,10 @@
       "ref": "@parcel/watcher@2.5.0|detect-libc@1.0.3"
     },
     {
-      "ref": "@parcel/watcher-win32-x64@2.5.0"
+      "ref": "@parcel/watcher-linux-x64-glibc@2.5.0"
+    },
+    {
+      "ref": "@parcel/watcher-linux-x64-musl@2.5.0"
     },
     {
       "ref": "chokidar@4.0.1",
