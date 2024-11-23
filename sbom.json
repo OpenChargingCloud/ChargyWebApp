@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.4",
   "version": 1,
-  "serialNumber": "urn:uuid:557ed53c-19dd-43ce-8199-cdc97f04334f",
+  "serialNumber": "urn:uuid:11539a09-b3ce-461a-be8c-7c51709c152e",
   "metadata": {
-    "timestamp": "2024-11-22T14:38:10.747Z",
+    "timestamp": "2024-11-23T02:00:26.775Z",
     "tools": [
       {
         "name": "npm",
@@ -2653,8 +2653,8 @@
       "type": "library",
       "name": "node",
       "group": "@types",
-      "version": "22.9.1",
-      "bom-ref": "@types/node@22.9.1",
+      "version": "22.9.2",
+      "bom-ref": "@types/node@22.9.2",
       "description": "TypeScript definitions for node",
       "licenses": [
         {
@@ -2663,7 +2663,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40types/node@22.9.1#types/node",
+      "purl": "pkg:npm/%40types/node@22.9.2#types/node",
       "externalReferences": [
         {
           "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git#types/node",
@@ -2681,12 +2681,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@types/node/-/node-22.9.1.tgz",
+          "url": "https://registry.npmjs.org/@types/node/-/node-22.9.2.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "a7c632ffcb30d5c680f02751210046e6d88b1e6c6d40a39b0a28e201af44cfe778f8f45f7cce34e78c5b8eed26b1ff9cbe12699c511e363c66553ff48a992dae"
+              "content": "c30bb101511bb11bc30fdc7b6eebc097b0f243b3a3faf6bf77f55eba0ee18a0633a7d305d0220d6df5930600c5329715c1c754898b8d997d8a7e7bd8dcdef49b"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -16189,7 +16189,7 @@
       "type": "library",
       "name": "strip-ansi",
       "version": "6.0.1",
-      "bom-ref": "BomRef.aa8rgfdl3jo.tea6u54lr6g",
+      "bom-ref": "BomRef.fnv04c4pupg.a8m3ktfp2",
       "author": "Sindre Sorhus",
       "description": "Strip ANSI escape codes from a string",
       "licenses": [
@@ -16351,7 +16351,7 @@
       "type": "library",
       "name": "string-width",
       "version": "4.2.3",
-      "bom-ref": "BomRef.utu4177jio8.5rersp3b7t",
+      "bom-ref": "BomRef.qbvnbuiqmi.8jd8f20j22o",
       "author": "Sindre Sorhus",
       "description": "Get the visual width of a string - the number of columns required to display it",
       "licenses": [
@@ -18714,8 +18714,8 @@
     {
       "type": "library",
       "name": "typescript",
-      "version": "5.6.3",
-      "bom-ref": "typescript@5.6.3",
+      "version": "5.7.2",
+      "bom-ref": "typescript@5.7.2",
       "author": "Microsoft Corp.",
       "description": "TypeScript is a language for application scale JavaScript development",
       "licenses": [
@@ -18725,7 +18725,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/typescript@5.6.3",
+      "purl": "pkg:npm/typescript@5.7.2",
       "externalReferences": [
         {
           "url": "git+https://github.com/microsoft/TypeScript.git",
@@ -18743,12 +18743,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/typescript/-/typescript-5.6.3.tgz",
+          "url": "https://registry.npmjs.org/typescript/-/typescript-5.7.2.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "863712d6685fbb28b8596f085ad8cfedbac3ac6d9cb8366e932ad8ad26aea1718d831d12ef371e3f4eda758909c9c12be7a04e51334fcdb227a2888dddf9f5ab"
+              "content": "8b9b7ae911f10ef54de341df0ddd4fb044e118d9e5302313de3314ba887dff44daa967af3689ed69cba75b2374d8b03dfdf21b11695c1d97204ca6fd42868b7e"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -31071,8 +31071,8 @@
     {
       "type": "library",
       "name": "caniuse-lite",
-      "version": "1.0.30001680",
-      "bom-ref": "caniuse-lite@1.0.30001680",
+      "version": "1.0.30001683",
+      "bom-ref": "caniuse-lite@1.0.30001683",
       "author": "Ben Briggs",
       "description": "A smaller version of caniuse-db, with only the essentials!",
       "licenses": [
@@ -31082,7 +31082,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/caniuse-lite@1.0.30001680",
+      "purl": "pkg:npm/caniuse-lite@1.0.30001683",
       "externalReferences": [
         {
           "url": "git+https://github.com/browserslist/caniuse-lite.git",
@@ -31100,12 +31100,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001680.tgz",
+          "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001683.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "acf432ef41ba00650c9dbc12d73e9783e4641d83c08b5f2286ce3b187d23731206ef002b98f818dd76d2dac45d05bc49963a77b61753f0122abfd71c0b2a623c"
+              "content": "8aa98d9d3859d27ef498dc2fc69102da7049d37ed91d9528048e46a2b875330e88944019ba3128535b5703adbc8997f39bb47d16f173c5b7dd82697cd9ade4f1"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -31125,8 +31125,8 @@
     {
       "type": "library",
       "name": "electron-to-chromium",
-      "version": "1.5.63",
-      "bom-ref": "electron-to-chromium@1.5.63",
+      "version": "1.5.64",
+      "bom-ref": "electron-to-chromium@1.5.64",
       "author": "Kilian Valkhof",
       "description": "Provides a list of electron-to-chromium version mappings",
       "licenses": [
@@ -31136,7 +31136,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/electron-to-chromium@1.5.63",
+      "purl": "pkg:npm/electron-to-chromium@1.5.64",
       "externalReferences": [
         {
           "url": "git+https://github.com/kilian/electron-to-chromium.git",
@@ -31154,12 +31154,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.63.tgz",
+          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.64.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "75d7972ae63d047a3f9b0d78e5ac65c968e5275501b7858adc096f913ed6d806ea7d142869c568454085eb02f7b88c7ff304fda0b297cc8fab16a1c7b1c07268"
+              "content": "21712ec54fb90a55b6206118142d93eeccdbc9581e86ea425907b918d87e1f4eb9083e94e8814dd2ce0a78030518d990a25454e0857bcc605649832667cbaea9"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -32483,7 +32483,7 @@
         "@types/decompress@4.2.7",
         "@types/elliptic@6.4.18",
         "@types/leaflet@1.9.14",
-        "@types/node@22.9.1",
+        "@types/node@22.9.2",
         "asn1.js@5.4.1",
         "base32-decode@1.0.0",
         "buffer@6.0.3",
@@ -32513,7 +32513,7 @@
         "stream-http@3.2.0",
         "style-loader@4.0.0",
         "ts-loader@9.5.1",
-        "typescript@5.6.3",
+        "typescript@5.7.2",
         "url@0.11.4",
         "vm-browserify@1.1.2",
         "webpack-cli@5.1.4",
@@ -32768,11 +32768,11 @@
     {
       "ref": "@types/decompress@4.2.7",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
-      "ref": "@types/node@22.9.1",
+      "ref": "@types/node@22.9.2",
       "dependsOn": [
         "undici-types@6.19.8"
       ]
@@ -32786,7 +32786,7 @@
     {
       "ref": "@types/bn.js@5.1.6",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
@@ -34231,7 +34231,7 @@
       "dependsOn": [
         "string-width@4.2.3",
         "@isaacs/cliui@8.0.2|string-width@5.1.2",
-        "BomRef.aa8rgfdl3jo.tea6u54lr6g",
+        "BomRef.fnv04c4pupg.a8m3ktfp2",
         "@isaacs/cliui@8.0.2|strip-ansi@7.1.0",
         "wrap-ansi@7.0.0",
         "wrap-ansi@8.1.0"
@@ -34275,7 +34275,7 @@
       "ref": "eastasianwidth@0.2.0"
     },
     {
-      "ref": "BomRef.aa8rgfdl3jo.tea6u54lr6g",
+      "ref": "BomRef.fnv04c4pupg.a8m3ktfp2",
       "dependsOn": [
         "ansi-regex@5.0.1"
       ]
@@ -34284,7 +34284,7 @@
       "ref": "wrap-ansi@7.0.0",
       "dependsOn": [
         "ansi-styles@4.3.0",
-        "BomRef.utu4177jio8.5rersp3b7t",
+        "BomRef.qbvnbuiqmi.8jd8f20j22o",
         "strip-ansi@6.0.1"
       ]
     },
@@ -34295,7 +34295,7 @@
       ]
     },
     {
-      "ref": "BomRef.utu4177jio8.5rersp3b7t",
+      "ref": "BomRef.qbvnbuiqmi.8jd8f20j22o",
       "dependsOn": [
         "emoji-regex@8.0.0",
         "is-fullwidth-code-point@3.0.0",
@@ -34468,7 +34468,7 @@
         "micromatch@4.0.8",
         "semver@7.6.3",
         "ts-loader@9.5.1|source-map@0.7.4",
-        "typescript@5.6.3",
+        "typescript@5.7.2",
         "webpack@5.96.1"
       ]
     },
@@ -34532,7 +34532,7 @@
       "ref": "picomatch@2.3.1"
     },
     {
-      "ref": "typescript@5.6.3"
+      "ref": "typescript@5.7.2"
     },
     {
       "ref": "url@0.11.4",
@@ -34896,20 +34896,20 @@
     {
       "ref": "@types/bonjour@3.5.13",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
       "ref": "@types/connect-history-api-fallback@1.5.4",
       "dependsOn": [
         "@types/express-serve-static-core@5.0.1",
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
       "ref": "@types/express-serve-static-core@5.0.1",
       "dependsOn": [
-        "@types/node@22.9.1",
+        "@types/node@22.9.2",
         "@types/qs@6.9.17",
         "@types/range-parser@1.2.7",
         "@types/send@0.17.4"
@@ -34925,7 +34925,7 @@
       "ref": "@types/send@0.17.4",
       "dependsOn": [
         "@types/mime@1.3.5",
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
@@ -34940,7 +34940,7 @@
     {
       "ref": "@types/express@4.17.21|@types/express-serve-static-core@4.19.6",
       "dependsOn": [
-        "@types/node@22.9.1",
+        "@types/node@22.9.2",
         "@types/qs@6.9.17",
         "@types/range-parser@1.2.7",
         "@types/send@0.17.4"
@@ -34950,20 +34950,20 @@
       "ref": "@types/body-parser@1.19.5",
       "dependsOn": [
         "@types/connect@3.4.38",
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
       "ref": "@types/connect@3.4.38",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
       "ref": "@types/serve-static@1.15.7",
       "dependsOn": [
         "@types/http-errors@2.0.4",
-        "@types/node@22.9.1",
+        "@types/node@22.9.2",
         "@types/send@0.17.4"
       ]
     },
@@ -34982,13 +34982,13 @@
     {
       "ref": "@types/sockjs@0.3.36",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
       "ref": "@types/ws@8.5.13",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
@@ -35386,7 +35386,7 @@
     {
       "ref": "@types/http-proxy@1.17.15",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
@@ -35495,7 +35495,7 @@
     {
       "ref": "@types/node-forge@1.3.11",
       "dependsOn": [
-        "@types/node@22.9.1"
+        "@types/node@22.9.2"
       ]
     },
     {
@@ -35830,17 +35830,17 @@
     {
       "ref": "browserslist@4.24.2",
       "dependsOn": [
-        "caniuse-lite@1.0.30001680",
-        "electron-to-chromium@1.5.63",
+        "caniuse-lite@1.0.30001683",
+        "electron-to-chromium@1.5.64",
         "node-releases@2.0.18",
         "update-browserslist-db@1.1.1"
       ]
     },
     {
-      "ref": "caniuse-lite@1.0.30001680"
+      "ref": "caniuse-lite@1.0.30001683"
     },
     {
-      "ref": "electron-to-chromium@1.5.63"
+      "ref": "electron-to-chromium@1.5.64"
     },
     {
       "ref": "node-releases@2.0.18"
@@ -35936,7 +35936,7 @@
     {
       "ref": "jest-worker@27.5.1",
       "dependsOn": [
-        "@types/node@22.9.1",
+        "@types/node@22.9.2",
         "merge-stream@2.0.0",
         "jest-worker@27.5.1|supports-color@8.1.1"
       ]
