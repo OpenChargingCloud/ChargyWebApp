@@ -625,8 +625,8 @@ export class ChargyApp {
             tileSize:      512,
             maxZoom:        18,
             zoomOffset:     -1,
-            id:           'mapbox/light-v10',
-            accessToken:  'pk.eyJ1IjoiYWh6ZiIsImEiOiJOdEQtTkcwIn0.Cn0iGqUYyA6KPS8iVjN68w'
+            id:           'mapbox/light-v10'
+            //accessToken:  'pk.eyJ1IjoiYWh6ZiIsImEiOiJOdEQtTkcwIn0.Cn0iGqUYyA6KPS8iVjN68w'
         }).addTo(this.map);
 
 

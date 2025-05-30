@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:a50f942b-968e-4fdf-b8c0-2736bfe9399b",
+  "serialNumber": "urn:uuid:7ac7441a-79de-4079-aece-fd29a399d304",
   "metadata": {
-    "timestamp": "2025-05-30T03:45:29.631Z",
+    "timestamp": "2025-05-30T04:08:25.849Z",
     "tools": {
       "components": [
         {
@@ -5288,8 +5288,8 @@
     {
       "type": "library",
       "name": "tar-fs",
-      "version": "2.1.2",
-      "bom-ref": "tar-fs@2.1.2",
+      "version": "2.1.3",
+      "bom-ref": "tar-fs@2.1.3",
       "scope": "optional",
       "licenses": [
         {
@@ -5299,15 +5299,15 @@
           }
         }
       ],
-      "purl": "pkg:npm/tar-fs@2.1.2",
+      "purl": "pkg:npm/tar-fs@2.1.3",
       "externalReferences": [
         {
-          "url": "https://registry.npmjs.org/tar-fs/-/tar-fs-2.1.2.tgz",
+          "url": "https://registry.npmjs.org/tar-fs/-/tar-fs-2.1.3.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "12c6805f0c66c7c501ec544aa9ea33a843e8a7af435dc998c134305efc803c5df9d8726c3dd91586f4da0cf62a7cd82bbaf789209cb74c0da5fb6ce3f0b24824"
+              "content": "d3dd27c182439a5870170116dd0425faf68d9f1b0edb256c778e5e4ca441cd2ceefa195bd70d8af629d5ab96f49e05ee2d5a90e00a6fb141c79eeff340d91602"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -5328,7 +5328,7 @@
           "type": "library",
           "name": "chownr",
           "version": "1.1.4",
-          "bom-ref": "tar-fs@2.1.2|chownr@1.1.4",
+          "bom-ref": "tar-fs@2.1.3|chownr@1.1.4",
           "scope": "optional",
           "licenses": [
             {
@@ -5367,7 +5367,7 @@
           "type": "library",
           "name": "tar-stream",
           "version": "2.2.0",
-          "bom-ref": "tar-fs@2.1.2|tar-stream@2.2.0",
+          "bom-ref": "tar-fs@2.1.3|tar-stream@2.2.0",
           "scope": "optional",
           "licenses": [
             {
@@ -5406,7 +5406,7 @@
           "type": "library",
           "name": "bl",
           "version": "4.1.0",
-          "bom-ref": "tar-fs@2.1.2|bl@4.1.0",
+          "bom-ref": "tar-fs@2.1.3|bl@4.1.0",
           "scope": "optional",
           "licenses": [
             {
@@ -5445,7 +5445,7 @@
           "type": "library",
           "name": "buffer",
           "version": "5.7.1",
-          "bom-ref": "tar-fs@2.1.2|buffer@5.7.1",
+          "bom-ref": "tar-fs@2.1.3|buffer@5.7.1",
           "scope": "optional",
           "licenses": [
             {
@@ -5484,7 +5484,7 @@
           "type": "library",
           "name": "readable-stream",
           "version": "3.6.2",
-          "bom-ref": "tar-fs@2.1.2|readable-stream@3.6.2",
+          "bom-ref": "tar-fs@2.1.3|readable-stream@3.6.2",
           "scope": "optional",
           "licenses": [
             {
@@ -7128,96 +7128,6 @@
     },
     {
       "type": "library",
-      "name": "chart.js",
-      "group": "@types",
-      "version": "4.0.1",
-      "bom-ref": "@types/chart.js@4.0.1",
-      "description": "Stub TypeScript definitions entry for chart.js, which provides its own types definitions",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40types/chart.js@4.0.1",
-      "externalReferences": [
-        {
-          "url": "https://registry.npmjs.org/@types/chart.js/-/chart.js-4.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "3b05c9e84835e1e1690ac4c6eac9638869ef5698ade51f6b6a91bb9f00e7425963b1da6554839856e092c32d3b21db82b6286b3b0bce9db85728bca9de7bcf73"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@types/chart.js"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "chart.js",
-      "version": "4.4.9",
-      "bom-ref": "chart.js@4.4.9",
-      "description": "Simple HTML5 charts using the canvas element.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/chart.js@4.4.9",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/chartjs/Chart.js.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://www.chartjs.org",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/chartjs/Chart.js/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/chart.js/-/chart.js-4.4.9.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "13267dc162a0a405347cb278dd8004205f2caf91765b72ea6d2e34649c872277abda5635e2e7eabf654ca7af4c022676ae9c31114c448481ffd14df1c91ca7c6"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/chart.js"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "decompress",
       "group": "@types",
       "version": "4.2.7",
@@ -7275,8 +7185,8 @@
       "type": "library",
       "name": "node",
       "group": "@types",
-      "version": "22.15.21",
-      "bom-ref": "@types/node@22.15.21",
+      "version": "22.15.26",
+      "bom-ref": "@types/node@22.15.26",
       "description": "TypeScript definitions for node",
       "licenses": [
         {
@@ -7286,7 +7196,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40types/node@22.15.21#types/node",
+      "purl": "pkg:npm/%40types/node@22.15.26#types/node",
       "externalReferences": [
         {
           "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git#types/node",
@@ -7304,12 +7214,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@types/node/-/node-22.15.21.tgz",
+          "url": "https://registry.npmjs.org/@types/node/-/node-22.15.26.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "115ff7ed377a73e3202806e470b1babea676cc46070fb6ef4abceaaacd912216c0eb0df1f83ab3f0c64cdec3fa9064de2eb7683a02997be5e36bbb540760cd91"
+              "content": "96021290daea750e430338c18670cd18a0ee5c3368effd55e0584dcec29112158b6533842d0029b6e02724ccc7b54975ab2101072f65341290f568f28929684f"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -7849,6 +7759,56 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/buffer"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "chart.js",
+      "version": "4.4.9",
+      "bom-ref": "chart.js@4.4.9",
+      "description": "Simple HTML5 charts using the canvas element.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/chart.js@4.4.9",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/chartjs/Chart.js.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://www.chartjs.org",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/chartjs/Chart.js/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/chart.js/-/chart.js-4.4.9.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "13267dc162a0a405347cb278dd8004205f2caf91765b72ea6d2e34649c872277abda5635e2e7eabf654ca7af4c022676ae9c31114c448481ffd14df1c91ca7c6"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/chart.js"
         }
       ]
     },
@@ -8509,8 +8469,8 @@
     {
       "type": "library",
       "name": "tinyglobby",
-      "version": "0.2.13",
-      "bom-ref": "tinyglobby@0.2.13",
+      "version": "0.2.14",
+      "bom-ref": "tinyglobby@0.2.14",
       "author": "Superchupu",
       "description": "A fast and minimal alternative to globby and fast-glob",
       "licenses": [
@@ -8521,7 +8481,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/tinyglobby@0.2.13",
+      "purl": "pkg:npm/tinyglobby@0.2.14",
       "externalReferences": [
         {
           "url": "git+https://github.com/SuperchupuDev/tinyglobby.git",
@@ -8539,12 +8499,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.13.tgz",
+          "url": "https://registry.npmjs.org/tinyglobby/-/tinyglobby-0.2.14.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "984c33a5482b2f24a5bde0701150cc2a4e41e7b6e12cf628bd17cf0170f9800ffdf0ea67d2b0838f71ad2f016f0af1f944af6e3c2131511396e4d8c3c2faa4c7"
+              "content": "b57e5eece3351e762bdbe6b60bfe15d21b4e71241ca124c7f4a8099d5bcd9b9ce6fdcc8458a27b8fb62eb6c1fd0b131db4e9242c5cb6007acc722f4833c20f65"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8564,8 +8524,8 @@
         {
           "type": "library",
           "name": "fdir",
-          "version": "6.4.4",
-          "bom-ref": "tinyglobby@0.2.13|fdir@6.4.4",
+          "version": "6.4.5",
+          "bom-ref": "tinyglobby@0.2.14|fdir@6.4.5",
           "author": "thecodrr",
           "description": "The fastest directory crawler & globbing alternative to glob, fast-glob, & tiny-glob. Crawls 1m files in < 1s",
           "licenses": [
@@ -8576,7 +8536,7 @@
               }
             }
           ],
-          "purl": "pkg:npm/fdir@6.4.4",
+          "purl": "pkg:npm/fdir@6.4.5",
           "externalReferences": [
             {
               "url": "git+https://github.com/thecodrr/fdir.git",
@@ -8594,12 +8554,12 @@
               "comment": "as detected from PackageJson property \"bugs.url\""
             },
             {
-              "url": "https://registry.npmjs.org/fdir/-/fdir-6.4.4.tgz",
+              "url": "https://registry.npmjs.org/fdir/-/fdir-6.4.5.tgz",
               "type": "distribution",
               "hashes": [
                 {
                   "alg": "SHA-512",
-                  "content": "d4d64ff862b819fb80bf73ea2afc504433237524598e792aeca7e194dac234d959d3281016979b7eb9df9eafd6edfa549c0bfd6865a6635ccac7b1582f783086"
+                  "content": "e011bba6e1e956c218c5951b89413746a1a5a0b6924b0cd889ee63bdab02e0b5ae056cd96b0ca7bd8a2e8636d02b0d89b88198766d03cc8c65f2256274a95413"
                 }
               ],
               "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -8620,7 +8580,7 @@
           "type": "library",
           "name": "picomatch",
           "version": "4.0.2",
-          "bom-ref": "tinyglobby@0.2.13|picomatch@4.0.2",
+          "bom-ref": "tinyglobby@0.2.14|picomatch@4.0.2",
           "author": "Jon Schlinkert",
           "description": "Blazing fast and accurate glob matcher written in JavaScript, with no dependencies and full support for standard and extended Bash glob features, including braces, extglobs, POSIX brackets, and regular expressions.",
           "licenses": [
@@ -10519,8 +10479,8 @@
     {
       "type": "library",
       "name": "postcss",
-      "version": "8.5.3",
-      "bom-ref": "postcss@8.5.3",
+      "version": "8.5.4",
+      "bom-ref": "postcss@8.5.4",
       "author": "Andrey Sitnik",
       "description": "Tool for transforming styles with JS plugins",
       "licenses": [
@@ -10531,7 +10491,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/postcss@8.5.3",
+      "purl": "pkg:npm/postcss@8.5.4",
       "externalReferences": [
         {
           "url": "git+https://github.com/postcss/postcss.git",
@@ -10549,12 +10509,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/postcss/-/postcss-8.5.3.tgz",
+          "url": "https://registry.npmjs.org/postcss/-/postcss-8.5.4.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7657bd037c98c65052aedf05bbe2298c64fc498f213749a5680e8663cb743f93e320e65e9942f3fc4d819e6ff675c50e7a76bbe4e4cd90723beae64135452adc"
+              "content": "4126bd1017bebb09464c5987b0f2a892fdc1fe810c419c5fa96d10a8d0b28696ba981d5a7f3ba5c27f218a1825a806f6a4ec3e04980d9665d0f256b655e1c1ef"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -13935,8 +13895,8 @@
     {
       "type": "library",
       "name": "file-type",
-      "version": "20.5.0",
-      "bom-ref": "file-type@20.5.0",
+      "version": "21.0.0",
+      "bom-ref": "file-type@21.0.0",
       "author": "Sindre Sorhus",
       "description": "Detect the file type of a file, stream, or data",
       "licenses": [
@@ -13947,7 +13907,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/file-type@20.5.0",
+      "purl": "pkg:npm/file-type@21.0.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/sindresorhus/file-type.git",
@@ -13965,12 +13925,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/file-type/-/file-type-20.5.0.tgz",
+          "url": "https://registry.npmjs.org/file-type/-/file-type-21.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "05f1d9b46fe5f62326e047226a7bbb3fc1d10f6b411cbb635e29e6e17eb65c1398ce2ec2600ee3caa7c9ccebd71eacd5ad53d8a81a36fc6bdb01131a68990a56"
+              "content": "7a4e71357d98058957862517ba2dc3fc15dadcb76a3e6a0b27baea131d9b289ec401411f997816d036acec373a36bf4cbea68e9c8aa23d5d26664febfd4a4d02"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -15222,8 +15182,8 @@
     {
       "type": "library",
       "name": "terser",
-      "version": "5.39.2",
-      "bom-ref": "terser@5.39.2",
+      "version": "5.40.0",
+      "bom-ref": "terser@5.40.0",
       "author": "Mihai Bazon",
       "description": "JavaScript parser, mangler/compressor and beautifier toolkit for ES6+",
       "licenses": [
@@ -15234,7 +15194,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/terser@5.39.2",
+      "purl": "pkg:npm/terser@5.40.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/terser/terser.git",
@@ -15252,12 +15212,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/terser/-/terser-5.39.2.tgz",
+          "url": "https://registry.npmjs.org/terser/-/terser-5.40.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c843d4996bdef9503bf1b23bd415bbd038744ee5781c777e2394873807d2d7e4013a6be60a289f7e08d1f2bcb211ddca21fbcf185aa8003b7c2dd43a5e95c8be"
+              "content": "71f78a97f8e3c124796abeddd051a66af7bd8451894fca1bca8d33f82ad03b294b0db93b5fcd673d4eafabd54e45ae63537d129039d3d855e32db47c1cb3fec4"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -15278,7 +15238,7 @@
           "type": "library",
           "name": "commander",
           "version": "2.20.3",
-          "bom-ref": "terser@5.39.2|commander@2.20.3",
+          "bom-ref": "terser@5.40.0|commander@2.20.3",
           "author": "TJ Holowaychuk",
           "description": "the complete solution for node.js command-line programs",
           "licenses": [
@@ -17382,7 +17342,6 @@
       "group": "@napi-rs",
       "version": "0.1.70",
       "bom-ref": "@napi-rs/canvas-linux-x64-gnu@0.1.70",
-      "description": "Canvas for Node.js with skia backend",
       "scope": "optional",
       "licenses": [
         {
@@ -17394,21 +17353,6 @@
       ],
       "purl": "pkg:npm/%40napi-rs/canvas-linux-x64-gnu@0.1.70",
       "externalReferences": [
-        {
-          "url": "git+https://github.com/Brooooooklyn/canvas.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Brooooooklyn/canvas#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Brooooooklyn/canvas/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
         {
           "url": "https://registry.npmjs.org/@napi-rs/canvas-linux-x64-gnu/-/canvas-linux-x64-gnu-0.1.70.tgz",
           "type": "distribution",
@@ -17470,6 +17414,7 @@
       "group": "@napi-rs",
       "version": "0.1.70",
       "bom-ref": "@napi-rs/canvas-win32-x64-msvc@0.1.70",
+      "description": "Canvas for Node.js with skia backend",
       "scope": "optional",
       "licenses": [
         {
@@ -17481,6 +17426,21 @@
       ],
       "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@0.1.70",
       "externalReferences": [
+        {
+          "url": "git+https://github.com/Brooooooklyn/canvas.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Brooooooklyn/canvas#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Brooooooklyn/canvas/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
         {
           "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-0.1.70.tgz",
           "type": "distribution",
@@ -17613,8 +17573,8 @@
         {
           "type": "library",
           "name": "jackspeak",
-          "version": "4.1.0",
-          "bom-ref": "rimraf@6.0.1|jackspeak@4.1.0",
+          "version": "4.1.1",
+          "bom-ref": "rimraf@6.0.1|jackspeak@4.1.1",
           "author": "Isaac Z. Schlueter",
           "description": "A very strict and proper argument parser.",
           "licenses": [
@@ -17625,7 +17585,7 @@
               }
             }
           ],
-          "purl": "pkg:npm/jackspeak@4.1.0",
+          "purl": "pkg:npm/jackspeak@4.1.1",
           "externalReferences": [
             {
               "url": "git+https://github.com/isaacs/jackspeak.git",
@@ -17643,12 +17603,12 @@
               "comment": "as detected from PackageJson property \"bugs.url\""
             },
             {
-              "url": "https://registry.npmjs.org/jackspeak/-/jackspeak-4.1.0.tgz",
+              "url": "https://registry.npmjs.org/jackspeak/-/jackspeak-4.1.1.tgz",
               "type": "distribution",
               "hashes": [
                 {
                   "alg": "SHA-512",
-                  "content": "f430dd85be63e9ca5e8ad09bbcb3bb9fb2782319db33a86817a3b58381d0e537e1bef28df32c0333bebaf1984c1d1a959b1aa1a6cfc5eacc962b629c3f162593"
+                  "content": "ce9b6fe7b3f71a92fe3b423b55d309341642bbe04f1d5414939e45b7cfd00898d3571ae7247b95b97ff4065d80ebffb6a3247f64c12e14ac26ceaa99fd4e673d"
                 }
               ],
               "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -19872,7 +19832,6 @@
       "group": "@parcel",
       "version": "2.5.1",
       "bom-ref": "@parcel/watcher-linux-x64-glibc@2.5.1",
-      "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "scope": "optional",
       "licenses": [
         {
@@ -19884,21 +19843,6 @@
       ],
       "purl": "pkg:npm/%40parcel/watcher-linux-x64-glibc@2.5.1",
       "externalReferences": [
-        {
-          "url": "git+https://github.com/parcel-bundler/watcher.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/parcel-bundler/watcher#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/parcel-bundler/watcher/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
         {
           "url": "https://registry.npmjs.org/@parcel/watcher-linux-x64-glibc/-/watcher-linux-x64-glibc-2.5.1.tgz",
           "type": "distribution",
@@ -19928,7 +19872,6 @@
       "group": "@parcel",
       "version": "2.5.1",
       "bom-ref": "@parcel/watcher-linux-x64-musl@2.5.1",
-      "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "scope": "optional",
       "licenses": [
         {
@@ -19940,21 +19883,6 @@
       ],
       "purl": "pkg:npm/%40parcel/watcher-linux-x64-musl@2.5.1",
       "externalReferences": [
-        {
-          "url": "git+https://github.com/parcel-bundler/watcher.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/parcel-bundler/watcher#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/parcel-bundler/watcher/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
         {
           "url": "https://registry.npmjs.org/@parcel/watcher-linux-x64-musl/-/watcher-linux-x64-musl-2.5.1.tgz",
           "type": "distribution",
@@ -20064,6 +19992,7 @@
       "group": "@parcel",
       "version": "2.5.1",
       "bom-ref": "@parcel/watcher-win32-x64@2.5.1",
+      "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "scope": "optional",
       "licenses": [
         {
@@ -20075,6 +20004,21 @@
       ],
       "purl": "pkg:npm/%40parcel/watcher-win32-x64@2.5.1",
       "externalReferences": [
+        {
+          "url": "git+https://github.com/parcel-bundler/watcher.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/parcel-bundler/watcher#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/parcel-bundler/watcher/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
         {
           "url": "https://registry.npmjs.org/@parcel/watcher-win32-x64/-/watcher-win32-x64-2.5.1.tgz",
           "type": "distribution",
@@ -33911,8 +33855,8 @@
     {
       "type": "library",
       "name": "browserslist",
-      "version": "4.24.5",
-      "bom-ref": "browserslist@4.24.5",
+      "version": "4.25.0",
+      "bom-ref": "browserslist@4.25.0",
       "author": "Andrey Sitnik",
       "description": "Share target browsers between different front-end tools, like Autoprefixer, Stylelint and babel-env-preset",
       "licenses": [
@@ -33923,7 +33867,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/browserslist@4.24.5",
+      "purl": "pkg:npm/browserslist@4.25.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/browserslist/browserslist.git",
@@ -33941,12 +33885,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/browserslist/-/browserslist-4.24.5.tgz",
+          "url": "https://registry.npmjs.org/browserslist/-/browserslist-4.25.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "1434e8a385a8f36848760735090f8d403d211219a93e3ad9de189483080e1ba22e4dd969afc8dd8f21b6e0fe9c34fd722694cbcd2e4e706812c34c660d4d7f4f"
+              "content": "3c9f2060a792e5eff0847061f31af060af9d02f123ec95edcfab93b9c9cc441f0e8864ec29c7057a4a11ae36a33c11d5f28398fb6b48e2ec5e71e4a298ac0c14"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -33966,8 +33910,8 @@
     {
       "type": "library",
       "name": "caniuse-lite",
-      "version": "1.0.30001718",
-      "bom-ref": "caniuse-lite@1.0.30001718",
+      "version": "1.0.30001720",
+      "bom-ref": "caniuse-lite@1.0.30001720",
       "author": "Ben Briggs",
       "description": "A smaller version of caniuse-db, with only the essentials!",
       "licenses": [
@@ -33978,7 +33922,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/caniuse-lite@1.0.30001718",
+      "purl": "pkg:npm/caniuse-lite@1.0.30001720",
       "externalReferences": [
         {
           "url": "git+https://github.com/browserslist/caniuse-lite.git",
@@ -33996,12 +33940,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001718.tgz",
+          "url": "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001720.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "01f96c795d5a85c4ae9cae7735f12cf6015680e126cebd1ffa468c140e3188b665afd1f3b7b1f1712a4815c9cd094933e91e9d58a6b9e2b533dc75262379d573"
+              "content": "11cff6c95da734fc1be039d300d115f7d656c26dd959f7657e441b5920c3b7e3ec5c4558c2584f1fcb5d31a3ee9d84ca2a6cfb0271e2da83448b519c98a083f2"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -34021,8 +33965,8 @@
     {
       "type": "library",
       "name": "electron-to-chromium",
-      "version": "1.5.155",
-      "bom-ref": "electron-to-chromium@1.5.155",
+      "version": "1.5.161",
+      "bom-ref": "electron-to-chromium@1.5.161",
       "author": "Kilian Valkhof",
       "description": "Provides a list of electron-to-chromium version mappings",
       "licenses": [
@@ -34033,7 +33977,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/electron-to-chromium@1.5.155",
+      "purl": "pkg:npm/electron-to-chromium@1.5.161",
       "externalReferences": [
         {
           "url": "git+https://github.com/kilian/electron-to-chromium.git",
@@ -34051,12 +33995,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.155.tgz",
+          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.161.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "a6ce4a7061a6c0bf1569e265be50e5bb87ce450a6fdfe188705e48ddff6d50a52527fc2ccac87a1d4f0fe4bd5759161e5df034a097783f233c76cf334c57fa36"
+              "content": "870b5eb707ca359a3f525c0721506529955dcbba3c6c8671c4ab3432ffd138f89041098381d9b96be2af2ad06cc4cf198c5cd368278ba28759f23881137a3dac"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -35119,8 +35063,8 @@
     {
       "type": "library",
       "name": "webpack-sources",
-      "version": "3.2.3",
-      "bom-ref": "webpack-sources@3.2.3",
+      "version": "3.3.0",
+      "bom-ref": "webpack-sources@3.3.0",
       "author": "Tobias Koppers @sokra",
       "description": "Source code handling classes for webpack",
       "licenses": [
@@ -35131,7 +35075,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/webpack-sources@3.2.3",
+      "purl": "pkg:npm/webpack-sources@3.3.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/webpack/webpack-sources.git",
@@ -35149,12 +35093,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.2.3.tgz",
+          "url": "https://registry.npmjs.org/webpack-sources/-/webpack-sources-3.3.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "fc3c8c10eac380b28a206d1f9afb73fb87545ffdc6868cf0826ea23e9f0a461be7f9e41ff7e43b196c5534c937fae08f59f757602e04c4605c9085dd1447c7d7"
+              "content": "efb4744439897e3f5dcafe69ddb339a4e1daf97f3f6643bd73b9290ecb628240b89c80e86da76c7d2182c01e1b2a1315c6a02893cb5a8daa11f2b8ab33bf9515"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -35178,11 +35122,10 @@
       "dependsOn": [
         "@cyclonedx/cyclonedx-npm@3.0.0",
         "@fortawesome/fontawesome-free@6.7.2",
-        "@types/chart.js@4.0.1",
         "@types/decompress@4.2.7",
         "@types/elliptic@6.4.18",
         "@types/leaflet@1.9.18",
-        "@types/node@22.15.21",
+        "@types/node@22.15.26",
         "asn1.js@5.4.1",
         "base32-decode@1.0.0",
         "buffer@6.0.3",
@@ -35196,7 +35139,7 @@
         "decompress@4.2.1",
         "elliptic@6.6.1",
         "file-loader@6.2.0",
-        "file-type@20.5.0",
+        "file-type@21.0.0",
         "html-webpack-plugin@5.6.3",
         "leaflet.awesome-markers@2.0.5",
         "leaflet@1.9.4",
@@ -35768,7 +35711,7 @@
         "pump@3.0.2",
         "rc@1.2.8",
         "simple-get@4.0.1",
-        "tar-fs@2.1.2",
+        "tar-fs@2.1.3",
         "tunnel-agent@0.6.0"
       ]
     },
@@ -35854,44 +35797,44 @@
       "ref": "simple-concat@1.0.1"
     },
     {
-      "ref": "tar-fs@2.1.2",
+      "ref": "tar-fs@2.1.3",
       "dependsOn": [
-        "tar-fs@2.1.2|chownr@1.1.4",
+        "tar-fs@2.1.3|chownr@1.1.4",
         "mkdirp-classic@0.5.3",
         "pump@3.0.2",
-        "tar-fs@2.1.2|tar-stream@2.2.0"
+        "tar-fs@2.1.3|tar-stream@2.2.0"
       ]
     },
     {
-      "ref": "tar-fs@2.1.2|chownr@1.1.4"
+      "ref": "tar-fs@2.1.3|chownr@1.1.4"
     },
     {
-      "ref": "tar-fs@2.1.2|tar-stream@2.2.0",
+      "ref": "tar-fs@2.1.3|tar-stream@2.2.0",
       "dependsOn": [
-        "tar-fs@2.1.2|bl@4.1.0",
+        "tar-fs@2.1.3|bl@4.1.0",
         "end-of-stream@1.4.4",
         "fs-constants@1.0.0",
         "inherits@2.0.4",
-        "tar-fs@2.1.2|readable-stream@3.6.2"
+        "tar-fs@2.1.3|readable-stream@3.6.2"
       ]
     },
     {
-      "ref": "tar-fs@2.1.2|bl@4.1.0",
+      "ref": "tar-fs@2.1.3|bl@4.1.0",
       "dependsOn": [
-        "tar-fs@2.1.2|buffer@5.7.1",
+        "tar-fs@2.1.3|buffer@5.7.1",
         "inherits@2.0.4",
-        "tar-fs@2.1.2|readable-stream@3.6.2"
+        "tar-fs@2.1.3|readable-stream@3.6.2"
       ]
     },
     {
-      "ref": "tar-fs@2.1.2|buffer@5.7.1",
+      "ref": "tar-fs@2.1.3|buffer@5.7.1",
       "dependsOn": [
         "base64-js@1.5.1",
         "ieee754@1.2.1"
       ]
     },
     {
-      "ref": "tar-fs@2.1.2|readable-stream@3.6.2",
+      "ref": "tar-fs@2.1.3|readable-stream@3.6.2",
       "dependsOn": [
         "inherits@2.0.4",
         "string_decoder@1.1.1",
@@ -36048,25 +35991,13 @@
       "ref": "@fortawesome/fontawesome-free@6.7.2"
     },
     {
-      "ref": "@types/chart.js@4.0.1",
-      "dependsOn": [
-        "chart.js@4.4.9"
-      ]
-    },
-    {
-      "ref": "chart.js@4.4.9",
-      "dependsOn": [
-        "@kurkle/color@0.3.4"
-      ]
-    },
-    {
       "ref": "@types/decompress@4.2.7",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
-      "ref": "@types/node@22.15.21",
+      "ref": "@types/node@22.15.26",
       "dependsOn": [
         "undici-types@6.21.0"
       ]
@@ -36080,7 +36011,7 @@
     {
       "ref": "@types/bn.js@5.1.6",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
@@ -36121,6 +36052,12 @@
       ]
     },
     {
+      "ref": "chart.js@4.4.9",
+      "dependsOn": [
+        "@kurkle/color@0.3.4"
+      ]
+    },
+    {
       "ref": "@kurkle/color@0.3.4"
     },
     {
@@ -36130,7 +36067,7 @@
         "normalize-path@3.0.0",
         "schema-utils@4.3.2",
         "serialize-javascript@6.0.2",
-        "tinyglobby@0.2.13",
+        "tinyglobby@0.2.14",
         "webpack@5.99.9"
       ]
     },
@@ -36190,20 +36127,20 @@
       ]
     },
     {
-      "ref": "tinyglobby@0.2.13",
+      "ref": "tinyglobby@0.2.14",
       "dependsOn": [
-        "tinyglobby@0.2.13|fdir@6.4.4",
-        "tinyglobby@0.2.13|picomatch@4.0.2"
+        "tinyglobby@0.2.14|fdir@6.4.5",
+        "tinyglobby@0.2.14|picomatch@4.0.2"
       ]
     },
     {
-      "ref": "tinyglobby@0.2.13|fdir@6.4.4",
+      "ref": "tinyglobby@0.2.14|fdir@6.4.5",
       "dependsOn": [
-        "tinyglobby@0.2.13|picomatch@4.0.2"
+        "tinyglobby@0.2.14|picomatch@4.0.2"
       ]
     },
     {
-      "ref": "tinyglobby@0.2.13|picomatch@4.0.2"
+      "ref": "tinyglobby@0.2.14|picomatch@4.0.2"
     },
     {
       "ref": "webpack@5.99.9",
@@ -36215,7 +36152,7 @@
         "@webassemblyjs/wasm-edit@1.14.1",
         "@webassemblyjs/wasm-parser@1.14.1",
         "acorn@8.14.1",
-        "browserslist@4.24.5",
+        "browserslist@4.25.0",
         "chrome-trace-event@1.0.4",
         "enhanced-resolve@5.18.1",
         "es-module-lexer@1.7.0",
@@ -36231,7 +36168,7 @@
         "tapable@2.2.2",
         "terser-webpack-plugin@5.3.14",
         "watchpack@2.4.4",
-        "webpack-sources@3.2.3"
+        "webpack-sources@3.3.0"
       ]
     },
     {
@@ -36499,7 +36436,7 @@
         "postcss-modules-scope@3.2.1",
         "postcss-modules-values@4.0.0",
         "postcss-value-parser@4.2.0",
-        "postcss@8.5.3",
+        "postcss@8.5.4",
         "semver@7.7.2",
         "webpack@5.99.9"
       ]
@@ -36507,11 +36444,11 @@
     {
       "ref": "icss-utils@5.1.0",
       "dependsOn": [
-        "postcss@8.5.3"
+        "postcss@8.5.4"
       ]
     },
     {
-      "ref": "postcss@8.5.3",
+      "ref": "postcss@8.5.4",
       "dependsOn": [
         "nanoid@3.3.11",
         "picocolors@1.1.1",
@@ -36521,7 +36458,7 @@
     {
       "ref": "postcss-modules-extract-imports@3.1.0",
       "dependsOn": [
-        "postcss@8.5.3"
+        "postcss@8.5.4"
       ]
     },
     {
@@ -36530,7 +36467,7 @@
         "icss-utils@5.1.0",
         "postcss-selector-parser@7.1.0",
         "postcss-value-parser@4.2.0",
-        "postcss@8.5.3"
+        "postcss@8.5.4"
       ]
     },
     {
@@ -36550,14 +36487,14 @@
       "ref": "postcss-modules-scope@3.2.1",
       "dependsOn": [
         "postcss-selector-parser@7.1.0",
-        "postcss@8.5.3"
+        "postcss@8.5.4"
       ]
     },
     {
       "ref": "postcss-modules-values@4.0.0",
       "dependsOn": [
         "icss-utils@5.1.0",
-        "postcss@8.5.3"
+        "postcss@8.5.4"
       ]
     },
     {
@@ -36853,7 +36790,7 @@
       "ref": "fast-json-stable-stringify@2.1.0"
     },
     {
-      "ref": "file-type@20.5.0",
+      "ref": "file-type@21.0.0",
       "dependsOn": [
         "@tokenizer/inflate@0.2.7",
         "strtok3@10.2.2",
@@ -36921,7 +36858,7 @@
         "he@1.2.0",
         "param-case@3.0.4",
         "relateurl@0.2.7",
-        "terser@5.39.2"
+        "terser@5.40.0"
       ]
     },
     {
@@ -36987,16 +36924,16 @@
       "ref": "relateurl@0.2.7"
     },
     {
-      "ref": "terser@5.39.2",
+      "ref": "terser@5.40.0",
       "dependsOn": [
         "@jridgewell/source-map@0.3.6",
         "acorn@8.14.1",
-        "terser@5.39.2|commander@2.20.3",
+        "terser@5.40.0|commander@2.20.3",
         "source-map-support@0.5.21"
       ]
     },
     {
-      "ref": "terser@5.39.2|commander@2.20.3"
+      "ref": "terser@5.40.0|commander@2.20.3"
     },
     {
       "ref": "@jridgewell/source-map@0.3.6",
@@ -37221,7 +37158,7 @@
       "ref": "rimraf@6.0.1|glob@11.0.2",
       "dependsOn": [
         "foreground-child@3.3.1",
-        "rimraf@6.0.1|jackspeak@4.1.0",
+        "rimraf@6.0.1|jackspeak@4.1.1",
         "rimraf@6.0.1|minimatch@10.0.1",
         "minipass@7.1.2",
         "package-json-from-dist@1.0.1",
@@ -37229,7 +37166,7 @@
       ]
     },
     {
-      "ref": "rimraf@6.0.1|jackspeak@4.1.0",
+      "ref": "rimraf@6.0.1|jackspeak@4.1.1",
       "dependsOn": [
         "@isaacs/cliui@8.0.2"
       ]
@@ -37980,20 +37917,20 @@
     {
       "ref": "@types/bonjour@3.5.13",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
       "ref": "@types/connect-history-api-fallback@1.5.4",
       "dependsOn": [
         "@types/express-serve-static-core@4.19.6",
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
       "ref": "@types/express-serve-static-core@4.19.6",
       "dependsOn": [
-        "@types/node@22.15.21",
+        "@types/node@22.15.26",
         "@types/qs@6.14.0",
         "@types/range-parser@1.2.7",
         "@types/send@0.17.4"
@@ -38009,7 +37946,7 @@
       "ref": "@types/send@0.17.4",
       "dependsOn": [
         "@types/mime@1.3.5",
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
@@ -38028,20 +37965,20 @@
       "ref": "@types/body-parser@1.19.5",
       "dependsOn": [
         "@types/connect@3.4.38",
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
       "ref": "@types/connect@3.4.38",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
       "ref": "@types/serve-static@1.15.7",
       "dependsOn": [
         "@types/http-errors@2.0.4",
-        "@types/node@22.15.21",
+        "@types/node@22.15.26",
         "@types/send@0.17.4"
       ]
     },
@@ -38057,13 +37994,13 @@
     {
       "ref": "@types/sockjs@0.3.36",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
       "ref": "@types/ws@8.18.1",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
@@ -38461,7 +38398,7 @@
     {
       "ref": "@types/http-proxy@1.17.16",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
@@ -38570,7 +38507,7 @@
     {
       "ref": "@types/node-forge@1.3.11",
       "dependsOn": [
-        "@types/node@22.15.21"
+        "@types/node@22.15.26"
       ]
     },
     {
@@ -38897,19 +38834,19 @@
       "ref": "@xtuc/ieee754@1.2.0"
     },
     {
-      "ref": "browserslist@4.24.5",
+      "ref": "browserslist@4.25.0",
       "dependsOn": [
-        "caniuse-lite@1.0.30001718",
-        "electron-to-chromium@1.5.155",
+        "caniuse-lite@1.0.30001720",
+        "electron-to-chromium@1.5.161",
         "node-releases@2.0.19",
         "update-browserslist-db@1.1.3"
       ]
     },
     {
-      "ref": "caniuse-lite@1.0.30001718"
+      "ref": "caniuse-lite@1.0.30001720"
     },
     {
-      "ref": "electron-to-chromium@1.5.155"
+      "ref": "electron-to-chromium@1.5.161"
     },
     {
       "ref": "node-releases@2.0.19"
@@ -38917,7 +38854,7 @@
     {
       "ref": "update-browserslist-db@1.1.3",
       "dependsOn": [
-        "browserslist@4.24.5",
+        "browserslist@4.25.0",
         "escalade@3.2.0",
         "picocolors@1.1.1"
       ]
@@ -38969,7 +38906,7 @@
         "jest-worker@27.5.1",
         "schema-utils@4.3.2",
         "serialize-javascript@6.0.2",
-        "terser@5.39.2",
+        "terser@5.40.0",
         "webpack@5.99.9"
       ]
     },
@@ -38979,7 +38916,7 @@
     {
       "ref": "jest-worker@27.5.1",
       "dependsOn": [
-        "@types/node@22.15.21",
+        "@types/node@22.15.26",
         "merge-stream@2.0.0",
         "jest-worker@27.5.1|supports-color@8.1.1"
       ]
@@ -39001,7 +38938,7 @@
       ]
     },
     {
-      "ref": "webpack-sources@3.2.3"
+      "ref": "webpack-sources@3.3.0"
     }
   ]
 }

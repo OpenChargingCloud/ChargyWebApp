@@ -32,7 +32,6 @@
   ],
   "devDependencies": {
     "@cyclonedx/cyclonedx-npm": "^3.0.0",
-    "@types/chart.js": "^4.0.1",
     "@types/decompress": "^4.2.7",
     "@types/elliptic": "^6.4.18",
     "@types/leaflet": "^1.9.18",
