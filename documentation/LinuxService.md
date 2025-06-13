@@ -16,7 +16,7 @@ After=network.target
 [Service]
 Type=simple
 User=chargeit
-WorkingDirectory=/use/src/ChargyWebApp2
+WorkingDirectory=/use/src/ChargyWebApp
 ExecStart=/usr/bin/npm start
 Restart=on-failure
 RestartSec=5
@@ -56,4 +56,13 @@ systemctl status chargyweb
 
 ```
 journalctl -u chargyweb -f
+```
+
+
+## 5. Update and Restart
+
+```
+git pull
+npm install
+sudo systemctl restart chargyweb
 ```
