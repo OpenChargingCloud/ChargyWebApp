@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Chargy }             from './chargy'
+import type { Chargy }        from './chargy'
 import { Alfen }              from './Alfen'
 import { OCMF }               from './OCMF'
 import * as chargyInterfaces  from './chargyInterfaces'

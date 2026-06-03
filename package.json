@@ -13,7 +13,9 @@
     "sbom": "cyclonedx-npm --output-format json --output-file sbom.json",
     "build": "npm run clean && npm run sbom && webpack --config webpack.config.cjs",
     "start": "webpack serve --open",
-    "test": "vitest run"
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test:typecheck": "tsc -p tests/tsconfig.json --noEmit"
   },
   "keywords": [
     "Chargy",

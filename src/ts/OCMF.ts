@@ -19,7 +19,7 @@
 // Note: More information about implementation details and limitations
 //       can be found within ~/documentation/OCMF/README.md!
 
-import { Chargy }             from './chargy'
+import type { Chargy }        from './chargy'
 import { ACrypt }             from './ACrypt'
 import * as chargyInterfaces  from './chargyInterfaces'
 import * as chargyLib         from './chargyLib'

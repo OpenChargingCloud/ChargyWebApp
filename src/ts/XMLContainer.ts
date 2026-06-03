@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-import { Chargy }             from './chargy'
+import type { Chargy }        from './chargy'
 import * as chargyInterfaces  from './chargyInterfaces'
 import * as chargyLib         from './chargyLib'
 import { EMHCrypt01 }         from './EMHCrypt01'

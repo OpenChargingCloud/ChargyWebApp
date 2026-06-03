@@ -3,14 +3,16 @@ import { createRequire } from "node:module";
 import { describe, expect, test, vi } from 'vitest';
 import { Chargy } from '../src/ts/chargy';
 import {
+    IsAChargeTransparencyRecord,
+    isIFileInfo
+} from '../src/ts/chargyInterfaces';
+import type {
     IChargeTransparencyRecord,
     ICryptoResult,
     IFileInfo,
     IMeasurement,
     IMeasurementValue,
-    ISessionCryptoResult,
-    IsAChargeTransparencyRecord,
-    isIFileInfo
+    ISessionCryptoResult
 } from '../src/ts/chargyInterfaces';
 
 const require = createRequire(import.meta.url);
