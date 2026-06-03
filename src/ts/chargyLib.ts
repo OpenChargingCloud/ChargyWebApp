@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2018-2024 GraphDefined GmbH <achim.friedland@graphdefined.com>
+ * Copyright (c) 2018-2026 GraphDefined GmbH <achim.friedland@graphdefined.com>
  * This file is part of Chargy WebApp <https://github.com/OpenChargingCloud/ChargyWebApp>
  *
  * Licensed under the Affero GPL license, Version 3.0 (the "License");
@@ -257,11 +257,8 @@ export function createHexString(arr: Iterable<number>) {
 
 }
 
-export function buf2hex(buffer: ArrayBuffer) {
-    //return Array.prototype.map.call(new Uint8Array(buffer), (x:number) => ('00' + x.toString(16)).slice(-2)).join('');
-    return Array.from(new Uint8Array(buffer))
-        .map(byte => byte.toString(16).padStart(2, '0'))
-        .join('');
+export function buf2hex(buffer: ArrayBuffer|Uint8Array) {
+    return Array.prototype.map.call(new Uint8Array(buffer), (x:number) => ('00' + x.toString(16)).slice(-2)).join('');
 }
 
 export function hexToArrayBuffer(hex: string): ArrayBuffer {

@@ -1,5 +1,5 @@
 ﻿/*
- * Copyright (c) 2018-2024 GraphDefined GmbH <achim.friedland@graphdefined.com>
+ * Copyright (c) 2018-2026 GraphDefined GmbH <achim.friedland@graphdefined.com>
  * This file is part of Chargy WebApp <https://github.com/OpenChargingCloud/ChargyWebApp>
  *
  * Licensed under the Affero GPL license, Version 3.0 (the "License");
@@ -3050,7 +3050,7 @@ export class ChargyApp {
 
 const app = new ChargyApp(
                 "",
-                "&copy; 2018-2024 GraphDefined GmbH",
+                "&copy; 2018-2026 GraphDefined GmbH",
                 "https://chargy.charging.cloud/apps/web/versions",
                 true, // Show Feedback Section
                 ["support@charging.cloud", "?subject=Chargy%20WebApp%20Support"],
