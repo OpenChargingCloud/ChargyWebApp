@@ -270,17 +270,6 @@ export class Chargy {
         if (FileInfos == null || FileInfos.length == 0)
             return FileInfos;
 
-        //const require = createRequire(import.meta.url);
-
-        const decompress       = require('decompress');
-        const decompressTar    = require('decompress-tar');
-        const decompressTargz  = require('decompress-targz');
-        const decompressTarbz2 = require('decompress-tarbz2');
-       // const decompressTarxz  = require('decompress-tarxz'); // Does not compile!
-        const decompressUnzip  = require('decompress-unzip');
-        const decompressGz     = require('decompress-gz');
-        const decompressBzip2  = require('decompress-bzip2');
-
         //#endregion
 
         let archiveFound      = false;
@@ -357,17 +346,9 @@ export class Chargy {
                             try
                             {
 
-                                let compressedFiles:Array<chargyInterfaces.TarInfo> = await decompress(Buffer.from(FileInfo.data instanceof ArrayBuffer
-                                                                                                                       ? new Uint8Array(FileInfo.data)
-                                                                                                                       : FileInfo.data),
-                                                                                                       { plugins: [ decompressTar(),
-                                                                                                                    decompressTargz(),
-                                                                                                                    decompressTarbz2(),
-                                                                                                                    //decompressTarxz(),
-                                                                                                                    decompressUnzip(),
-                                                                                                                    decompressGz(),
-                                                                                                                    decompressBzip2()
-                                                                                                                ] });
+                                let compressedFiles = await this.extractArchive(FileInfo.name,
+                                                                                FileInfo.data,
+                                                                                filetype.mime.toString());
 
                                 if (compressedFiles.length == 0)
                                     continue;
@@ -518,6 +499,222 @@ export class Chargy {
 
     //#endregion
 
+    private async extractArchive(fileName: string,
+                                 data: ArrayBuffer | Uint8Array,
+                                 mimeType: string): Promise<Array<chargyInterfaces.TarInfo>> {
+
+        const archiveData = this.toUint8Array(data);
+
+        if (mimeType === "application/zip")
+            return await this.extractZipArchive(archiveData);
+
+        if (mimeType === "application/x-tar")
+            return this.extractTarArchive(archiveData);
+
+        if (mimeType === "application/gzip") {
+            const decompressed = await this.decompressStream(archiveData, "gzip");
+            const tarFiles     = this.extractTarArchive(decompressed);
+
+            return tarFiles.length > 0
+                       ? tarFiles
+                       : [{
+                             data:  Buffer.from(decompressed),
+                             mode:  0,
+                             mtime: "",
+                             path:  fileName.substring(0, fileName.lastIndexOf('.')),
+                             type:  "file"
+                         }];
+        }
+
+        if (mimeType === "application/x-bzip2") {
+            const seekBzip     = require('seek-bzip');
+            const decompressed = this.toUint8Array(seekBzip.decode(Buffer.from(archiveData)));
+            const tarFiles     = this.extractTarArchive(decompressed);
+
+            return tarFiles.length > 0
+                       ? tarFiles
+                       : [{
+                             data:  Buffer.from(decompressed),
+                             mode:  0,
+                             mtime: "",
+                             path:  fileName.substring(0, fileName.lastIndexOf('.')),
+                             type:  "file"
+                         }];
+        }
+
+        return [];
+
+    }
+
+    private extractTarArchive(data: Uint8Array): Array<chargyInterfaces.TarInfo> {
+
+        const files = new Array<chargyInterfaces.TarInfo>();
+
+        for (let offset = 0; offset + 512 <= data.byteLength;) {
+
+            const header = data.subarray(offset, offset + 512);
+
+            if (header.every(byte => byte === 0))
+                break;
+
+            const name = this.readTarString(header, 0,   100);
+            const size = this.readTarOctal (header, 124, 12);
+
+            if (name.length === 0 || size < 0)
+                break;
+
+            const prefix    = this.readTarString(header, 345, 155);
+            const path      = prefix.length > 0 ? prefix + "/" + name : name;
+            const typeFlag  = String.fromCharCode(header[156] ?? 0);
+            const dataStart = offset + 512;
+            const dataEnd   = dataStart + size;
+
+            if (dataEnd > data.byteLength)
+                break;
+
+            if (typeFlag !== "5")
+                files.push({
+                    data:  Buffer.from(data.subarray(dataStart, dataEnd)),
+                    mode:  this.readTarOctal(header, 100, 8),
+                    mtime: this.readTarOctal(header, 136, 12).toString(),
+                    path,
+                    type:  "file"
+                });
+
+            offset += 512 + Math.ceil(size / 512) * 512;
+
+        }
+
+        return files;
+
+    }
+
+    private async extractZipArchive(data: Uint8Array): Promise<Array<chargyInterfaces.TarInfo>> {
+
+        const files = new Array<chargyInterfaces.TarInfo>();
+        const view  = new DataView(data.buffer, data.byteOffset, data.byteLength);
+
+        const endOfCentralDirectory = this.findZipEndOfCentralDirectory(data);
+
+        if (endOfCentralDirectory < 0)
+            return files;
+
+        const entryCount             = view.getUint16(endOfCentralDirectory + 10, true);
+        let centralDirectoryOffset   = view.getUint32(endOfCentralDirectory + 16, true);
+
+        for (let index = 0; index < entryCount && centralDirectoryOffset + 46 <= data.byteLength; index++) {
+
+            if (view.getUint32(centralDirectoryOffset, true) !== 0x02014b50)
+                break;
+
+            const compression        = view.getUint16(centralDirectoryOffset + 10, true);
+            const compressedSize     = view.getUint32(centralDirectoryOffset + 20, true);
+            const uncompressedSize   = view.getUint32(centralDirectoryOffset + 24, true);
+            const fileNameLength     = view.getUint16(centralDirectoryOffset + 28, true);
+            const extraLength        = view.getUint16(centralDirectoryOffset + 30, true);
+            const commentLength      = view.getUint16(centralDirectoryOffset + 32, true);
+            const localHeaderOffset  = view.getUint32(centralDirectoryOffset + 42, true);
+            const pathStart          = centralDirectoryOffset + 46;
+            const pathEnd            = pathStart + fileNameLength;
+
+            if (pathEnd > data.byteLength ||
+                localHeaderOffset + 30 > data.byteLength ||
+                view.getUint32(localHeaderOffset, true) !== 0x04034b50)
+                break;
+
+            const localNameLength    = view.getUint16(localHeaderOffset + 26, true);
+            const localExtraLength   = view.getUint16(localHeaderOffset + 28, true);
+            const dataStart          = localHeaderOffset + 30 + localNameLength + localExtraLength;
+            const dataEnd          = dataStart + compressedSize;
+
+            if (dataEnd > data.byteLength)
+                break;
+
+            const path           = new TextDecoder("utf-8").decode(data.subarray(pathStart, pathEnd));
+            const compressedData = data.subarray(dataStart, dataEnd);
+
+            if (!path.endsWith("/")) {
+
+                let fileData: Uint8Array;
+
+                if (compression === 0)
+                    fileData = compressedData;
+
+                else if (compression === 8)
+                    fileData = await this.decompressStream(compressedData, "deflate-raw");
+
+                else
+                    fileData = new Uint8Array(0);
+
+                if (compression === 0 || compression === 8)
+                    files.push({
+                        data:  Buffer.from(fileData),
+                        mode:  0,
+                        mtime: "",
+                        path,
+                        type:  "file"
+                    });
+
+                if (uncompressedSize > 0 && fileData.byteLength !== uncompressedSize)
+                    console.debug("Unexpected ZIP entry size for '" + path + "'!");
+
+            }
+
+            centralDirectoryOffset = pathEnd + extraLength + commentLength;
+
+        }
+
+        return files;
+
+    }
+
+    private async decompressStream(data: Uint8Array, format: CompressionFormat): Promise<Uint8Array> {
+
+        const buffer = data.buffer.slice(data.byteOffset, data.byteOffset + data.byteLength) as ArrayBuffer;
+        const stream = new Blob([ buffer ]).stream().pipeThrough(new DecompressionStream(format));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
+
+    }
+
+    private findZipEndOfCentralDirectory(data: Uint8Array): number {
+
+        const view      = new DataView(data.buffer, data.byteOffset, data.byteLength);
+        const maxOffset = Math.max(0, data.byteLength - 65557);
+
+        for (let offset = data.byteLength - 22; offset >= maxOffset; offset--)
+            if (view.getUint32(offset, true) === 0x06054b50)
+                return offset;
+
+        return -1;
+
+    }
+
+    private toUint8Array(data: ArrayBuffer | Uint8Array): Uint8Array {
+
+        return data instanceof Uint8Array
+                   ? data
+                   : new Uint8Array(data);
+
+    }
+
+    private readTarString(data: Uint8Array, offset: number, length: number): string {
+
+        let end = offset;
+
+        while (end < offset + length && data[end] !== 0)
+            end++;
+
+        return new TextDecoder("utf-8").decode(data.subarray(offset, end)).trim();
+
+    }
+
+    private readTarOctal(data: Uint8Array, offset: number, length: number): number {
+
+        const value = this.readTarString(data, offset, length).replace(/\0/g, "").trim();
+        return value.length > 0 ? parseInt(value, 8) : 0;
+
+    }
+
 
     //#region DetectAndConvertContentFormat(FileInfos)
 
@@ -622,6 +819,8 @@ export class Chargy {
         }
 
         //#endregion
+
+        expandedFiles = await this.decompressFiles(expandedFiles);
 
         //#region Process JSON/XML/text files
 
