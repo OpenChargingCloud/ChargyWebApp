@@ -1673,7 +1673,7 @@ export class OCMF {
 
                 OCMFJSONDocument.publicKey ??= PublicKey;
 
-                let publicKeyBytes:ArrayBuffer|null = null;
+                let publicKeyBytes:Buffer|null = null;
 
                 if (typeof OCMFJSONDocument.publicKey === 'string')
                 {
@@ -1709,7 +1709,7 @@ export class OCMF {
                                 break;
 
                             case "base32":
-                                publicKeyBytes = Buffer.from(this.chargy.base32Decode(publicKeyBytes, 'RFC4648'));
+                                publicKeyBytes = Buffer.from(this.chargy.base32Decode(OCMFJSONDocument.publicKey, 'RFC4648'));
                                 break;
 
                             case 'base64':
@@ -1736,7 +1736,7 @@ export class OCMF {
                         else if (base32Regex.test(OCMFJSONDocument.publicKey))
                         {
                             PublicKeyEncoding  = 'base32';
-                            publicKeyBytes     = Buffer.from(this.chargy.base32Decode(publicKeyBytes, 'RFC4648'));
+                            publicKeyBytes     = Buffer.from(this.chargy.base32Decode(OCMFJSONDocument.publicKey, 'RFC4648'));
                         }
 
                         else if (base64Regex.test(OCMFJSONDocument.publicKey))

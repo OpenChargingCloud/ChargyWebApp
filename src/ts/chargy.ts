@@ -298,9 +298,9 @@ export class Chargy {
                     pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorkerSrc;
 
                     const pdfDocument  = fileInfo.data
-                                            ? await pdfjsLib.getDocument(fileInfo.data).promise
+                                            ? await pdfjsLib.getDocument({ data: fileInfo.data }).promise
                                             : fileInfo.path
-                                                  ? await pdfjsLib.getDocument(fileInfo.path).promise
+                                                  ? await pdfjsLib.getDocument({ url: fileInfo.path }).promise
                                                   : null;
 
                     if (pdfDocument)

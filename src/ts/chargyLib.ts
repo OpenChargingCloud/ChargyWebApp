@@ -717,12 +717,12 @@ export function pad(text: string|undefined, paddingValue: number) {
  * @param message a text of data view
  * @returns true, when the given text exists and is a valid string
  */
-export async function sha256(message: string|DataView): Promise<string> {
+export async function sha256(message: string | DataView<ArrayBuffer>): Promise<string> {
 
     let hashBuffer: ArrayBuffer | null = null;
 
     if (typeof message === 'string')
-        hashBuffer = await crypto.subtle.digest('SHA-256', Buffer.from(message, 'utf8'));
+        hashBuffer = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(message));
     else
         hashBuffer = await crypto.subtle.digest('SHA-256', message);
 
@@ -738,12 +738,12 @@ export async function sha256(message: string|DataView): Promise<string> {
  * @param message a text of data view
  * @returns true, when the given text exists and is a valid string
  */
-export async function sha384(message: string|DataView): Promise<string> {
+export async function sha384(message: string | DataView<ArrayBuffer>): Promise<string> {
 
     let hashBuffer: ArrayBuffer | null = null;
 
     if (typeof message === 'string')
-        hashBuffer = await crypto.subtle.digest('SHA-384', Buffer.from(message, 'utf8'));
+        hashBuffer = await crypto.subtle.digest('SHA-384', new TextEncoder().encode(message));
     else
         hashBuffer = await crypto.subtle.digest('SHA-384', message);
 
@@ -759,12 +759,12 @@ export async function sha384(message: string|DataView): Promise<string> {
  * @param message a text of data view
  * @returns true, when the given text exists and is a valid string
  */
-export async function sha512(message: string|DataView): Promise<string> {
+export async function sha512(message: string | DataView<ArrayBuffer>): Promise<string> {
 
     let hashBuffer: ArrayBuffer | null = null;
 
     if (typeof message === 'string')
-        hashBuffer = await crypto.subtle.digest('SHA-512', Buffer.from(message, 'utf8'));
+        hashBuffer = await crypto.subtle.digest('SHA-512', new TextEncoder().encode(message));
     else
         hashBuffer = await crypto.subtle.digest('SHA-512', message);
 

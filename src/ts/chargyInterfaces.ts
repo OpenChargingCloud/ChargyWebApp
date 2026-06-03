@@ -806,14 +806,24 @@ export interface IFileInfo {
     name:           string,
     path?:          string,
     type?:          string,
-    data?:          ArrayBuffer,
+    data?:          ArrayBuffer | Uint8Array,
     info?:          string,
     error?:         string,
     exception?:     any
 }
 
 export function isIFileInfo(obj: any): obj is IFileInfo {
-    return obj.status !== undefined && obj.name && typeof obj.name === 'string' && obj.data && obj.data instanceof ArrayBuffer;
+    return obj != null &&
+           typeof obj.name === 'string' &&
+           (
+               obj.data === undefined ||
+               obj.data instanceof ArrayBuffer ||
+               obj.data instanceof Uint8Array
+           ) &&
+           (
+               obj.path === undefined ||
+               typeof obj.path === 'string'
+           );
 }
 
 export interface IExtendedFileInfo extends IFileInfo {

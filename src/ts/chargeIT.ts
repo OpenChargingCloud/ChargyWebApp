@@ -112,7 +112,7 @@ export class ChargeIT {
             const additionalInfo_indexes_logBook             = additionalInfo_indexes.logBook;
 
             const chargePoint                                = signedMeterValue.chargePoint;
-            const chargePoint_softwareVersion                = chargePoint.softwareVersion;
+            const chargePoint_softwareVersion                = chargePoint?.softwareVersion ?? "";
 
             //#endregion
 
@@ -163,8 +163,8 @@ export class ChargeIT {
                 chargyLib.isMandatoryNumber     (additionalInfo_indexes_timer)              &&
                 chargyLib.isMandatoryString     (additionalInfo_indexes_logBook)            &&
 
-                chargyLib.isMandatoryJSONObject (chargePoint)                               &&
-                chargyLib.isMandatoryString     (chargePoint_softwareVersion)) {
+                (chargePoint === undefined || chargyLib.isOptionalJSONObject(chargePoint))   &&
+                chargyLib.isOptionalString      (chargePoint_softwareVersion)) {
 
                     CTRArray.push({
                         "timestamp":            timestamp,
