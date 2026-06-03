@@ -15,12 +15,13 @@
  * limitations under the License.
  */
 
-import type { Chargy }        from './chargy'
-import * as chargyInterfaces  from './chargyInterfaces'
-import * as chargyLib         from './chargyLib'
-import { EMHCrypt01 }         from './EMHCrypt01'
-import { Alfen }            from './Alfen'
-import { OCMF }               from './OCMF'
+import type { Chargy }            from './chargy'
+import * as chargyInterfaces      from './chargyInterfaces'
+import * as chargyLib             from './chargyLib'
+import { EMHCrypt01 }             from './EMHCrypt01'
+import { Alfen }                  from './Alfen'
+import { OCMF }                   from './OCMF'
+import { getElementsByLocalName } from './chargyLib'
 
 interface XMLContainerCommonFormat {
     publicKey:             string;
@@ -297,7 +298,7 @@ export class XMLContainer {
         {
             return {
                 status:    chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
-                message:   "Exception occured: " + (exception instanceof Error ? exception.message : exception),
+                message:   "Exception occured while trying to parse XML: " + (exception instanceof Error ? exception.message : exception),
                 certainty: 0
             }
         }

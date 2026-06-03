@@ -15,7 +15,6 @@
  * limitations under the License.
  */
 
-//import { Buffer }                           from 'node:buffer';
 import { Buffer }                           from 'buffer';
 import { fileTypeFromBuffer }               from 'file-type';
 
@@ -76,6 +75,146 @@ export class Chargy {
         this.asn1            = asn1;
         this.base32Decode    = base32Decode;
         this.showPKIDetails  = ShowPKIDetails;
+
+    }
+
+
+    private PublicKeyIdFromFileName(fileName: string): string {
+
+        return (fileName.indexOf('.') > -1
+                    ? fileName.substring(0, fileName.indexOf('.'))
+                    : fileName).replace(/[-_]?public[-_]?key/i, "");
+
+    }
+
+
+    private TryToParseDERPublicKey(keyId: string,
+                                   publicKeyBuffer: Buffer): chargyInterfaces.IPublicKeyLookup & { "@id": string, "@context": string } {
+
+        // https://lapo.it/asn1js/ for a visual check...
+        // https://github.com/indutny/asn1.js
+        const ASN1_OIDs      = this.asn1.define('OIDs', function() {
+            //@ts-ignore
+            this.key('oid').objid()
+        });
+
+        const ASN1_PublicKey = this.asn1.define('PublicKey', function() {
+            //@ts-ignore
+            this.seq().obj(
+                //@ts-ignore
+                this.key('oids').seqof(ASN1_OIDs),
+                //@ts-ignore
+                this.key('publicKey').bitstr()
+            );
+        });
+
+        const publicKeyDER   = ASN1_PublicKey.decode(publicKeyBuffer, 'der');
+
+        const KeyType_OID    = publicKeyDER.oids[0].join(".") as string;
+        let   KeyType        = "unknown";
+        switch (KeyType_OID)
+        {
+            case "1.2.840.10045.2.1":
+                KeyType      = "ecPublicKey";   // ANSI X9.62 public key type
+                break;
+        }
+
+        const Curve_OID      = publicKeyDER.oids[1].join(".") as string;
+        let   Curve          = "unknown";
+        switch (Curve_OID)
+        {
+
+            // Koblitz 224-bit curve
+            case "1.3.132.0.32":
+                Curve        = "secp224k1";
+                break;
+
+            // NIST/ANSI X9.62 named 256-bit elliptic curve used with SHA256
+            case "1.2.840.10045.3.1.7":
+                Curve        = "secp256r1";    // also: ANSI prime256v1, NIST P-256
+                break;
+
+            // NIST/ANSI X9.62 named 384-bit elliptic curve used with SHA384
+            case "1.3.132.0.34":
+                Curve        = "secp384r1";    // also: ANSI prime384v1, NIST P-384
+                break;
+
+            // NIST/ANSI X9.62 named 521-bit elliptic curve used with SHA512
+            case "1.3.132.0.35":
+                Curve        = "secp521r1";    // also: ANSI prime521v1, NIST P-521
+                break;
+
+        }
+
+        return {
+            "@id":       keyId,
+            "@context":  "https://open.charging.cloud/contexts/CTR+json",
+            publicKeys: [
+                {
+                    "@id":            keyId,
+                    "@context":       "https://open.charging.cloud/contexts/publicKey+json",
+                    "subject":        keyId,
+                    type: {
+                        oid:          KeyType_OID,
+                        name:         KeyType
+                    },
+                    algorithm: {
+                        oid:          Curve_OID,
+                        name:         Curve
+                    },
+                    value:      chargyLib.buf2hex(publicKeyDER.publicKey.data),
+                    certainty:  0
+                }
+            ]
+        };
+
+    }
+
+
+    private IsHexEncodedPublicKeyFile(fileName:     string,
+                                      textContent?: string): boolean {
+
+        if (textContent == null)
+            return false;
+
+        const fileNameLower = fileName.toLowerCase();
+        const publicKeyFile = fileNameLower.includes("publickey") ||
+                              fileNameLower.includes("public-key") ||
+                              fileNameLower.includes("public_key");
+        const publicKeyHEX  = textContent.replace(/\s+/g, "");
+
+        return publicKeyFile                    &&
+               publicKeyHEX.length >= 80       &&
+               publicKeyHEX.length % 2 === 0   &&
+               publicKeyHEX.startsWith("30")   &&
+               /^[0-9a-fA-F]+$/.test(publicKeyHEX);
+
+    }
+
+
+    private TryToGetDERPublicKeyHEX(fileName:     string,
+                                    textContent?: string): string|undefined {
+
+        if (textContent == null)
+            return undefined;
+
+        if (textContent.startsWith("-----BEGIN PUBLIC KEY-----") &&
+            textContent.endsWith  ("-----END PUBLIC KEY-----"))
+        {
+            const publicKeyPEM = textContent.replace("-----BEGIN PUBLIC KEY-----", "").
+                                             replace("-----END PUBLIC KEY-----",   "").
+                                             split  ('\n').
+                                             map    ((line) => line.trim()).
+                                             filter ((line) => line !== '' && !line.startsWith('#')).
+                                             join   ("");
+
+            return chargyLib.buf2hex(Buffer.from(publicKeyPEM, 'base64'));
+        }
+
+        if (this.IsHexEncodedPublicKeyFile(fileName, textContent))
+            return textContent.replace(/\s+/g, "");
+
+        return undefined;
 
     }
 
@@ -822,6 +961,24 @@ export class Chargy {
 
         expandedFiles = await this.decompressFiles(expandedFiles);
 
+        const publicKeyHEXLookup = new Map<string, string>();
+
+        for (let expandedFile of expandedFiles)
+        {
+            let textContent = new TextDecoder('utf-8').decode(expandedFile.data)?.trim();
+
+            // Catches EFBBBF (UTF-8 BOM) because the buffer-to-string
+            // conversion translates it to FEFF (UTF-16 BOM)
+            if (textContent?.charCodeAt(0) === 0xFEFF)
+                textContent = textContent.substring(1);
+
+            const publicKeyHEX = this.TryToGetDERPublicKeyHEX(expandedFile.name, textContent);
+
+            if (publicKeyHEX != null)
+                publicKeyHEXLookup.set(this.PublicKeyIdFromFileName(expandedFile.name), publicKeyHEX);
+
+        }
+
         //#region Process JSON/XML/text files
 
         for (let expandedFile of expandedFiles)
@@ -858,12 +1015,37 @@ export class Chargy {
                                 break;
 
                             case "http://transparenz.software/schema/2018/07":
-                                processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
+                                // try
+                                // {
+                                    processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
+                                // }
+                                // catch (exception)
+                                // {
+                                //     processedFile.result = {
+                                //         status:     chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
+                                //         exception:  exception,
+                                //         certainty:  0
+                                //     };
+                                // }
+
+                                // if (processedFile.result.status !== undefined &&
+                                //     processedFile.result.status !== chargyInterfaces.SessionVerificationResult.Unvalidated)
+                                // {
+                                //     processedFile.result = await new XMLContainer(this).tryToParseXMLContainer(XMLDocument);
+                                // }
+
                                 break;
 
                             // The SAFE transparency software v1.0 does not understand its own
                             // XML namespace. Therefore we have to guess the format.
                             case "":
+                                // if (XMLDocument.documentElement?.nodeName  === "values" ||
+                                //     XMLDocument.documentElement?.localName === "values")
+                                // {
+                                //     processedFile.result = await new XMLContainer(this).tryToParseXMLContainer(XMLDocument);
+                                //     break;
+                                // }
+
                                 processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
 
                                 if (processedFile.result.status && processedFile.result.status !== chargyInterfaces.SessionVerificationResult.Unvalidated)
@@ -886,12 +1068,9 @@ export class Chargy {
                         // XML namespace. Therefore we have to guess the format.
                         processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
 
-                        if (processedFile.result.status &&
-                           (//processedFile.result.status === chargyInterfaces.SessionVerificationResult.Unvalidated ||
-                            processedFile.result.status === chargyInterfaces.SessionVerificationResult.InvalidSignature))
-                        {
+                        // Maybe another XML format, e.g. the XML container format?
+                        if (processedFile.result.status === chargyInterfaces.SessionVerificationResult.InvalidSessionFormat)
                             processedFile.result = await new XMLContainer(this).tryToParseXMLContainer(XMLDocument);
-                        }
 
                     }
 
@@ -903,7 +1082,7 @@ export class Chargy {
                         status:     chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
                         message:    this.GetLocalizedMessage("UnknownOrInvalidXMLChargeTransparencyFormat"),
                         exception:  exception,
-                        certainty: 0
+                        certainty:  0
                     }
                 }
             }
@@ -913,10 +1092,28 @@ export class Chargy {
             //#region OCMF processing
 
             else if (textContent?.startsWith("OCMF"))
-                processedFile.result = await new OCMF(this).TryToParseOCMFDocument(textContent);
+            {
+                const publicKeyHEX = publicKeyHEXLookup.get(this.PublicKeyIdFromFileName(processedFile.name)) ??
+                                     (publicKeyHEXLookup.size === 1 ? publicKeyHEXLookup.values().next().value : undefined);
+
+                processedFile.result = await new OCMF(this).TryToParseOCMFDocument(
+                    textContent,
+                    publicKeyHEX,
+                    publicKeyHEX != null ? "hex" : undefined
+                );
+            }
 
             else if (textContent?.startsWith("\"OCMF") && textContent?.endsWith("\""))
-                processedFile.result = await new OCMF(this).TryToParseOCMFDocument(textContent.substring(1, textContent.length - 1));
+            {
+                const publicKeyHEX = publicKeyHEXLookup.get(this.PublicKeyIdFromFileName(processedFile.name)) ??
+                                     (publicKeyHEXLookup.size === 1 ? publicKeyHEXLookup.values().next().value : undefined);
+
+                processedFile.result = await new OCMF(this).TryToParseOCMFDocument(
+                    textContent.substring(1, textContent.length - 1),
+                    publicKeyHEX,
+                    publicKeyHEX != null ? "hex" : undefined
+                );
+            }
 
             //#endregion
 
@@ -939,9 +1136,7 @@ export class Chargy {
                 try
                 {
 
-                    const keyId          = (processedFile.name.indexOf('.') > -1
-                                                ? processedFile.name.substring(0, processedFile.name.indexOf('.'))
-                                                : processedFile.name).replace("-publicKey", "");
+                    const keyId          = this.PublicKeyIdFromFileName(processedFile.name);
 
                     const publicKeyPEM   = textContent.replace("-----BEGIN PUBLIC KEY-----", "").
                                                     replace("-----END PUBLIC KEY-----",   "").
@@ -950,82 +1145,38 @@ export class Chargy {
                                                     filter ((line) => line !== '' && !line.startsWith('#')).
                                                     join   ("");
 
-                    // https://lapo.it/asn1js/ for a visual check...
-                    // https://github.com/indutny/asn1.js
-                    const ASN1_OIDs      = this.asn1.define('OIDs', function() {
-                        //@ts-ignore
-                        this.key('oid').objid()
-                    });
+                    processedFile.result = this.TryToParseDERPublicKey(
+                        keyId,
+                        Buffer.from(publicKeyPEM, 'base64')
+                    );
 
-                    const ASN1_PublicKey = this.asn1.define('PublicKey', function() {
-                        //@ts-ignore
-                        this.seq().obj(
-                            //@ts-ignore
-                            this.key('oids').seqof(ASN1_OIDs),
-                            //@ts-ignore
-                            this.key('publicKey').bitstr()
-                        );
-                    });
-
-                    const publicKeyDER   = ASN1_PublicKey.decode(Buffer.from(publicKeyPEM, 'base64'), 'der');
-
-                    const KeyType_OID    = publicKeyDER.oids[0].join(".") as string;
-                    let   KeyType        = "unknown";
-                    switch (KeyType_OID)
-                    {
-                        case "1.2.840.10045.2.1":
-                            KeyType      = "ecPublicKey";   // ANSI X9.62 public key type
-                            break;
-                    }
-
-                    const Curve_OID      = publicKeyDER.oids[1].join(".") as string;
-                    let   Curve          = "unknown";
-                    switch (Curve_OID)
-                    {
-
-                        // Koblitz 224-bit curve
-                        case "1.3.132.0.32":
-                            Curve        = "secp224k1";
-                            break;
-
-                        // NIST/ANSI X9.62 named 256-bit elliptic curve used with SHA256
-                        case "1.2.840.10045.3.1.7":
-                            Curve        = "secp256r1";    // also: ANSI prime256v1, NIST P-256
-                            break;
-
-                        // NIST/ANSI X9.62 named 384-bit elliptic curve used with SHA384
-                        case "1.3.132.0.34":
-                            Curve        = "secp384r1";    // also: ANSI prime384v1, NIST P-384
-                            break;
-
-                        // NIST/ANSI X9.62 named 521-bit elliptic curve used with SHA512
-                        case "1.3.132.0.35":
-                            Curve        = "secp521r1";    // also: ANSI prime521v1, NIST P-521
-                            break;
-
-                    }
-
+                }
+                catch (exception)
+                {
                     processedFile.result = {
-                        "@id":       keyId,
-                        "@context":  "https://open.charging.cloud/contexts/CTR+json",
-                        publicKeys: [
-                            {
-                                "@id":            keyId,
-                                "@context":       "https://open.charging.cloud/contexts/publicKey+json",
-                                "subject":        keyId,
-                                type: {
-                                    oid:          KeyType_OID,
-                                    name:         KeyType
-                                },
-                                algorithm: {
-                                    oid:          Curve_OID,
-                                    name:         Curve
-                                },
-                                value:  chargyLib.buf2hex(publicKeyDER.publicKey.data),
-                                certainty: 0
-                            }
-                        ]
-                    };
+                        status:     chargyInterfaces.SessionVerificationResult.InvalidPublicKey,
+                        message:    this.GetLocalizedMessage("UnknownOrInvalidPublicKeyFormat"),
+                        exception:  exception,
+                        certainty: 0
+                    }
+                }
+
+            }
+
+            //#endregion
+
+            //#region Public key processing (HEX encoded DER format)
+
+            else if (this.IsHexEncodedPublicKeyFile(processedFile.name, textContent))
+            {
+
+                try
+                {
+
+                    processedFile.result = this.TryToParseDERPublicKey(
+                        this.PublicKeyIdFromFileName(processedFile.name),
+                        Buffer.from(textContent.replace(/\s+/g, ""), 'hex')
+                    );
 
                 }
                 catch (exception)
@@ -1772,7 +1923,5 @@ export class Chargy {
         return mergedCTR;
 
     }
-
-
 
 }

@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:3ab5c7fd-22b5-4b66-9732-b39bbaca80ee",
+  "serialNumber": "urn:uuid:767cb8bc-331e-4daf-855e-199fec1a5044",
   "metadata": {
-    "timestamp": "2026-06-03T14:14:34.691Z",
+    "timestamp": "2026-06-03T17:26:12.277Z",
     "tools": {
       "components": [
         {
@@ -208,6 +208,52 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@fortawesome/fontawesome-free"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "dom",
+      "group": "@oozcitak",
+      "version": "2.0.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+      "author": "Ozgur Ozcitak",
+      "description": "A modern DOM implementation",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/dom@2.0.2",
+      "externalReferences": [
+        {
+          "url": "git://github.com/oozcitak/dom.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/dom",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/dom/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-2.0.2.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/dom"
         }
       ]
     },
@@ -3370,6 +3416,144 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/xmlbuilder2"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "infra",
+      "group": "@oozcitak",
+      "version": "2.0.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "author": "Ozgur Ozcitak",
+      "description": "An implementation of the Infra Living Standard",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/infra@2.0.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/oozcitak/infra.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/infra",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/infra/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-2.0.2.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/infra"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "url",
+      "group": "@oozcitak",
+      "version": "3.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+      "author": "Ozgur Ozcitak",
+      "description": "An implementation of the URL Living Standard",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/url@3.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/oozcitak/url.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/url",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/url/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/url/-/url-3.0.0.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/url"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "util",
+      "group": "@oozcitak",
+      "version": "10.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
+      "author": "Ozgur Ozcitak",
+      "description": "Utility functions",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/util@10.0.0",
+      "externalReferences": [
+        {
+          "url": "git://github.com/oozcitak/util.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/util",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/util/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/util/-/util-10.0.0.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/util"
         }
       ]
     },
@@ -11535,144 +11719,6 @@
     },
     {
       "type": "library",
-      "name": "dom",
-      "group": "@oozcitak",
-      "version": "2.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
-      "author": "Ozgur Ozcitak",
-      "description": "A modern DOM implementation",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40oozcitak/dom@2.0.2",
-      "externalReferences": [
-        {
-          "url": "git://github.com/oozcitak/dom.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/dom",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/dom/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-2.0.2.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/dom"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "infra",
-      "group": "@oozcitak",
-      "version": "2.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-      "author": "Ozgur Ozcitak",
-      "description": "An implementation of the Infra Living Standard",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40oozcitak/infra@2.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/oozcitak/infra.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/infra",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/infra/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-2.0.2.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/infra"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "util",
-      "group": "@oozcitak",
-      "version": "10.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
-      "author": "Ozgur Ozcitak",
-      "description": "Utility functions",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40oozcitak/util@10.0.0",
-      "externalReferences": [
-        {
-          "url": "git://github.com/oozcitak/util.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/util",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/util/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/util/-/util-10.0.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/util"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "js-yaml",
       "version": "4.2.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0",
@@ -19613,52 +19659,6 @@
     },
     {
       "type": "library",
-      "name": "url",
-      "group": "@oozcitak",
-      "version": "3.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
-      "author": "Ozgur Ozcitak",
-      "description": "An implementation of the URL Living Standard",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40oozcitak/url@3.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/oozcitak/url.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/url",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/url/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/url/-/url-3.0.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/url"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "argparse",
       "version": "2.0.1",
       "bom-ref": "chargytransparenzsoftware@1.4.7|argparse@2.0.1",
@@ -27512,6 +27512,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@4.2.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
         "chargytransparenzsoftware@1.4.7|@types/decompress@4.2.7",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
@@ -27570,6 +27571,14 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/decompress@4.2.7",
@@ -28116,6 +28125,22 @@
         "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
         "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bn.js@5.2.0",
@@ -29168,23 +29193,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|spdx-license-ids@3.0.22"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|argparse@2.0.1"
@@ -30152,13 +30160,6 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|spdx-exceptions@2.5.0",
         "chargytransparenzsoftware@1.4.7|spdx-license-ids@3.0.22"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
       ]
     },
     {

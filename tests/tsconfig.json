@@ -7,6 +7,8 @@
     },
     "files": [],
     "include": [
-        "**/*.test.ts"
+        "testHelper.ts",
+        "**/*.test.ts",
+        "**/*.tests.ts"
     ]
 }
