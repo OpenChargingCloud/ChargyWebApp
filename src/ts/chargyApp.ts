@@ -573,7 +573,7 @@ export class ChargyApp {
             var files = ev?.target?.files;
 
             if (files != null)
-                this.readFilesFromDiskInBrowser(files[0]);
+                this.readFilesFromDiskInBrowser(files);
 
         }
 
@@ -602,7 +602,7 @@ export class ChargyApp {
             event.preventDefault();
             (event.currentTarget as HTMLDivElement)?.classList.remove('over');
             if (event.dataTransfer?.files != null)
-                this.readFilesFromDiskInBrowser(event.dataTransfer.files[0] as Blob);
+                this.readFilesFromDiskInBrowser(event.dataTransfer.files);
         }, false);
 
         //#endregion
@@ -618,7 +618,7 @@ export class ChargyApp {
 
         this.leaflet = L;
         this.map   = L.map(document.getElementById('map') as HTMLElement);
-        this.map.setView([49.7325504, 10.1424442], 10);
+        this.map.setView([50.9279287, 11.5731785], 12);
 
         const accessToken = 'pk.eyJ1IjoiYWh6ZiIsImEiOiJOdEQtTkcwIn0.Cn0iGqUYyA6KPS8iVjN68w';
 
@@ -698,6 +698,7 @@ export class ChargyApp {
                 (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["pdfjs-dist"]?.             replace(/[^0-9\.]/g, "");
                 (this.openSourceLibsDiv.querySelector("#seekBzip")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["seek-bzip"]?.              replace(/[^0-9\.]/g, "");
                 (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["file-type"]?.              replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["jsqr"]?.                   replace(/[^0-9\.]/g, "");
                 (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["asn1.js"]?.                replace(/[^0-9\.]/g, "");
                 (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["buffer"]?.                 replace(/[^0-9\.]/g, "");
                 (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["base32-decode"]?.          replace(/[^0-9\.]/g, "");
@@ -871,44 +872,47 @@ export class ChargyApp {
 
     }
 
-    private readFilesFromDiskInBrowser(file: Blob)
+    private async readFilesFromDiskInBrowser(files: Blob|File|FileList)
     {
 
-        const reader  = new FileReader();
-        const that    = this;
+        const filesToLoad = files instanceof FileList
+                                ? Array.from(files)
+                                : [ files ];
 
-        reader.onload = function(loadEvent) {
+        const loadedFiles = new Array<chargyInterfaces.IFileInfo>();
 
-            const fileContent = loadEvent.target?.result; // Hier ist der Inhalt der Datei
-            const filename    = { name: "abc.txt", path: "file://abc.txt", type: "text/plain" };
+        for (const file of filesToLoad) {
 
-            let loadedFiles = new Array<chargyInterfaces.IFileInfo>();
+            try {
 
-            if (typeof(fileContent) === 'string')
+                const data = await file.arrayBuffer();
+                const name = file instanceof File && file.name.trim() !== ""
+                                 ? file.name
+                                 : "unknown";
+
                 loadedFiles.push({
-                    "name":  filename.name,
-                    "path":  filename.path,
-                    "type":  filename.type,
-                    "data":  that.stringToArrayBuffer(fileContent)
+                    name: name,
+                    path: "file://" + name,
+                    type: file.type,
+                    data: data
                 });
 
-            else if (fileContent)
+            }
+            catch (exception) {
+
                 loadedFiles.push({
-                    "name":  filename.name,
-                    "path":  filename.path,
-                    "type":  filename.type,
-                    "data":  fileContent
+                    name:       file instanceof File ? file.name : "unknown",
+                    type:       file.type,
+                    error:      "Fehlerhafter Transparenzdatensatz!",
+                    exception:  exception
                 });
 
-            that.detectAndConvertContentFormat(loadedFiles);
+            }
 
-        };
+        }
 
-        reader.onerror = function() {
-            console.error("Beim Lesen der Datei ist ein Fehler aufgetreten.");
-        };
-
-        reader.readAsArrayBuffer(file);
+        if (loadedFiles.length > 0)
+            this.detectAndConvertContentFormat(loadedFiles);
 
     }
 
@@ -3053,12 +3057,7 @@ const app = new ChargyApp(
                 "&copy; 2018-2026 GraphDefined GmbH",
                 "https://chargy.charging.cloud/apps/web/versions",
                 true, // Show Feedback Section
-                ["support@charging.cloud", "?subject=Chargy%20WebApp%20Support"],
+                ["support@open.charging.cloud", "?subject=Chargy%20WebApp%20Support"],
                 undefined, //["+4993219319101",         "+49 9321 9319 101"],
                 "https://chargy.charging.cloud/desktop/issues"
             );
-
-// const app = new ChargyApp("https://chargepoint.charging.cloud/chargy/versions", //"https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/versions/versions.json",
-//                           ["support.eu@chargepoint.com", "?subject=Chargy%20Supportanfrage"],
-//                           ["+496995307383",              "+49 69 95307383"],
-//                           "https://chargepoint.charging.cloud/chargy/issues");

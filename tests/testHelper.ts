@@ -17,6 +17,8 @@ import type {
 
 export {
     expectVerificationReport,
+    expectVerificationReportInline,
+    expectBinaryVerificationReport,
     expectArchiveVerificationReport,
     expectVerificationReportWithPublicKey
 }
@@ -72,6 +74,24 @@ function archiveMimeType(fileName: string): string {
     if (fileName.endsWith(".pdf"))
         return "application/pdf";
 
+    if (fileName.endsWith(".png"))
+        return "image/png";
+
+    if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg"))
+        return "image/jpeg";
+
+    if (fileName.endsWith(".svg"))
+        return "image/svg+xml";
+
+    if (fileName.endsWith(".webp"))
+        return "image/webp";
+
+    if (fileName.endsWith(".gif"))
+        return "image/gif";
+
+    if (fileName.endsWith(".bmp"))
+        return "image/bmp";
+
     return "binary/octet-stream";
 
 }
@@ -114,6 +134,15 @@ async function expectVerificationReport(inputFixture: string, expectedFixture: s
 
 }
 
+async function expectVerificationReportInline(inputFixture: string, expected: any) {
+
+    const input  = readFixture(inputFixture);
+    const report = await verifyChargeData(inputFixture, input);
+
+    expect(report).toMatchObject(expected);
+
+}
+
 async function expectArchiveVerificationReport(archiveFixture: string, expectedFixture: string) {
 
     const archive  = readBinaryFixture(archiveFixture);
@@ -123,6 +152,23 @@ async function expectArchiveVerificationReport(archiveFixture: string, expectedF
                                archiveFixture,
                                archive,
                                archiveMimeType(archiveFixture)
+                           );
+
+    const summary  = formatChargeDataVerificationReport(report);
+
+    expectReportLines(summary, expected);
+
+}
+
+async function expectBinaryVerificationReport(inputFixture: string, expectedFixture: string) {
+
+    const input    = readBinaryFixture(inputFixture);
+    const expected = readFixture(expectedFixture);
+
+    const report   = await verifyChargeData(
+                               inputFixture,
+                               input,
+                               archiveMimeType(inputFixture)
                            );
 
     const summary  = formatChargeDataVerificationReport(report);

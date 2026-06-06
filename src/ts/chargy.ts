@@ -29,6 +29,7 @@ import { OCMF, OCMFv1_x }                   from './OCMF'
 import { SAFEXML }                          from './SAFE_XML'
 import { XMLContainer }                     from './XMLContainer'
 import { OCPI }                             from './OCPI'
+import { readQRCodeTextFromImage }          from './qrReader'
 import * as chargyInterfaces                from './chargyInterfaces'
 import * as chargyLib                       from './chargyLib'
 import * as pdfjsLib                        from 'pdfjs-dist';
@@ -638,6 +639,88 @@ export class Chargy {
 
     //#endregion
 
+    //#region (private) readQRCodeImages(FileInfos)
+
+    private async readQRCodeImages(FileInfos: Array<chargyInterfaces.IFileInfo>): Promise<Array<chargyInterfaces.IFileInfo>> {
+
+        const expandedFileInfos = new Array<chargyInterfaces.IFileInfo>();
+
+        for (const FileInfo of FileInfos) {
+
+            if (this.isQRCodeImageFile(FileInfo)) {
+
+                const qrText = FileInfo.data != null
+                                   ? await readQRCodeTextFromImage(
+                                               FileInfo.data,
+                                               FileInfo.type ?? this.mimeTypeFromFileName(FileInfo.name)
+                                           )
+                                   : undefined;
+
+                if (qrText != null && qrText.trim() !== "") {
+                    expandedFileInfos.push({
+                        name:  FileInfo.name + ".qr.txt",
+                        path:  FileInfo.path,
+                        type:  "text/plain",
+                        data:  new TextEncoder().encode(qrText.trim()),
+                        info:  "QR code text extracted from " + FileInfo.name
+                    });
+                    continue;
+                }
+
+            }
+
+            expandedFileInfos.push(FileInfo);
+
+        }
+
+        return expandedFileInfos;
+
+    }
+
+    private isQRCodeImageFile(FileInfo: chargyInterfaces.IFileInfo): boolean {
+
+        const mimeType = FileInfo.type?.toLowerCase() ?? "";
+        const fileName = FileInfo.name. toLowerCase();
+
+        return mimeType.startsWith("image/") ||
+               fileName.endsWith(".png")    ||
+               fileName.endsWith(".jpg")    ||
+               fileName.endsWith(".jpeg")   ||
+               fileName.endsWith(".svg")    ||
+               fileName.endsWith(".webp")   ||
+               fileName.endsWith(".gif")    ||
+               fileName.endsWith(".bmp");
+
+    }
+
+    private mimeTypeFromFileName(fileName: string): string {
+
+        const lowerFileName = fileName.toLowerCase();
+
+        if (lowerFileName.endsWith(".png"))
+            return "image/png";
+
+        if (lowerFileName.endsWith(".jpg") || lowerFileName.endsWith(".jpeg"))
+            return "image/jpeg";
+
+        if (lowerFileName.endsWith(".webp"))
+            return "image/webp";
+
+        if (lowerFileName.endsWith(".svg"))
+            return "image/svg+xml";
+
+        if (lowerFileName.endsWith(".gif"))
+            return "image/gif";
+
+        if (lowerFileName.endsWith(".bmp"))
+            return "image/bmp";
+
+        return "application/octet-stream";
+
+    }
+
+    //#endregion
+
     private async extractArchive(fileName: string,
                                  data: ArrayBuffer | Uint8Array,
                                  mimeType: string): Promise<Array<chargyInterfaces.TarInfo>> {
@@ -963,7 +1046,8 @@ export class Chargy {
 
         //#endregion
 
-        expandedFiles = await this.decompressFiles(expandedFiles);
+        expandedFiles = await this.readQRCodeImages(expandedFiles);
+        expandedFiles = await this.decompressFiles  (expandedFiles);
 
         const publicKeyHEXLookup = new Map<string, string>();
 

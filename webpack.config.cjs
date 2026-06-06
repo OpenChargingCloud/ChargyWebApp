@@ -10,6 +10,11 @@ module.exports = {
   target:  'web',
   //devtool: "eval-source-map",  // Do not use in production!
   devtool: "source-map",
+  ignoreWarnings: [
+    warning =>
+      warning.module?.resource?.includes(`${path.sep}node_modules${path.sep}file-type${path.sep}source${path.sep}index.js`) &&
+      warning.message.includes('Critical dependency: the request of a dependency is an expression')
+  ],
   resolve: {
     extensions: [".ts", ".js"],
     fallback: {
