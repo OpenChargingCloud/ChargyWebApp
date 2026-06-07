@@ -286,19 +286,29 @@ export async function readQRCodeTextFromImage(data:       ArrayBuffer | Uint8Arr
         if (imageData == null)
             continue;
 
-        const qrCode = jsQR(
-            imageData.data,
-            imageData.width,
-            imageData.height,
-            { inversionAttempts: "attemptBoth" }
-        );
-
-        const qrText = qrCode?.data?.trim();
+        const qrText = readQRCodeTextFromImageData(imageData);
 
         if (qrText && qrText.length > 0)
             return qrText;
     }
 
     return undefined;
+
+}
+
+export function readQRCodeTextFromImageData(imageData: QRImageData): string | undefined {
+
+    const qrCode = jsQR(
+        imageData.data,
+        imageData.width,
+        imageData.height,
+        { inversionAttempts: "attemptBoth" }
+    );
+
+    const qrText = qrCode?.data?.trim();
+
+    return qrText && qrText.length > 0
+               ? qrText
+               : undefined;
 
 }
