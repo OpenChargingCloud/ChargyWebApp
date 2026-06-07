@@ -4,12 +4,16 @@ const HtmlWebpackPlugin    = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin    = require('copy-webpack-plugin');
 
+const modeArgIndex = process.argv.indexOf('--mode');
+const cliMode      = modeArgIndex >= 0 ? process.argv[modeArgIndex + 1] : undefined;
+const mode         = process.env.NODE_ENV === 'production' ? 'production' : cliMode || 'development';
+
 module.exports = {
-  mode:    'development',
+  mode,
   entry:   './src/ts/chargyApp.ts',
   target:  'web',
   //devtool: "eval-source-map",  // Do not use in production!
-  devtool: "source-map",
+  devtool: mode === 'production' ? false : 'source-map',
   ignoreWarnings: [
     warning =>
       warning.module?.resource?.includes(`${path.sep}node_modules${path.sep}file-type${path.sep}source${path.sep}index.js`) &&

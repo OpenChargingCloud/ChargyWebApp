@@ -40,6 +40,8 @@ npm start
 
 Your prefered web browser should automagically open http://localhost:1608
 
+For Linux production deployments, build the static web application and serve the generated `build/` directory with a web server such as nginx. See [Chargy WebApp on Linux](documentation/LinuxService.md).
+
 
 ## Future
 

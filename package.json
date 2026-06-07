@@ -12,6 +12,7 @@
     "clean": "rimraf ./build",
     "sbom": "cyclonedx-npm --output-format json --output-file sbom.json",
     "build": "npm run clean && npm run sbom && webpack --config webpack.config.cjs",
+    "build:production": "npm run clean && npm run sbom && webpack --config webpack.config.cjs --mode production",
     "start": "webpack serve --open",
     "test": "vitest run --config tests/vitest.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
