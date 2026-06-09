@@ -39,7 +39,17 @@ module.exports = {
       {
         test: /\.ts$/,
         include: path.resolve(__dirname, 'src/ts'),
-        use: [{ loader: 'ts-loader' }]
+        use: [{
+          loader: 'ts-loader',
+          options: {
+            compilerOptions: {
+              // tsconfig.json sets "noEmit": true to keep direct 'tsc' runs
+              // from littering src/ts with .js files — but ts-loader itself
+              // must emit, so override it here.
+              noEmit: false
+            }
+          }
+        }]
       },
       {
         // Only .scss files are included, that are included in a .ts file

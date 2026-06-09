@@ -1,0 +1,20 @@
+{
+
+    // TypeScript project used by ESLint for type-aware linting.
+    // The main tsconfig.json only lists the webpack entry point, but the
+    // linter needs every source and test file to be part of a project.
+
+    "extends": "./tsconfig.json",
+
+    "files":   [],
+
+    "include": [
+        "src/ts/**/*.ts",
+        "tests/**/*.ts"
+    ],
+
+    "exclude": [
+        "**/node_modules"
+    ]
+
+}
