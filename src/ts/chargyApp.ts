@@ -54,7 +54,7 @@ export class ChargyApp {
     public  defaultFeedbackHotline:             string[]            = [];
     public  defaultIssueURL:                    string              = "";
     public  packageJson:                        any                 = {};
-    public  i18n:                               any                 = {};
+    public  i18n:                               chargyInterfaces.I18NDictionary = {};
     public  UILanguage:                         string              = "de";
 
     private currentAppInfos:                    any                 = null;

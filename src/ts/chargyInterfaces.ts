@@ -789,6 +789,11 @@ export interface IMultilanguageText {
     [key: string]:  string;
 }
 
+// The i18n.json dictionary: message key => language => localized text
+export interface I18NDictionary {
+    [key: string]:  IMultilanguageText;
+}
+
 export interface IResult {
     status:         SessionVerificationResult,
     message:        string
