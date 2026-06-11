@@ -29,7 +29,7 @@ export class Alfen  {
         this.chargy  = chargy;
     }
 
-    private bufferToHex(buffer: ArrayBuffer, Reverse?: Boolean) : string {
+    private bufferToHex(buffer: ArrayBuffer, Reverse?: boolean) : string {
         return (Reverse
                     ? Array.from(new Uint8Array(buffer)).reverse()
                     : Array.from(new Uint8Array(buffer))
@@ -79,9 +79,9 @@ export class Alfen  {
                     UnitEncoded:        0,
                     Scalar:             "",
                     UID:                "",
-                    InternalSessionId:  0,
+                    InternalSessionId:          0,
                     dataSets:           [] as any[]
-                };
+            };
 
             let signedValues:string[] = [];
             if (typeof (Content) === 'string')
@@ -333,8 +333,7 @@ export class Alfen  {
                                                          "format":                   "DER",
                                                          "encoding":                 "base32"
                                                      }
-                                                 ],
-                                                 "publicKeySignatures":      ContainerInfos.energyMeter?.publicKeySignatures
+                                                 ]
                                              }
                                          ]
                                      }
@@ -1057,6 +1056,5 @@ export class AlfenCrypt01 extends ACrypt {
     }
 
     //#endregion
-
 
 }

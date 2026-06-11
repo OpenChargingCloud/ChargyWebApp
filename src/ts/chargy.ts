@@ -17,6 +17,7 @@
 
 import { Buffer }                           from 'buffer';
 import { fileTypeFromBuffer }               from 'file-type';
+import type * as Asn1                       from 'asn1.js';
 import type Base32Decode                    from 'base32-decode';
 import type Moment                          from 'moment';
 
@@ -53,12 +54,6 @@ type Asn1Builder = {
     seqof(schema: unknown): Asn1Builder;
 };
 
-type Asn1Module = {
-    define(name: string, body: (this: Asn1Builder) => void): {
-        decode<T = any>(data: Buffer | Uint8Array | ArrayBuffer, encoding: string): T;
-    };
-};
-
 type EllipticModule = {
     ec: new (curve: string) => {
         keyFromPublic(publicKey: string, encoding: string): {
@@ -75,7 +70,7 @@ export class Chargy {
     public  readonly UILanguage:      string;
     public  readonly elliptic:        EllipticModule;
     public  readonly moment:          typeof Moment;
-    public  readonly asn1:            Asn1Module;
+    public  readonly asn1:            typeof Asn1;
     public  readonly base32Decode:    typeof Base32Decode;
     public  readonly showPKIDetails:  chargyInterfaces.ShowPKIDetailsFunction;
 
@@ -98,7 +93,7 @@ export class Chargy {
                 UILanguage:      string,
                 elliptic:        EllipticModule,
                 moment:          typeof Moment,
-                asn1:            Asn1Module,
+                asn1:            typeof Asn1,
                 base32Decode:    typeof Base32Decode,
                 ShowPKIDetails:  chargyInterfaces.ShowPKIDetailsFunction) {
 

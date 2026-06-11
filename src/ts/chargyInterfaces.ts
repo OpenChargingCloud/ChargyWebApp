@@ -54,8 +54,12 @@ export function IsAPublicKeyLookup(data: IChargeTransparencyRecord|IPublicKeyLoo
         return false;
 
     let publicKeyLookup = data as IPublicKeyLookup;
+    let chargeTransparencyRecord = data as IChargeTransparencyRecord;
 
-    return publicKeyLookup.publicKeys !== undefined;
+    return Array.isArray(publicKeyLookup.publicKeys) &&
+           chargeTransparencyRecord.chargingSessions === undefined &&
+           chargeTransparencyRecord.begin            === undefined &&
+           chargeTransparencyRecord.end              === undefined;
 
 }
 
@@ -121,8 +125,8 @@ export interface IChargeTransparencyRecord
     // hopefully one will be the best matching parser.
     certainty:                  number;
 
-    warnings?:                  Array<String>;
-    errors?:                    Array<String>;
+    warnings?:                  Array<string>;
+    errors?:                    Array<string>;
     status?:                    SessionVerificationResult;
 
 }
@@ -286,10 +290,6 @@ export interface IEVSE
     connectors?:                Array<IConnector>;
 }
 
-export interface IPublicKeySignature extends ISignatureRS {
-    
-}
-
 export interface IMeter
 {
     "@id":                      string;
@@ -310,7 +310,6 @@ export interface IMeter
     signatureInfos?:            ISignatureInfos;
     signatureFormat?:           string;
     publicKeys?:                Array<IPublicKey>;
-    publicKeySignatures?:       Array<IPublicKeySignature>;
 }
 
 export interface IConnector {
@@ -582,8 +581,8 @@ export interface ISessionCryptoResult
     // hopefully one will be the best matching parser.
     certainty:                  number;
 
-    warnings?:                  Array<String>;
-    errors?:                    Array<String>;
+    warnings?:                  Array<string>;
+    errors?:                    Array<string>;
 
 }
 
@@ -800,7 +799,7 @@ export interface IResult {
 }
 
 export interface TarInfo {
-    data:           Buffer,
+    data:           ArrayBuffer|Uint8Array,
     mode:           number,
     mtime:          string,
     path:           string
@@ -811,24 +810,14 @@ export interface IFileInfo {
     name:           string,
     path?:          string,
     type?:          string,
-    data?:          ArrayBuffer | Uint8Array,
+    data?:          ArrayBuffer|Uint8Array,
     info?:          string,
     error?:         string,
     exception?:     any
 }
 
 export function isIFileInfo(obj: any): obj is IFileInfo {
-    return obj != null &&
-           typeof obj.name === 'string' &&
-           (
-               obj.data === undefined ||
-               obj.data instanceof ArrayBuffer ||
-               obj.data instanceof Uint8Array
-           ) &&
-           (
-               obj.path === undefined ||
-               typeof obj.path === 'string'
-           );
+    return !!(obj?.name && typeof obj.name === 'string' && obj.data && (obj.data instanceof ArrayBuffer || ArrayBuffer.isView(obj.data)));
 }
 
 export interface IExtendedFileInfo extends IFileInfo {
