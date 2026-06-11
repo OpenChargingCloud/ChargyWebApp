@@ -3,15 +3,15 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:221827e1-d755-4b5b-934f-12eb3426c2f9",
+  "serialNumber": "urn:uuid:63b1991e-3522-4ac8-b4bf-dcec787472b8",
   "metadata": {
-    "timestamp": "2026-06-11T17:55:58.696Z",
+    "timestamp": "2026-06-11T18:12:43.592Z",
     "tools": {
       "components": [
         {
           "type": "application",
           "name": "npm",
-          "version": "11.6.2"
+          "version": "11.16.0"
         },
         {
           "type": "application",
@@ -591,8 +591,8 @@
       "type": "library",
       "name": "dom",
       "group": "@oozcitak",
-      "version": "2.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+      "version": "3.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
       "author": "Ozgur Ozcitak",
       "description": "A modern DOM implementation",
       "licenses": [
@@ -603,7 +603,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oozcitak/dom@2.0.2",
+      "purl": "pkg:npm/%40oozcitak/dom@3.0.0",
       "externalReferences": [
         {
           "url": "git://github.com/oozcitak/dom.git",
@@ -621,12 +621,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-2.0.2.tgz",
+          "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-3.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "1a3a4a8644980b7323e3e95fc04c88d5daa7b0a4e0c06cb8f32b591219b803fc671fff33f4cdd95572abfd81908b7b822ecd401014bec794f624f8ae7840d6f3"
+              "content": "a2ca9361f2888438fba7bebbac3af946c2595c3ccf89f56912881adb79f7ee962dbe922832bcecc2d27c491a5af925fe2f7e9c4a562eee5c5062bd2d2a6b8f5c"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -640,6 +640,120 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@oozcitak/dom"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "infra",
+          "group": "@oozcitak",
+          "version": "3.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/infra@3.0.0",
+          "author": "Ozgur Ozcitak",
+          "description": "An implementation of the Infra Living Standard",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/infra@3.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/oozcitak/infra.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-3.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "70cad76a378bed671d77844ec4fc55981e2f1f6dcad9197d8b8bd67e6787d0e33f3ce26f4990f06a30ec7af5f233e0e6380b0e161fb655220501cb9d94883776"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/dom/node_modules/@oozcitak/infra"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "util",
+          "group": "@oozcitak",
+          "version": "11.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/util@11.0.0",
+          "author": "Ozgur Ozcitak",
+          "description": "Utility functions",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/util@11.0.0",
+          "externalReferences": [
+            {
+              "url": "git://github.com/oozcitak/util.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/util/-/util-11.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "8c150307e985975e8b800e4f955de5dff19831aae734b24f22d06dd5dce61e4eaf8ddaf47b60b0360a31d2381ec81063d4bbb608ef1fbcdf35c20c4695d73882"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/dom/node_modules/@oozcitak/util"
+            }
+          ]
         }
       ]
     },
@@ -817,8 +931,8 @@
       "type": "library",
       "name": "node",
       "group": "@types",
-      "version": "25.9.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+      "version": "25.9.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
       "description": "TypeScript definitions for node",
       "licenses": [
         {
@@ -828,7 +942,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40types/node@25.9.1",
+      "purl": "pkg:npm/%40types/node@25.9.3",
       "externalReferences": [
         {
           "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git#types/node",
@@ -846,12 +960,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@types/node/-/node-25.9.1.tgz",
+          "url": "https://registry.npmjs.org/@types/node/-/node-25.9.3.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c5fae563b503e6b30993765524ff013734b6f09dfa60983ec69f8b3d75754dd5b1afcb8c1f903ceb440dc580c641eff29434a08f1139d90f559ceee9ef9b49c6"
+              "content": "eb4dc175d40cbf7a5472be14d9d86e8e4f37376b530d5affdf8c0823607a6c9cba83ef160fac946f5d63b3336cd20762e0f7ac55697b001b7c9d8315a672d472"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -1601,57 +1715,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/copy-webpack-plugin"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "crypto-browserify",
-      "version": "3.12.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|crypto-browserify@3.12.1",
-      "author": "Dominic Tarr",
-      "description": "implementation of crypto for the browser",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/crypto-browserify@3.12.1",
-      "externalReferences": [
-        {
-          "url": "git://github.com/browserify/crypto-browserify.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/browserify/crypto-browserify",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/browserify/crypto-browserify/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/crypto-browserify/-/crypto-browserify-3.12.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "af8112c3f225bac0f5ee58108b53b6d056b7a8d9ec724475dba4dd52e06002eec60584883ef74dc8e35ddd9af1874c42c00e3eeb0fd30c0ac13ec32f86eafe29"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/crypto-browserify"
         }
       ]
     },
@@ -7883,8 +7946,8 @@
     {
       "type": "library",
       "name": "seek-bzip",
-      "version": "1.0.6",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@1.0.6",
+      "version": "2.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
       "description": "a pure-JavaScript Node.JS module for random-access decoding bzip2 data",
       "licenses": [
         {
@@ -7894,7 +7957,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/seek-bzip@1.0.6",
+      "purl": "pkg:npm/seek-bzip@2.0.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/cscott/seek-bzip.git",
@@ -7912,12 +7975,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/seek-bzip/-/seek-bzip-1.0.6.tgz",
+          "url": "https://registry.npmjs.org/seek-bzip/-/seek-bzip-2.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7b542d3f760be6d5b0c3cb8a68e090d7c531213da568d0571e357f4b65980a22b8b9d8aff25906f3d2912280a351a827026081bab8c5e331155f607205b9c28d"
+              "content": "48c82e8939d8ae1a4b764dcfc1fcc77a8b6b7308bc6cd57889e98bf6dc7da6847fc9e68c63007d573475c3b6f9ec3b96a6ea91f27ea865ba22d218f703167142"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -7933,8 +7996,8 @@
         {
           "type": "library",
           "name": "commander",
-          "version": "2.20.3",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@1.0.6|commander@2.20.3",
+          "version": "6.2.1",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1",
           "author": "TJ Holowaychuk",
           "description": "the complete solution for node.js command-line programs",
           "licenses": [
@@ -7945,7 +8008,7 @@
               }
             }
           ],
-          "purl": "pkg:npm/commander@2.20.3",
+          "purl": "pkg:npm/commander@6.2.1",
           "externalReferences": [
             {
               "url": "git+https://github.com/tj/commander.js.git",
@@ -7963,12 +8026,12 @@
               "comment": "as detected from PackageJson property \"bugs.url\""
             },
             {
-              "url": "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz",
+              "url": "https://registry.npmjs.org/commander/-/commander-6.2.1.tgz",
               "type": "distribution",
               "hashes": [
                 {
                   "alg": "SHA-512",
-                  "content": "1a956498cf2f176bd05248f62ef6660f7e49c5e24e2c2c09f5c524ba0ca4da7ba16efdfe989be92d862dfb4f9448cc44fa88fe7b2fe52449e1670ef9c7f38c71"
+                  "content": "53b55dac9167260a38c63ac7a53ceed32ac73c622676c983f796658184846a3027d892b30e10d33c6f6405379f98e6cbdb0fe781e6678a593e395f421b777b50"
                 }
               ],
               "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -11731,6 +11794,120 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/xmlbuilder2"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "dom",
+          "group": "@oozcitak",
+          "version": "2.0.2",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/dom@2.0.2",
+          "author": "Ozgur Ozcitak",
+          "description": "A modern DOM implementation",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/dom@2.0.2",
+          "externalReferences": [
+            {
+              "url": "git://github.com/oozcitak/dom.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/dom",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/dom/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-2.0.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "1a3a4a8644980b7323e3e95fc04c88d5daa7b0a4e0c06cb8f32b591219b803fc671fff33f4cdd95572abfd81908b7b822ecd401014bec794f624f8ae7840d6f3"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/xmlbuilder2/node_modules/@oozcitak/dom"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "url",
+          "group": "@oozcitak",
+          "version": "3.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/url@3.0.0",
+          "author": "Ozgur Ozcitak",
+          "description": "An implementation of the URL Living Standard",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/url@3.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/oozcitak/url.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/url",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/url/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/url/-/url-3.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "64a7c44fc024d70b0b0222d635f16465cfc1ada0dc72e4c9291eacbd361ceec5636d1f88bb4bed5dd883318e28ea36859794d6d93952ee36cb978568bed00959"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/xmlbuilder2/node_modules/@oozcitak/url"
+            }
+          ]
+        }
       ]
     },
     {
@@ -11900,66 +12077,10 @@
     },
     {
       "type": "library",
-      "name": "infra",
-      "group": "@oozcitak",
-      "version": "2.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-      "author": "Ozgur Ozcitak",
-      "description": "An implementation of the Infra Living Standard",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40oozcitak/infra@2.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/oozcitak/infra.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/infra",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/infra/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-2.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "da0f84ee1a04d9d802cff00f3ce10ae6cdeb32126f37148c06b3fe53e8f5396b086ed4a95b1c65523ab5954f1122c149358bfb34c96756c0ae1dc533256fbcbc"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/infra"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "url",
       "group": "@oozcitak",
-      "version": "3.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+      "version": "4.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0",
       "author": "Ozgur Ozcitak",
       "description": "An implementation of the URL Living Standard",
       "licenses": [
@@ -11970,7 +12091,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oozcitak/url@3.0.0",
+      "purl": "pkg:npm/%40oozcitak/url@4.0.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/oozcitak/url.git",
@@ -11988,12 +12109,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@oozcitak/url/-/url-3.0.0.tgz",
+          "url": "https://registry.npmjs.org/@oozcitak/url/-/url-4.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "64a7c44fc024d70b0b0222d635f16465cfc1ada0dc72e4c9291eacbd361ceec5636d1f88bb4bed5dd883318e28ea36859794d6d93952ee36cb978568bed00959"
+              "content": "7e643e5ac1855b785896fafab654ac82c0275abb7f682aff4c0dbf0653d465e087d36f4ab19f4a8d2da411e2d1a44247743a85a6a73f2de8b454c8c11f8bff23"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -12008,61 +12129,119 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/@oozcitak/url"
         }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "util",
-      "group": "@oozcitak",
-      "version": "10.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
-      "author": "Ozgur Ozcitak",
-      "description": "Utility functions",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
       ],
-      "purl": "pkg:npm/%40oozcitak/util@10.0.0",
-      "externalReferences": [
+      "components": [
         {
-          "url": "git://github.com/oozcitak/util.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/util",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/util/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/util/-/util-10.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
+          "type": "library",
+          "name": "infra",
+          "group": "@oozcitak",
+          "version": "3.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/infra@3.0.0",
+          "author": "Ozgur Ozcitak",
+          "description": "An implementation of the Infra Living Standard",
+          "licenses": [
             {
-              "alg": "SHA-512",
-              "content": "8405f4a53ffbdf5f7434ba813cf592741546b5b63a54e85660adeaa87aad5d0d602bb912db2cf8fa2bec374ee1a49e88dda78cb4a3fa27a9e9b0428e033b932c"
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
             }
           ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
+          "purl": "pkg:npm/%40oozcitak/infra@3.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/oozcitak/infra.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-3.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "70cad76a378bed671d77844ec4fc55981e2f1f6dcad9197d8b8bd67e6787d0e33f3ce26f4990f06a30ec7af5f233e0e6380b0e161fb655220501cb9d94883776"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/url/node_modules/@oozcitak/infra"
+            }
+          ]
         },
         {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/util"
+          "type": "library",
+          "name": "util",
+          "group": "@oozcitak",
+          "version": "11.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/util@11.0.0",
+          "author": "Ozgur Ozcitak",
+          "description": "Utility functions",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/util@11.0.0",
+          "externalReferences": [
+            {
+              "url": "git://github.com/oozcitak/util.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/util/-/util-11.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "8c150307e985975e8b800e4f955de5dff19831aae734b24f22d06dd5dce61e4eaf8ddaf47b60b0360a31d2381ec81063d4bbb608ef1fbcdf35c20c4695d73882"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/url/node_modules/@oozcitak/util"
+            }
+          ]
         }
       ]
     },
@@ -13027,615 +13206,6 @@
               "value": "node_modules/tinyglobby/node_modules/picomatch"
             }
           ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "browserify-cipher",
-      "version": "1.0.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-cipher@1.0.1",
-      "author": "Calvin Metcalf",
-      "description": "ciphers for the browser",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/browserify-cipher@1.0.1",
-      "externalReferences": [
-        {
-          "url": "git+ssh://git@github.com/crypto-browserify/browserify-cipher.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-cipher#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-cipher/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/browserify-cipher/-/browserify-cipher-1.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "b0f864cf401129b7f8ad142dda14e9007aa7e3b5f79652e45069fec442732e3c18f0b46cda9d2fee58ef239132a113bf99ec6b36e9cd1028ac66cfa0c36cf3d7"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/browserify-cipher"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "browserify-sign",
-      "version": "4.2.6",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-sign@4.2.6",
-      "description": "adds node crypto signing for browsers",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/browserify-sign@4.2.6",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/browserify-sign.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-sign#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-sign/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/browserify-sign/-/browserify-sign-4.2.6.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "b1df90eb97e39560985ad64a5e229fad473c77ee23b69ffc7f45b6364c332eda16e1b23a5039d6bac2d622eac79e6bab5b45d2848471a7088e5f81283ed5d402"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/browserify-sign"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "bn.js",
-          "version": "5.2.3",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-sign@4.2.6|bn.js@5.2.3",
-          "author": "Fedor Indutny",
-          "description": "Big number implementation in pure javascript",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/bn.js@5.2.3",
-          "externalReferences": [
-            {
-              "url": "git+ssh://git@github.com/indutny/bn.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/indutny/bn.js",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/indutny/bn.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/bn.js/-/bn.js-5.2.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "1007269cf931a67b552fe0d2edb3b5ce171936f0a4c6ab64774658e77874e86350dc312490667f80a8260efe837594068fd0607d23cab4927b0e9d463cff1fef"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/browserify-sign/node_modules/bn.js"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "create-ecdh",
-      "version": "4.0.4",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|create-ecdh@4.0.4",
-      "author": "Calvin Metcalf",
-      "description": "createECDH but browserifiable",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/create-ecdh@4.0.4",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/createECDH.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/createECDH",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/createECDH/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/create-ecdh/-/create-ecdh-4.0.4.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "99ff930b1f3059cf55a6ec5f3f686dd2248848b667b742605a5ace29988dab25195a78c868221535002b3079c264a7c461183a20cec0f8d789a0df207ff5acd0"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/create-ecdh"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "create-hash",
-      "version": "1.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-      "description": "create hashes for browserify",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/create-hash@1.2.0",
-      "externalReferences": [
-        {
-          "url": "git+ssh://git@github.com/crypto-browserify/createHash.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/createHash",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/createHash/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/create-hash/-/create-hash-1.2.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "cf4d1b0863470c6f261c090fec2b53d6a56ef9b15050f8d8abfe08bf70b79168d3155d74cc88df4a87aa5e8f40b30b3c8304870c68ff865daee0e1888daa5e0a"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/create-hash"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "create-hmac",
-      "version": "1.1.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|create-hmac@1.1.7",
-      "description": "node style hmacs in the browser",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/create-hmac@1.1.7",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/createHmac.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/createHmac",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/createHmac/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/create-hmac/-/create-hmac-1.1.7.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "3091bd962899fa881ce13cd4c2ebdb111d4945d82f505481e7e551fe0e61f367c668845631675db4a0478bbfec5617e3419e927a197286f418adc6246942292e"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/create-hmac"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "diffie-hellman",
-      "version": "5.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|diffie-hellman@5.0.3",
-      "author": "Calvin Metcalf",
-      "description": "pure js diffie-hellman",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/diffie-hellman@5.0.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/diffie-hellman.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/diffie-hellman",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/diffie-hellman/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/diffie-hellman/-/diffie-hellman-5.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "92a6a0fcd97e7f71b0c8adb97e150c623f350543ab67d22e26c8c870313989c34cf452470159b755c503c5d2cfa10b53b94ca55a6e992249d8270c1a3f1b14ce"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/diffie-hellman"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "hash-base",
-      "version": "3.0.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|hash-base@3.0.5",
-      "author": "Kirill Fomichev",
-      "description": "abstract base class for hash-streams",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/hash-base@3.0.5",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/hash-base.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/hash-base",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/hash-base/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/hash-base/-/hash-base-3.0.5.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "bd79b4978e556dc1c45654c2cecf0cfacd15798b01da59e501a4e1a0b2865ebddb13f5560ce7a53549f27143c484a11a5c044bd931058c13b252233afb9e4a06"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/hash-base"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "pbkdf2",
-      "version": "3.1.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|pbkdf2@3.1.5",
-      "author": "Daniel Cousens",
-      "description": "This library provides the functionality of PBKDF2 with the ability to use any supported hashing algorithm returned from crypto.getHashes()",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/pbkdf2@3.1.5",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/browserify/pbkdf2.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/browserify/pbkdf2",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/browserify/pbkdf2/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/pbkdf2/-/pbkdf2-3.1.5.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "437086fdc62f08ed727b840a92e1fb117c6cdd50bfac8d7fb6b77ea97dbe3e895b68a1b41fe6e0719ceb4edf7a98cc91b5e8e4f8930288b527df2dbd5bcaa615"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/pbkdf2"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "public-encrypt",
-      "version": "4.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|public-encrypt@4.0.3",
-      "author": "Calvin Metcalf",
-      "description": "browserify version of publicEncrypt & privateDecrypt",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/public-encrypt@4.0.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/publicEncrypt.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/publicEncrypt",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/publicEncrypt/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/public-encrypt/-/public-encrypt-4.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "cd5a5af282994b3e5b4cc4c50a57357d03a7cb2133a65e68ce98b507961cbc1adda213231f6adfb01b725dcb8dbb08ec0c85e6058945d8de45949621476f6df1"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/public-encrypt"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "randombytes",
-      "version": "2.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|randombytes@2.1.0",
-      "description": "random bytes from browserify stand alone",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/randombytes@2.1.0",
-      "externalReferences": [
-        {
-          "url": "git+ssh://git@github.com/crypto-browserify/randombytes.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/randombytes",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/randombytes/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/randombytes/-/randombytes-2.1.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "bd897788e5fee022945aec468bd5248627ba7eca97a92f4513665a89ce2d3450f637641069738c15bb8a2b84260c70b424ee81d59a78d49d0ba53d2847af1a99"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/randombytes"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "randomfill",
-      "version": "1.0.4",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|randomfill@1.0.4",
-      "description": "random fill from browserify stand alone",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/randomfill@1.0.4",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/randomfill.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/randomfill",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/randomfill/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/randomfill/-/randomfill-1.0.4.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "f3b95c6d1f3e321716714890fbd7be470c7c3324763fbaa7b75e729d495b9b74d4fdf8db833e06b2f7d25034de9ad082b550aa6f865c1059723cd4e1f5b0532f"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/randomfill"
         }
       ]
     },
@@ -17394,6 +16964,10 @@
         }
       ],
       "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/safe-buffer"
@@ -22955,6 +22529,118 @@
     },
     {
       "type": "library",
+      "name": "infra",
+      "group": "@oozcitak",
+      "version": "2.0.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "author": "Ozgur Ozcitak",
+      "description": "An implementation of the Infra Living Standard",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/infra@2.0.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/oozcitak/infra.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/infra",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/infra/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-2.0.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "da0f84ee1a04d9d802cff00f3ce10ae6cdeb32126f37148c06b3fe53e8f5396b086ed4a95b1c65523ab5954f1122c149358bfb34c96756c0ae1dc533256fbcbc"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/infra"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "util",
+      "group": "@oozcitak",
+      "version": "10.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
+      "author": "Ozgur Ozcitak",
+      "description": "Utility functions",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/util@10.0.0",
+      "externalReferences": [
+        {
+          "url": "git://github.com/oozcitak/util.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/util",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/util/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/util/-/util-10.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "8405f4a53ffbdf5f7434ba813cf592741546b5b63a54e85660adeaa87aad5d0d602bb912db2cf8fa2bec374ee1a49e88dda78cb4a3fa27a9e9b0428e033b932c"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/util"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "js-yaml",
       "version": "4.2.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0",
@@ -23060,875 +22746,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/ajv-keywords"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "browserify-aes",
-      "version": "1.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-aes@1.2.0",
-      "description": "aes, for browserify",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/browserify-aes@1.2.0",
-      "externalReferences": [
-        {
-          "url": "git://github.com/crypto-browserify/browserify-aes.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-aes",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-aes/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/browserify-aes/-/browserify-aes-1.2.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "fbb0875ea1aeb29527fd297968eec46b4c56180b444cf5cd4808c7a38f097cb74f59c327837dd77b8ce716f4307aa73fbb3939cd2388dc7e760989e309f6f984"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/browserify-aes"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "browserify-des",
-      "version": "1.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-des@1.0.2",
-      "author": "Calvin Metcalf",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/browserify-des@1.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/browserify-des.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-des#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-des/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/browserify-des/-/browserify-des-1.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "062a0ed717f7845c33e2473a881848de27831689a9321acc9670c50b8ff4fef779328929b8073747e2d86f04c0f40e5873da6af5460fa9f7caa56d8e6eec17e4"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/browserify-des"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "evp_bytestokey",
-      "version": "1.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|evp_bytestokey@1.0.3",
-      "author": "Calvin Metcalf",
-      "description": "The insecure key derivation algorithm from OpenSSL",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/evp_bytestokey@1.0.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/EVP_BytesToKey.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/EVP_BytesToKey",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/EVP_BytesToKey/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/evp_bytestokey/-/evp_bytestokey-1.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "fdfd86a384e88271ff2af08848fece52c1e7f39853f67524c7103d0445b1167f8e8fda3c64d2e6ff8d217658122f2b8e8a6b2b4ca2d4304a2b41ec69fda3d078"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/evp_bytestokey"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "browserify-rsa",
-      "version": "4.1.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1",
-      "description": "RSA for browserify",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/browserify-rsa@4.1.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/browserify-rsa.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-rsa#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/browserify-rsa/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/browserify-rsa/-/browserify-rsa-4.1.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "6018d20224ea334e1955e8bab178a086eebbf5add2a96391037a994c4a992269e5903205b4a73aa4dbada63c99f112538d0b6e61f79eb64c4cd751b0a185cc21"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/browserify-rsa"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "bn.js",
-          "version": "5.2.3",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1|bn.js@5.2.3",
-          "author": "Fedor Indutny",
-          "description": "Big number implementation in pure javascript",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/bn.js@5.2.3",
-          "externalReferences": [
-            {
-              "url": "git+ssh://git@github.com/indutny/bn.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/indutny/bn.js",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/indutny/bn.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/bn.js/-/bn.js-5.2.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "1007269cf931a67b552fe0d2edb3b5ce171936f0a4c6ab64774658e77874e86350dc312490667f80a8260efe837594068fd0607d23cab4927b0e9d463cff1fef"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/browserify-rsa/node_modules/bn.js"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "parse-asn1",
-      "version": "5.1.9",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9",
-      "description": "utility library for parsing asn1 files for use with browserify-sign.",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/parse-asn1@5.1.9",
-      "externalReferences": [
-        {
-          "url": "git://github.com/crypto-browserify/parse-asn1.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/parse-asn1#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/parse-asn1/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/parse-asn1/-/parse-asn1-5.1.9.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "7c860db99fc76acb526fcd1b6863ae3d1a353bd71fe1b696c395ac029edd06e5337930ff068686f2c5537653c592c044da5176d5d37e035027ae9223496a871e"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/parse-asn1"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "asn1.js",
-          "version": "4.10.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9|asn1.js@4.10.1",
-          "author": "Fedor Indutny",
-          "description": "ASN.1 encoder and decoder",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/asn1.js@4.10.1",
-          "externalReferences": [
-            {
-              "url": "git+ssh://git@github.com/indutny/asn1.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/indutny/asn1.js",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/indutny/asn1.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/asn1.js/-/asn1.js-4.10.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "a77d9c385e6ad19aacf6e06238d2982e6e810a50a80423393bd25f7944a59d02c14f161d4cafa95be9d77e59bc52429dd9462511b633e6a122d09b9947d7244b"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/parse-asn1/node_modules/asn1.js"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "readable-stream",
-      "version": "2.3.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8",
-      "description": "Streams3, a user-land copy of the stream library from Node.js",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/readable-stream@2.3.8",
-      "externalReferences": [
-        {
-          "url": "git://github.com/nodejs/readable-stream.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/nodejs/readable-stream#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/nodejs/readable-stream/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.8.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "f29d00524e173838087b04a2d25f04a63b3e1159d688aecda03204194d07844efe67263c0f520c63ba1dbb9951ac55c683bd4bd79286f10acf9ae9b8e514ed74"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/readable-stream"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "safe-buffer",
-          "version": "5.1.2",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8|safe-buffer@5.1.2",
-          "author": "Feross Aboukhadijeh",
-          "description": "Safer Node.js Buffer API",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/safe-buffer@5.1.2",
-          "externalReferences": [
-            {
-              "url": "git://github.com/feross/safe-buffer.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/feross/safe-buffer",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/feross/safe-buffer/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "19dd94641243917958ec66c9c5fb04f3f9ef2a45045351b7f1cd6c88de903fa6bd3d3f4c98707c1a7a6c71298c252a05f0b388aedf2e77fc0fb688f2b381bafa"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/readable-stream/node_modules/safe-buffer"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "cipher-base",
-      "version": "1.0.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|cipher-base@1.0.7",
-      "author": "Calvin Metcalf",
-      "description": "abstract base class for crypto-streams",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/cipher-base@1.0.7",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/cipher-base.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/cipher-base#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/cipher-base/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/cipher-base/-/cipher-base-1.0.7.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "333f50313e5f25eedb288ecc1f7d548a54f97042b91071d109c730fd8445b11638ec0b8d81a57a1d8debb1ca74fc8e10fad4d6ff9ce8aa949e451239e1390358"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/cipher-base"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "md5.js",
-      "version": "1.3.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|md5.js@1.3.5",
-      "author": "Kirill Fomichev",
-      "description": "node style md5 on pure JavaScript",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/md5.js@1.3.5",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/md5.js.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/md5.js",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/md5.js/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/md5.js/-/md5.js-1.3.5.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "c62b4ff96c4d3dc4d33a09d325cae1334c6f74f7a98a93d27f723c108a4629e14b8eddcf9492c80c6deef045f9dd922e6e46fee54dbedeb10b6291211e1cdd92"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/md5.js"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ripemd160",
-      "version": "2.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3",
-      "description": "Compute ripemd160 of bytes or strings.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ripemd160@2.0.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/ripemd160.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/ripemd160#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/ripemd160/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/ripemd160/-/ripemd160-2.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "e438bd502d3ef21d4be990f677b6b033b13f4f8b80d5f251971eb393f36f74209512802716abc7982b8d7882a809e222c415ffabcb8cfbac9c0ef17cc28aa8b0"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ripemd160"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "hash-base",
-          "version": "3.1.2",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3|hash-base@3.1.2",
-          "author": "Kirill Fomichev",
-          "description": "abstract base class for hash-streams",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/hash-base@3.1.2",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/crypto-browserify/hash-base.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/crypto-browserify/hash-base",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/crypto-browserify/hash-base/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/hash-base/-/hash-base-3.1.2.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "05bdf729ba30553223e6ceca79dd4eb2a1d4782a73fffb4fc11f84db326024aa3d6795e8959f5be9b7548239989709d68683902a84ddd53613a191a7e660183a"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/ripemd160/node_modules/hash-base"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "sha.js",
-      "version": "2.4.12",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|sha.js@2.4.12",
-      "author": "Dominic Tarr",
-      "description": "Streamable SHA hashes in pure javascript",
-      "licenses": [
-        {
-          "expression": "(MIT AND BSD-3-Clause)",
-          "acknowledgement": "declared"
-        }
-      ],
-      "purl": "pkg:npm/sha.js@2.4.12",
-      "externalReferences": [
-        {
-          "url": "git://github.com/crypto-browserify/sha.js.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/sha.js",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/sha.js/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/sha.js/-/sha.js-2.4.12.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "f0bcc2e7e6ef238e418e97d753c5797dd53699f78a8907b50f5808327ed752517739352ba5d2693cf1f810c0271740ec1c775266a09d4acb39a829892ae88edf"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/sha.js"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "miller-rabin",
-      "version": "4.0.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|miller-rabin@4.0.1",
-      "author": "Fedor Indutny",
-      "description": "Miller Rabin algorithm for primality test",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/miller-rabin@4.0.1",
-      "externalReferences": [
-        {
-          "url": "git+ssh://git@github.com/indutny/miller-rabin.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/indutny/miller-rabin",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/indutny/miller-rabin/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/miller-rabin/-/miller-rabin-4.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "d75e5f2e1bd956a5b01cf6c29729edc4455f5437e5f432cb4ee26fab78363bf3b18bc022368b801ef0d2cc74b4be250973e579be6ddeabdd57c2a9fd769e2344"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/miller-rabin"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "to-buffer",
-      "version": "1.2.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2",
-      "author": "Mathias Buus",
-      "description": "Pass in a string, array, Buffer, Data View, or Uint8Array, and get a Buffer back.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/to-buffer@1.2.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/browserify/to-buffer.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/browserify/to-buffer",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/browserify/to-buffer/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/to-buffer/-/to-buffer-1.2.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "75bd04dd42637058690e1005e2d2e8d37a258b7a7097775b9f35ce5089512aba7e95d93f554c73a5661910db30d92662b818c7024ec37c1d1553b34a7696fab3"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/to-buffer"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "isarray",
-          "version": "2.0.5",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2|isarray@2.0.5",
-          "author": "Julian Gruber",
-          "description": "Array#isArray for older browsers",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/isarray@2.0.5",
-          "externalReferences": [
-            {
-              "url": "git://github.com/juliangruber/isarray.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/juliangruber/isarray",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/juliangruber/isarray/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/isarray/-/isarray-2.0.5.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "c478e10ebddc3412b40737542523d7667b50531fe6c0c4b9470e00ee53c9f745c600ee8848ffde3c336ea34be1a8e654f940f9268a1dc02000a1941ddc57802b"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/to-buffer/node_modules/isarray"
-            }
-          ]
         }
       ]
     },
@@ -30734,8 +29551,8 @@
     {
       "type": "library",
       "name": "shell-quote",
-      "version": "1.8.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|shell-quote@1.8.3",
+      "version": "1.8.4",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|shell-quote@1.8.4",
       "author": "James Halliday",
       "description": "quote and parse shell commands",
       "licenses": [
@@ -30746,7 +29563,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/shell-quote@1.8.3",
+      "purl": "pkg:npm/shell-quote@1.8.4",
       "externalReferences": [
         {
           "url": "git+ssh://git@github.com/ljharb/shell-quote.git",
@@ -30764,12 +29581,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/shell-quote/-/shell-quote-1.8.3.tgz",
+          "url": "https://registry.npmjs.org/shell-quote/-/shell-quote-1.8.4.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "39b9a7205e215cd83506a8671e681b0c44c5f1d2cf0a08195818e441f859a5bb3366762eaf90d49634dc0878a2e4b0b7279134c9e3bfd4b20cc87f94bc7420cb"
+              "content": "56c0ba9fabf3d62858632659c17ed8652179979c77e9c6b5ece0be6baf61f7862a07b5fa5cbc1ffb930e8329d88abd922c551b97c80862f068f0af11a0d43a6d"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -31394,9 +30211,9 @@
     {
       "type": "library",
       "name": "uuid",
-      "version": "8.3.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|uuid@8.3.2",
-      "description": "RFC4122 (v1, v4, and v5) UUIDs",
+      "version": "11.1.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|uuid@11.1.1",
+      "description": "RFC9562 UUIDs",
       "licenses": [
         {
           "license": {
@@ -31405,7 +30222,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/uuid@8.3.2",
+      "purl": "pkg:npm/uuid@11.1.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/uuidjs/uuid.git",
@@ -31423,12 +30240,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz",
+          "url": "https://registry.npmjs.org/uuid/-/uuid-11.1.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "f8d62cd9078c5b2f865853849bdc679fa1c20e9d25ed0043ee697cccb52627ef77439345d0da1c12b9f09139175453625f7fdfa42e9a7d2f0385bfe0cfb47b7a"
+              "content": "bc8631ac1082fcdfcaf89b37a9237cf20a3b9087cd3ecb2bfe11c27ac28240d0239a0bd84b6a2aafaf6422e7c41be3b8f8f7decce1f811b21e1c27c5a2ff1981"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -33154,311 +31971,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/argparse"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "buffer-xor",
-      "version": "1.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|buffer-xor@1.0.3",
-      "author": "Daniel Cousens",
-      "description": "A simple module for bitwise-xor on buffers",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/buffer-xor@1.0.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/crypto-browserify/buffer-xor.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/buffer-xor",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/crypto-browserify/buffer-xor/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/buffer-xor/-/buffer-xor-1.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "e7bd6cd13ee76562babc1ebb1c8e5dc9417bc1788d71f68f3cf4e5eb3602340a4036322f6094e0ee196e77ff9c269740852edd573a8c2e67e17c7477ac070e8d"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/buffer-xor"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "des.js",
-      "version": "1.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|des.js@1.1.0",
-      "author": "Fedor Indutny",
-      "description": "DES implementation",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/des.js@1.1.0",
-      "externalReferences": [
-        {
-          "url": "git+ssh://git@github.com/indutny/des.js.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/indutny/des.js#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/indutny/des.js/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/des.js/-/des.js-1.1.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "af5ec6c638540a3491cbc6a2269afcfd469d148ccccc919ec48dcd9b3e000e2f4b612171e204c1a7cd3e35a5ff62c5d658b86967bbffbffb9b11cfdb08d7cac2"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/des.js"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "core-util-is",
-      "version": "1.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|core-util-is@1.0.3",
-      "author": "Isaac Z. Schlueter",
-      "description": "The `util.is*` functions introduced in Node v0.12.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/core-util-is@1.0.3",
-      "externalReferences": [
-        {
-          "url": "git://github.com/isaacs/core-util-is.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/isaacs/core-util-is#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/isaacs/core-util-is/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "65006f8b50dca49e060ea6a78ee719d878f7c043b9a590d2f3d0566e472bbddc64b09a2bc140c365a997f65745929f5ac369660432e090e6c40380d6349f4561"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/core-util-is"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "isarray",
-      "version": "1.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|isarray@1.0.0",
-      "author": "Julian Gruber",
-      "description": "Array#isArray for older browsers",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/isarray@1.0.0",
-      "externalReferences": [
-        {
-          "url": "git://github.com/juliangruber/isarray.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/juliangruber/isarray",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/juliangruber/isarray/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "54b82121634ce842d0ce8ef3c26720d0d99357258a623bc878cf37ca3a74c110d39949eb33aefc7d06dc281a3a9f6089105d2cce81bfff2b60f932a56bcf402d"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/isarray"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "process-nextick-args",
-      "version": "2.0.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|process-nextick-args@2.0.1",
-      "description": "process.nextTick but always with args",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/process-nextick-args@2.0.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/calvinmetcalf/process-nextick-args.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/calvinmetcalf/process-nextick-args",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/calvinmetcalf/process-nextick-args/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "de8b943a9421b60adb39ad7b27bfaec4e4e92136166863fbfc0868477f80fbfd5ef6c92bcde9468bf757cc4632bdbc6e6c417a5a7db2a6c7132a22891459f56a"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/process-nextick-args"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "typed-array-buffer",
-      "version": "1.0.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|typed-array-buffer@1.0.3",
-      "author": "Jordan Harband",
-      "description": "Get the ArrayBuffer out of a TypedArray, robustly.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/typed-array-buffer@1.0.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/inspect-js/typed-array-buffer.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/inspect-js/typed-array-buffer#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/inspect-js/typed-array-buffer/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/typed-array-buffer/-/typed-array-buffer-1.0.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "9c0618c1f637aa7cd7df422403a01066355bb4ae9db86a27b5c426d56486d4c0fde182ea2b4e75e46340a57928c4a39632eb15b2c00758b87d49e6a879f6051b"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/typed-array-buffer"
         }
       ]
     },
@@ -38355,108 +36867,6 @@
     },
     {
       "type": "library",
-      "name": "call-bound",
-      "version": "1.0.4",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|call-bound@1.0.4",
-      "author": "Jordan Harband",
-      "description": "Robust call-bound JavaScript intrinsics, using `call-bind` and `get-intrinsic`.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/call-bound@1.0.4",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ljharb/call-bound.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ljharb/call-bound#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ljharb/call-bound/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "fb2b3df7b53dea9a382b1fc0069042aa103d12ec49690583420ef6f791f8841a61bf72198346e804abb0629b78617a7a319e4099942753fb72313951a5a49e8e"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/call-bound"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "is-typed-array",
-      "version": "1.1.15",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|is-typed-array@1.1.15",
-      "author": "Jordan Harband",
-      "description": "Is this value a JS Typed Array? This module works cross-realm/iframe, does not depend on `instanceof` or mutable properties, and despite ES6 Symbol.toStringTag.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/is-typed-array@1.1.15",
-      "externalReferences": [
-        {
-          "url": "git://github.com/inspect-js/is-typed-array.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/inspect-js/is-typed-array#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/inspect-js/is-typed-array/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/is-typed-array/-/is-typed-array-1.1.15.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "a7711cb227178e2b7b49ab245c7b35840f75431813c38e85bfa10528a192e434452c3f322a7a218c5de1c688eef786ff39c319a10ba4ce93e9044f6e2d52b381"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/is-typed-array"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "json-buffer",
       "version": "3.0.1",
       "bom-ref": "chargytransparenzsoftware@1.4.7|json-buffer@3.0.1",
@@ -39171,6 +37581,57 @@
     },
     {
       "type": "library",
+      "name": "call-bound",
+      "version": "1.0.4",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|call-bound@1.0.4",
+      "author": "Jordan Harband",
+      "description": "Robust call-bound JavaScript intrinsics, using `call-bind` and `get-intrinsic`.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/call-bound@1.0.4",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/ljharb/call-bound.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/ljharb/call-bound#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/ljharb/call-bound/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/call-bound/-/call-bound-1.0.4.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "fb2b3df7b53dea9a382b1fc0069042aa103d12ec49690583420ef6f791f8841a61bf72198346e804abb0629b78617a7a319e4099942753fb72313951a5a49e8e"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/call-bound"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "get-intrinsic",
       "version": "1.3.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|get-intrinsic@1.3.0",
@@ -39718,6 +38179,117 @@
     },
     {
       "type": "library",
+      "name": "readable-stream",
+      "version": "2.3.8",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8",
+      "description": "Streams3, a user-land copy of the stream library from Node.js",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/readable-stream@2.3.8",
+      "externalReferences": [
+        {
+          "url": "git://github.com/nodejs/readable-stream.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/nodejs/readable-stream#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/nodejs/readable-stream/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.8.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "f29d00524e173838087b04a2d25f04a63b3e1159d688aecda03204194d07844efe67263c0f520c63ba1dbb9951ac55c683bd4bd79286f10acf9ae9b8e514ed74"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/readable-stream"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "safe-buffer",
+          "version": "5.1.2",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8|safe-buffer@5.1.2",
+          "author": "Feross Aboukhadijeh",
+          "description": "Safer Node.js Buffer API",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/safe-buffer@5.1.2",
+          "externalReferences": [
+            {
+              "url": "git://github.com/feross/safe-buffer.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/feross/safe-buffer",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/feross/safe-buffer/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "19dd94641243917958ec66c9c5fb04f3f9ef2a45045351b7f1cd6c88de903fa6bd3d3f4c98707c1a7a6c71298c252a05f0b388aedf2e77fc0fb688f2b381bafa"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/readable-stream/node_modules/safe-buffer"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "base64",
       "group": "@jsonjoy.com",
       "version": "1.1.2",
@@ -39996,108 +38568,6 @@
     },
     {
       "type": "library",
-      "name": "call-bind-apply-helpers",
-      "version": "1.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
-      "author": "Jordan Harband",
-      "description": "Helper functions around Function call/apply/bind, for use in `call-bind`",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/call-bind-apply-helpers@1.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ljharb/call-bind-apply-helpers.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ljharb/call-bind-apply-helpers#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ljharb/call-bind-apply-helpers/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "4a9d5a6e52748af0e44b38dc68977112e9cde7f5ef92c149dac30115fabac74af285057fd9bfcac057b6d5c329987b4f3928a3f0af7dff049fa04b9339b9ae31"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/call-bind-apply-helpers"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "which-typed-array",
-      "version": "1.1.19",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|which-typed-array@1.1.19",
-      "author": "Jordan Harband",
-      "description": "Which kind of Typed Array is this JavaScript value? Works cross-realm, without `instanceof`, and despite Symbol.toStringTag.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/which-typed-array@1.1.19",
-      "externalReferences": [
-        {
-          "url": "git://github.com/inspect-js/which-typed-array.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/inspect-js/which-typed-array#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/inspect-js/which-typed-array/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/which-typed-array/-/which-typed-array-1.1.19.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "ac4bebf7405c938599b7d1c7142e0324cb23beeef1fabe9b226cf4fc1adb59bec0d9d8c9f219d932b5a71e8f45f2cb2fd0e304adab0385fb6b7d1393caa483af"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/which-typed-array"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "yocto-queue",
       "version": "0.1.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|yocto-queue@0.1.0",
@@ -40313,6 +38783,57 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/is-number"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "call-bind-apply-helpers",
+      "version": "1.0.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
+      "author": "Jordan Harband",
+      "description": "Helper functions around Function call/apply/bind, for use in `call-bind`",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/call-bind-apply-helpers@1.0.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/ljharb/call-bind-apply-helpers.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/ljharb/call-bind-apply-helpers#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/ljharb/call-bind-apply-helpers/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/call-bind-apply-helpers/-/call-bind-apply-helpers-1.0.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "4a9d5a6e52748af0e44b38dc68977112e9cde7f5ef92c149dac30115fabac74af285057fd9bfcac057b6d5c329987b4f3928a3f0af7dff049fa04b9339b9ae31"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/call-bind-apply-helpers"
         }
       ]
     },
@@ -40730,11 +39251,11 @@
     },
     {
       "type": "library",
-      "name": "available-typed-arrays",
-      "version": "1.0.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|available-typed-arrays@1.0.7",
-      "author": "Jordan Harband",
-      "description": "Returns an array of Typed Array names that are available in the current environment",
+      "name": "core-util-is",
+      "version": "1.0.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|core-util-is@1.0.3",
+      "author": "Isaac Z. Schlueter",
+      "description": "The `util.is*` functions introduced in Node v0.12.",
       "licenses": [
         {
           "license": {
@@ -40743,30 +39264,30 @@
           }
         }
       ],
-      "purl": "pkg:npm/available-typed-arrays@1.0.7",
+      "purl": "pkg:npm/core-util-is@1.0.3",
       "externalReferences": [
         {
-          "url": "git+https://github.com/inspect-js/available-typed-arrays.git",
+          "url": "git://github.com/isaacs/core-util-is.git",
           "type": "vcs",
           "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "url": "https://github.com/inspect-js/available-typed-arrays#readme",
+          "url": "https://github.com/isaacs/core-util-is#readme",
           "type": "website",
           "comment": "as detected from PackageJson property \"homepage\""
         },
         {
-          "url": "https://github.com/inspect-js/available-typed-arrays/issues",
+          "url": "https://github.com/isaacs/core-util-is/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/available-typed-arrays/-/available-typed-arrays-1.0.7.tgz",
+          "url": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c2f52306d48637bfbb4a3369abff4cd93837e745190f7abad881592db4404756d23250a8d5969e5be049f83d3dd1ee2120864b05c4c359ee0c8788ef5036a3cd"
+              "content": "65006f8b50dca49e060ea6a78ee719d878f7c043b9a590d2f3d0566e472bbddc64b09a2bc140c365a997f65745929f5ac369660432e090e6c40380d6349f4561"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -40774,18 +39295,22 @@
       ],
       "properties": [
         {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/available-typed-arrays"
+          "value": "node_modules/core-util-is"
         }
       ]
     },
     {
       "type": "library",
-      "name": "call-bind",
-      "version": "1.0.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|call-bind@1.0.8",
-      "author": "Jordan Harband",
-      "description": "Robustly `.call.bind()` a function",
+      "name": "isarray",
+      "version": "1.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|isarray@1.0.0",
+      "author": "Julian Gruber",
+      "description": "Array#isArray for older browsers",
       "licenses": [
         {
           "license": {
@@ -40794,30 +39319,30 @@
           }
         }
       ],
-      "purl": "pkg:npm/call-bind@1.0.8",
+      "purl": "pkg:npm/isarray@1.0.0",
       "externalReferences": [
         {
-          "url": "git+https://github.com/ljharb/call-bind.git",
+          "url": "git://github.com/juliangruber/isarray.git",
           "type": "vcs",
           "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "url": "https://github.com/ljharb/call-bind#readme",
+          "url": "https://github.com/juliangruber/isarray",
           "type": "website",
           "comment": "as detected from PackageJson property \"homepage\""
         },
         {
-          "url": "https://github.com/ljharb/call-bind/issues",
+          "url": "https://github.com/juliangruber/isarray/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/call-bind/-/call-bind-1.0.8.tgz",
+          "url": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "a0a95214c70cc29520d9e767921438e78c1f5a253fba5dc29097bf3c41dc4caba25fa4696de854885317bb5dc76a5199c5f530090cd91bbe3b617067d629bdc3"
+              "content": "54b82121634ce842d0ce8ef3c26720d0d99357258a623bc878cf37ca3a74c110d39949eb33aefc7d06dc281a3a9f6089105d2cce81bfff2b60f932a56bcf402d"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -40825,18 +39350,21 @@
       ],
       "properties": [
         {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/call-bind"
+          "value": "node_modules/isarray"
         }
       ]
     },
     {
       "type": "library",
-      "name": "for-each",
-      "version": "0.3.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|for-each@0.3.5",
-      "author": "Raynos",
-      "description": "A better forEach",
+      "name": "process-nextick-args",
+      "version": "2.0.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|process-nextick-args@2.0.1",
+      "description": "process.nextTick but always with args",
       "licenses": [
         {
           "license": {
@@ -40845,30 +39373,30 @@
           }
         }
       ],
-      "purl": "pkg:npm/for-each@0.3.5",
+      "purl": "pkg:npm/process-nextick-args@2.0.1",
       "externalReferences": [
         {
-          "url": "git+https://github.com/Raynos/for-each.git",
+          "url": "git+https://github.com/calvinmetcalf/process-nextick-args.git",
           "type": "vcs",
           "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "url": "https://github.com/Raynos/for-each",
+          "url": "https://github.com/calvinmetcalf/process-nextick-args",
           "type": "website",
           "comment": "as detected from PackageJson property \"homepage\""
         },
         {
-          "url": "https://github.com/Raynos/for-each/issues",
+          "url": "https://github.com/calvinmetcalf/process-nextick-args/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/for-each/-/for-each-0.3.5.tgz",
+          "url": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "74ac75d9e442548cea0b1146a65c8528930fbcb11682636d52ba53889211e6ef7bcc48511bcc92aed6e83c7657c7b75a2f1415ae5eb8ddc4f36da6f6b64423c6"
+              "content": "de8b943a9421b60adb39ad7b27bfaec4e4e92136166863fbfc0868477f80fbfd5ef6c92bcde9468bf757cc4632bdbc6e6c417a5a7db2a6c7132a22891459f56a"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -40876,59 +39404,12 @@
       ],
       "properties": [
         {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/for-each"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "has-tostringtag",
-      "version": "1.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|has-tostringtag@1.0.2",
-      "author": "Jordan Harband",
-      "description": "Determine if the JS environment has `Symbol.toStringTag` support. Supports spec, or shams.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/has-tostringtag@1.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/inspect-js/has-tostringtag.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
+          "name": "cdx:npm:package:development",
+          "value": "true"
         },
-        {
-          "url": "https://github.com/inspect-js/has-tostringtag#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/inspect-js/has-tostringtag/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/has-tostringtag/-/has-tostringtag-1.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "36a00307c5633c52ccd95d15bc751ec30c2cc3465605a21d828fa2787b4ade16ac2f3e2a78246361ca9f07a010ac182044aa69285f0be76fd5a9d56c3b8ec397"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
         {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/has-tostringtag"
+          "value": "node_modules/process-nextick-args"
         }
       ]
     },
@@ -41040,159 +39521,6 @@
     },
     {
       "type": "library",
-      "name": "possible-typed-array-names",
-      "version": "1.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|possible-typed-array-names@1.1.0",
-      "author": "Jordan Harband",
-      "description": "A simple list of possible Typed Array names.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/possible-typed-array-names@1.1.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ljharb/possible-typed-array-names.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ljharb/possible-typed-array-names#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ljharb/possible-typed-array-names/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/possible-typed-array-names/-/possible-typed-array-names-1.1.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "ffee55153721243a158f76e1a2a8ba51eca6703d340c0c1bd672706a6ccfbc712ccc9e05a45e9234d6d46ce4bcc88e7aa87cdd57c78ad2a11f3928a87644ddc6"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/possible-typed-array-names"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "set-function-length",
-      "version": "1.2.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|set-function-length@1.2.2",
-      "author": "Jordan Harband",
-      "description": "Set a function's length property",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/set-function-length@1.2.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ljharb/set-function-length.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ljharb/set-function-length#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ljharb/set-function-length/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/set-function-length/-/set-function-length-1.2.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "a6045ce21278fec363582492f409a74b8d31ddb34c0d39271e02f951a3014ccc899d4f741205a1d51cfe302f5e16ee01b8dfd4c198ca42e63fd6fdeb33b1cc7e"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/set-function-length"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "is-callable",
-      "version": "1.2.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|is-callable@1.2.7",
-      "author": "Jordan Harband",
-      "description": "Is this JS value callable? Works with Functions and GeneratorFunctions, despite ES6 @@toStringTag.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/is-callable@1.2.7",
-      "externalReferences": [
-        {
-          "url": "git://github.com/inspect-js/is-callable.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/inspect-js/is-callable#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/inspect-js/is-callable/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/is-callable/-/is-callable-1.2.7.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "d410b40551614bfa74aadc3a7a7a7c7bef0e0f452b2b4a052f3b528cdce170a037583b89c7100f5f33ee3ed2a48c463d514a045a55fff1f80a7aed92f22f494c"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/is-callable"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "p-try",
       "version": "2.2.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|p-try@2.2.0",
@@ -41245,108 +39573,6 @@
           "value": "node_modules/p-try"
         }
       ]
-    },
-    {
-      "type": "library",
-      "name": "define-data-property",
-      "version": "1.1.4",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|define-data-property@1.1.4",
-      "author": "Jordan Harband",
-      "description": "Define a data property on an object. Will fall back to assignment in an engine without descriptors.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/define-data-property@1.1.4",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/ljharb/define-data-property.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/ljharb/define-data-property#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/ljharb/define-data-property/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/define-data-property/-/define-data-property-1.1.4.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "ac132f23396903cbfa13e489668a3ef87018aac2eb920ecc49f2229cc3c5866928af0ed7f9d39754942cf904faf731a4cccc9f0e720c3765a2775f8d6cbdd3f8"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/define-data-property"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "has-property-descriptors",
-      "version": "1.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|has-property-descriptors@1.0.2",
-      "author": "Jordan Harband",
-      "description": "Does the environment have full property descriptor support? Handles IE 8's broken defineProperty/gOPD.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/has-property-descriptors@1.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/inspect-js/has-property-descriptors.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/inspect-js/has-property-descriptors#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/inspect-js/has-property-descriptors/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/has-property-descriptors/-/has-property-descriptors-1.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "e7924d2ae216fafab829ed418ce4e333661cb5022f093ec61731f099f64f1a8e709eb82489dd1842d9c095e152aae9999b86b3de7d814be7ab6f2e62a49760ae"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/has-property-descriptors"
-        }
-      ]
     }
   ],
   "dependencies": [
@@ -41361,11 +39587,11 @@
         "chargytransparenzsoftware@1.4.7|@isaacs/fs-minipass@4.0.1",
         "chargytransparenzsoftware@1.4.7|@npmcli/agent@3.0.0",
         "chargytransparenzsoftware@1.4.7|@npmcli/fs@4.0.0",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
         "chargytransparenzsoftware@1.4.7|@pkgjs/parseargs@0.11.0",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
         "chargytransparenzsoftware@1.4.7|abbrev@3.0.1",
         "chargytransparenzsoftware@1.4.7|agent-base@7.1.4",
         "chargytransparenzsoftware@1.4.7|ansi-regex@6.2.2",
@@ -41379,7 +39605,6 @@
         "chargytransparenzsoftware@1.4.7|chart.js@4.5.1",
         "chargytransparenzsoftware@1.4.7|chownr@3.0.0",
         "chargytransparenzsoftware@1.4.7|copy-webpack-plugin@14.0.0",
-        "chargytransparenzsoftware@1.4.7|crypto-browserify@3.12.1",
         "chargytransparenzsoftware@1.4.7|css-loader@7.1.4",
         "chargytransparenzsoftware@1.4.7|decimal.js@10.6.0",
         "chargytransparenzsoftware@1.4.7|decompress-response@6.0.0",
@@ -41460,7 +39685,7 @@
         "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
         "chargytransparenzsoftware@1.4.7|sass@1.100.0",
         "chargytransparenzsoftware@1.4.7|schemes@1.4.0",
-        "chargytransparenzsoftware@1.4.7|seek-bzip@1.0.6",
+        "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
         "chargytransparenzsoftware@1.4.7|signal-exit@4.1.0",
         "chargytransparenzsoftware@1.4.7|simple-concat@1.0.1",
         "chargytransparenzsoftware@1.4.7|simple-get@4.0.1",
@@ -41559,12 +39784,21 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/infra@3.0.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/util@11.0.0"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/infra@3.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/util@11.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0|@oozcitak/util@11.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@pkgjs/parseargs@0.11.0"
@@ -41582,7 +39816,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+      "ref": "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|undici-types@7.24.6"
       ]
@@ -41665,23 +39899,6 @@
         "chargytransparenzsoftware@1.4.7|serialize-javascript@7.0.5",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|webpack@5.107.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|crypto-browserify@3.12.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|browserify-cipher@1.0.1",
-        "chargytransparenzsoftware@1.4.7|browserify-sign@4.2.6",
-        "chargytransparenzsoftware@1.4.7|create-ecdh@4.0.4",
-        "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-        "chargytransparenzsoftware@1.4.7|create-hmac@1.1.7",
-        "chargytransparenzsoftware@1.4.7|diffie-hellman@5.0.3",
-        "chargytransparenzsoftware@1.4.7|hash-base@3.0.5",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|pbkdf2@3.1.5",
-        "chargytransparenzsoftware@1.4.7|public-encrypt@4.0.3",
-        "chargytransparenzsoftware@1.4.7|randombytes@2.1.0",
-        "chargytransparenzsoftware@1.4.7|randomfill@1.0.4"
       ]
     },
     {
@@ -42316,13 +40533,13 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@1.0.6",
+      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|seek-bzip@1.0.6|commander@2.20.3"
+        "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@1.0.6|commander@2.20.3"
+      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|signal-exit@4.1.0"
@@ -42572,7 +40789,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.8",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
         "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.8",
         "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.8",
         "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.8",
@@ -42800,10 +41017,25 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+        "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/dom@2.0.2",
         "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
         "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
         "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/dom@2.0.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+        "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/url@3.0.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/url@3.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
       ]
     },
     {
@@ -42816,25 +41048,25 @@
       "ref": "chargytransparenzsoftware@1.4.7|semver@7.7.3"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/infra@3.0.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/util@11.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/infra@3.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/util@11.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@4.0.0|@oozcitak/util@11.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bn.js@5.2.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
@@ -42906,109 +41138,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17|picomatch@4.0.4"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-cipher@1.0.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|browserify-aes@1.2.0",
-        "chargytransparenzsoftware@1.4.7|browserify-des@1.0.2",
-        "chargytransparenzsoftware@1.4.7|evp_bytestokey@1.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-sign@4.2.6",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|browserify-sign@4.2.6|bn.js@5.2.3",
-        "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1",
-        "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-        "chargytransparenzsoftware@1.4.7|create-hmac@1.1.7",
-        "chargytransparenzsoftware@1.4.7|elliptic@6.6.1",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9",
-        "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-sign@4.2.6|bn.js@5.2.3"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|create-ecdh@4.0.4",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|bn.js@4.12.3",
-        "chargytransparenzsoftware@1.4.7|elliptic@6.6.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|cipher-base@1.0.7",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|md5.js@1.3.5",
-        "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3",
-        "chargytransparenzsoftware@1.4.7|sha.js@2.4.12"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|create-hmac@1.1.7",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|cipher-base@1.0.7",
-        "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1",
-        "chargytransparenzsoftware@1.4.7|sha.js@2.4.12"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|diffie-hellman@5.0.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|bn.js@4.12.3",
-        "chargytransparenzsoftware@1.4.7|miller-rabin@4.0.1",
-        "chargytransparenzsoftware@1.4.7|randombytes@2.1.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|hash-base@3.0.5",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|pbkdf2@3.1.5",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-        "chargytransparenzsoftware@1.4.7|create-hmac@1.1.7",
-        "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1",
-        "chargytransparenzsoftware@1.4.7|sha.js@2.4.12",
-        "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|public-encrypt@4.0.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|bn.js@4.12.3",
-        "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1",
-        "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-        "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9",
-        "chargytransparenzsoftware@1.4.7|randombytes@2.1.0",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|randombytes@2.1.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|randomfill@1.0.4",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|randombytes@2.1.0",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|icss-utils@5.1.0",
@@ -43533,7 +41662,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|vite@8.0.16",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
         "chargytransparenzsoftware@1.4.7|lightningcss@1.32.0",
         "chargytransparenzsoftware@1.4.7|vite@8.0.16|picomatch@4.0.4",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.15",
@@ -43586,20 +41715,20 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bonjour@3.5.13",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/connect-history-api-fallback@1.5.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/express-serve-static-core@4.19.7",
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/express-serve-static-core@4.19.7",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
         "chargytransparenzsoftware@1.4.7|@types/qs@6.14.0",
         "chargytransparenzsoftware@1.4.7|@types/range-parser@1.2.7",
         "chargytransparenzsoftware@1.4.7|@types/send@1.2.1"
@@ -43624,7 +41753,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|@types/serve-static@1.15.10",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/http-errors@2.0.5",
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
         "chargytransparenzsoftware@1.4.7|@types/serve-static@1.15.10|@types/send@0.17.6"
       ]
     },
@@ -43632,19 +41761,19 @@
       "ref": "chargytransparenzsoftware@1.4.7|@types/serve-static@1.15.10|@types/send@0.17.6",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/mime@1.3.5",
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/sockjs@0.3.36",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/ws@8.18.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
@@ -43750,7 +41879,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|launch-editor@2.12.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|picocolors@1.1.1",
-        "chargytransparenzsoftware@1.4.7|shell-quote@1.8.3"
+        "chargytransparenzsoftware@1.4.7|shell-quote@1.8.4"
       ]
     },
     {
@@ -43826,7 +41955,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|sockjs@0.3.24",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|faye-websocket@0.11.4",
-        "chargytransparenzsoftware@1.4.7|uuid@8.3.2",
+        "chargytransparenzsoftware@1.4.7|uuid@11.1.1",
         "chargytransparenzsoftware@1.4.7|websocket-driver@0.7.4"
       ]
     },
@@ -44004,6 +42133,15 @@
       "ref": "chargytransparenzsoftware@1.4.7|spdx-license-ids@3.0.22"
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|argparse@2.0.1"
@@ -44015,135 +42153,6 @@
         "chargytransparenzsoftware@1.4.7|ajv@8.20.0",
         "chargytransparenzsoftware@1.4.7|fast-deep-equal@3.1.3"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-aes@1.2.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|buffer-xor@1.0.3",
-        "chargytransparenzsoftware@1.4.7|cipher-base@1.0.7",
-        "chargytransparenzsoftware@1.4.7|create-hash@1.2.0",
-        "chargytransparenzsoftware@1.4.7|evp_bytestokey@1.0.3",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-des@1.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|cipher-base@1.0.7",
-        "chargytransparenzsoftware@1.4.7|des.js@1.1.0",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|evp_bytestokey@1.0.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|md5.js@1.3.5",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1|bn.js@5.2.3",
-        "chargytransparenzsoftware@1.4.7|randombytes@2.1.0",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|browserify-rsa@4.1.1|bn.js@5.2.3"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9|asn1.js@4.10.1",
-        "chargytransparenzsoftware@1.4.7|browserify-aes@1.2.0",
-        "chargytransparenzsoftware@1.4.7|evp_bytestokey@1.0.3",
-        "chargytransparenzsoftware@1.4.7|pbkdf2@3.1.5",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|parse-asn1@5.1.9|asn1.js@4.10.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|bn.js@4.12.3",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|minimalistic-assert@1.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|core-util-is@1.0.3",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|isarray@1.0.0",
-        "chargytransparenzsoftware@1.4.7|process-nextick-args@2.0.1",
-        "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8|safe-buffer@5.1.2",
-        "chargytransparenzsoftware@1.4.7|string_decoder@1.1.1",
-        "chargytransparenzsoftware@1.4.7|util-deprecate@1.0.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8|safe-buffer@5.1.2"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|cipher-base@1.0.7",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1",
-        "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|md5.js@1.3.5",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|hash-base@3.0.5",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3|hash-base@3.1.2",
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|ripemd160@2.0.3|hash-base@3.1.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1",
-        "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|sha.js@2.4.12",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1",
-        "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|miller-rabin@4.0.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|bn.js@4.12.3",
-        "chargytransparenzsoftware@1.4.7|brorand@1.1.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2|isarray@2.0.5",
-        "chargytransparenzsoftware@1.4.7|safe-buffer@5.2.1",
-        "chargytransparenzsoftware@1.4.7|typed-array-buffer@1.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|to-buffer@1.2.2|isarray@2.0.5"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|postcss-selector-parser@7.1.0",
@@ -44507,14 +42516,14 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/send@1.2.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/body-parser@1.19.6",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/connect@3.4.38",
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
@@ -44747,7 +42756,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/http-proxy@1.17.17",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
@@ -44762,7 +42771,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|is-plain-obj@3.0.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|shell-quote@1.8.3"
+      "ref": "chargytransparenzsoftware@1.4.7|shell-quote@1.8.4"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|default-browser@5.4.0",
@@ -44835,7 +42844,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|uuid@8.3.2"
+      "ref": "chargytransparenzsoftware@1.4.7|uuid@11.1.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|websocket-driver@0.7.4",
@@ -44984,7 +42993,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1",
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
         "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0",
         "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1"
       ]
@@ -45017,33 +43026,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|argparse@2.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|buffer-xor@1.0.3"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|des.js@1.1.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
-        "chargytransparenzsoftware@1.4.7|minimalistic-assert@1.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|core-util-is@1.0.3"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|isarray@1.0.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|process-nextick-args@2.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typed-array-buffer@1.0.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|call-bound@1.0.4",
-        "chargytransparenzsoftware@1.4.7|es-errors@1.3.0",
-        "chargytransparenzsoftware@1.4.7|is-typed-array@1.1.15"
-      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|cssesc@3.0.0"
@@ -45218,7 +43200,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/connect@3.4.38",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@25.9.1"
+        "chargytransparenzsoftware@1.4.7|@types/node@25.9.3"
       ]
     },
     {
@@ -45493,19 +43475,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|color-name@1.1.4"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|call-bound@1.0.4",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
-        "chargytransparenzsoftware@1.4.7|get-intrinsic@1.3.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|is-typed-array@1.1.15",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|which-typed-array@1.1.19"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|json-buffer@3.0.1"
     },
     {
@@ -45564,6 +43533,13 @@
       "ref": "chargytransparenzsoftware@1.4.7|to-regex-range@5.0.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|is-number@7.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|call-bound@1.0.4",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
+        "chargytransparenzsoftware@1.4.7|get-intrinsic@1.3.0"
       ]
     },
     {
@@ -45638,6 +43614,21 @@
       ]
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|core-util-is@1.0.3",
+        "chargytransparenzsoftware@1.4.7|inherits@2.0.4",
+        "chargytransparenzsoftware@1.4.7|isarray@1.0.0",
+        "chargytransparenzsoftware@1.4.7|process-nextick-args@2.0.1",
+        "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8|safe-buffer@5.1.2",
+        "chargytransparenzsoftware@1.4.7|string_decoder@1.1.1",
+        "chargytransparenzsoftware@1.4.7|util-deprecate@1.0.2"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|readable-stream@2.3.8|safe-buffer@5.1.2"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/base64@1.1.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
@@ -45667,25 +43658,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|hyperdyperid@1.2.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|es-errors@1.3.0",
-        "chargytransparenzsoftware@1.4.7|function-bind@1.1.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|which-typed-array@1.1.19",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|available-typed-arrays@1.0.7",
-        "chargytransparenzsoftware@1.4.7|call-bind@1.0.8",
-        "chargytransparenzsoftware@1.4.7|call-bound@1.0.4",
-        "chargytransparenzsoftware@1.4.7|for-each@0.3.5",
-        "chargytransparenzsoftware@1.4.7|get-proto@1.0.1",
-        "chargytransparenzsoftware@1.4.7|gopd@1.2.0",
-        "chargytransparenzsoftware@1.4.7|has-tostringtag@1.0.2"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|yocto-queue@0.1.0"
     },
     {
@@ -45704,6 +43676,13 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|is-number@7.0.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|es-errors@1.3.0",
+        "chargytransparenzsoftware@1.4.7|function-bind@1.1.2"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|es-define-property@1.0.1"
@@ -45740,31 +43719,13 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|available-typed-arrays@1.0.7",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|possible-typed-array-names@1.1.0"
-      ]
+      "ref": "chargytransparenzsoftware@1.4.7|core-util-is@1.0.3"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|call-bind@1.0.8",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|call-bind-apply-helpers@1.0.2",
-        "chargytransparenzsoftware@1.4.7|es-define-property@1.0.1",
-        "chargytransparenzsoftware@1.4.7|get-intrinsic@1.3.0",
-        "chargytransparenzsoftware@1.4.7|set-function-length@1.2.2"
-      ]
+      "ref": "chargytransparenzsoftware@1.4.7|isarray@1.0.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|for-each@0.3.5",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|is-callable@1.2.7"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|has-tostringtag@1.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|has-symbols@1.1.0"
-      ]
+      "ref": "chargytransparenzsoftware@1.4.7|process-nextick-args@2.0.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|dunder-proto@1.0.1",
@@ -45781,38 +43742,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|possible-typed-array-names@1.1.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|set-function-length@1.2.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|define-data-property@1.1.4",
-        "chargytransparenzsoftware@1.4.7|es-errors@1.3.0",
-        "chargytransparenzsoftware@1.4.7|function-bind@1.1.2",
-        "chargytransparenzsoftware@1.4.7|get-intrinsic@1.3.0",
-        "chargytransparenzsoftware@1.4.7|gopd@1.2.0",
-        "chargytransparenzsoftware@1.4.7|has-property-descriptors@1.0.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|is-callable@1.2.7"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|p-try@2.2.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|define-data-property@1.1.4",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|es-define-property@1.0.1",
-        "chargytransparenzsoftware@1.4.7|es-errors@1.3.0",
-        "chargytransparenzsoftware@1.4.7|gopd@1.2.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|has-property-descriptors@1.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|es-define-property@1.0.1"
-      ]
     }
   ]
 }

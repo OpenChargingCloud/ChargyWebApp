@@ -419,7 +419,7 @@ export class ChargyApp {
 
         //#region Handle the 'About'-button
 
-        this.aboutButton.onclick = (ev: MouseEvent) => {
+        this.aboutButton.onclick = async (ev: MouseEvent) => {
 
             this.updateAvailableScreen.style.display     = "none";
             this.inputDiv.style.flexDirection            = "";
@@ -472,10 +472,10 @@ export class ChargyApp {
                                     const signatureDiv = signaturesDiv.appendChild(document.createElement('div'));
 
                                     if (signatureDiv != null)
-                                        signatureDiv.innerHTML = this.checkApplicationHashSignature(this.currentAppInfos,
-                                                                                                    this.currentVersionInfos,
-                                                                                                    this.currentPackage,
-                                                                                                    signature);
+                                        signatureDiv.innerHTML = await this.checkApplicationHashSignature(this.currentAppInfos,
+                                                                                                          this.currentVersionInfos,
+                                                                                                          this.currentPackage,
+                                                                                                          signature);
 
                                 }
                             }
@@ -1332,10 +1332,10 @@ export class ChargyApp {
 
     //#region checkApplicationHashSignature (...)
 
-    private checkApplicationHashSignature(app:        any,
-                                          version:    any,
-                                          _package:   any,
-                                          signature:  any): string
+    private async checkApplicationHashSignature(app:        any,
+                                                version:    any,
+                                                _package:   any,
+                                                signature:  any): Promise<string>
     {
 
         if (app == null || version == null || _package == null || signature == null)
@@ -1377,15 +1377,12 @@ export class ChargyApp {
 
             //ToDo: Checking the timestamp might be usefull!
 
-            var Input       = JSON.stringify(toCheck);
-            var sha256value = require('crypto').createHash('sha256').
-                                                update(Input, 'utf8').
-                                                digest('hex');
-
-            var result = new this.elliptic.ec('secp256k1').
-                                  keyFromPublic(signature.publicKey, 'hex').
-                                  verify       (sha256value,
-                                                signature.signature);
+            var Input        = JSON.stringify(toCheck);
+            var sha256value  = await chargyLib.sha256(Input);
+            var result       = new this.elliptic.ec('secp256k1').
+                                        keyFromPublic(signature.publicKey, 'hex').
+                                        verify       (sha256value,
+                                                      signature.signature);
 
             if (result)
                 return "<i class=\"fas fa-check-circle\"></i>" + signature.signer;

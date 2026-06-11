@@ -26,7 +26,6 @@ module.exports = {
       "original-fs":  false,
       "path":         require.resolve("path-browserify"),
       "http":         require.resolve("stream-http"),
-      "crypto":       require.resolve("crypto-browserify"),
       "url":          require.resolve("url/"),
       "stream":       require.resolve("stream-browserify"),
       "vm":           require.resolve("vm-browserify"),
