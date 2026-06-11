@@ -57,7 +57,7 @@ export function getDirectChildByLocalName(parent: Document | Element, localName:
 }
 
 export function getTrimmedTextContent(element?: Element): string | undefined {
-    const text = element?.textContent?.trim();
+    const text = element?.textContent.trim();
     return text && text.length > 0 ? text : undefined;
 }
 
@@ -70,7 +70,7 @@ export function parseDescription(parent: Element): chargyInterfaces.IMultilangua
     for (const description of descriptions)
     {
         const language = description.getAttribute("language")?.trim() || "und";
-        const text     = description.textContent?.trim();
+        const text     = description.textContent.trim();
 
         if (text)
             textMap[language] = text;
@@ -373,7 +373,6 @@ export function hexToArrayBuffer(hex: string): ArrayBuffer {
 
 }
 
-
 export async function hashFile(url: string): Promise<ArrayBuffer>
 {
     try
@@ -406,9 +405,6 @@ export function ConcatenateBuffers(buffers: ArrayBuffer[]): ArrayBuffer {
     return result.buffer;
 
 }
-
-
-
 
 export function intFromBytes(x: number[]){
 
@@ -765,6 +761,8 @@ export function CreateDiv2(ParentDiv:        HTMLDivElement,
 }
 
 
+
+
 export interface String {
     isNullOrEmpty():    boolean;
     isNotNullOrEmpty(): boolean;
@@ -867,6 +865,7 @@ export async function sha512(message: string|DataView): Promise<string> {
     return hashHex;
 
 }
+
 
 /**
  * A JSON object after runtime validation. Property values stay `unknown`
