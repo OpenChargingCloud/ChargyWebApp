@@ -47,6 +47,7 @@
 
     "files": [
         "src/ts/chargyApp.ts",
+        "src/ts/declarations.d.ts",
         "src/ts/types.d.ts"
     ],
 

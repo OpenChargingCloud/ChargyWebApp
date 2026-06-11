@@ -17,6 +17,8 @@
 
 import { Buffer }                           from 'buffer';
 import { fileTypeFromBuffer }               from 'file-type';
+import type Base32Decode                    from 'base32-decode';
+import type Moment                          from 'moment';
 
 import { Alfen, AlfenCrypt01 }              from './Alfen'
 import { BSMCrypt01 }                       from './BSMCrypt01'
@@ -29,10 +31,40 @@ import { OCMF, OCMFv1_x }                   from './OCMF'
 import { SAFEXML }                          from './SAFE_XML'
 import { XMLContainer }                     from './XMLContainer'
 import { OCPI }                             from './OCPI'
-import { readQRCodeTextFromImage }          from './qrReader'
 import * as chargyInterfaces                from './chargyInterfaces'
 import * as chargyLib                       from './chargyLib'
 import * as pdfjsLib                        from 'pdfjs-dist';
+import { readQRCodeTextFromImage }          from './qrReader'
+
+type DERPublicKey = {
+    oids:      [number[], number[]];
+    publicKey: {
+        data:  ArrayBuffer | Uint8Array;
+    };
+};
+
+type Asn1Builder = {
+    bitstr(): Asn1Builder;
+    key(name: string): Asn1Builder;
+    obj(...items: unknown[]): Asn1Builder;
+    objid(): Asn1Builder;
+    seq(): Asn1Builder;
+    seqof(schema: unknown): Asn1Builder;
+};
+
+type Asn1Module = {
+    define(name: string, body: (this: Asn1Builder) => void): {
+        decode<T = any>(data: Buffer | Uint8Array | ArrayBuffer, encoding: string): T;
+    };
+};
+
+type EllipticModule = {
+    ec: new (curve: string) => {
+        keyFromPublic(publicKey: string, encoding: string): {
+            verify(hash: string, signature: unknown): boolean;
+        };
+    };
+};
 
 export class Chargy {
 
@@ -40,10 +72,10 @@ export class Chargy {
 
     public  readonly i18n:            any;
     public  readonly UILanguage:      string;
-    public  readonly elliptic:        any;
-    public  readonly moment:          any;
-    public  readonly asn1:            any;
-    public  readonly base32Decode:    any;
+    public  readonly elliptic:        EllipticModule;
+    public  readonly moment:          typeof Moment;
+    public  readonly asn1:            Asn1Module;
+    public  readonly base32Decode:    typeof Base32Decode;
     public  readonly showPKIDetails:  chargyInterfaces.ShowPKIDetailsFunction;
 
     private chargingStationOperators  = new Array<chargyInterfaces.IChargingStationOperator>();
@@ -63,10 +95,10 @@ export class Chargy {
 
     constructor(i18n:            any,
                 UILanguage:      string,
-                elliptic:        any,
-                moment:          any,
-                asn1:            any,
-                base32Decode:    any,
+                elliptic:        EllipticModule,
+                moment:          typeof Moment,
+                asn1:            Asn1Module,
+                base32Decode:    typeof Base32Decode,
                 ShowPKIDetails:  chargyInterfaces.ShowPKIDetailsFunction) {
 
         this.i18n            = i18n;
@@ -94,22 +126,18 @@ export class Chargy {
 
         // https://lapo.it/asn1js/ for a visual check...
         // https://github.com/indutny/asn1.js
-        const ASN1_OIDs      = this.asn1.define('OIDs', function() {
-            //@ts-ignore
+        const ASN1_OIDs      = this.asn1.define('OIDs', function(this: Asn1Builder) {
             this.key('oid').objid()
         });
 
-        const ASN1_PublicKey = this.asn1.define('PublicKey', function() {
-            //@ts-ignore
+        const ASN1_PublicKey = this.asn1.define('PublicKey', function(this: Asn1Builder) {
             this.seq().obj(
-                //@ts-ignore
                 this.key('oids').seqof(ASN1_OIDs),
-                //@ts-ignore
                 this.key('publicKey').bitstr()
             );
         });
 
-        const publicKeyDER   = ASN1_PublicKey.decode(publicKeyBuffer, 'der');
+        const publicKeyDER   = ASN1_PublicKey.decode(publicKeyBuffer, 'der') as DERPublicKey;
 
         const KeyType_OID    = publicKeyDER.oids[0].join(".") as string;
         let   KeyType        = "unknown";
@@ -216,6 +244,170 @@ export class Chargy {
             return textContent.replace(/\s+/g, "");
 
         return undefined;
+
+    }
+
+    private isSupportedQRCodeImageFile(fileInfo: chargyInterfaces.IFileInfo,
+                                       mimeType?: string): boolean {
+
+        const mimeTypeToCheck = (mimeType ?? fileInfo.type ?? "").toLowerCase();
+        const fileName        = fileInfo.name.toLowerCase();
+
+        return mimeTypeToCheck === "image/png"      ||
+               mimeTypeToCheck === "image/jpeg"     ||
+               mimeTypeToCheck === "image/jpg"      ||
+               mimeTypeToCheck === "image/gif"      ||
+               mimeTypeToCheck === "image/webp"     ||
+               mimeTypeToCheck === "image/bmp"      ||
+               mimeTypeToCheck === "image/svg+xml"  ||
+               fileName.endsWith(".png")            ||
+               fileName.endsWith(".jpg")            ||
+               fileName.endsWith(".jpeg")           ||
+               fileName.endsWith(".gif")            ||
+               fileName.endsWith(".webp")           ||
+               fileName.endsWith(".bmp")            ||
+               fileName.endsWith(".svg");
+
+    }
+
+    private fileNameWithoutExtension(fileName: string): string {
+
+        const lastSeparator = Math.max(fileName.lastIndexOf('/'), fileName.lastIndexOf('\\'));
+        const lastDot       = fileName.lastIndexOf('.');
+
+        if (lastDot > lastSeparator)
+            return fileName.substring(0, lastDot);
+
+        return fileName;
+
+    }
+
+    private textFileNameForQRCodeContent(fileName: string,
+                                         qrText:   string): string {
+
+        const trimmedQRCodeText = qrText.trimStart();
+        const baseFileName      = this.fileNameWithoutExtension(fileName);
+
+        if (trimmedQRCodeText.startsWith("<?xml") || trimmedQRCodeText.startsWith("<"))
+            return baseFileName + ".xml";
+
+        if (trimmedQRCodeText.startsWith("{") || trimmedQRCodeText.startsWith("["))
+            return baseFileName + ".json";
+
+        return baseFileName + ".txt";
+
+    }
+
+    private tryExtractChargeTransparencyTextFromURL(qrText: string): string {
+
+        if (!qrText.startsWith("http://") && !qrText.startsWith("https://"))
+            return qrText;
+
+        try
+        {
+            const url = new URL(qrText);
+
+            const candidates = [
+                url.hash.startsWith("#") ? url.hash.substring(1) : url.hash,
+                url.searchParams.get("data"),
+                url.searchParams.get("content"),
+                url.searchParams.get("ctr"),
+                url.searchParams.get("record"),
+                url.searchParams.get("payload"),
+                url.searchParams.get("q")
+            ];
+
+            for (const candidate of candidates)
+            {
+                const decodedCandidate = candidate != null
+                                             ? decodeURIComponent(candidate).trim()
+                                             : "";
+
+                if (decodedCandidate.startsWith("<?xml") ||
+                    decodedCandidate.startsWith("<values") ||
+                    decodedCandidate.startsWith("{")      ||
+                    decodedCandidate.startsWith("[")      ||
+                    decodedCandidate.startsWith("OCMF")   ||
+                    decodedCandidate.startsWith("AP;"))
+                {
+                    return decodedCandidate;
+                }
+            }
+        }
+        catch
+        { }
+
+        return qrText;
+
+    }
+
+    private tryExtractSignedDataTextFromXML(qrText: string): string {
+
+        const trimmedQRCodeText = qrText.trim();
+
+        if (!trimmedQRCodeText.startsWith("<?xml") && !trimmedQRCodeText.startsWith("<"))
+            return qrText;
+
+        try
+        {
+            const xmlDocument      = new DOMParser().parseFromString(trimmedQRCodeText, "text/xml");
+            const signedDataValues = chargyLib.getElementsByLocalName(xmlDocument, "signedData").
+                                        filter(signedData => (signedData.getAttribute("format") ?? "").trim().toLowerCase() === "alfen").
+                                        map   (signedData => signedData.textContent?.trim() ?? "").
+                                        filter(signedData => signedData.startsWith("AP;"));
+
+            if (signedDataValues.length > 0)
+                return signedDataValues.join("\n");
+        }
+        catch
+        { }
+
+        return qrText;
+
+    }
+
+    private async expandQRCodeImageFiles(FileInfos: Array<chargyInterfaces.IFileInfo>): Promise<Array<chargyInterfaces.IFileInfo>> {
+
+        const expandedFileInfos = new Array<chargyInterfaces.IFileInfo>();
+
+        for (const fileInfo of FileInfos)
+        {
+            if (fileInfo.data != null && this.isSupportedQRCodeImageFile(fileInfo))
+            {
+                const qrText = await readQRCodeTextFromImage(fileInfo.data, fileInfo.type);
+
+                if (qrText != null)
+                {
+                    const extractedText = this.tryExtractSignedDataTextFromXML(
+                                              this.tryExtractChargeTransparencyTextFromURL(qrText)
+                                          );
+
+                    expandedFileInfos.push({
+                        name:  this.textFileNameForQRCodeContent(fileInfo.name, extractedText),
+                        path:  fileInfo.path,
+                        type:  "text/plain",
+                        data:  new TextEncoder().encode(extractedText),
+                        info:  "Text extracted from QR code image"
+                    });
+
+                    continue;
+                }
+
+                expandedFileInfos.push({
+                    name:       fileInfo.name,
+                    path:       fileInfo.path,
+                    type:       fileInfo.type,
+                    data:       fileInfo.data,
+                    exception:  "No QR code with charge transparency data found!"
+                });
+
+                continue;
+            }
+
+            expandedFileInfos.push(fileInfo);
+        }
+
+        return expandedFileInfos;
 
     }
 
@@ -380,9 +572,9 @@ export class Chargy {
 
             //ToDo: Checking the timestamp might be usefull!
 
-            var sha256value  = await chargyLib.sha256(JSON.stringify(toCheck));
+            const sha256value = await chargyLib.sha256(JSON.stringify(toCheck));
 
-            var result       = new this.elliptic.ec('secp256r1').
+            const result      = new this.elliptic.ec('secp256r1').
                                         keyFromPublic(signature.publicKey, 'hex').
                                         verify       (sha256value,
                                                       signature.signature);
@@ -435,7 +627,15 @@ export class Chargy {
                         if (filetype?.mime == undefined)
                         {
 
-                            if (FileInfo.name.endsWith(".chargy"))
+                            if (this.isSupportedQRCodeImageFile(FileInfo))
+                                expandedFileInfos.push({
+                                                      name:  FileInfo.name,
+                                                      data:  FileInfo.data,
+                                                      type:  FileInfo.type,
+                                                      info:  "QR code image file"
+                                                  });
+
+                            else if (FileInfo.name.endsWith(".chargy"))
                                 expandedFileInfos.push({
                                                       name:       FileInfo.name,
                                                       data:       FileInfo.data,
@@ -473,6 +673,17 @@ export class Chargy {
                                                   name:  FileInfo.name,
                                                   data:  FileInfo.data,
                                                   info:  "JSON file"
+                                              });
+                            continue;
+                        }
+
+                        else if (this.isSupportedQRCodeImageFile(FileInfo, filetype.mime.toString()))
+                        {
+                            expandedFileInfos.push({
+                                                  name:  FileInfo.name,
+                                                  data:  FileInfo.data,
+                                                  type:  filetype.mime.toString(),
+                                                  info:  "QR code image file"
                                               });
                             continue;
                         }
@@ -634,88 +845,6 @@ export class Chargy {
         while (archiveFound);
 
         return expandedFileInfos;
-
-    }
-
-    //#endregion
-
-    //#region (private) readQRCodeImages(FileInfos)
-
-    private async readQRCodeImages(FileInfos: Array<chargyInterfaces.IFileInfo>): Promise<Array<chargyInterfaces.IFileInfo>> {
-
-        const expandedFileInfos = new Array<chargyInterfaces.IFileInfo>();
-
-        for (const FileInfo of FileInfos) {
-
-            if (this.isQRCodeImageFile(FileInfo)) {
-
-                const qrText = FileInfo.data != null
-                                   ? await readQRCodeTextFromImage(
-                                               FileInfo.data,
-                                               FileInfo.type ?? this.mimeTypeFromFileName(FileInfo.name)
-                                           )
-                                   : undefined;
-
-                if (qrText != null && qrText.trim() !== "") {
-                    expandedFileInfos.push({
-                        name:  FileInfo.name + ".qr.txt",
-                        path:  FileInfo.path,
-                        type:  "text/plain",
-                        data:  new TextEncoder().encode(qrText.trim()),
-                        info:  "QR code text extracted from " + FileInfo.name
-                    });
-                    continue;
-                }
-
-            }
-
-            expandedFileInfos.push(FileInfo);
-
-        }
-
-        return expandedFileInfos;
-
-    }
-
-    private isQRCodeImageFile(FileInfo: chargyInterfaces.IFileInfo): boolean {
-
-        const mimeType = FileInfo.type?.toLowerCase() ?? "";
-        const fileName = FileInfo.name. toLowerCase();
-
-        return mimeType.startsWith("image/") ||
-               fileName.endsWith(".png")    ||
-               fileName.endsWith(".jpg")    ||
-               fileName.endsWith(".jpeg")   ||
-               fileName.endsWith(".svg")    ||
-               fileName.endsWith(".webp")   ||
-               fileName.endsWith(".gif")    ||
-               fileName.endsWith(".bmp");
-
-    }
-
-    private mimeTypeFromFileName(fileName: string): string {
-
-        const lowerFileName = fileName.toLowerCase();
-
-        if (lowerFileName.endsWith(".png"))
-            return "image/png";
-
-        if (lowerFileName.endsWith(".jpg") || lowerFileName.endsWith(".jpeg"))
-            return "image/jpeg";
-
-        if (lowerFileName.endsWith(".webp"))
-            return "image/webp";
-
-        if (lowerFileName.endsWith(".svg"))
-            return "image/svg+xml";
-
-        if (lowerFileName.endsWith(".gif"))
-            return "image/gif";
-
-        if (lowerFileName.endsWith(".bmp"))
-            return "image/bmp";
-
-        return "application/octet-stream";
 
     }
 
@@ -1046,8 +1175,8 @@ export class Chargy {
 
         //#endregion
 
-        expandedFiles = await this.readQRCodeImages(expandedFiles);
-        expandedFiles = await this.decompressFiles  (expandedFiles);
+        expandedFiles = await this.decompressFiles(expandedFiles);
+        expandedFiles = await this.expandQRCodeImageFiles(expandedFiles);
 
         const publicKeyHEXLookup = new Map<string, string>();
 
@@ -1103,6 +1232,7 @@ export class Chargy {
                                 break;
 
                             case "http://transparenz.software/schema/2018/07":
+                            case "https://open.charging.cloud/CTR/2020/01":
                                 // try
                                 // {
                                     processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
@@ -1136,8 +1266,12 @@ export class Chargy {
 
                                 processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
 
-                                if (processedFile.result.status && processedFile.result.status !== chargyInterfaces.SessionVerificationResult.Unvalidated)
+                                if (processedFile.result.status &&
+                                    processedFile.result.status !== chargyInterfaces.SessionVerificationResult.Unvalidated &&
+                                    chargyLib.getElementsByLocalName(XMLDocument, "chargingStation").length === 0)
+                                {
                                     processedFile.result = await new XMLContainer(this).tryToParseXMLContainer(XMLDocument);
+                                }
 
                                 break;
 
@@ -1157,8 +1291,11 @@ export class Chargy {
                         processedFile.result = await new SAFEXML(this).tryToParseSAFEXML(XMLDocument);
 
                         // Maybe another XML format, e.g. the XML container format?
-                        if (processedFile.result.status === chargyInterfaces.SessionVerificationResult.InvalidSessionFormat)
+                        if (processedFile.result.status === chargyInterfaces.SessionVerificationResult.InvalidSessionFormat &&
+                            chargyLib.getElementsByLocalName(XMLDocument, "chargingStation").length === 0)
+                        {
                             processedFile.result = await new XMLContainer(this).tryToParseXMLContainer(XMLDocument);
+                        }
 
                     }
 
