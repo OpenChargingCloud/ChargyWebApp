@@ -22,6 +22,7 @@ import * as chargeTransparencyRecord  from './interfaces/IChargeTransparencyReco
 import * as chargyLib                 from './chargyLib'
 import Decimal                        from 'decimal.js';
 
+
 export const PCDF_PREFIX = "128.8.0";
 
 export const PCDF_FIELD_ORDER = [

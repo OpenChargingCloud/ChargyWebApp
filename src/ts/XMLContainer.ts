@@ -23,6 +23,7 @@ import { EMHCrypt01 }                 from './EMHCrypt01'
 import { Alfen }                      from './Alfen'
 import { OCMF }                       from './OCMF'
 
+
 interface XMLContainerCommonFormat {
     publicKey:             string;
     meterValueSignatures:  Array<string>;

@@ -22,6 +22,7 @@ import * as chargyInterfaces          from './interfaces/chargyInterfaces'
 import * as chargeTransparencyRecord  from './interfaces/IChargeTransparencyRecord'
 import * as chargyLib                 from './chargyLib'
 
+
 export interface ISAFEXMLEVSEContext {
     "@id":         string;
     description?: chargyInterfaces.IMultilanguageText;
