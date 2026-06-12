@@ -17,12 +17,75 @@
 
 import * as chargyInterfaces  from './chargyInterfaces'
 
-export interface ChargeTransparencyLiveLink {
+export const ChargeTransparencyLiveLinkContext = "https://open.charging.cloud/contexts/chargeTransparency/live/link/1.0";
 
-    "@context": "https://open.charging.cloud/contexts/chargeTransparency/live/link/1.0";
+
+function isConnector(data: unknown): data is IConnector {
+    if (!chargyInterfaces.isObject(data))
+        return false;
+
+    return [ "standard", "format", "powerType", "maxPower" ].
+               every(key => data[key] === undefined || typeof data[key] === "string");
+}
+
+function isTransportURL(data: unknown): data is ITransportURL|string {
+    if (typeof data === "string")
+        return data.trim() !== "";
+
+    return chargyInterfaces.isObject(data) &&
+           typeof data["url"] === "string" &&
+           (data["priority"] === undefined || typeof data["priority"] === "number") &&
+           (data["weight"]   === undefined || typeof data["weight"]   === "number");
+}
+
+function isTransport(data: unknown): data is Transport {
+
+    if (!chargyInterfaces.isObject(data))
+        return false;
+
+    const type = data["type"];
+
+    if (type !== "https"     &&
+        type !== "httpSSE"   &&
+        type !== "websocket")
+    {
+        return false;
+    }
+
+    return (data["url"]  === undefined || typeof data["url"] === "string") &&
+           (data["urls"] === undefined || (Array.isArray(data["urls"]) && data["urls"].every(isTransportURL))) &&
+           (data["totp"] === undefined || isTOTPConfig(data["totp"]));
+
+}
+
+export function IsAChargeTransparencyLiveLink(data: unknown): data is IChargeTransparencyLiveLink {
+
+    if (!chargyInterfaces.isObject(data))
+        return false;
+
+    return data["@context"] === ChargeTransparencyLiveLinkContext &&
+           (data["timestamp"]   === undefined || data["timestamp"] === null || typeof data["timestamp"] === "string") &&
+           (data["description"] === undefined || chargyInterfaces.isMultilanguageText(data["description"])) &&
+           (data["imageURLs"]   === undefined || (Array.isArray(data["imageURLs"]) && data["imageURLs"].every(value => typeof value === "string"))) &&
+           (data["geoLocation"] === undefined || chargyInterfaces.isGeoLocation(data["geoLocation"])) &&
+           (data["connector"]   === undefined || isConnector(data["connector"])) &&
+           (data["transports"]  === undefined || (Array.isArray(data["transports"]) && data["transports"].every(isTransport))) &&
+           (data["signatures"]  === undefined || Array.isArray(data["signatures"]));
+
+}
+
+function isTOTPConfig(data: unknown): data is TOTPConfig {
+    return chargyInterfaces.isObject(data) &&
+           typeof data["initialSharedSecret"] === "string" &&
+           typeof data["timeStep"]            === "number";
+}
+
+export interface IChargeTransparencyLiveLink {
+
+    "@context": typeof ChargeTransparencyLiveLinkContext;
 
     /** ISO 8601 timestamp */
-    timestamp?:     string;
+    timestamp?:     string|null;
 
     /** Multi-language description */
     description?:   chargyInterfaces.IMultilanguageText;
@@ -34,7 +97,7 @@ export interface ChargeTransparencyLiveLink {
     geoLocation?:   chargyInterfaces.IGeoLocation;
 
     /** Technical connector data */
-    connector?:     Connector;
+    connector?:     IConnector;
 
     /** Available transport methods for live data */
     transports?:    Transport[];
@@ -45,47 +108,48 @@ export interface ChargeTransparencyLiveLink {
 }
 
 /** Connector information */
-export interface Connector {
-  standard: string;
-  format: string;
-  powerType: string;
-  maxPower: string;
+export interface IConnector {
+    standard?:             string;
+    format?:               string;
+    powerType?:            string;
+    maxPower?:             string;
 }
+
+
 
 /** Union type for the different transport variants */
 export type Transport =
-  | TransportSnapshot
-  | TransportWebsocket
-  | TransportHttpSSE;
+  | TransportHTTPS
+  | TransportHTTPSSE
+  | TransportWebsocket;
 
-/** Snapshot transport (simple HTTP GET) */
-export interface TransportSnapshot {
-  type: "snapshot";
-  url: string;
+
+export interface ITransport {
+    url?:  string;
+    urls?: Array<ITransportURL|string>;
+    totp?: TOTPConfig;
 }
 
-/** WebSocket transport with load balancing and optional TOTP */
-export interface TransportWebsocket {
-  type: "websocket";
-  urls: WebsocketUrl[];
-  totp?: TOTPConfig;
+export interface TransportHTTPS     extends ITransport {
+    type: "https";
 }
 
-export interface WebsocketUrl {
-  url: string;
-  priority?: number;
-  weight?: number;
+export interface TransportHTTPSSE   extends ITransport {
+    type: "httpSSE";
 }
 
-/** HTTP Server-Sent Events transport */
-export interface TransportHttpSSE {
-  type: "httpSSE";
-  urls: string[];
-  totp?: TOTPConfig;
+export interface TransportWebsocket extends ITransport {
+    type: "websocket";
 }
 
-/** TOTP configuration (Time-based One-Time Password) */
+export interface ITransportURL {
+    url:                   string;
+    priority?:             number;
+    weight?:               number;
+}
+
+/** Time-based One-Time Password configuration */
 export interface TOTPConfig {
-  initialSharedSecret: string;
-  timeStep: number;
+    initialSharedSecret:   string;
+    timeStep:              number;
 }

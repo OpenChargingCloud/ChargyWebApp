@@ -11,6 +11,12 @@ import type {
     IMeasurementValue
 } from '../src/ts/interfaces/IChargeTransparencyRecord';
 import type {
+    IChargeTransparencyLiveLink
+} from '../src/ts/interfaces/IChargeTransparencyLiveLink';
+import {
+    IsAChargeTransparencyLiveLink
+} from '../src/ts/interfaces/IChargeTransparencyLiveLink';
+import type {
     ICryptoResult,
     IFileInfo,
     ISessionCryptoResult
@@ -221,7 +227,7 @@ async function expectVerificationReportWithPublicKey(inputFixture: string, publi
 
 }
 
-async function verifyChargeData(fileName: string, input: string | Uint8Array, type?: string): Promise<IChargeTransparencyRecord | ISessionCryptoResult> {
+async function verifyChargeData(fileName: string, input: string | Uint8Array, type?: string): Promise<IChargeTransparencyRecord | IChargeTransparencyLiveLink | ISessionCryptoResult> {
 
     const fileInfo: IFileInfo = {
         name: fileName,
@@ -235,11 +241,18 @@ async function verifyChargeData(fileName: string, input: string | Uint8Array, ty
 
 }
 
-async function verifyChargeDataFiles(fileInfos: IFileInfo[]): Promise<IChargeTransparencyRecord | ISessionCryptoResult> {
+async function verifyChargeDataFiles(fileInfos: IFileInfo[]): Promise<IChargeTransparencyRecord | IChargeTransparencyLiveLink | ISessionCryptoResult> {
     return await createChargy().DetectAndConvertContentFormat(fileInfos);
 }
 
-function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | ISessionCryptoResult): string {
+function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | IChargeTransparencyLiveLink | ISessionCryptoResult): string {
+
+    if (IsAChargeTransparencyLiveLink(report))
+        return [
+            "format: charge-transparency-live-link",
+            "timestamp: " + (report.timestamp ?? ""),
+            "transports: " + (report.transports?.length ?? 0)
+        ].join("\n");
 
     if (!IsAChargeTransparencyRecord(report))
         return [
