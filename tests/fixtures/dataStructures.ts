@@ -1,20 +1,25 @@
 import Decimal from "decimal.js";
 import {
-  CryptoAlgorithms,
-  CryptoHashAlgorithms,
-  IChargeTransparencyRecord,
-  ICryptoResult,
-  IFileInfo,
-  IMeasurement,
-  IMeasurementValue,
-  IPublicKeyInfo,
-  IPublicKeyLookup,
-  ISessionCryptoResult,
-  PublicKeyFormats,
-  SessionVerificationResult,
-  SignatureFormats,
-  VerificationResult
-} from "../../src/ts/chargyInterfaces";
+    CryptoAlgorithms,
+    CryptoHashAlgorithms,
+    PublicKeyFormats,
+    SessionVerificationResult,
+    SignatureFormats,
+    VerificationResult
+} from '../../src/ts/interfaces/chargyInterfaces';
+
+import type {
+    IChargeTransparencyRecord,
+    IMeasurement,
+    IMeasurementValue
+} from '../../src/ts/interfaces/IChargeTransparencyRecord';
+import type {
+    ICryptoResult,
+    IFileInfo,
+    IPublicKeyInfo,
+    IPublicKeyLookup,
+    ISessionCryptoResult
+} from '../../src/ts/interfaces/chargyInterfaces';
 
 export function samplePublicKeyInfo(overrides: Partial<IPublicKeyInfo> = {}): IPublicKeyInfo {
   return {

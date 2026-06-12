@@ -1,19 +1,20 @@
-import { readFileSync } from "node:fs";
-import { createRequire } from "node:module";
-import { describe, expect, test, vi } from 'vitest';
-import { Chargy } from '../src/ts/chargy';
+import { expect, vi }     from 'vitest';
+import { Chargy }         from '../src/ts/chargy';
+import { readFileSync }   from "node:fs";
+import { createRequire }  from "node:module";
 import {
-    IsAChargeTransparencyRecord,
-    isIFileInfo
-} from '../src/ts/chargyInterfaces';
+    IsAChargeTransparencyRecord
+} from '../src/ts/interfaces/IChargeTransparencyRecord';
 import type {
     IChargeTransparencyRecord,
+    IMeasurement,
+    IMeasurementValue
+} from '../src/ts/interfaces/IChargeTransparencyRecord';
+import type {
     ICryptoResult,
     IFileInfo,
-    IMeasurement,
-    IMeasurementValue,
     ISessionCryptoResult
-} from '../src/ts/chargyInterfaces';
+} from '../src/ts/interfaces/chargyInterfaces';
 
 export {
     expectVerificationReport,
