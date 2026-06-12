@@ -17,17 +17,18 @@
 
 /* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-floating-promises, @typescript-eslint/no-misused-promises, @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports, @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unnecessary-type-conversion, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-enum-comparison, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars, @typescript-eslint/require-await, @typescript-eslint/restrict-plus-operands, @typescript-eslint/restrict-template-expressions, no-empty, no-useless-assignment, no-useless-escape, no-var */
 
-import { Chargy }             from './chargy'
-import { readQRCodeTextFromImageData } from './qrReader'
-import * as chargyInterfaces  from './chargyInterfaces'
-import * as chargyLib         from './chargyLib'
-import * as L                 from 'leaflet';
-import Decimal                from 'decimal.js';
+import { Chargy }                       from './chargy'
+import { readQRCodeTextFromImageData }  from './qrReader'
+import * as chargyInterfaces            from './interfaces/chargyInterfaces'
+import * as chargeTransparencyRecord    from './interfaces/IChargeTransparencyRecord'
+import * as chargyLib                   from './chargyLib'
+import * as L                           from 'leaflet';
+import Decimal                          from 'decimal.js';
 
 import '../scss/chargy.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-type DetectionResult = chargyInterfaces.IChargeTransparencyRecord | chargyInterfaces.ISessionCryptoResult;
+type DetectionResult = chargeTransparencyRecord.IChargeTransparencyRecord | chargyInterfaces.ISessionCryptoResult;
 
 type DetectionOptions = {
     prepareUI?: boolean;
@@ -1422,7 +1423,7 @@ export class ChargyApp {
                                                                              data: new TextEncoder().encode(FileInfos)
                                                                           }]);
 
-            else if (chargyInterfaces.isIFileInfo(FileInfos))
+            else if (chargeTransparencyRecord.isIFileInfo(FileInfos))
                 result = await this.chargy.DetectAndConvertContentFormat([ FileInfos ]);
 
             else
@@ -1439,7 +1440,7 @@ export class ChargyApp {
         }
 
 
-        if (chargyInterfaces.IsAChargeTransparencyRecord(result))
+        if (chargeTransparencyRecord.IsAChargeTransparencyRecord(result))
         {
             if (options?.prepareUI === false)
             {
@@ -1476,7 +1477,7 @@ export class ChargyApp {
 
     //#region showChargeTransparencyRecord  (CTR)
 
-    private async showChargeTransparencyRecord(CTR: chargyInterfaces.IChargeTransparencyRecord)
+    private async showChargeTransparencyRecord(CTR: chargeTransparencyRecord.IChargeTransparencyRecord)
     {
 
         if (CTR == null)
@@ -2311,7 +2312,7 @@ export class ChargyApp {
 
                 const result = invalidDataSet.result;
 
-                if (chargyInterfaces.IsASessionCryptoResult(result))
+                if (chargeTransparencyRecord.IsASessionCryptoResult(result))
                 {
 
                     const invalidDataSetDiv = chargyLib.CreateDiv(invalidDataSetsDiv, "invalidDataSet");
@@ -2354,7 +2355,7 @@ export class ChargyApp {
 
     //#region showChargingSessionDetails    (chargingSession)
 
-    private async showChargingSessionDetails(chargingSession: chargyInterfaces.IChargingSession)
+    private async showChargingSessionDetails(chargingSession: chargeTransparencyRecord.IChargingSession)
     {
 
         try
@@ -3248,7 +3249,7 @@ export class ChargyApp {
 
     //#region showMeasurementCryptoDetails  (measurementValue)
 
-    private showMeasurementCryptoDetails(measurementValue:  chargyInterfaces.IMeasurementValue) : void
+    private showMeasurementCryptoDetails(measurementValue:  chargeTransparencyRecord.IMeasurementValue) : void
     {
 
         function doError(text: string)
