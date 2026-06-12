@@ -20,6 +20,7 @@ export {
     expectVerificationReportInline,
     expectBinaryVerificationReport,
     expectArchiveVerificationReport,
+    expectMultiArchiveVerificationReport,
     expectVerificationReportWithPublicKey
 }
 
@@ -153,6 +154,24 @@ async function expectArchiveVerificationReport(archiveFixture: string, expectedF
                                archive,
                                archiveMimeType(archiveFixture)
                            );
+
+    const summary  = formatChargeDataVerificationReport(report);
+
+    expectReportLines(summary, expected);
+
+}
+
+async function expectMultiArchiveVerificationReport(inputFixtures: string[], expectedFixture: string) {
+
+    const expected = readFixture(expectedFixture);
+
+    const report   = await verifyChargeDataFiles(
+        inputFixtures.map(inputFixture => ({
+            name:  inputFixture,
+            type:  archiveMimeType(inputFixture),
+            data:  readBinaryFixture(inputFixture)
+        }))
+    );
 
     const summary  = formatChargeDataVerificationReport(report);
 
