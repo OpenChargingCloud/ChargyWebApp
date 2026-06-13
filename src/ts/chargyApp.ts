@@ -752,7 +752,7 @@ export class ChargyApp {
         if (this.isSupportedLanguage(storedLanguage))
             return storedLanguage;
 
-        return "de";
+        return "en";
 
     }
 
