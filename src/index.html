@@ -55,8 +55,23 @@
         <div id="app">
 
             <div id="headline">
-                <div id="logo"></div>
+                <div id="logo"><span data-i18n-key="appHeadline">Chargy - Transparenzsoftware für die Elektromobilität</span></div>
                 <div id="windowButtons">
+                    <div id="languageSelector">
+                        <button id="languageButton" aria-haspopup="true" aria-expanded="false" title="Sprache auswählen">
+                            <span id="languageFlag" class="languageFlag languageFlag-de"><span></span><span></span><span></span></span>
+                        </button>
+                        <div id="languageMenu" role="menu">
+                            <button data-language="de" role="menuitem">
+                                <span class="languageFlag languageFlag-de"><span></span><span></span><span></span></span>
+                                <span>Deutsch</span>
+                            </button>
+                            <button data-language="en" role="menuitem">
+                                <span class="languageFlag languageFlag-en"><span></span><span></span><span></span></span>
+                                <span>English</span>
+                            </button>
+                        </div>
+                    </div>
                     <button id="updateAvailableButton"><i class="fas fa-exclamation-circle"></i></button>
                     <button id="aboutButton"          ><i class="far fa-question-circle"   ></i></button>
                     <button id="fullScreenButton"     ><i class="fas fa-expand"            ></i></button>
@@ -72,15 +87,15 @@
 
                         <div id="inputInfos">
 
-                            <div id="text">Sie können einen oder mehrere Transparenzdatensätze und deren dazugehörige Public Keys
+                            <div id="text" data-i18n-key="inputHelp">Sie können einen oder mehrere Transparenzdatensätze und deren dazugehörige Public Keys
                                         zu Ihren Ladevorgängen entweder aus einer Datei laden,
                                         über die Zwischenablage einfügen oder Drag'n'Drop verwenden...</div>
 
                             <div id="buttonsDiv">
-                                <button id="fileInputButton"><i class="far fa-folder-open"></i><br />Datensätze<br />laden</button>
+                                <button id="fileInputButton"><i class="far fa-folder-open"></i><br /><span data-i18n-key="recordsLabel">Datensätze</span><br /><span data-i18n-key="loadLabel">laden</span></button>
                                 <input id="fileInput" type="file" multiple accept=".chargy,.xml,.json,.txt,.csv,.pdf,.zip,.tar,.gz,.bz2,.png,.jpg,.jpeg,.svg,.webp,.gif,.bmp,image/*" />
-                                <button id="qrScanButton" disabled><i class="fas fa-qrcode"></i><br />QR-Code<br />scannen</button>
-                                <button id="pasteButton"><i class="fas fa-paste"></i><br />Datensätze<br />einfügen</button>
+                                <button id="qrScanButton" disabled><i class="fas fa-qrcode"></i><br /><span data-i18n-key="qrCodeLabel">QR-Code</span><br /><span data-i18n-key="scanLabel">scannen</span></button>
+                                <button id="pasteButton"><i class="fas fa-paste"></i><br /><span data-i18n-key="recordsLabel">Datensätze</span><br /><span data-i18n-key="pasteLabel">einfügen</span></button>
                             </div>
 
                             <div id="loadingErrors">
@@ -100,7 +115,7 @@
                                 </div>
                             </div>
 
-                            <p>
+                            <p data-i18n-key="aboutOpenSourceIntro">
                                 Diese Software ist Open Source und basiert auf den folgenden Open-Source-Software-Bibliotheken:
                             </p>
 
@@ -189,27 +204,27 @@
 
                             </div>
 
-                            <p>
+                            <p data-i18n-key="aboutCryptoAPI">
                                 Die SHA256/512-Hash-Funktionen werden durch die Crypto API des Web Browsers realisiert.
                             </p>
                             <p>
-                                Elliptische Kurven Kryptographie wird durch <button class="linkButton" href="https://github.com/indutny/elliptic">elliptic</button> und einer angepassten Implementierung der <button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo">secp224k1-Kurve</button> realisiert.
-                                Hierbei kommen je nach Verfahren und Ladestations- bzw. Smart-Meter-Hersteller unterschiedliche elliptische Kurven zum Einsatz.
+                                <span data-i18n-key="aboutECCIntro">Elliptische Kurven Kryptographie wird durch</span> <button class="linkButton" href="https://github.com/indutny/elliptic">elliptic</button> <span data-i18n-key="aboutECCAnd">und einer angepassten Implementierung der</span> <button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo">secp224k1-Kurve</button> <span data-i18n-key="aboutECCOutro">realisiert.
+                                Hierbei kommen je nach Verfahren und Ladestations- bzw. Smart-Meter-Hersteller unterschiedliche elliptische Kurven zum Einsatz.</span>
                             </p>
                             <p>
-                                Weitere Details zu den internen Datenstrukturen und Abläufen von Chargy gibt es auf <button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/tree/master/documentation">GitHub</button>.
+                                <span data-i18n-key="aboutDocumentation">Weitere Details zu den internen Datenstrukturen und Abläufen von Chargy gibt es auf</span> <button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/tree/master/documentation">GitHub</button>.
                             </p>
 
                             <div id="applicationHash">
-                                <div id="text">SHA-512 Hashwert dieser Software:</div>
-                                <div id="value"><span style="font-style: italics">Wird berechnet...</span></div>
+                                <div id="text" data-i18n-key="applicationHashLabel">SHA-512 Hashwert dieser Software:</div>
+                                <div id="value"><span style="font-style: italics" data-i18n-key="isBeingCalculated">Wird berechnet...</span></div>
                                 <div id="sigHead"></div>
                                 <div id="signatures"></div>
                             </div>
 
                             <div id="applicationSignatures">
-                                <div id="text">Digitale Signaturen dieser Software:</div>
-                                <div id="value"><span style="font-style: italics">Werden berechnet...</span></div>
+                                <div id="text" data-i18n-key="applicationSignaturesLabel">Digitale Signaturen dieser Software:</div>
+                                <div id="value"><span style="font-style: italics" data-i18n-key="areBeingCalculated">Werden berechnet...</span></div>
                             </div>
 
                             <div id="funding">
@@ -262,7 +277,7 @@
                         <div id="inputButtons">
                             <button id="backButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
                             <div id="exportButtonDiv">
-                                <button id="exportButton"><i class="fas fa-download"></i> Exportieren</button>
+                                <button id="exportButton"><i class="fas fa-download"></i> <span data-i18n-key="exportLabel">Exportieren</span></button>
                             </div>
                         </div>
 
@@ -278,10 +293,10 @@
                     </div>
 
                     <div id="feedback">
-                        Falsche Daten, falsche Signaturen oder sonstige Fragen?<br />
-                        Treten Sie mit uns in Kontakt:
+                        <span data-i18n-key="feedbackQuestion">Falsche Daten, falsche Signaturen oder sonstige Fragen?</span><br />
+                        <span data-i18n-key="feedbackContact">Treten Sie mit uns in Kontakt:</span>
                         <div id="feedbackMethods">
-                            <button id="showIssueTracker"><i class="far fa-comments"></i>Mängel melden</button>
+                            <button id="showIssueTracker"><i class="far fa-comments"></i><span data-i18n-key="reportIssueLabel">Mängel melden</span></button>
                             <a      id="eMail"   href="mailto:..."><i class="far fa-envelope"></i></a>
                             <a      id="hotline" href="tel:..."><i class="fas fa-phone fa-rotate-90"></i></a>
                         </div>
@@ -299,7 +314,7 @@
                         <div class="error"></div>
 
                         <div class="intro">
-                            Tariff informations:
+                            <span data-i18n-key="tariffInformations">Tariff informations:</span>
                         </div>
 
                     </div>
@@ -330,7 +345,7 @@
                         <div class="error"></div>
 
                         <div class="intro">
-                            Charging Period
+                            <span data-i18n-key="chargingPeriod">Charging Period</span>
                         </div>
 
                     </div>
@@ -361,7 +376,7 @@
                         <div class="error"></div>
 
                         <div class="intro">
-                            Folgende Daten des Ladevorgangs sind <span class="important">mess- und eichrechtsrelevant</span> und damit gemäß <span id="cryptoAlgorithm"></span> Teil der digitalen Signatur:
+                            <span data-i18n-key="signatureRelevantDataIntro">Folgende Daten des Ladevorgangs sind <span class="important">mess- und eichrechtsrelevant</span> und damit gemäß</span> <span id="cryptoAlgorithm"></span> <span data-i18n-key="signatureRelevantDataOutro">Teil der digitalen Signatur:</span>
                         </div>
 
                     </div>
@@ -417,34 +432,34 @@
             <div id="issueTracker" class="overlay">
                 <div class="overlayText">
 
-                    <div id="headline">
+                    <div id="headline" data-i18n-key="issueTrackerHeadline">
                         Sie wollen einen oder mehrere Mängel melden?
                     </div>
 
                     <form id="newIssueForm">
 
-                        <div class="label">Bitte wählen sie eine oder mehrere Kategorien...</div>
-                        <input type="checkbox" id="invalidCTR"                value="invalidCTR"> Transparenzdatensatz konnte nicht geladen werden<br>
-                        <input type="checkbox" id="InvalidStationData"        value="InvalidStationData"> Falsche Daten zu einer Ladestation<br>
-                        <input type="checkbox" id="invalidSignatures"         value="invalidSignatures"> Signatur(en) im Transparenzdatensatz sind ungültig<br>
-                        <input type="checkbox" id="invalidCertificates"       value="invalidCertificates"> Fehler bei der Überprüfung von digitalen Zertifikaten<br>
-                        <input type="checkbox" id="transparencenySoftwareBug" value="transparencenySoftwareBug"> Allgemeiner Fehler in der Transparenzsoftware<br>
-                        <input type="checkbox" id="DSGVO"                     value="DSGVO"> Anfrage nach der Datenschutz-Grundverordnung (DSGVO)<br>
-                        <input type="checkbox" id="BITV"                      value="BITV"> Anfrage bezüglich barrierefreier Informationstechnik (BITV 2.0, EU Direktive 2016/2102)<br>
+                        <div class="label" data-i18n-key="issueCategoriesLabel">Bitte wählen sie eine oder mehrere Kategorien...</div>
+                        <input type="checkbox" id="invalidCTR"                value="invalidCTR"> <span data-i18n-key="issueInvalidCTR">Transparenzdatensatz konnte nicht geladen werden</span><br>
+                        <input type="checkbox" id="InvalidStationData"        value="InvalidStationData"> <span data-i18n-key="issueInvalidStationData">Falsche Daten zu einer Ladestation</span><br>
+                        <input type="checkbox" id="invalidSignatures"         value="invalidSignatures"> <span data-i18n-key="issueInvalidSignatures">Signatur(en) im Transparenzdatensatz sind ungültig</span><br>
+                        <input type="checkbox" id="invalidCertificates"       value="invalidCertificates"> <span data-i18n-key="issueInvalidCertificates">Fehler bei der Überprüfung von digitalen Zertifikaten</span><br>
+                        <input type="checkbox" id="transparencenySoftwareBug" value="transparencenySoftwareBug"> <span data-i18n-key="issueSoftwareBug">Allgemeiner Fehler in der Transparenzsoftware</span><br>
+                        <input type="checkbox" id="DSGVO"                     value="DSGVO"> <span data-i18n-key="issueDSGVO">Anfrage nach der Datenschutz-Grundverordnung (DSGVO)</span><br>
+                        <input type="checkbox" id="BITV"                      value="BITV"> <span data-i18n-key="issueBITV">Anfrage bezüglich barrierefreier Informationstechnik (BITV 2.0, EU Direktive 2016/2102)</span><br>
 
-                        <div class="label">Bitte beschreiben Sie die aufgetretenen Fehler oder Probleme ein wenig genauer...</div>
+                        <div class="label" data-i18n-key="issueDescriptionLabel">Bitte beschreiben Sie die aufgetretenen Fehler oder Probleme ein wenig genauer...</div>
                         <textarea id="issueDescription"></textarea>
 
-                        <div class="label">Sollen die Daten Ihres Ladevorgangs zur einfacheren Klärung des Problems mit übermittelt werden?</div>
+                        <div class="label" data-i18n-key="issueIncludeCTRLabel">Sollen die Daten Ihres Ladevorgangs zur einfacheren Klärung des Problems mit übermittelt werden?</div>
                         <select id="includeCTR">
-                            <option value="yes">ja</option>
-                            <option value="no" selected>nein</option>
+                            <option value="yes" data-i18n-key="yesLabel">ja</option>
+                            <option value="no" selected data-i18n-key="noLabel">nein</option>
                         </select>
 
-                        <div class="label">Ihre Kontaktdaten, falls Rückfragen notwendig sein sollten...</div>
-                        <input type="text" id="issueName"  placeholder="Ihr Name"><br /> 
-                        <input type="text" id="issuePhone" placeholder="Ihre Telefonnummer"><br /> 
-                        <input type="text" id="issueEMail" placeholder="Ihre E-Mail Adresse"><br /> 
+                        <div class="label" data-i18n-key="issueContactLabel">Ihre Kontaktdaten, falls Rückfragen notwendig sein sollten...</div>
+                        <input type="text" id="issueName"  placeholder="Ihr Name" data-i18n-placeholder-key="issueNamePlaceholder"><br />
+                        <input type="text" id="issuePhone" placeholder="Ihre Telefonnummer" data-i18n-placeholder-key="issuePhonePlaceholder"><br />
+                        <input type="text" id="issueEMail" placeholder="Ihre E-Mail Adresse" data-i18n-placeholder-key="issueEMailPlaceholder"><br />
 
                         <div id="privacyStatement">
                             <h1>Datenschutzerklärung für diesen Mängelmelder</h1>
@@ -511,8 +526,8 @@
                         </div>
 
                         <div id="sendIssueBox">
-                            <input id="privacyStatementAccepted" type="checkbox" name="privacyStatementAccepted"><button id="showPrivacyStatement">Datenschutzerklärung</button> gelesen und akzeptiert?<br />
-                            <button id="sendIssueButton" disabled>Mängel melden</button>
+                            <input id="privacyStatementAccepted" type="checkbox" name="privacyStatementAccepted"><button id="showPrivacyStatement" data-i18n-key="privacyStatementLabel">Datenschutzerklärung</button> <span data-i18n-key="privacyStatementAcceptedLabel">gelesen und akzeptiert?</span><br />
+                            <button id="sendIssueButton" disabled data-i18n-key="reportIssueLabel">Mängel melden</button>
                         </div>
 
                     </form>
@@ -529,7 +544,7 @@
 
                     <div class="headline">
                         <div class="error"></div>
-                        <div class="intro">QR-Code scannen</div>
+                        <div class="intro" data-i18n-key="scanQRCodeLabel">QR-Code scannen</div>
                     </div>
 
                     <div class="data">
@@ -539,15 +554,15 @@
                             <div id="scannerFrame"></div>
                         </div>
 
-                        <div id="qrCodeScannerStatus">Kamera wird gestartet...</div>
+                        <div id="qrCodeScannerStatus" data-i18n-key="cameraStarting">Kamera wird gestartet...</div>
 
                         <div id="qrCodeScannerResult">
-                            <div id="qrCodeScannerResultLabel">Erkannter Inhalt</div>
+                            <div id="qrCodeScannerResultLabel" data-i18n-key="recognizedContent">Erkannter Inhalt</div>
                             <pre id="qrCodeScannerResultText"></pre>
                             <div id="qrCodeScannerURLActions">
-                                <button id="qrCodeScannerOpenURLButton"><i class="fas fa-external-link-alt"></i> URL öffnen</button>
+                                <button id="qrCodeScannerOpenURLButton"><i class="fas fa-external-link-alt"></i> <span data-i18n-key="openURLLabel">URL öffnen</span></button>
                             </div>
-                            <button id="qrCodeScannerRescanButton"><i class="fas fa-rotate-right"></i> Erneut scannen</button>
+                            <button id="qrCodeScannerRescanButton"><i class="fas fa-rotate-right"></i> <span data-i18n-key="rescanLabel">Erneut scannen</span></button>
                         </div>
                     </div>
 
