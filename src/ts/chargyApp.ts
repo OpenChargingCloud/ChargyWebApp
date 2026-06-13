@@ -36,9 +36,9 @@ type DetectionOptions = {
     onError?:   (result: chargyInterfaces.ISessionCryptoResult) => void;
 };
 
-type SupportedLanguage = "de" | "en";
+const supportedLanguages = [ "de", "en" ] as const;
 
-const supportedLanguages: ReadonlyArray<SupportedLanguage> = [ "de", "en" ];
+type SupportedLanguage = typeof supportedLanguages[number];
 
 export class ChargyApp {
 
@@ -751,6 +751,19 @@ export class ChargyApp {
 
         if (this.isSupportedLanguage(storedLanguage))
             return storedLanguage;
+
+        const browserLanguages = [
+            navigator.language,
+            ...(navigator.languages ?? [])
+        ].map(language => language.toLowerCase());
+
+        for (const supportedLanguage of supportedLanguages)
+            if (browserLanguages.includes(supportedLanguage))
+                return supportedLanguage;
+
+        for (const supportedLanguage of supportedLanguages)
+            if (browserLanguages.some(language => language.startsWith(supportedLanguage + "-")))
+                return supportedLanguage;
 
         return "en";
 
