@@ -6,7 +6,7 @@ import {
     SessionVerificationResult,
     SignatureFormats,
     VerificationResult
-} from '../../src/ts/interfaces/chargyInterfaces';
+} from '../../src/ts/interfaces/IPublicKeyInfo';
 
 import type {
     IChargeTransparencyRecord,
@@ -19,7 +19,7 @@ import type {
     IPublicKeyInfo,
     IPublicKeyLookup,
     ISessionCryptoResult
-} from '../../src/ts/interfaces/chargyInterfaces';
+} from '../../src/ts/interfaces/IPublicKeyInfo';
 
 export function samplePublicKeyInfo(overrides: Partial<IPublicKeyInfo> = {}): IPublicKeyInfo {
   return {

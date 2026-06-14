@@ -15,13 +15,12 @@
  * limitations under the License.
  */
 
-/* eslint-disable @typescript-eslint/ban-ts-comment, @typescript-eslint/no-explicit-any, @typescript-eslint/no-floating-promises, @typescript-eslint/no-misused-promises, @typescript-eslint/no-non-null-assertion, @typescript-eslint/no-require-imports, @typescript-eslint/no-unnecessary-condition, @typescript-eslint/no-unnecessary-type-conversion, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-enum-comparison, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars, @typescript-eslint/require-await, @typescript-eslint/restrict-plus-operands, @typescript-eslint/restrict-template-expressions, no-empty, no-useless-assignment, no-useless-escape, no-var */
-
 import { Chargy }                       from './chargy'
 import { readQRCodeTextFromImageData }  from './qrReader'
 import * as chargyInterfaces            from './interfaces/chargyInterfaces'
 import * as chargeTransparencyRecord    from './interfaces/IChargeTransparencyRecord'
 import * as chargeTransparencyLiveLink  from './interfaces/IChargeTransparencyLiveLink'
+import * as publicKeyInfo               from './interfaces/IPublicKeyInfo'
 import * as chargyLib                   from './chargyLib'
 import * as L                           from 'leaflet';
 import Decimal                          from 'decimal.js';
@@ -29,11 +28,31 @@ import Decimal                          from 'decimal.js';
 import '../scss/chargy.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-type DetectionResult = chargeTransparencyRecord.IChargeTransparencyRecord | chargeTransparencyLiveLink.IChargeTransparencyLiveLink | chargyInterfaces.ISessionCryptoResult;
+type DetectionResult = chargeTransparencyRecord.  IChargeTransparencyRecord   |
+                       chargeTransparencyLiveLink.IChargeTransparencyLiveLink |
+                       publicKeyInfo.             IPublicKeyInfo              |
+                       chargyInterfaces.          ISessionCryptoResult;
 
 type DetectionOptions = {
     prepareUI?: boolean;
     onError?:   (result: chargyInterfaces.ISessionCryptoResult) => void;
+};
+
+type SaveFilePicker = (options: {
+    suggestedName?: string;
+    types?: Array<{
+        description?: string;
+        accept: Record<string, string[]>;
+    }>;
+}) => Promise<{
+    createWritable(): Promise<{
+        write(data: string): Promise<void>;
+        close(): Promise<void>;
+    }>;
+}>;
+
+type WindowWithSaveFilePicker = Window & {
+    showSaveFilePicker?: SaveFilePicker;
 };
 
 const supportedLanguages = [ "de", "en" ] as const;
@@ -69,9 +88,9 @@ export class ChargyApp {
     private applicationHash:                    string              = "";
 
     private markers:                            any                 = [];
-    private minlat:                             number              = +1000;
+    private minlat:                             number              =  1000;
     private maxlat:                             number              = -1000;
-    private minlng:                             number              = +1000;
+    private minlng:                             number              =  1000;
     private maxlng:                             number              = -1000;
 
     private appDiv:                             HTMLDivElement;
@@ -183,11 +202,11 @@ export class ChargyApp {
 
         //#region Load external data from web server
 
-        this.loadI18n().then(() => {
+        void this.loadI18n().then(async () => {
             this.applyTranslations();
-            this.updateQRCodeScannerAvailability();
+            await this.updateQRCodeScannerAvailability();
         });
-        this.loadPackageJSON();
+        void this.loadPackageJSON();
 
         //#endregion
 
@@ -305,13 +324,13 @@ export class ChargyApp {
                                                             this.showPKIDetails.bind(this)
                                                         );
 
-        this.setUILanguage(this.UILanguage, false);
+        void this.setUILanguage(this.UILanguage, false);
         this.setupLanguageSelector();
 
 
         //#region OnWindowResize
 
-        window.onresize = (ev: UIEvent) => {
+        window.onresize = () => {
             this.verifyframeDiv.style.maxHeight = (this.appDiv.clientHeight - this.headlineDiv.clientHeight).toString() + "px";
         }
 
@@ -347,42 +366,86 @@ export class ChargyApp {
 
                 //#region Collect issue data...
 
-                const newIssueForm  = document.getElementById('newIssueForm') as HTMLFormElement;
-                const   data:any      = {};
+                const newIssueForm = document.getElementById('newIssueForm') as HTMLFormElement;
 
-                data["timestamp"]                  = new Date().toISOString();
-                data["chargyVersion"]              = this.packageJson.version;
-                data["platform"]                   = process.platform;
+                const queryRequired = (selector: string): Element => {
 
-                data["invalidCTR"]                 = (newIssueForm.querySelector("#invalidCTR")                as HTMLInputElement).checked;
-                data["InvalidStationData"]         = (newIssueForm.querySelector("#InvalidStationData")        as HTMLInputElement).checked;
-                data["invalidSignatures"]          = (newIssueForm.querySelector("#invalidSignatures")         as HTMLInputElement).checked;
-                data["invalidCertificates"]        = (newIssueForm.querySelector("#invalidCertificates")       as HTMLInputElement).checked;
-                data["transparencenySoftwareBug"]  = (newIssueForm.querySelector("#transparencenySoftwareBug") as HTMLInputElement).checked;
-                data["DSGVO"]                      = (newIssueForm.querySelector("#DSGVO")                     as HTMLInputElement).checked;
-                data["BITV"]                       = (newIssueForm.querySelector("#BITV")                      as HTMLInputElement).checked;
+                    const element = newIssueForm.querySelector(selector);
 
-                data["description"]                = (newIssueForm.querySelector("#issueDescription")          as HTMLTextAreaElement).value;
+                    if (element == null)
+                        throw new Error("Missing issue form element: " + selector);
 
-                if ((newIssueForm.querySelector("#includeCTR") as HTMLSelectElement).value == "yes")
+                    return element;
+
+                };
+
+                const queryInput = (selector: string): HTMLInputElement => {
+
+                    const element = queryRequired(selector);
+
+                    if (!(element instanceof HTMLInputElement))
+                        throw new Error("Issue form element is not an input: " + selector);
+
+                    return element;
+
+                };
+
+                const querySelect = (selector: string): HTMLSelectElement => {
+
+                    const element = queryRequired(selector);
+
+                    if (!(element instanceof HTMLSelectElement))
+                        throw new Error("Issue form element is not a select: " + selector);
+
+                    return element;
+
+                };
+
+                const queryTextArea = (selector: string): HTMLTextAreaElement => {
+
+                    const element = queryRequired(selector);
+
+                    if (!(element instanceof HTMLTextAreaElement))
+                        throw new Error("Issue form element is not a textarea: " + selector);
+
+                    return element;
+
+                };
+
+                const packageJson = this.packageJson as { version?: unknown };
+                const data: chargyInterfaces.IssueReportPayload = {
+                    timestamp:                  new Date().toISOString(),
+                    chargyVersion:              typeof packageJson.version === "string" ? packageJson.version : "",
+                    platform:                   process.platform,
+                    invalidCTR:                 queryInput("#invalidCTR").checked,
+                    InvalidStationData:         queryInput("#InvalidStationData").checked,
+                    invalidSignatures:          queryInput("#invalidSignatures").checked,
+                    invalidCertificates:        queryInput("#invalidCertificates").checked,
+                    transparencenySoftwareBug:  queryInput("#transparencenySoftwareBug").checked,
+                    DSGVO:                      queryInput("#DSGVO").checked,
+                    BITV:                       queryInput("#BITV").checked,
+                    description:                queryTextArea("#issueDescription").value,
+                    name:                       queryInput("#issueName").value,
+                    phone:                      queryInput("#issuePhone").value,
+                    eMail:                      queryInput("#issueEMail").value
+                };
+
+                if (querySelect("#includeCTR").value == "yes")
                 {
                     try
                     {
 
-                        const stringify  = require('safe-stable-stringify');
-                        const ctr        = stringify(this.chargy.currentCTR);
+                        const ctr = JSON.stringify(this.chargy.currentCTR);
 
                         if (ctr !== "{}")
                             data["chargeTransparencyRecord"] = ctr;
 
                     }
-                    catch (exception)
-                    { }
+                    catch
+                    {
+                        // Optional diagnostic attachment; the issue report itself can still be sent.
+                    }
                 }
-
-                data["name"]                       = (newIssueForm.querySelector("#issueName")                 as HTMLInputElement).value;
-                data["phone"]                      = (newIssueForm.querySelector("#issuePhone")                as HTMLInputElement).value;
-                data["eMail"]                      = (newIssueForm.querySelector("#issueEMail")                as HTMLInputElement).value;
 
                 //#endregion
 
@@ -421,7 +484,7 @@ export class ChargyApp {
             }
             catch (exception)
             {
-                alert(this.getLocalizedText("issueSubmitFailed"));
+                alert(this.getLocalizedText("issueSubmitFailed") + ": " + (exception instanceof Error ? exception.message : String(exception)));
             }
 
         }
@@ -498,11 +561,10 @@ export class ChargyApp {
 
                                     const signatureDiv = signaturesDiv.appendChild(document.createElement('div'));
 
-                                    if (signatureDiv != null)
-                                        signatureDiv.innerHTML = await this.checkApplicationHashSignature(this.currentAppInfos,
-                                                                                                          this.currentVersionInfos,
-                                                                                                          this.currentPackage,
-                                                                                                          signature);
+                                    signatureDiv.innerHTML = await this.checkApplicationHashSignature(this.currentAppInfos,
+                                                                                                      this.currentVersionInfos,
+                                                                                                      this.currentPackage,
+                                                                                                      signature);
 
                                 }
                             }
@@ -523,9 +585,8 @@ export class ChargyApp {
 
         //#region Handle the 'Full Screen'-button
 
-        const d = document as any;
-        this.fullScreenButton.onclick = (ev: MouseEvent) => {
-            if (d.fullScreen || d.mozFullScreen || d.webkitIsFullScreen)
+        this.fullScreenButton.onclick = () => {
+            if (document.fullscreenElement)
             {
                 this.measurementsDetailsDiv.classList.remove("fullScreen");
                 chargyLib.closeFullscreen();
@@ -543,7 +604,7 @@ export class ChargyApp {
 
         //#region Handle the 'App Quit'-button
 
-        this.appQuitButton.onclick = (ev: MouseEvent) => {
+        this.appQuitButton.onclick = () => {
             window.close();
         }
 
@@ -552,7 +613,7 @@ export class ChargyApp {
 
         //#region Handle the 'back'-button
 
-        this.backButton.onclick  = (ev: MouseEvent) => {
+        this.backButton.onclick  = () => {
 
             this.updateAvailableScreen.style.display     = "none";
             this.inputDiv.style.flexDirection            = "";
@@ -568,9 +629,9 @@ export class ChargyApp {
             this.currentChargeTransparencyLiveLink       = null;
             this.currentGlobalError                      = null;
 
-            this.minlat = +1000;
+            this.minlat =  1000;
             this.maxlat = -1000;
-            this.minlng = +1000;
+            this.minlng =  1000;
             this.maxlng = -1000;
 
         }
@@ -579,22 +640,52 @@ export class ChargyApp {
 
         //#region Handle the 'export'-button
 
-        this.exportButton.onclick  = async (ev: MouseEvent) => {
+        this.exportButton.onclick  = async () => {
 
             try
             {
 
-                // const path = this.ipcRenderer.sendSync('showSaveDialog')
+                const json      = JSON.stringify(this.chargy.currentCTR, null, 4);
+                const fileName  = "chargy-export.json";
 
-                // if (path != null)
-                //     require('original-fs').writeFileSync(path,
-                //                                          JSON.stringify(this.chargy.currentCTR, null, '\t'),
-                //                                          'utf-8');
+                const showSaveFilePicker = (window as WindowWithSaveFilePicker).showSaveFilePicker;
+
+                if (typeof showSaveFilePicker === "function") {
+                    const fileHandle = await showSaveFilePicker({
+                        suggestedName: fileName,
+                        types: [
+                            {
+                                description: "JSON file",
+                                accept: {
+                                    "application/json": [".json"]
+                                }
+                            }
+                        ]
+                    });
+
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(json);
+                    await writable.close();
+                    return;
+                }
+
+                const blob = new Blob([ json ], { type: "application/json;charset=utf-8" });
+                const url  = URL.createObjectURL(blob);
+
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = fileName;
+                link.click();
+
+                URL.revokeObjectURL(url);
 
             }
-            catch(exception)
-            {
-                alert(this.getLocalizedText("exportFailed") + exception);
+            catch (exception) {
+                const message = exception instanceof Error
+                    ? exception.message
+                    : String(exception);
+
+                alert(`${this.getLocalizedText("exportFailed")}${message}`);
             }
 
         }
@@ -631,18 +722,20 @@ export class ChargyApp {
         //#region Handle the 'fileInput'-button
 
         this.fileInput  = document.getElementById('fileInput')  as HTMLInputElement;
-        this.fileInputButton.onclick = (ev: MouseEvent) => {
+        this.fileInputButton.onclick = () => {
             this.fileInput.value = '';
             this.fileInput.click();
         }
 
-        this.fileInput.onchange = (ev: Event) => {
+        this.fileInput.onchange = async (ev: Event) => {
 
-            //@ts-ignore
-            const files = ev?.target?.files;
+            const input = ev.target;
 
-            if (files != null)
-                this.readFilesFromDiskInBrowser(files);
+            if (input instanceof HTMLInputElement &&
+                input.files != null)
+            {
+                await this.readFilesFromDiskInBrowser(input.files);
+            }
 
         }
 
@@ -652,33 +745,33 @@ export class ChargyApp {
 
         this.inputDiv.addEventListener('dragenter', (event: DragEvent) => {
             event.preventDefault();
-            (event.currentTarget as HTMLDivElement)?.classList.add('over');
+            (event.currentTarget as HTMLDivElement).classList.add('over');
         }, false);
 
         this.inputDiv.addEventListener('dragover',  (event: DragEvent) => {
             event.stopPropagation();
             event.preventDefault();
             event.dataTransfer!.dropEffect = 'copy';
-            (event.currentTarget as HTMLDivElement)?.classList.add('over');
+            (event.currentTarget as HTMLDivElement).classList.add('over');
         }, false);
 
         this.inputDiv.addEventListener('dragleave', (event: DragEvent) => {
-            (event.currentTarget as HTMLDivElement)?.classList.remove('over');
+            (event.currentTarget as HTMLDivElement).classList.remove('over');
         }, false);
 
         this.inputDiv.addEventListener('drop',      (event: DragEvent) => {
             event.stopPropagation();
             event.preventDefault();
-            (event.currentTarget as HTMLDivElement)?.classList.remove('over');
+            (event.currentTarget as HTMLDivElement).classList.remove('over');
             if (event.dataTransfer?.files != null)
-                this.readFilesFromDiskInBrowser(event.dataTransfer.files);
+                void this.readFilesFromDiskInBrowser(event.dataTransfer.files);
         }, false);
 
         //#endregion
 
         //#region Handle the 'paste'-button
 
-        this.pasteButton.onclick = async (ev: MouseEvent)  => {
+        this.pasteButton.onclick = async ()  => {
             await this.readClipboard();
         }
 
@@ -711,8 +804,10 @@ export class ChargyApp {
             }
         }
 
-        this.updateQRCodeScannerAvailability();
-        navigator.mediaDevices?.addEventListener?.("devicechange", () => this.updateQRCodeScannerAvailability());
+        void this.updateQRCodeScannerAvailability();
+        navigator.mediaDevices.addEventListener("devicechange", () => {
+            void this.updateQRCodeScannerAvailability();
+        });
 
         //#endregion
 
@@ -734,7 +829,7 @@ export class ChargyApp {
 
         //#region Calculate application hash
 
-        this.calcApplicationHash();
+        void this.calcApplicationHash();
 
         //#endregion
 
@@ -754,7 +849,7 @@ export class ChargyApp {
 
         const browserLanguages = [
             navigator.language,
-            ...(navigator.languages ?? [])
+            ...(navigator.languages)
         ].map(language => language.toLowerCase());
 
         for (const supportedLanguage of supportedLanguages)
@@ -775,8 +870,8 @@ export class ChargyApp {
 
     }
 
-    private getLocalizedText(key: string,
-                             fallback?: string): string {
+    private getLocalizedText(key:        string,
+                             fallback?:  string): string {
 
         const multiLanguage = this.i18n[key];
 
@@ -815,7 +910,7 @@ export class ChargyApp {
             this.languageButton.setAttribute("aria-expanded", isOpen ? "true" : "false");
         };
 
-        for (const languageMenuButton of Array.from(this.languageMenuDiv.querySelectorAll("button[data-language]")) as HTMLButtonElement[])
+        for (const languageMenuButton of Array.from(this.languageMenuDiv.querySelectorAll<HTMLButtonElement>("button[data-language]")))
         {
             languageMenuButton.onclick = async (ev: MouseEvent) => {
                 ev.preventDefault();
@@ -838,8 +933,8 @@ export class ChargyApp {
                                 persist:  boolean = true): Promise<void> {
 
         this.UILanguage = language;
-        this.chargy?.SetUILanguage(language);
-        this.moment?.locale(language);
+        this.chargy.SetUILanguage(language);
+        this.moment.locale(language);
         chargyLib.setUILocale(language);
 
         if (persist)
@@ -854,21 +949,21 @@ export class ChargyApp {
 
         document.documentElement.lang = this.UILanguage;
 
-        for (const element of Array.from(document.querySelectorAll("[data-i18n-key]")) as HTMLElement[])
+        for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-i18n-key]")))
         {
             const key = element.dataset["i18nKey"];
             if (key != null)
                 element.innerHTML = this.getLocalizedText(key, element.innerHTML);
         }
 
-        for (const element of Array.from(document.querySelectorAll("[data-i18n-title-key]")) as HTMLElement[])
+        for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-i18n-title-key]")))
         {
             const key = element.dataset["i18nTitleKey"];
             if (key != null)
                 element.title = this.getLocalizedText(key, element.title);
         }
 
-        for (const element of Array.from(document.querySelectorAll("[data-i18n-placeholder-key]")) as HTMLInputElement[])
+        for (const element of Array.from(document.querySelectorAll<HTMLInputElement>("[data-i18n-placeholder-key]")))
         {
             const key = element.dataset["i18nPlaceholderKey"];
             if (key != null)
@@ -882,7 +977,7 @@ export class ChargyApp {
 
         this.languageFlagImage.src = "images/flags/" + this.UILanguage + ".svg";
 
-        for (const languageMenuButton of Array.from(this.languageMenuDiv.querySelectorAll("button[data-language]")) as HTMLButtonElement[])
+        for (const languageMenuButton of Array.from(this.languageMenuDiv.querySelectorAll<HTMLButtonElement>("button[data-language]")))
         {
             const isActive = languageMenuButton.dataset["language"] === this.UILanguage;
             languageMenuButton.classList.toggle("active", isActive);
@@ -1062,23 +1157,19 @@ export class ChargyApp {
 
     //#endregion
 
-    private getSessionCryptoResultText(result?: chargyInterfaces.ISessionCryptoResult|null): string {
+    private getSessionCryptoResultText(result?: chargyInterfaces.ISessionCryptoResult|null): string
+    {
 
         let text = this.getLocalizedText("UnknownOrInvalidChargeTransparencyRecord");
 
-        if (result?.message !== null &&
-            result?.message !== undefined)
-        {
+        if (result?.message !== undefined)
             text = result.message.trim();
-        }
 
-        if (result !== null                    &&
-            result !== undefined               &&
-            result.errors                      &&
-            result.errors        !== undefined &&
-            result.errors        !== null      &&
-            result.errors.length   > 0         &&
-            result.errors[0]     !== undefined)
+        if (result !== null          &&
+            result !== undefined     &&
+            result.errors            &&
+            result.errors.length > 0 &&
+            result.errors[0] !== undefined)
         {
             text = result.errors[0].trim();
         }
@@ -1089,8 +1180,8 @@ export class ChargyApp {
 
     //#region doGlobalError(...)
 
-    private doGlobalError(result:   chargyInterfaces.ISessionCryptoResult,
-                          context?: any)
+    private doGlobalError(result:    chargyInterfaces.ISessionCryptoResult,
+                          context?:  unknown)
     {
 
         this.currentGlobalError                = result;
@@ -1108,8 +1199,8 @@ export class ChargyApp {
         this.errorTextDiv.style.display              = 'inline-block';
         this.errorTextDiv.innerHTML                  = '<i class="fas fa-times-circle"></i> ' + text;
 
-        // console.log(text);
-        // console.log(context);
+        console.log(text);
+        console.log(context);
 
         // this.ipcRenderer.sendSync('setVerificationResult', result);
 
@@ -1119,28 +1210,163 @@ export class ChargyApp {
 
     //#region readClipboard()
 
+    private getSupportedClipboardType(types: ReadonlyArray<string>): string | undefined
+    {
+
+        const exactTypePriority = [
+            "application/chargy",
+            "application/json",
+            "application/ld+json",
+            "application/xml",
+            "text/xml",
+            "text/plain",
+            "application/pdf",
+            "image/png",
+            "image/jpeg",
+            "image/jpg",
+            "image/gif",
+            "image/webp",
+            "image/bmp",
+            "image/svg+xml"
+        ];
+
+        for (const preferredType of exactTypePriority)
+        {
+
+            const matchingType = types.find(type => type.toLowerCase() === preferredType);
+
+            if (matchingType != null)
+                return matchingType;
+
+        }
+
+        return types.find(type => {
+            const normalizedType = type.toLowerCase();
+            return normalizedType.endsWith("+json") ||
+                   normalizedType.endsWith("+xml")  ||
+                   normalizedType.startsWith("image/");
+        });
+
+    }
+
+    private getClipboardFileName(mimeType: string): string
+    {
+
+        const normalizedType = mimeType.toLowerCase();
+
+        if (normalizedType === "application/pdf")
+            return "clipboard.pdf";
+
+        if (normalizedType === "application/json" ||
+            normalizedType === "application/ld+json" ||
+            normalizedType.endsWith("+json"))
+        {
+            return "clipboard.json";
+        }
+
+        if (normalizedType === "application/xml" ||
+            normalizedType === "text/xml"        ||
+            normalizedType.endsWith("+xml"))
+        {
+            return "clipboard.xml";
+        }
+
+        if (normalizedType === "image/svg+xml")
+            return "clipboard.svg";
+
+        if (normalizedType === "image/jpeg" ||
+            normalizedType === "image/jpg")
+        {
+            return "clipboard.jpg";
+        }
+
+        if (normalizedType.startsWith("image/"))
+            return "clipboard." + normalizedType.substring("image/".length);
+
+        return "clipboard.txt";
+
+    }
+
+    private isClipboardTextType(mimeType: string): boolean
+    {
+
+        const normalizedType = mimeType.toLowerCase();
+
+        return normalizedType === "application/chargy"  ||
+               normalizedType === "application/json"    ||
+               normalizedType === "application/ld+json" ||
+               normalizedType === "application/xml"     ||
+               normalizedType === "text/xml"            ||
+               normalizedType === "text/plain"          ||
+               normalizedType.endsWith("+json")         ||
+               normalizedType.endsWith("+xml");
+
+    }
+
     private async readClipboard()
     {
         try
         {
+
             const text = await navigator.clipboard.readText();
-            this.detectAndConvertContentFormat(text);
+
+            if (text.trim() !== "")
+            {
+                await this.detectAndConvertContentFormat(text);
+                return;
+            }
+
+            if (typeof navigator.clipboard.read === "function")
+            {
+
+                const clipboardItems = await navigator.clipboard.read();
+
+                for (const item of clipboardItems)
+                {
+
+                    const clipboardType = this.getSupportedClipboardType(item.types);
+
+                    if (clipboardType != null)
+                    {
+
+                        const blob = await item.getType(clipboardType);
+
+                        if (this.isClipboardTextType(clipboardType))
+                        {
+                            await this.detectAndConvertContentFormat(await blob.text());
+                            return;
+                        }
+
+                        await this.detectAndConvertContentFormat({
+                                  name:  this.getClipboardFileName(clipboardType),
+                                  type:  clipboardType,
+                                  data:  await blob.arrayBuffer()
+                              });
+
+                        return;
+
+                    }
+
+                }
+
+            }
+
+            await this.detectAndConvertContentFormat("");
+
         }
         catch (exception)
         {
             if (exception instanceof DOMException &&
                 exception.message === "Document is not focused.")
             {
-                // ignore!
+                return;
             }
-            else
-            {
-                this.doGlobalError({
-                    status:    chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
-                    message:   this.chargy.GetLocalizedMessage("UnknownOrInvalidChargeTransparencyRecord"),
-                    certainty: 0
-                });
-            }
+
+            this.doGlobalError({
+                status:    chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
+                message:   this.chargy.GetLocalizedMessage("UnknownOrInvalidChargeTransparencyRecord"),
+                certainty: 0
+            });
         }
     }
 
@@ -1148,17 +1374,18 @@ export class ChargyApp {
 
     //#region QR code scanner
 
-    private async updateQRCodeScannerAvailability(): Promise<void> {
+    private async updateQRCodeScannerAvailability(): Promise<void>
+    {
 
         const mediaDevices = navigator.mediaDevices;
 
-        if (mediaDevices?.getUserMedia == null)
+        if (typeof mediaDevices.getUserMedia !== "function")
         {
             this.setQRCodeScannerButtonAvailability(false, this.getLocalizedText("cameraAccessUnsupported"));
             return;
         }
 
-        if (mediaDevices.enumerateDevices == null)
+        if (typeof mediaDevices.enumerateDevices !== "function")
         {
             this.setQRCodeScannerButtonAvailability(true, this.getLocalizedText("scanQRCodeWithCamera"));
             return;
@@ -1166,6 +1393,7 @@ export class ChargyApp {
 
         try
         {
+
             const devices   = await mediaDevices.enumerateDevices();
             const hasCamera = devices.some(device => device.kind === "videoinput");
 
@@ -1175,6 +1403,7 @@ export class ChargyApp {
                     ? this.getLocalizedText("scanQRCodeWithCamera")
                     : this.getLocalizedText("noCameraAvailable")
             );
+
         }
         catch
         {
@@ -1183,15 +1412,17 @@ export class ChargyApp {
 
     }
 
-    private setQRCodeScannerButtonAvailability(isAvailable: boolean,
-                                               title:       string): void {
+    private setQRCodeScannerButtonAvailability(isAvailable:  boolean,
+                                               title:        string): void
+    {
 
         this.qrScanButton.disabled = !isAvailable;
         this.qrScanButton.title    = title;
 
     }
 
-    private async openQRCodeScanner(): Promise<void> {
+    private async openQRCodeScanner(): Promise<void>
+    {
 
         if (this.qrScanButton.disabled)
             return;
@@ -1200,6 +1431,7 @@ export class ChargyApp {
 
         try
         {
+
             const stream = await navigator.mediaDevices.getUserMedia({
                 audio: false,
                 video: {
@@ -1214,6 +1446,7 @@ export class ChargyApp {
             await this.qrCodeScannerVideo.play();
 
             this.resumeQRCodeScanner();
+
         }
         catch (exception)
         {
@@ -1228,7 +1461,8 @@ export class ChargyApp {
 
     }
 
-    private closeQRCodeScanner(): void {
+    private closeQRCodeScanner(): void
+    {
 
         if (this.qrCodeScannerAnimationFrame != null)
         {
@@ -1254,7 +1488,8 @@ export class ChargyApp {
 
     }
 
-    private resumeQRCodeScanner(): void {
+    private resumeQRCodeScanner(): void
+    {
 
         this.qrCodeScannerIsProcessing = false;
         this.qrCodeScannerLastText     = null;
@@ -1266,7 +1501,8 @@ export class ChargyApp {
 
     }
 
-    private resetQRCodeScannerDialog(statusText: string): void {
+    private resetQRCodeScannerDialog(statusText: string): void
+    {
 
         this.qrCodeScannerErrorDiv.textContent             = "";
         this.qrCodeScannerStatusDiv.textContent            = statusText;
@@ -1276,11 +1512,13 @@ export class ChargyApp {
 
     }
 
-    private setQRCodeScannerStatus(statusText: string): void {
+    private setQRCodeScannerStatus(statusText: string): void
+    {
         this.qrCodeScannerStatusDiv.textContent = statusText;
     }
 
-    private scanQRCodeFrame(): void {
+    private scanQRCodeFrame(): void
+    {
 
         if (this.qrCodeScannerDiv.style.display !== "block")
         {
@@ -1323,7 +1561,8 @@ export class ChargyApp {
 
     }
 
-    private async handleScannedQRCodeText(qrText: string): Promise<void> {
+    private async handleScannedQRCodeText(qrText: string): Promise<void>
+    {
 
         this.qrCodeScannerIsProcessing = true;
         this.setQRCodeScannerStatus(this.getLocalizedText("qrCodeDetected"));
@@ -1346,7 +1585,8 @@ export class ChargyApp {
     }
 
     private showQRCodeScannerRejectedText(qrText: string,
-                                          result: chargyInterfaces.ISessionCryptoResult): void {
+                                          result: chargyInterfaces.ISessionCryptoResult): void
+    {
 
         const url = this.tryParseQRCodeURL(qrText);
 
@@ -1366,15 +1606,18 @@ export class ChargyApp {
 
     }
 
-    private tryParseQRCodeURL(qrText: string): URL|null {
+    private tryParseQRCodeURL(qrText: string): URL|null
+    {
 
         try
         {
+
             const url = new URL(qrText.trim());
 
             return url.protocol === "https:" || url.protocol === "http:"
                        ? url
                        : null;
+
         }
         catch
         {
@@ -1386,18 +1629,6 @@ export class ChargyApp {
     //#endregion
 
     //#region readFile(s)FromDisk()
-
-    private stringToArrayBuffer(str: string): ArrayBuffer {
-
-        const buf     = new ArrayBuffer(str.length);
-        const bufView = new Uint8Array(buf);
-
-        for (let i=0, strLen=str.length; i < strLen; i++)
-            bufView[i] = str.charCodeAt(i);
-
-        return buf;
-
-    }
 
     private async readFilesFromDiskInBrowser(files: Blob|File|FileList)
     {
@@ -1439,71 +1670,9 @@ export class ChargyApp {
         }
 
         if (loadedFiles.length > 0)
-            this.detectAndConvertContentFormat(loadedFiles);
+            await this.detectAndConvertContentFormat(loadedFiles);
 
     }
-
-
-    // private readFilesFromDisk(files: string[]|FileList): void {
-    //     if (files != null && files.length > 0)
-    //     {
-
-    //         //#region Map file names
-
-    //         const filesToLoad = new Array<chargyInterfaces.IFileInfo>();
-
-    //         for (let i = 0; i < files.length; i++)
-    //         {
-
-    //             const file = files[i];
-
-    //             if (file != undefined)
-    //             {
-    //                 if (typeof file == 'string')
-    //                     filesToLoad.push({ name: file });
-    //                 else
-    //                     filesToLoad.push(file)
-    //             }
-
-    //         }
-
-    //         //#endregion
-
-    //         const fs          = require('original-fs');
-    //         const loadedFiles = new Array<chargyInterfaces.IFileInfo>();
-
-    //         for (const filename of filesToLoad)
-    //         {
-    //             if (filename.name.trim() != "" && filename.name != "." && filename.name[0] != '-')
-    //             {
-    //                 try
-    //                 {
-
-    //                     loadedFiles.push({
-    //                                    "name":  filename.name,
-    //                                    "path":  filename.path,
-    //                                    "type":  filename.type,
-    //                                    "data":  fs.readFileSync((filename.path ?? filename.name).replace("file://", ""))
-    //                                 });
-
-    //                 }
-    //                 catch (exception) {
-    //                     loadedFiles.push({
-    //                         "name":       filename.name,
-    //                         "path":       filename.path,
-    //                         "error":      this.getLocalizedText("invalidChargeTransparencyRecord"),
-    //                         "exception":  exception
-    //                      });
-    //                 }
-    //             }
-    //         }
-
-
-    //         if (loadedFiles.length > 0)
-    //             this.detectAndConvertContentFormat(loadedFiles);
-
-    //     }
-    // }
 
     //#endregion
 
@@ -1531,7 +1700,7 @@ export class ChargyApp {
             this.applicationHashValueDiv.innerHTML  = this.applicationHash.match(/.{1,8}/g)?.join(" ") ?? "";
 
         } catch (error) {
-            console.error(`An error occurred: ${error}`);
+            console.error("An error occurred:", error);
             return "";
         }
 
@@ -1619,21 +1788,25 @@ export class ChargyApp {
             this.errorTextDiv.style.display  = 'none';
         }
 
-        let result:DetectionResult|null = null;
+        let result:DetectionResult;
 
         try
         {
+
             if (typeof FileInfos === 'string')
-                result = await this.chargy.DetectAndConvertContentFormat([{
-                                                                             name: "clipboard",
-                                                                             data: new TextEncoder().encode(FileInfos)
-                                                                          }]);
+                result = await this.chargy.DetectAndConvertContentFormat(
+                                   [{
+                                       name:  "clipboard",
+                                       data:  new TextEncoder().encode(FileInfos)
+                                   }]
+                               );
 
             else if (chargeTransparencyRecord.isIFileInfo(FileInfos))
                 result = await this.chargy.DetectAndConvertContentFormat([ FileInfos ]);
 
             else
                 result = await this.chargy.DetectAndConvertContentFormat(FileInfos);
+
         }
         catch (exception)
         {
@@ -1648,16 +1821,14 @@ export class ChargyApp {
 
         if (chargeTransparencyRecord.IsAChargeTransparencyRecord(result))
         {
+
             if (options?.prepareUI === false)
             {
                 this.inputInfosDiv.style.display = 'none';
                 this.errorTextDiv.style.display  = 'none';
             }
 
-            // if (!this.ipcRenderer.sendSync('noGUI'))
-                 await this.showChargeTransparencyRecord(result);
-
-            // this.ipcRenderer.sendSync('setVerificationResult', result.chargingSessions?.map(session => session.verificationResult));
+            await this.showChargeTransparencyRecord(result);
 
             return true;
 
@@ -1665,6 +1836,7 @@ export class ChargyApp {
 
         if (chargeTransparencyLiveLink.IsAChargeTransparencyLiveLink(result))
         {
+
             if (options?.prepareUI === false)
             {
                 this.inputInfosDiv.style.display = 'none';
@@ -1677,17 +1849,25 @@ export class ChargyApp {
 
         }
 
-        const sessionResult = result ??
-                              {
-                                  status:     chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
-                                  message:    this.getLocalizedText("UnknownOrInvalidChargeTransparencyRecord"),
-                                  certainty:  0
-                              };
+        if (publicKeyInfo.IsAPublicKeyInfo(result))
+        {
 
-        if (options?.onError != null)
-            options.onError(sessionResult);
+            if (options?.prepareUI === false)
+            {
+                this.inputInfosDiv.style.display = 'none';
+                this.errorTextDiv.style.display  = 'none';
+            }
+
+            // await this.showPublicKeyInfo(result);
+
+            return true;
+
+        }
+
+        if (options?.onError !== undefined)
+            options.onError(result);
         else
-            this.doGlobalError(sessionResult);
+            this.doGlobalError(result);
 
         return false;
 
@@ -1699,9 +1879,6 @@ export class ChargyApp {
 
     private async showChargeTransparencyLiveLink(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink)
     {
-
-        if (LiveLink == null)
-            return;
 
         this.currentChargeTransparencyLiveLink       = LiveLink;
         this.currentChargeTransparencyRecord         = null;
@@ -1744,7 +1921,7 @@ export class ChargyApp {
                 "Position " + [
                     LiveLink.geoLocation.lat,
                     LiveLink.geoLocation.lng
-                ].filter(value => value != null).join(", ")
+                ].join(", ")
             );
 
         if (LiveLink.connector)
@@ -1798,7 +1975,7 @@ export class ChargyApp {
                 '<i class="fas fa-file-signature"></i>',
                 LiveLink.signatures.length === 1
                     ? "1 Signatur"
-                    : LiveLink.signatures.length + " Signaturen"
+                    : LiveLink.signatures.length.toString() + " Signaturen"
             );
 
     }
@@ -1806,7 +1983,8 @@ export class ChargyApp {
     private appendLiveLinkInfoRow(tableDiv:   HTMLDivElement,
                                   className:  string,
                                   iconHTML:   string,
-                                  content:    string|HTMLElement): void {
+                                  content:    string|HTMLElement): void
+    {
 
         const rowDiv         = tableDiv.appendChild(document.createElement('div'));
         rowDiv.className     = className;
@@ -1884,9 +2062,6 @@ export class ChargyApp {
     private async showChargeTransparencyRecord(CTR: chargeTransparencyRecord.IChargeTransparencyRecord)
     {
 
-        if (CTR == null)
-            return;
-
         this.currentChargeTransparencyRecord         = CTR;
         this.currentChargeTransparencyLiveLink       = null;
         this.currentGlobalError                      = null;
@@ -1931,9 +2106,9 @@ export class ChargyApp {
 
         //#region Show global contract infos
 
-        if (CTR.contract)
-        {
-        }
+        // if (CTR.contract)
+        // {
+        // }
 
         //#endregion
 
@@ -1950,22 +2125,21 @@ export class ChargyApp {
 
                 const chargingSessionDiv    = chargyLib.CreateDiv(chargingSessionsDiv, "chargingSession");
                 chargingSession.GUI         = chargingSessionDiv;
-                chargingSessionDiv.onclick  = (ev: MouseEvent) => {
+                chargingSessionDiv.onclick  = async (ev: MouseEvent) => {
 
                     //#region Highlight the selected charging session...
 
                     const AllChargingSessionsDivs = document.getElementsByClassName("chargingSession");
 
-                    if (AllChargingSessionsDivs != null)
-                        for(let i=0; i<AllChargingSessionsDivs.length; i++)
-                            AllChargingSessionsDivs[i]?.classList.remove("activated");
+                    for(let i=0; i<AllChargingSessionsDivs.length; i++)
+                        AllChargingSessionsDivs[i]?.classList.remove("activated");
 
                     //(this as HTMLDivElement)?.classList.add("activated");
-                    (ev.currentTarget as HTMLDivElement)?.classList.add("activated");
+                    (ev.currentTarget as HTMLDivElement).classList.add("activated");
 
                     //#endregion
 
-                    this.showChargingSessionDetails(chargingSession);
+                    await this.showChargingSessionDetails(chargingSession);
 
                 };
 
@@ -2209,39 +2383,36 @@ export class ChargyApp {
 
                 //#region Show authorization start/stop information
 
-                try {
+                try
+                {
 
-                    if (chargingSession.authorizationStart != null)
+                    const authorizationStartDiv            = tableDiv.appendChild(document.createElement('div'));
+                        authorizationStartDiv.className  = "authorizationStart";
+
+                    const authorizationStartIconDiv                   = authorizationStartDiv.appendChild(document.createElement('div'));
+                    authorizationStartIconDiv.className             = "icon";
+                    switch (chargingSession.authorizationStart.type)
                     {
 
-                        const authorizationStartDiv            = tableDiv.appendChild(document.createElement('div'));
-                            authorizationStartDiv.className  = "authorizationStart";
+                        case "cryptoKey":
+                            authorizationStartIconDiv.innerHTML     = '<i class="fas fa-key"></i>';
+                            break;
 
-                        const authorizationStartIconDiv                   = authorizationStartDiv.appendChild(document.createElement('div'));
-                        authorizationStartIconDiv.className             = "icon";
-                        switch (chargingSession.authorizationStart.type)
-                        {
+                        case "eMAId":
+                        case "EVCOId":
+                            authorizationStartIconDiv.innerHTML     = '<i class="fas fa-mobile-alt"></i>';
+                            break;
 
-                            case "cryptoKey":
-                                authorizationStartIconDiv.innerHTML     = '<i class="fas fa-key"></i>';
-                                break;
-
-                            case "eMAId":
-                            case "EVCOId":
-                                authorizationStartIconDiv.innerHTML     = '<i class="fas fa-mobile-alt"></i>';
-                                break;
-
-                            default:
-                                authorizationStartIconDiv.innerHTML     = '<i class="fas fa-id-card"></i>';
-                                break;
-
-                        }
-
-                        const authorizationStartIdDiv                     = authorizationStartDiv.appendChild(document.createElement('div'));
-                        authorizationStartIdDiv.className               = "id";
-                        authorizationStartIdDiv.innerHTML = chargingSession.authorizationStart["@id"];
+                        default:
+                            authorizationStartIconDiv.innerHTML     = '<i class="fas fa-id-card"></i>';
+                            break;
 
                     }
+
+                    const authorizationStartIdDiv                     = authorizationStartDiv.appendChild(document.createElement('div'));
+                    authorizationStartIdDiv.className                 = "id";
+                    authorizationStartIdDiv.innerHTML = chargingSession.authorizationStart["@id"];
+
 
                     if (chargingSession.authorizationStop != null)
                     {
@@ -2685,9 +2856,9 @@ export class ChargyApp {
             if (CTR.chargingSessions.length >= 1)
                 CTR.chargingSessions[0]?.GUI?.click();
 
-            if (this.minlat == +1000 &&
+            if (this.minlat ==  1000 &&
                 this.maxlat == -1000 &&
-                this.minlng == +1000 &&
+                this.minlng ==  1000 &&
                 this.maxlng == -1000)
             {
                 this.map.setView([0, 0], 1);
@@ -3189,7 +3360,7 @@ export class ChargyApp {
 
                     //#region Show measurement values...
 
-                    if (measurement.values && measurement.values.length > 0)
+                    if (measurement.values.length > 0)
                     {
 
                         let   measurementCounter    = 0;
@@ -3560,7 +3731,7 @@ export class ChargyApp {
 
         //#region Footer
 
-        const footerDiv                 = this.measurementsDetailsDiv.querySelector('.footer')                    as HTMLDivElement;
+        const footerDiv                 = this.measurementsDetailsDiv.querySelector('.footer')        as HTMLDivElement;
         const signatureCheckDiv         = footerDiv.      querySelector('#signatureCheck')            as HTMLDivElement;
 
         signatureCheckDiv.innerHTML     = '';
@@ -3676,7 +3847,7 @@ export class ChargyApp {
 
         //#endregion
 
-        if (!measurementValue?.measurement ||
+        if (!measurementValue.measurement ||
             !measurementValue.method)
         {
             doError(this.chargy.GetLocalizedMessage("Unknown meter data record format!"));
