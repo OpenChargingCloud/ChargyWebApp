@@ -9,7 +9,7 @@ import {
 import {
     SessionVerificationResult,
     VerificationResult
-} from '../src/ts/interfaces/IPublicKeyInfo';
+} from '../src/ts/interfaces/chargyInterfaces';
 import {
     buildMennekesSignatureData,
     dateToMennekesLocalEpochSeconds,
@@ -18,7 +18,7 @@ import {
 } from '../src/ts/Mennekes';
 import type {
     IFileInfo
-} from '../src/ts/interfaces/IPublicKeyInfo';
+} from '../src/ts/interfaces/chargyInterfaces';
 
 const require = createRequire(import.meta.url);
 

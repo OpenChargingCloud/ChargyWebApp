@@ -2,11 +2,10 @@ import Decimal from "decimal.js";
 import {
     CryptoAlgorithms,
     CryptoHashAlgorithms,
-    PublicKeyFormats,
     SessionVerificationResult,
     SignatureFormats,
     VerificationResult
-} from '../../src/ts/interfaces/IPublicKeyInfo';
+} from '../../src/ts/interfaces/chargyInterfaces';
 
 import type {
     IChargeTransparencyRecord,
@@ -14,12 +13,14 @@ import type {
     IMeasurementValue
 } from '../../src/ts/interfaces/IChargeTransparencyRecord';
 import type {
+    IPublicKeyInfo,
+    IPublicKeyLookup
+} from '../../src/ts/interfaces/IPublicKeyInfo';
+import type {
     ICryptoResult,
     IFileInfo,
-    IPublicKeyInfo,
-    IPublicKeyLookup,
     ISessionCryptoResult
-} from '../../src/ts/interfaces/IPublicKeyInfo';
+} from '../../src/ts/interfaces/chargyInterfaces';
 
 export function samplePublicKeyInfo(overrides: Partial<IPublicKeyInfo> = {}): IPublicKeyInfo {
   return {

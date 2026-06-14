@@ -9,10 +9,10 @@ import {
 import {
     SessionVerificationResult,
     VerificationResult
-} from '../src/ts/interfaces/IPublicKeyInfo';
+} from '../src/ts/interfaces/chargyInterfaces';
 import type {
     IFileInfo
-} from '../src/ts/interfaces/IPublicKeyInfo';
+} from '../src/ts/interfaces/chargyInterfaces';
 import {
     PCDF_FIELD_ORDER,
     PCDF_PREFIX,

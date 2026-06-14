@@ -6,7 +6,7 @@ import { beforeAll, describe, expect, test, vi } from "vitest";
 
 import type {
     IFileInfo
-} from "../src/ts/interfaces/IPublicKeyInfo";
+} from "../src/ts/interfaces/chargyInterfaces";
 import {
     IsAChargeTransparencyLiveLink
 } from "../src/ts/interfaces/IChargeTransparencyLiveLink";

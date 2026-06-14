@@ -1801,7 +1801,7 @@ export class ChargyApp {
                                    }]
                                );
 
-            else if (chargeTransparencyRecord.isIFileInfo(FileInfos))
+            else if (chargyInterfaces.isIFileInfo(FileInfos))
                 result = await this.chargy.DetectAndConvertContentFormat([ FileInfos ]);
 
             else
