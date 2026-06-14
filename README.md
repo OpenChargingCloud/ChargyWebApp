@@ -4,6 +4,8 @@ Chargy is a transparency software for the validation of secure and transparent e
 
 ![](documentation/Screenshot02.png)
 
+You can test the Chargy WebApp at: [https://chargy.charging.cloud](https://chargy.charging.cloud)
+
 
 ## Benefits of Chargy
 
