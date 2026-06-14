@@ -104,7 +104,6 @@ export class ChargyApp {
     private updateAvailableButton:              HTMLButtonElement;
     private aboutButton:                        HTMLButtonElement;
     private fullScreenButton:                   HTMLButtonElement;
-    private appQuitButton:                      HTMLButtonElement;
 
     private updateAvailableScreen:              HTMLDivElement;
     private inputDiv:                           HTMLDivElement;
@@ -253,7 +252,6 @@ export class ChargyApp {
         this.updateAvailableButton                    = document.getElementById('updateAvailableButton')                    as HTMLButtonElement;
         this.aboutButton                              = document.getElementById('aboutButton')                              as HTMLButtonElement;
         this.fullScreenButton                         = document.getElementById('fullScreenButton')                         as HTMLButtonElement;
-        this.appQuitButton                            = document.getElementById('appQuitButton')                            as HTMLButtonElement;
 
         this.chargingTariffDetailsDiv                 = document.getElementById('chargingTariffDetails')                    as HTMLDivElement;
         this.chargingTariffDetailsLeftButton          = this.chargingTariffDetailsDiv.querySelector(".overlayLeftButton")   as HTMLButtonElement;
@@ -598,14 +596,6 @@ export class ChargyApp {
                 chargyLib.openFullscreen();
                 this.fullScreenButton.innerHTML = '<i class="fas fa-compress"></i>';
             }
-        }
-
-        //#endregion
-
-        //#region Handle the 'App Quit'-button
-
-        this.appQuitButton.onclick = () => {
-            window.close();
         }
 
         //#endregion
