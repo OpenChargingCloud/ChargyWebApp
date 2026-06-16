@@ -109,6 +109,7 @@ export class ChargyApp {
     private inputDiv:                           HTMLDivElement;
     private inputInfosDiv:                      HTMLDivElement;
     private aboutScreenDiv:                     HTMLDivElement;
+    private imprintScreenDiv:                   HTMLDivElement;
     private applicationHashDiv:                 HTMLDivElement;
     private applicationHashValueDiv:            HTMLDivElement;
     private softwareInfosDiv:                   HTMLDivElement;
@@ -132,6 +133,7 @@ export class ChargyApp {
     private feedbackEMailAnchor:                HTMLAnchorElement;
     private feedbackHotlineAnchor:              HTMLAnchorElement;
     private showIssueTrackerButton:             HTMLButtonElement;
+    private showImprintButton:                  HTMLButtonElement;
     private issueTrackerText:                   HTMLDivElement;
 
     private chargingTariffDetailsDiv:           HTMLDivElement;
@@ -240,8 +242,10 @@ export class ChargyApp {
         this.showIssueTrackerButton                   = this.feedbackMethodsDiv.querySelector("#showIssueTracker")          as HTMLButtonElement;
         this.feedbackEMailAnchor                      = this.feedbackMethodsDiv.querySelector("#eMail")                     as HTMLAnchorElement;
         this.feedbackHotlineAnchor                    = this.feedbackMethodsDiv.querySelector("#hotline")                   as HTMLAnchorElement;
+        this.showImprintButton                        = this.feedbackMethodsDiv.querySelector("#showImprint")               as HTMLButtonElement;
 
         this.aboutScreenDiv                           = document.getElementById('aboutScreen')                              as HTMLDivElement;
+        this.imprintScreenDiv                         = document.getElementById('imprintScreen')                            as HTMLDivElement;
         this.softwareInfosDiv                         = this.aboutScreenDiv.    querySelector("#softwareInfos")             as HTMLDivElement;
         this.openSourceLibsDiv                        = this.aboutScreenDiv.    querySelector("#openSourceLibs")            as HTMLDivElement;
 
@@ -492,11 +496,12 @@ export class ChargyApp {
 
         //#region Handle the 'Update available'-button
 
-        this.updateAvailableButton.onclick = (ev: MouseEvent) => {
+        this.updateAvailableButton.onclick = () => {
             this.updateAvailableScreen.style.display     = "block";
             this.inputDiv.style.flexDirection            = "";
             this.inputInfosDiv.style.display             = "none";
             this.aboutScreenDiv.style.display            = "none";
+            this.imprintScreenDiv.style.display          = "none";
             this.chargingSessionScreenDiv.style.display  = "none";
             this.invalidDataSetsScreenDiv.style.display  = "none";
             this.inputButtonsDiv.style.display           = "block";
@@ -507,12 +512,13 @@ export class ChargyApp {
 
         //#region Handle the 'About'-button
 
-        this.aboutButton.onclick = async (ev: MouseEvent) => {
+        this.aboutButton.onclick = async () => {
 
             this.updateAvailableScreen.style.display     = "none";
             this.inputDiv.style.flexDirection            = "";
             this.inputInfosDiv.style.display             = "none";
             this.aboutScreenDiv.style.display            = "block";
+            this.imprintScreenDiv.style.display          = "none";
             this.chargingSessionScreenDiv.style.display  = "none";
             this.invalidDataSetsScreenDiv.style.display  = "none";
             this.inputButtonsDiv.style.display           = "block";
@@ -609,6 +615,7 @@ export class ChargyApp {
             this.inputDiv.style.flexDirection            = "";
             this.inputInfosDiv.style.display             = 'flex';
             this.aboutScreenDiv.style.display            = "none";
+            this.imprintScreenDiv.style.display          = "none";
             this.chargingSessionScreenDiv.style.display  = "none";
             this.invalidDataSetsScreenDiv.style.display  = "none";
             this.inputButtonsDiv.style.display           = "none";
@@ -741,7 +748,8 @@ export class ChargyApp {
         this.inputDiv.addEventListener('dragover',  (event: DragEvent) => {
             event.stopPropagation();
             event.preventDefault();
-            event.dataTransfer!.dropEffect = 'copy';
+            if (event.dataTransfer != null)
+                event.dataTransfer.dropEffect = 'copy';
             (event.currentTarget as HTMLDivElement).classList.add('over');
         }, false);
 
@@ -1113,6 +1121,24 @@ export class ChargyApp {
 
         //#endregion
 
+        //#region Imprint
+
+        this.showImprintButton.style.display = "block";
+        this.showImprintButton.onclick = (ev: MouseEvent) => {
+            ev.preventDefault();
+            this.updateAvailableScreen.style.display     = "none";
+            this.inputDiv.style.flexDirection            = "";
+            this.inputInfosDiv.style.display             = "none";
+            this.aboutScreenDiv.style.display            = "none";
+            this.imprintScreenDiv.style.display          = "block";
+            this.chargingSessionScreenDiv.style.display  = "none";
+            this.invalidDataSetsScreenDiv.style.display  = "none";
+            this.inputButtonsDiv.style.display           = "block";
+            this.exportButtonDiv.style.display           = "none";
+        }
+
+        //#endregion
+
         //#region Feedback E-Mail
 
         const feedbackEMail   = FeedbackEMail   ?? this.defaultFeedbackEMail;
@@ -1182,6 +1208,8 @@ export class ChargyApp {
 
         this.inputDiv.style.flexDirection            = "";
         this.inputInfosDiv.style.display             = 'flex';
+        this.aboutScreenDiv.style.display            = "none";
+        this.imprintScreenDiv.style.display          = "none";
         this.chargingSessionScreenDiv.style.display  = 'none';
         this.chargingSessionScreenDiv.innerHTML      = '';
         this.invalidDataSetsScreenDiv.style.display  = "none";
@@ -1517,9 +1545,9 @@ export class ChargyApp {
         }
 
         if (!this.qrCodeScannerIsProcessing &&
-            this.qrCodeScannerVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
-            this.qrCodeScannerVideo.videoWidth  > 0 &&
-            this.qrCodeScannerVideo.videoHeight > 0)
+             this.qrCodeScannerVideo.readyState >= HTMLMediaElement.HAVE_CURRENT_DATA &&
+             this.qrCodeScannerVideo.videoWidth  > 0 &&
+             this.qrCodeScannerVideo.videoHeight > 0)
         {
             const canvas  = this.qrCodeScannerCanvas;
             const context = canvas.getContext("2d", { willReadFrequently: true });
@@ -1542,7 +1570,7 @@ export class ChargyApp {
                     qrText !== this.qrCodeScannerLastText)
                 {
                     this.qrCodeScannerLastText = qrText;
-                    this.handleScannedQRCodeText(qrText);
+                    void this.handleScannedQRCodeText(qrText);
                 }
             }
         }
@@ -1867,7 +1895,7 @@ export class ChargyApp {
 
     //#region showChargeTransparencyLiveLink(LiveLink)
 
-    private async showChargeTransparencyLiveLink(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink)
+    private showChargeTransparencyLiveLink(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink)
     {
 
         this.currentChargeTransparencyLiveLink       = LiveLink;
@@ -1875,6 +1903,8 @@ export class ChargyApp {
         this.currentGlobalError                      = null;
 
         this.inputDiv.style.flexDirection            = "column";
+        this.aboutScreenDiv.style.display            = "none";
+        this.imprintScreenDiv.style.display          = "none";
         this.chargingSessionScreenDiv.style.display  = "flex";
         this.chargingSessionScreenDiv.innerText      = "";
         this.invalidDataSetsScreenDiv.style.display  = "none";
@@ -2013,8 +2043,8 @@ export class ChargyApp {
                 const labelInfo = typeof urlInfo === "string"
                                       ? ""
                                       : [
-                                            urlInfo.priority != null ? "Priorität " + urlInfo.priority : "",
-                                            urlInfo.weight   != null ? "Gewicht "   + urlInfo.weight   : ""
+                                            urlInfo.priority != null ? "Priorität " + urlInfo.priority.toString() : "",
+                                            urlInfo.weight   != null ? "Gewicht "   + urlInfo.weight.  toString() : ""
                                         ].filter(value => value !== "").join(", ");
 
                 transportDiv.appendChild(this.createLiveLinkAnchor(url, labelInfo !== "" ? url + " (" + labelInfo + ")" : url));
@@ -2025,7 +2055,7 @@ export class ChargyApp {
         {
             const totpDiv = transportDiv.appendChild(document.createElement('div'));
             totpDiv.className = "totp";
-            totpDiv.innerText = "TOTP: " + transport.totp.timeStep + " s";
+            totpDiv.innerText = "TOTP: " + transport.totp.timeStep.toString() + " s";
         }
 
         return transportDiv;
@@ -2059,6 +2089,8 @@ export class ChargyApp {
         //#region Prepare View
 
         this.inputDiv.style.flexDirection            = "column";
+        this.aboutScreenDiv.style.display            = "none";
+        this.imprintScreenDiv.style.display          = "none";
         this.chargingSessionScreenDiv.style.display  = "flex";
         this.chargingSessionScreenDiv.innerText      = "";
         this.invalidDataSetsScreenDiv.style.display  = "none";
@@ -2164,7 +2196,7 @@ export class ChargyApp {
                 }
                 catch (exception)
                 { 
-                    console.log("Could not show session time infos of charging session '" + chargingSession["@id"] + "':" + exception);
+                    console.log("Could not show session time infos of charging session '" + chargingSession["@id"] + "':" + String(exception));
                 }
 
                 //#endregion
@@ -2366,7 +2398,7 @@ export class ChargyApp {
                 }
                 catch (exception)
                 { 
-                    console.log("Could not show parking infos of charging session '" + chargingSession["@id"] + "':" + exception);
+                    console.log("Could not show parking infos of charging session '" + chargingSession["@id"] + "':" + String(exception));
                 }
 
                 //#endregion
@@ -2438,7 +2470,7 @@ export class ChargyApp {
 
                 } catch (exception)
                 {
-                    console.log("Could not show authorization start/stop infos of charging session '" + chargingSession["@id"] + "':" + exception);
+                    console.log("Could not show authorization start/stop infos of charging session '" + chargingSession["@id"] + "':" + String(exception));
                 }
 
                 //#endregion
@@ -2479,8 +2511,8 @@ export class ChargyApp {
                             }
 
                             chargingStationDiv.classList.add("EVSE");
-                            chargingStationDiv.innerHTML      = (chargingSession.EVSE   != null && chargingSession.EVSE.description != null
-                                                                    ? this.getLocalizedDataText(chargingSession.EVSE.description) + "<br />"
+                            chargingStationDiv.innerHTML      = (chargingSession.EVSE?.description != null
+                                                                    ? (this.getLocalizedDataText(chargingSession.EVSE.description) ?? "-") + "<br />"
                                                                     : "") +
                                                                 (chargingSession.EVSEId != null
                                                                     ? chargingSession.EVSEId
@@ -2518,8 +2550,8 @@ export class ChargyApp {
                             {
 
                                 chargingStationDiv.classList.add("chargingStation");
-                                chargingStationDiv.innerHTML      = (chargingSession.chargingStation   != null && chargingSession.chargingStation.description != null
-                                                                        ? this.getLocalizedDataText(chargingSession.chargingStation.description) + "<br />"
+                                chargingStationDiv.innerHTML      = (chargingSession.chargingStation.description != null
+                                                                        ? (this.getLocalizedDataText(chargingSession.chargingStation.description) ?? "-") + "<br />"
                                                                         : "") +
                                                                     (chargingSession.chargingStationId != null
                                                                         ? chargingSession.chargingStationId
@@ -2549,8 +2581,8 @@ export class ChargyApp {
                             {
 
                                 chargingStationDiv.classList.add("chargingPool");
-                                chargingStationDiv.innerHTML      = (chargingSession.chargingPool   != null && chargingSession.chargingPool.description != null
-                                                                        ? this.getLocalizedDataText(chargingSession.chargingPool.description) + "<br />"
+                                chargingStationDiv.innerHTML      = (chargingSession.chargingPool.description != null
+                                                                        ? (this.getLocalizedDataText(chargingSession.chargingPool.description) ?? "-") + "<br />"
                                                                         : "") +
                                                                     (chargingSession.chargingPoolId != null
                                                                         ? chargingSession.chargingPoolId
@@ -2566,7 +2598,7 @@ export class ChargyApp {
 
                 } catch (exception)
                 {
-                    console.log("Could not show charging station infos of charging session '" + chargingSession["@id"] + "':" + exception);
+                    console.log("Could not show charging station infos of charging session '" + chargingSession["@id"] + "':" + String(exception));
                 }
 
                 //#endregion
@@ -2607,7 +2639,7 @@ export class ChargyApp {
 
                 } catch (exception)
                 {
-                    console.log("Could not show location infos of charging session '" + chargingSession["@id"] + "':" + exception);
+                    console.log("Could not show location infos of charging session '" + chargingSession["@id"] + "':" + String(exception));
                 }
 
                 //#endregion
@@ -2653,7 +2685,7 @@ export class ChargyApp {
 
                 } catch (exception)
                 {
-                    console.log("Could not show costs of charging session '" + chargingSession["@id"] + "':" + exception);
+                    console.log("Could not show costs of charging session '" + chargingSession["@id"] + "':" + String(exception));
                 }
 
                 //#endregion
@@ -2906,7 +2938,7 @@ export class ChargyApp {
                                 break;
 
                             default:
-                                valueDiv.innerHTML  = result.status.toString();
+                                valueDiv.innerHTML  = result.status;
 
                         }
 
@@ -2924,7 +2956,7 @@ export class ChargyApp {
 
     //#region showChargingSessionDetails    (chargingSession)
 
-    private async showChargingSessionDetails(chargingSession: chargeTransparencyRecord.IChargingSession)
+    private showChargingSessionDetails(chargingSession: chargeTransparencyRecord.IChargingSession)
     {
 
         try
@@ -3012,7 +3044,7 @@ export class ChargyApp {
                             measurement.chargingSession.chargingStation.legalCompliance.conformity &&
                             measurement.chargingSession.chargingStation.legalCompliance.conformity.length > 0 &&
                             measurement.chargingSession.chargingStation.legalCompliance.conformity[0]?.freeText &&
-                            measurement.chargingSession.chargingStation.legalCompliance.conformity[0]?.freeText.length > 0)
+                            measurement.chargingSession.chargingStation.legalCompliance.conformity[0]. freeText.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "conformity",
                                                  this.chargy.GetLocalizedMessage("Conformity"),
@@ -3023,7 +3055,7 @@ export class ChargyApp {
                             measurement.chargingSession.chargingStation.legalCompliance.calibration &&
                             measurement.chargingSession.chargingStation.legalCompliance.calibration.length > 0 &&
                             measurement.chargingSession.chargingStation.legalCompliance.calibration[0]?.freeText &&
-                            measurement.chargingSession.chargingStation.legalCompliance.calibration[0]?.freeText.length > 0)
+                            measurement.chargingSession.chargingStation.legalCompliance.calibration[0]. freeText.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "calibration",
                                                  this.chargy.GetLocalizedMessage("Calibration"),
@@ -3560,8 +3592,7 @@ export class ChargyApp {
                                             icon += measurementValue.errors[0];
 
                                         // Validation errors...
-                                        else if (measurementValue.result                    &&
-                                                 measurementValue.result.errors             &&
+                                        else if (measurementValue.result.errors             &&
                                                  measurementValue.result.errors.length  > 0 &&
                                                  measurementValue.result.errors[0]     != null)
                                             icon += measurementValue.result.errors[0];
@@ -3872,17 +3903,19 @@ export class ChargyApp {
 
         //#endregion
 
-        measurementValue.method.ViewMeasurement(measurementValue,
-                                                errorDiv,
-                                                introDiv,
+        void measurementValue.method.ViewMeasurement(
+                 measurementValue,
+                 errorDiv,
+                 introDiv,
 
-                                                cryptoDataDiv,
-                                                bufferDiv,
-                                                hashedBufferDiv,
-                                                publicKeyDiv,
-                                                signatureExpectedDiv,
+                 cryptoDataDiv,
+                 bufferDiv,
+                 hashedBufferDiv,
+                 publicKeyDiv,
+                 signatureExpectedDiv,
 
-                                                signatureCheckDiv);
+                 signatureCheckDiv
+             );
 
     }
 
