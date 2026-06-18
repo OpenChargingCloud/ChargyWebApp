@@ -8,6 +8,17 @@ const modeArgIndex = process.argv.indexOf('--mode');
 const cliMode      = modeArgIndex >= 0 ? process.argv[modeArgIndex + 1] : undefined;
 const mode         = process.env.NODE_ENV === 'production' ? 'production' : cliMode || 'development';
 
+const sourceMapModuleName = info => {
+  let resourcePath = (info.resourcePath || info.absoluteResourcePath || '').replace(/\\/g, '/');
+
+  resourcePath = resourcePath
+    .replace(/^ignored\|.*\/node_modules\//, 'ignored|node_modules/')
+    .replace(/^.*\/node_modules\//, 'node_modules/')
+    .replace(/^\.\//, '');
+
+  return `webpack://chargytransparenzsoftware/${resourcePath}`;
+};
+
 module.exports = {
   mode,
   entry:   './src/ts/chargyApp.ts',
@@ -92,8 +103,9 @@ module.exports = {
     'base32decode': 'base32-decode'
   },
   output: {
-    path:     path.resolve(__dirname, 'build'),
-    filename: 'chargyWebApp-bundle.js'
+    path:                          path.resolve(__dirname, 'build'),
+    filename:                      'chargyWebApp-bundle.js',
+    devtoolModuleFilenameTemplate: sourceMapModuleName
   },
   plugins: [
     new webpack.ProvidePlugin({
