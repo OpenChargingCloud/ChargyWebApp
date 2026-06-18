@@ -29,6 +29,16 @@ import Decimal                          from 'decimal.js';
 import corePackageJson                  from '@open-charging-cloud/chargy-core/package.json';
 import coreI18n                         from '@open-charging-cloud/chargy-core/i18n.json';
 import webAppI18n                       from '../i18n.json';
+import {
+    decodeBase64Url as decodeDeepLinkBase64Url,
+    decodeUtf8 as decodeDeepLinkUtf8,
+    findExternalURLRule,
+    getDeepLinkFileName,
+    parseExternalURLConfig,
+    readResponseWithinLimit,
+    withDeepLinkVerificationToken,
+    type ExternalURLRule
+}                                      from './deepLinks';
 
 import '../scss/chargy.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -351,6 +361,8 @@ export class ChargyApp {
         this.UpdateFeedbackSection();
 
         //#endregion
+
+        void this.handleDeepLinkVerificationData();
 
         //#region The Issue tracker
 
@@ -1082,6 +1094,257 @@ export class ChargyApp {
         } catch (error) {
             console.error('There has been a problem with fetching "package.json":', error);
         }
+    }
+
+    //#endregion
+
+
+    //#region Deep-link verification data
+
+    private getDeepLinkVerificationData(): string|null
+    {
+
+        const verifyParameter = new URLSearchParams(window.location.search).get("verify");
+
+        if (verifyParameter == null ||
+            verifyParameter.trim() === "")
+        {
+            return null;
+        }
+
+        return verifyParameter;
+
+    }
+
+    private getDeepLinkVerificationURL(): URL|null
+    {
+
+        const searchParameters  = new URLSearchParams(window.location.search);
+        const verifyURLParameter = searchParameters.get("verifyURL") ?? searchParameters.get("verifyUrl");
+
+        if (verifyURLParameter == null ||
+            verifyURLParameter.trim() === "")
+        {
+            return null;
+        }
+
+        try
+        {
+
+            const verifyURL = new URL(verifyURLParameter);
+
+            return verifyURL.protocol === "https:" ||
+                   verifyURL.protocol === "http:"
+                       ? verifyURL
+                       : null;
+
+        }
+        catch
+        {
+            return null;
+        }
+
+    }
+
+    private getDeepLinkVerificationToken(): string|null
+    {
+
+        const tokenParameter = new URLSearchParams(window.location.search).get("token");
+
+        if (tokenParameter == null ||
+            tokenParameter.trim() === "")
+        {
+            return null;
+        }
+
+        return tokenParameter;
+
+    }
+
+    private getDeepLinkVerificationBearerToken(): string|null
+    {
+
+        const bearerTokenParameter = new URLSearchParams(window.location.search).get("bearerToken");
+
+        if (bearerTokenParameter == null ||
+            bearerTokenParameter.trim() === "")
+        {
+            return null;
+        }
+
+        return bearerTokenParameter;
+
+    }
+
+    private withDeepLinkVerificationToken(verifyURL: URL,
+                                          token:     string|null): URL
+    {
+
+        return withDeepLinkVerificationToken(verifyURL, token);
+
+    }
+
+    private decodeBase64Url(base64Value: string): Uint8Array
+    {
+
+        return decodeDeepLinkBase64Url(base64Value);
+
+    }
+
+    private decodeUtf8(bytes: Uint8Array): string|null
+    {
+
+        return decodeDeepLinkUtf8(bytes);
+
+    }
+
+    private parseExternalURLConfig(configText: string): ExternalURLRule[]
+    {
+
+        return parseExternalURLConfig(configText);
+
+    }
+
+    private async loadExternalURLRules(): Promise<ExternalURLRule[]>
+    {
+
+        const response = await fetch("externalURLs.conf", {
+            cache:        "no-store",
+            credentials:  "same-origin"
+        });
+
+        if (!response.ok)
+            return [];
+
+        return this.parseExternalURLConfig(await response.text());
+
+    }
+
+    private findExternalURLRule(verifyURL: URL,
+                                rules:     ExternalURLRule[]): ExternalURLRule|null
+    {
+
+        return findExternalURLRule(verifyURL, rules);
+
+    }
+
+    private getDeepLinkFileName(verifyURL: URL,
+                                contentType: string): string
+    {
+
+        return getDeepLinkFileName(verifyURL, contentType);
+
+    }
+
+    private async readResponseWithinLimit(response:        Response,
+                                          maxPayloadBytes: number): Promise<Uint8Array>
+    {
+
+        return readResponseWithinLimit(response, maxPayloadBytes);
+
+    }
+
+    private async handleDeepLinkVerificationURL(verifyURL:    URL,
+                                                token:        string|null,
+                                                bearerToken:  string|null): Promise<void>
+    {
+
+        const rules = await this.loadExternalURLRules();
+        const rule  = this.findExternalURLRule(verifyURL, rules);
+
+        if (rule == null)
+        {
+            throw new Error("External verification URL is not allowed.");
+        }
+
+        const downloadURL = this.withDeepLinkVerificationToken(verifyURL, token);
+
+        if (!downloadURL.href.startsWith(rule.prefix))
+            throw new Error("External verification URL token merge moved URL outside the allowed prefix.");
+
+        const headers = new Headers();
+
+        if (bearerToken != null)
+            headers.set("Authorization", "Bearer " + bearerToken);
+
+        const response = await fetch(downloadURL.href, {
+            cache:        "no-store",
+            credentials:  "omit",
+            headers:      headers,
+            redirect:     "follow"
+        });
+
+        if (!response.ok)
+            throw new Error("External verification URL could not be loaded.");
+
+        if (!response.url.startsWith(rule.prefix))
+            throw new Error("External verification URL redirected outside the allowed prefix.");
+
+        const contentType = response.headers.get("content-type") ?? "application/octet-stream";
+        const data        = await this.readResponseWithinLimit(response, rule.maxPayloadBytes);
+
+        await this.detectAndConvertContentFormat({
+            name:  this.getDeepLinkFileName(verifyURL, contentType),
+            path:  downloadURL.href,
+            type:  contentType,
+            data:  data
+        });
+
+    }
+
+    private async handleDeepLinkVerificationData(): Promise<void>
+    {
+
+        const encodedData = this.getDeepLinkVerificationData();
+        const verifyURL   = this.getDeepLinkVerificationURL();
+        const token       = this.getDeepLinkVerificationToken();
+        const bearerToken = this.getDeepLinkVerificationBearerToken();
+
+        if (encodedData == null &&
+            verifyURL    == null)
+        {
+            return;
+        }
+
+        try
+        {
+
+            if (encodedData == null &&
+                verifyURL    != null)
+            {
+                await this.handleDeepLinkVerificationURL(verifyURL, token, bearerToken);
+                return;
+            }
+
+            if (encodedData == null)
+                return;
+
+            const decodedBytes = this.decodeBase64Url(encodedData);
+            const decodedText  = this.decodeUtf8(decodedBytes);
+
+            if (decodedText != null)
+            {
+                await this.detectAndConvertContentFormat(decodedText);
+                return;
+            }
+
+            await this.detectAndConvertContentFormat({
+                name: "deeplink.bin",
+                type: "application/octet-stream",
+                data: decodedBytes
+            });
+
+        }
+        catch (exception)
+        {
+            this.doGlobalError({
+                status:     chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
+                message:    this.getLocalizedText("UnknownOrInvalidChargeTransparencyRecord"),
+                exception:  exception,
+                certainty:  0
+            });
+        }
+
     }
 
     //#endregion

@@ -130,6 +130,10 @@ module.exports = {
           to:       path.resolve(__dirname, 'build/images')
         },
         {
+          from:     path.resolve(__dirname, 'static/externalURLs.conf'),
+          to:       path.resolve(__dirname, 'build/externalURLs.conf')
+        },
+        {
           from:     path.resolve(__dirname, 'package.json'),
           to:       path.resolve(__dirname, 'build/package.json')
         }

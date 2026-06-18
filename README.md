@@ -47,6 +47,101 @@ Your prefered web browser should automagically open http://localhost:1608
 For Linux production deployments, build the static web application and serve the generated `build/` directory with a web server such as nginx. See [Chargy WebApp on Linux](documentation/LinuxService.md).
 
 
+## Deep Links
+
+The hosted WebApp supports deep links for CPOs and backend systems that want to send customers directly to a verification result.
+
+### Inline payloads
+
+Small charge transparency records can be embedded directly in the URL via the `verify` query parameter:
+
+```
+https://chargy.charging.cloud?verify=<base64-or-base64url-encoded-data>
+```
+
+The payload is decoded by the browser and then processed like data received via drag and drop or clipboard paste. Both standard Base64 and Base64URL are accepted. Base64URL without padding is recommended for links.
+
+This variant should only be used for small text payloads such as compact JSON, XML or OCMF data. Large payloads are not recommended because URL size limits vary between browsers, proxies, mail clients and QR-code workflows. As a practical rule of thumb, keep the full URL below a few kilobytes whenever possible.
+
+### External payload URLs
+
+Larger payloads can be referenced via `verifyURL`:
+
+```
+https://chargy.charging.cloud?verifyURL=https%3A%2F%2Fapi.example.org%2Fctrs%2F12345.json
+```
+
+The `verifyURL` must reference a concrete charge transparency payload resource, not a directory or collection URL.
+
+An optional temporary access token can be provided with the `token` query parameter:
+
+```
+https://chargy.charging.cloud?verifyURL=https%3A%2F%2Fapi.example.org%2Fctrs%2F12345.json&token=<temporary-token>
+```
+
+The WebApp appends this token to the downloaded URL as its own `token` query parameter. If the target URL already contains a query string, the token is merged into it:
+
+```
+https://api.example.org/ctrs/12345.json?format=chargy
+```
+
+becomes:
+
+```
+https://api.example.org/ctrs/12345.json?format=chargy&token=<temporary-token>
+```
+
+Alternatively, or in addition, a bearer token can be provided with the `bearerToken` query parameter:
+
+```
+https://chargy.charging.cloud?verifyURL=https%3A%2F%2Fapi.example.org%2Fctrs%2F12345.json%3Fformat%3Dchargy&bearerToken=<temporary-token>
+```
+
+This token is sent as an HTTP authorization header when downloading the payload:
+
+```
+Authorization: Bearer <temporary-token>
+```
+
+The `token` and `bearerToken` parameters may be used at the same time, even if that is redundant.
+
+The WebApp will only download external payloads from URL prefixes explicitly allowed by a local `externalURLs.conf` file served next to `index.html`.
+
+The file format is one rule per line:
+
+```
+# <URL-prefix> <max-payload-size-in-kbytes>
+https://api.example.org/ctrs/ 100
+```
+
+Blank lines and lines starting with `#` are ignored. The requested `verifyURL` must start with one of the configured URL prefixes. Redirects are only accepted when the final URL still starts with the same allowed prefix.
+
+The size limit is enforced twice:
+
+- If the server sends a `Content-Length` header larger than the configured limit, the download is rejected before reading the body.
+- If the response is streamed without a usable `Content-Length`, the WebApp counts bytes while reading and aborts as soon as the configured limit is exceeded.
+
+The generated build includes an empty template at `build/externalURLs.conf`. Production deployments should replace or extend this file with the allowed API prefixes.
+
+### CORS
+
+Because `verifyURL` downloads are performed by the user's browser, the target API must allow cross-origin requests from the WebApp origin. For the public deployment this means allowing:
+
+```
+Access-Control-Allow-Origin: https://chargy.charging.cloud
+```
+
+When `bearerToken` is used, the target API must also allow the `Authorization` request header, for example:
+
+```
+Access-Control-Allow-Headers: Authorization
+```
+
+The WebApp fetches external payloads without credentials, so APIs should not require cookies or browser authentication for these verification payload URLs. Prefer short-lived, unguessable URLs or backend-issued tokens when payloads are not public.
+
+Tokens passed in URLs can appear in browser history, server logs and referrer logs. They should therefore be short-lived, scoped to a single payload and invalidated after use whenever possible.
+
+
 ## Future
 
 The development of version **v1.5** already started and will focus on enhanced security concepts, more digital certificates and pricing information.
