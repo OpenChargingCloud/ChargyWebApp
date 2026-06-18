@@ -33,6 +33,7 @@
         "verbatimModuleSyntax":               true,
         "isolatedModules":                    true,
         "resolveJsonModule":                  true,
+        "skipLibCheck":                       true,
         "allowUnusedLabels":                  false,
         "types":                              ["node"],
         // "noUnusedLocals":                     false,  // Report errors on unused locals

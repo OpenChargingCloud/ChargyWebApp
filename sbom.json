@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:af4dea42-8e32-4255-9a36-65d0c4d7f211",
+  "serialNumber": "urn:uuid:0a302fc4-4eb8-4a76-9aa7-b386e79b479b",
   "metadata": {
-    "timestamp": "2026-06-18T03:11:11.102Z",
+    "timestamp": "2026-06-18T04:04:05.240Z",
     "tools": {
       "components": [
         {
@@ -17,7 +17,7 @@
           "type": "application",
           "name": "cyclonedx-npm",
           "group": "@cyclonedx",
-          "version": "4.2.1",
+          "version": "5.0.0",
           "author": "Jan Kowalleck",
           "description": "Create CycloneDX Software Bill of Materials (SBOM) from NPM projects.",
           "licenses": [
@@ -125,8 +125,8 @@
       "type": "library",
       "name": "cyclonedx-npm",
       "group": "@cyclonedx",
-      "version": "4.2.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@4.2.1",
+      "version": "5.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@5.0.0",
       "author": "Jan Kowalleck",
       "description": "Create CycloneDX Software Bill of Materials (SBOM) from NPM projects.",
       "licenses": [
@@ -137,7 +137,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40cyclonedx/cyclonedx-npm@4.2.1",
+      "purl": "pkg:npm/%40cyclonedx/cyclonedx-npm@5.0.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/CycloneDX/cyclonedx-node-npm.git",
@@ -155,12 +155,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@cyclonedx/cyclonedx-npm/-/cyclonedx-npm-4.2.1.tgz",
+          "url": "https://registry.npmjs.org/@cyclonedx/cyclonedx-npm/-/cyclonedx-npm-5.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "48e03ff7ab1fd30b20518091b4590b166e96a05846faad41c5d0bce213d29fd277c56947d5eece9d33c94fe58d5334eacd7d674a6e49863457e24ae8ceed97fa"
+              "content": "a44cffa6a6091d0d19bd8e711496be190e408cd2fb24e109097087ca6bcaa36375567cca13544ea64ba676e26df1ad03ba442341f046457a2e190f71a89b4969"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -286,8 +286,8 @@
       "type": "library",
       "name": "dom",
       "group": "@oozcitak",
-      "version": "2.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+      "version": "1.15.10",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
       "author": "Ozgur Ozcitak",
       "description": "A modern DOM implementation",
       "licenses": [
@@ -298,7 +298,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oozcitak/dom@2.0.2",
+      "purl": "pkg:npm/%40oozcitak/dom@1.15.10",
       "externalReferences": [
         {
           "url": "git://github.com/oozcitak/dom.git",
@@ -316,12 +316,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-2.0.2.tgz",
+          "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-1.15.10.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "1a3a4a8644980b7323e3e95fc04c88d5daa7b0a4e0c06cb8f32b591219b803fc671fff33f4cdd95572abfd81908b7b822ecd401014bec794f624f8ae7840d6f3"
+              "content": "d094f6f7f2dac558117062af1e64ab51312f67c057bd98469762c04915201ea0d30b5339835a4b995bf9e8860dcadddb1b60948c391cebbc27c990b5e296d0ad"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -336,14 +336,128 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/@oozcitak/dom"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "infra",
+          "group": "@oozcitak",
+          "version": "1.0.8",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/infra@1.0.8",
+          "author": "Ozgur Ozcitak",
+          "description": "An implementation of the Infra Living Standard",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/infra@1.0.8",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/oozcitak/infra.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-1.0.8.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "25101473d551e8818738bece185fb2aefb342cef1296a1a73c032acb33ae1593d26525c8ed77f63bdf9ac103d2317808586b6051ffdd03a1ece97eb24846964e"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/dom/node_modules/@oozcitak/infra"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "util",
+          "group": "@oozcitak",
+          "version": "8.3.8",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8",
+          "author": "Ozgur Ozcitak",
+          "description": "Utility functions",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/util@8.3.8",
+          "externalReferences": [
+            {
+              "url": "git://github.com/oozcitak/util.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/util/-/util-8.3.8.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4fc4db4a71acc68e930c1271fd282ffc195524bdedb21c593fb02ae51d664a733939c1d8d9d41ac4b32edbe13cbb780dd0c2cecdd8eeaea37865156ecd0c9c39"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/dom/node_modules/@oozcitak/util"
+            }
+          ]
+        }
       ]
     },
     {
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0",
+      "version": "0.2.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.2.0",
       "author": "GraphDefined GmbH",
       "description": "Shared Chargy TypeScript core for Chargy desktop, web, and mobile applications.",
       "licenses": [
@@ -354,7 +468,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.1.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.2.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -372,12 +486,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.1.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.2.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "b76be13cac18e82d364617bcad5aca2ae30a19e4394f1fd8d7b507b186ce7e2a74c1f92dae098e67851541a139b50f99570bff0e18c4945ff58bd266937693ba"
+              "content": "2c03287cf1a16d8eadd5d1e0e280c4b0221471abfbc74dc5f219c1e178db5e8e167b82249bc508163cc12e0b8bb428a1695a832106d53b1ba5e177c45ce329af"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -387,265 +501,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@open-charging-cloud/chargy-core"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "canvas",
-          "group": "@napi-rs",
-          "version": "0.1.100",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas@0.1.100",
-          "description": "Canvas for Node.js with skia backend",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40napi-rs/canvas@0.1.100",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/Brooooooklyn/canvas.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/Brooooooklyn/canvas#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/Brooooooklyn/canvas/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-0.1.100.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "c6095803aab75cee4fdc1349631559d4857b0cb563a753f2ea7c1a83cf189edad2fb7bca1f261c32a5d54b8673b499b0cf6b86bf3d455a123fe0b81b479b900c"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/@napi-rs/canvas"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "file-type",
-          "version": "20.5.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|file-type@20.5.0",
-          "author": "Sindre Sorhus",
-          "description": "Detect the file type of a file, stream, or data",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/file-type@20.5.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/file-type.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/file-type#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/file-type/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/file-type/-/file-type-20.5.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "05f1d9b46fe5f62326e047226a7bbb3fc1d10f6b411cbb635e29e6e17eb65c1398ce2ec2600ee3caa7c9ccebd71eacd5ad53d8a81a36fc6bdb01131a68990a56"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/file-type"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "pdfjs-dist",
-          "version": "5.7.284",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|pdfjs-dist@5.7.284",
-          "description": "Generic build of Mozilla's PDF.js library.",
-          "licenses": [
-            {
-              "license": {
-                "id": "Apache-2.0",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/pdfjs-dist@5.7.284",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mozilla/pdf.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mozilla.github.io/pdf.js/",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mozilla/pdf.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/pdfjs-dist/-/pdfjs-dist-5.7.284.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "87811d61073398685b3a5a9cdcf3d9c317af9fb0297563dba2f02e597381fc38c8ca28129f07f2da8cdeedcea645c4abf5780ba7778ddc478be03cb24933cc17"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/pdfjs-dist"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "canvas-win32-x64-msvc",
-          "group": "@napi-rs",
-          "version": "0.1.100",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas-win32-x64-msvc@0.1.100",
-          "description": "Canvas for Node.js with skia backend",
-          "scope": "optional",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@0.1.100",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/Brooooooklyn/canvas.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/Brooooooklyn/canvas#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/Brooooooklyn/canvas/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-0.1.100.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "3324f58f79870b6f8bbb8a418bd98ac8c261b4fe94ee4ec495d63bb23fee4b980903ae604d7b7c31e7c94172c9a3977fbd96ee5a67f1ce411435cfeead5de91c"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/@napi-rs/canvas-win32-x64-msvc"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "inflate",
-          "group": "@tokenizer",
-          "version": "0.2.7",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@tokenizer/inflate@0.2.7",
-          "author": "Borewit",
-          "description": "Tokenized zip support",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40tokenizer/inflate@0.2.7",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/Borewit/tokenizer-inflate.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/Borewit/tokenizer-inflate#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "hhttps://github.com/Borewit/tokenizer-inflate/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@tokenizer/inflate/-/inflate-0.2.7.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "3000d0826653d5e2a3a74ea3a48db2a33c5a53db95b381b3ce048bfae12aedb55c27d57565742478636a9757ec488d20332d6f86f35335b52aaf1fa965f2559a"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/@tokenizer/inflate"
-            }
-          ]
         }
       ]
     },
@@ -1230,8 +1085,8 @@
     {
       "type": "library",
       "name": "eslint",
-      "version": "10.4.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+      "version": "10.5.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
       "author": "Nicholas C. Zakas",
       "description": "An AST-based pattern checker for JavaScript.",
       "licenses": [
@@ -1242,7 +1097,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/eslint@10.4.1",
+      "purl": "pkg:npm/eslint@10.5.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/eslint/eslint.git",
@@ -1260,12 +1115,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/eslint/-/eslint-10.4.1.tgz",
+          "url": "https://registry.npmjs.org/eslint/-/eslint-10.5.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "03220a867381b8e01db9e0fb441df107e61e01649c6fd8c7b090601f61dc75ef089cfe49621aab451ea24cc1f24c4c2010d2b9e02a78e1ee2ff01c0d86cb87bb"
+              "content": "d72fbb0bebe2d766d42b522965e695de0b07f5f1cb0663ef6263f1e36a6f4ff13dc86d080bc8373d4659829d3e24b265ed90cad1f95cda073e030f5da42bc8b1"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -1286,7 +1141,7 @@
           "type": "library",
           "name": "ajv",
           "version": "6.15.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|ajv@6.15.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|ajv@6.15.0",
           "author": "Evgeny Poberezkin",
           "description": "Another JSON Schema Validator",
           "licenses": [
@@ -1341,7 +1196,7 @@
           "type": "library",
           "name": "eslint-scope",
           "version": "9.1.2",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|eslint-scope@9.1.2",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|eslint-scope@9.1.2",
           "description": "ECMAScript scope analyzer for ESLint",
           "licenses": [
             {
@@ -1395,7 +1250,7 @@
           "type": "library",
           "name": "find-up",
           "version": "5.0.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|find-up@5.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|find-up@5.0.0",
           "author": "Sindre Sorhus",
           "description": "Find a file or directory by walking up parent directories",
           "licenses": [
@@ -1450,7 +1305,7 @@
           "type": "library",
           "name": "minimatch",
           "version": "10.2.5",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|minimatch@10.2.5",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|minimatch@10.2.5",
           "author": "Isaac Z. Schlueter",
           "description": "a glob matcher in javascript",
           "licenses": [
@@ -1505,7 +1360,7 @@
           "type": "library",
           "name": "json-schema-traverse",
           "version": "0.4.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|json-schema-traverse@0.4.1",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|json-schema-traverse@0.4.1",
           "author": "Evgeny Poberezkin",
           "description": "Traverse JSON Schema passing each schema object to callback",
           "licenses": [
@@ -1560,7 +1415,7 @@
           "type": "library",
           "name": "estraverse",
           "version": "5.3.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|estraverse@5.3.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|estraverse@5.3.0",
           "description": "ECMAScript JS AST traversal functions",
           "licenses": [
             {
@@ -1614,7 +1469,7 @@
           "type": "library",
           "name": "locate-path",
           "version": "6.0.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|locate-path@6.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|locate-path@6.0.0",
           "author": "Sindre Sorhus",
           "description": "Get the first path that exists on disk of multiple paths",
           "licenses": [
@@ -1669,7 +1524,7 @@
           "type": "library",
           "name": "brace-expansion",
           "version": "5.0.6",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|brace-expansion@5.0.6",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|brace-expansion@5.0.6",
           "description": "Brace expansion as known from sh/bash",
           "licenses": [
             {
@@ -1723,7 +1578,7 @@
           "type": "library",
           "name": "p-locate",
           "version": "5.0.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|p-locate@5.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|p-locate@5.0.0",
           "author": "Sindre Sorhus",
           "description": "Get the first fulfilled promise that satisfies the provided testing function",
           "licenses": [
@@ -1778,7 +1633,7 @@
           "type": "library",
           "name": "balanced-match",
           "version": "4.0.4",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|balanced-match@4.0.4",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|balanced-match@4.0.4",
           "description": "Match balanced character pairs, like \"{\" and \"}\"",
           "licenses": [
             {
@@ -1832,7 +1687,7 @@
           "type": "library",
           "name": "p-limit",
           "version": "3.1.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|p-limit@3.1.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|p-limit@3.1.0",
           "author": "Sindre Sorhus",
           "description": "Run multiple promise-returning & async functions with limited concurrency",
           "licenses": [
@@ -3229,8 +3084,8 @@
     {
       "type": "library",
       "name": "sass",
-      "version": "1.100.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|sass@1.100.0",
+      "version": "1.101.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|sass@1.101.0",
       "author": "Natalie Weizenbaum",
       "description": "A pure JavaScript implementation of Sass.",
       "licenses": [
@@ -3241,7 +3096,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/sass@1.100.0",
+      "purl": "pkg:npm/sass@1.101.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/sass/dart-sass.git",
@@ -3259,12 +3114,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/sass/-/sass-1.100.0.tgz",
+          "url": "https://registry.npmjs.org/sass/-/sass-1.101.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "0798f4ad83258a78613a8f6d8d079b315567d137f25c017ec01ddbda081952e27f8acfd8fbbf891a38ab00cc4767d6778483fdf0d3df6a69409011dad6501a5d"
+              "content": "38bdc6a10ca851d0edf38dc3a559833bacb6935b1ce488540d2a6ef17b9c108fb7e677aae508af6758ae7a09e9ada1154c95e54062b5825dbbcca7132c43db43"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3648,8 +3503,8 @@
     {
       "type": "library",
       "name": "ts-loader",
-      "version": "9.6.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.0",
+      "version": "9.6.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.1",
       "author": "John Reilly",
       "description": "TypeScript loader for webpack",
       "licenses": [
@@ -3660,7 +3515,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/ts-loader@9.6.0",
+      "purl": "pkg:npm/ts-loader@9.6.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/TypeStrong/ts-loader.git",
@@ -3678,12 +3533,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/ts-loader/-/ts-loader-9.6.0.tgz",
+          "url": "https://registry.npmjs.org/ts-loader/-/ts-loader-9.6.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "76c24ed12f93ee0ad30d64dce1ad274f28171a32a7715529c7c63e69ff04bc8fc3e5681325bcb95049397a830207d11c2d09a7be2b6a87df4caad8ed1e003015"
+              "content": "f053079e6c6da6771402ed198e4aa95e739397073d798f797ac1fc59537de20b933cf764836a1f55d8953398fc2f69668e219ead7779eb35dbfc3d89c9540f2e"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3704,7 +3559,7 @@
           "type": "library",
           "name": "source-map",
           "version": "0.7.6",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.0|source-map@0.7.6",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.1|source-map@0.7.6",
           "author": "Nick Fitzgerald",
           "description": "Generates and consumes source maps",
           "licenses": [
@@ -3760,8 +3615,8 @@
     {
       "type": "library",
       "name": "typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.1",
       "description": "Tooling which enables you to use TypeScript with ESLint",
       "licenses": [
         {
@@ -3771,7 +3626,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/typescript-eslint@8.61.0",
+      "purl": "pkg:npm/typescript-eslint@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/typescript-eslint",
@@ -3789,12 +3644,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "f32df545dd1e193ac32aa872eaf4f41edce137e60b8d08b3c17dda03784f5cfff29d27e7ac15dc418e48cec3fdfc333bfa4957e0852771966391c84fd33fab53"
+              "content": "57b3dac807c9a24577a441e037bfefd370f54a9ba38517d0b582db2c88817c30e771d8383c089105fa12e1c9c200d2b88e600f9dc7338b9f503b769f89752537"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3972,9 +3827,59 @@
     },
     {
       "type": "library",
+      "name": "uuid",
+      "version": "14.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|uuid@14.0.0",
+      "description": "RFC9562 UUIDs",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/uuid@14.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/uuidjs/uuid.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/uuidjs/uuid#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/uuidjs/uuid/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/uuid/-/uuid-14.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "428fae5a08a57d298085708c6afd6e605ca79503bb7cc16231566c42a6513085e9d0eeeb47baa3923f9c3ef0472e006a8bdeb4402a28fcf1f6ffa66d56a2afae"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/uuid"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.9",
       "author": "Anthony Fu",
       "description": "Next generation testing framework powered by Vite",
       "licenses": [
@@ -3985,7 +3890,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/vitest@4.1.8",
+      "purl": "pkg:npm/vitest@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/vitest",
@@ -4003,12 +3908,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/vitest/-/vitest-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/vitest/-/vitest-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7e563a49c6c222df474e1b3e0b91d2ee3bc6381e7ad0326d93f675e4841139303acc4cb8f4d87c4ff7687d64d02fe9f7becc2a9fceec6c9362baac35483a7922"
+              "content": "9c4dff2c4c9cd33f3bb8760b65e6ea09439a26bda176db8fa7b050e01a2c5459df96dc6002f306d3c372ad21a53e93945af476edce5f95299815336befc2fd19"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -4029,7 +3934,7 @@
           "type": "library",
           "name": "picomatch",
           "version": "4.0.4",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.8|picomatch@4.0.4",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.9|picomatch@4.0.4",
           "author": "Jon Schlinkert",
           "description": "Blazing fast and accurate glob matcher written in JavaScript, with no dependencies and full support for standard and extended Bash glob features, including braces, extglobs, POSIX brackets, and regular expressions.",
           "licenses": [
@@ -4190,8 +4095,8 @@
     {
       "type": "library",
       "name": "webpack-dev-server",
-      "version": "5.2.4",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4",
+      "version": "5.2.5",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5",
       "author": "Tobias Koppers @sokra",
       "description": "Serves a webpack app. Updates the browser on changes.",
       "licenses": [
@@ -4202,7 +4107,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/webpack-dev-server@5.2.4",
+      "purl": "pkg:npm/webpack-dev-server@5.2.5",
       "externalReferences": [
         {
           "url": "git+https://github.com/webpack/webpack-dev-server.git",
@@ -4220,12 +4125,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/webpack-dev-server/-/webpack-dev-server-5.2.4.tgz",
+          "url": "https://registry.npmjs.org/webpack-dev-server/-/webpack-dev-server-5.2.5.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "1aa0cf19937d6d1a8a053929e1a5a4a1b0c31ccb2b5caa0649d387e7ab2622b8bca91d091bc81f2fcfeffdffce651dff38a5e31bcbb025b15584a9bf14d53f50"
+              "content": "e3066d0aab92baff42297f28c9ba3e9aac6dc59a96cf8eee3350a1f78971a30073b4e85609b86abd16df0bf98e0cec31815d9bad8f89199a47ab9f3f4ae54562"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -4246,7 +4151,7 @@
           "type": "library",
           "name": "chokidar",
           "version": "3.6.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|chokidar@3.6.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|chokidar@3.6.0",
           "author": "Paul Miller",
           "description": "Minimal and efficient cross-platform file watching library",
           "licenses": [
@@ -4301,7 +4206,7 @@
           "type": "library",
           "name": "glob-parent",
           "version": "5.1.2",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|glob-parent@5.1.2",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|glob-parent@5.1.2",
           "author": "Gulp Team",
           "description": "Extract the non-magic parent path from a glob string.",
           "licenses": [
@@ -4356,7 +4261,7 @@
           "type": "library",
           "name": "readdirp",
           "version": "3.6.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|readdirp@3.6.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|readdirp@3.6.0",
           "author": "Thorsten Lorenz",
           "description": "Recursive version of fs.readdir with streaming API.",
           "licenses": [
@@ -5016,61 +4921,119 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/xmlbuilder2"
         }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "infra",
-      "group": "@oozcitak",
-      "version": "2.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-      "author": "Ozgur Ozcitak",
-      "description": "An implementation of the Infra Living Standard",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
       ],
-      "purl": "pkg:npm/%40oozcitak/infra@2.0.2",
-      "externalReferences": [
+      "components": [
         {
-          "url": "git+https://github.com/oozcitak/infra.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "http://github.com/oozcitak/infra",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "http://github.com/oozcitak/infra/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-2.0.2.tgz",
-          "type": "distribution",
-          "hashes": [
+          "type": "library",
+          "name": "dom",
+          "group": "@oozcitak",
+          "version": "2.0.2",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/dom@2.0.2",
+          "author": "Ozgur Ozcitak",
+          "description": "A modern DOM implementation",
+          "licenses": [
             {
-              "alg": "SHA-512",
-              "content": "da0f84ee1a04d9d802cff00f3ce10ae6cdeb32126f37148c06b3fe53e8f5396b086ed4a95b1c65523ab5954f1122c149358bfb34c96756c0ae1dc533256fbcbc"
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
             }
           ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
+          "purl": "pkg:npm/%40oozcitak/dom@2.0.2",
+          "externalReferences": [
+            {
+              "url": "git://github.com/oozcitak/dom.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/dom",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/dom/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/dom/-/dom-2.0.2.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "1a3a4a8644980b7323e3e95fc04c88d5daa7b0a4e0c06cb8f32b591219b803fc671fff33f4cdd95572abfd81908b7b822ecd401014bec794f624f8ae7840d6f3"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/xmlbuilder2/node_modules/@oozcitak/dom"
+            }
+          ]
         },
         {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/infra"
+          "type": "library",
+          "name": "url",
+          "group": "@oozcitak",
+          "version": "3.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/url@3.0.0",
+          "author": "Ozgur Ozcitak",
+          "description": "An implementation of the URL Living Standard",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/url@3.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/oozcitak/url.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/url",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/url/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/url/-/url-3.0.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "64a7c44fc024d70b0b0222d635f16465cfc1ada0dc72e4c9291eacbd361ceec5636d1f88bb4bed5dd883318e28ea36859794d6d93952ee36cb978568bed00959"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/xmlbuilder2/node_modules/@oozcitak/url"
+            }
+          ]
         }
       ]
     },
@@ -5078,8 +5041,8 @@
       "type": "library",
       "name": "url",
       "group": "@oozcitak",
-      "version": "3.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+      "version": "1.0.4",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4",
       "author": "Ozgur Ozcitak",
       "description": "An implementation of the URL Living Standard",
       "licenses": [
@@ -5090,7 +5053,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oozcitak/url@3.0.0",
+      "purl": "pkg:npm/%40oozcitak/url@1.0.4",
       "externalReferences": [
         {
           "url": "git+https://github.com/oozcitak/url.git",
@@ -5108,12 +5071,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@oozcitak/url/-/url-3.0.0.tgz",
+          "url": "https://registry.npmjs.org/@oozcitak/url/-/url-1.0.4.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "64a7c44fc024d70b0b0222d635f16465cfc1ada0dc72e4c9291eacbd361ceec5636d1f88bb4bed5dd883318e28ea36859794d6d93952ee36cb978568bed00959"
+              "content": "903703f32fb2dc50923af9c123a1c9825d34be23bf9c66d0a0220d990d21f7c3a19c6213ad64776ce19fc180ad86072b57c0274c9cfc333b254d06c2dd23809b"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -5128,16 +5091,130 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/@oozcitak/url"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "infra",
+          "group": "@oozcitak",
+          "version": "1.0.8",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/infra@1.0.8",
+          "author": "Ozgur Ozcitak",
+          "description": "An implementation of the Infra Living Standard",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/infra@1.0.8",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/oozcitak/infra.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/infra/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-1.0.8.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "25101473d551e8818738bece185fb2aefb342cef1296a1a73c032acb33ae1593d26525c8ed77f63bdf9ac103d2317808586b6051ffdd03a1ece97eb24846964e"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/url/node_modules/@oozcitak/infra"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "util",
+          "group": "@oozcitak",
+          "version": "8.3.8",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/util@8.3.8",
+          "author": "Ozgur Ozcitak",
+          "description": "Utility functions",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40oozcitak/util@8.3.8",
+          "externalReferences": [
+            {
+              "url": "git://github.com/oozcitak/util.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "http://github.com/oozcitak/util/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@oozcitak/util/-/util-8.3.8.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "4fc4db4a71acc68e930c1271fd282ffc195524bdedb21c593fb02ae51d664a733939c1d8d9d41ac4b32edbe13cbb780dd0c2cecdd8eeaea37865156ecd0c9c39"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@oozcitak/url/node_modules/@oozcitak/util"
+            }
+          ]
+        }
       ]
     },
     {
       "type": "library",
-      "name": "util",
-      "group": "@oozcitak",
-      "version": "10.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
-      "author": "Ozgur Ozcitak",
-      "description": "Utility functions",
+      "name": "canvas",
+      "group": "@napi-rs",
+      "version": "1.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
+      "description": "Canvas for Node.js with skia backend",
+      "scope": "optional",
       "licenses": [
         {
           "license": {
@@ -5146,30 +5223,30 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40oozcitak/util@10.0.0",
+      "purl": "pkg:npm/%40napi-rs/canvas@1.0.0",
       "externalReferences": [
         {
-          "url": "git://github.com/oozcitak/util.git",
+          "url": "git+https://github.com/Brooooooklyn/canvas.git",
           "type": "vcs",
           "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "url": "http://github.com/oozcitak/util",
+          "url": "https://github.com/Brooooooklyn/canvas#readme",
           "type": "website",
           "comment": "as detected from PackageJson property \"homepage\""
         },
         {
-          "url": "http://github.com/oozcitak/util/issues",
+          "url": "https://github.com/Brooooooklyn/canvas/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@oozcitak/util/-/util-10.0.0.tgz",
+          "url": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-1.0.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8405f4a53ffbdf5f7434ba813cf592741546b5b63a54e85660adeaa87aad5d0d602bb912db2cf8fa2bec374ee1a49e88dda78cb4a3fa27a9e9b0428e033b932c"
+              "content": "26ac5ccb55ce22a8fe947f6c975193fa297a191dee42fd77bc8da6af0b9b3f7b93f0e95a9360a50eb2b6467c6540a8f0bfc051af86f7ba0d1847b73a8415fcc2"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -5177,12 +5254,8 @@
       ],
       "properties": [
         {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/@oozcitak/util"
+          "value": "node_modules/@napi-rs/canvas"
         }
       ]
     },
@@ -9156,58 +9229,6 @@
     },
     {
       "type": "library",
-      "name": "canvas",
-      "group": "@napi-rs",
-      "version": "1.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
-      "description": "Canvas for Node.js with skia backend",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40napi-rs/canvas@1.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Brooooooklyn/canvas.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Brooooooklyn/canvas#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Brooooooklyn/canvas/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-1.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "26ac5ccb55ce22a8fe947f6c975193fa297a191dee42fd77bc8da6af0b9b3f7b93f0e95a9360a50eb2b6467c6540a8f0bfc051af86f7ba0d1847b73a8415fcc2"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@napi-rs/canvas"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "package-json-from-dist",
       "version": "1.0.1",
       "bom-ref": "chargytransparenzsoftware@1.4.7|package-json-from-dist@1.0.1",
@@ -9810,8 +9831,8 @@
       "type": "library",
       "name": "eslint-plugin",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.1",
       "description": "TypeScript plugin for ESLint",
       "licenses": [
         {
@@ -9821,7 +9842,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/eslint-plugin@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/eslint-plugin@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/eslint-plugin",
@@ -9839,12 +9860,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "6c536f97d65cce555bfb0476024b337f78077ca563ffc59a9d768627752cb5303b6eb34a83470d764e97d4fb2ee55ecc676a10b7364a384cc851e85aa316c31b"
+              "content": "64f9559773c1ddeb7fe7d35ed1fbffb1c8ba657cf84f81e9e274c9e7a8bf634811f3d0116fe2a98688d3aba8fee7a1393c87b398e20e396c98f9a59015df8891"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -9865,7 +9886,7 @@
           "type": "library",
           "name": "ignore",
           "version": "7.0.5",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.0|ignore@7.0.5",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.1|ignore@7.0.5",
           "author": "kael",
           "description": "Ignore is a manager and filter for .gitignore rules, the one used by eslint, gitbook and many others.",
           "licenses": [
@@ -9922,8 +9943,8 @@
       "type": "library",
       "name": "parser",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.1",
       "description": "An ESLint custom parser which leverages TypeScript ESTree",
       "licenses": [
         {
@@ -9933,7 +9954,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/parser@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/parser@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/parser",
@@ -9951,12 +9972,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "e41ecf7c0d9ed4d4060a70c777fd255bb5b782fa77779f51cb0e781583bc52cc31a3d7fa8a4c3701957e5e3fd3be92269a9b2263252a01f842ea42480f58c5eb"
+              "content": "3c9e6f78fab9fe882705bac87280b9f921cee5d7e978b3f33fd1692e4cd6ae0ba861011e7928e52695703a9a35251493122edd45cc0dcb887877357bd0fa8772"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -9977,8 +9998,8 @@
       "type": "library",
       "name": "typescript-estree",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1",
       "description": "A parser that converts TypeScript source code into an ESTree compatible form",
       "licenses": [
         {
@@ -9988,7 +10009,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/typescript-estree@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/typescript-estree@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/typescript-estree",
@@ -10006,12 +10027,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "e36cdab5de6a4afbdc57525d0c108bc584739ef3f87881e93e86577643c59c099a9c0e05b99e5d89b4a708182063c8509ea6a33e9a068d715d67b7c824a42794"
+              "content": "bbea100f706a6163dcf1857d65a6f8bda244949bb038b3d1735d099b5a3fa92fba4307a7d781c25b0c7449ea382e74a7db0c5e6b6224f03c4fb76fc51e6ba1ae"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10032,7 +10053,7 @@
           "type": "library",
           "name": "minimatch",
           "version": "10.2.5",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|minimatch@10.2.5",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|minimatch@10.2.5",
           "author": "Isaac Z. Schlueter",
           "description": "a glob matcher in javascript",
           "licenses": [
@@ -10087,7 +10108,7 @@
           "type": "library",
           "name": "brace-expansion",
           "version": "5.0.6",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|brace-expansion@5.0.6",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|brace-expansion@5.0.6",
           "description": "Brace expansion as known from sh/bash",
           "licenses": [
             {
@@ -10141,7 +10162,7 @@
           "type": "library",
           "name": "balanced-match",
           "version": "4.0.4",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|balanced-match@4.0.4",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|balanced-match@4.0.4",
           "description": "Match balanced character pairs, like \"{\" and \"}\"",
           "licenses": [
             {
@@ -10197,8 +10218,8 @@
       "type": "library",
       "name": "utils",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.1",
       "description": "Utilities for working with TypeScript + ESLint together",
       "licenses": [
         {
@@ -10208,7 +10229,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/utils@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/utils@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/utils",
@@ -10226,12 +10247,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "ddbcc5b7b22614c5bf8d563025a983a1efdd30e7452d20baa689baad18dd87849924462ea723337a6f1eeef2992dc94b7e91e39704805ce531b4ac465d488ba8"
+              "content": "d7e3ffdc38fa8efb726c4d6ad0743ac81b7f82afa8289c8b744bf81dd9ea6ac6845d1498080b03e7d99711542733f50b35d4316d7efbb5d1b88cf463212ea49c"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10302,8 +10323,8 @@
       "type": "library",
       "name": "expect",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.9",
       "description": "Jest's expect matchers as a Chai plugin",
       "licenses": [
         {
@@ -10313,7 +10334,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/expect@4.1.8",
+      "purl": "pkg:npm/%40vitest/expect@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/expect",
@@ -10331,12 +10352,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/expect/-/expect-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/expect/-/expect-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8779c33baefb4432c41a5071c90e425bc46531385229244b51e3cb3b1d3d80d21644be3479d800d4609949981fd56e79305006ebf4b0d7829e6809eabf434a75"
+              "content": "be5feb62c50a701af74a7427d7aebe5d1e5941c80cc770d084559d7e58bf716a4b9cb5266f166fcab259a2d2c552bca26fe2ed02b60c49327945b439ed9aab94"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10357,8 +10378,8 @@
       "type": "library",
       "name": "mocker",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.9",
       "description": "Vitest module mocker implementation",
       "licenses": [
         {
@@ -10368,7 +10389,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/mocker@4.1.8",
+      "purl": "pkg:npm/%40vitest/mocker@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/mocker",
@@ -10386,12 +10407,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "2c488dff17b839221b29ef47408a79382db86a0183f49e429e6320b0ba21555a0e3d62fd6b6b01a11e95071e378d065becaaf5978442bb2089cdc01ad3e7688f"
+              "content": "115917cc18eb3c633e70af3f00d5a006b91409f25f6f7f3f11f4d23bc87ba56bca9323e4a56c6f47b0640f633222d305eb60bdef3004a2a769522c7047f7be47"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10412,8 +10433,8 @@
       "type": "library",
       "name": "pretty-format",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.9",
       "description": "Fork of pretty-format with support for ESM",
       "licenses": [
         {
@@ -10423,7 +10444,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/pretty-format@4.1.8",
+      "purl": "pkg:npm/%40vitest/pretty-format@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/pretty-format",
@@ -10441,12 +10462,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/pretty-format/-/pretty-format-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "f466ac101c69675558229a877ffd3e606835db5b9237008a389a88ad3c163ff4c1ec39850a2681a4d97768f673a0b59f5a4baa85b1fcbc9215a1b664bdda3670"
+              "content": "b348ae7e7b37888162b5d826f9847b835c21080686b57cf8e7d552f7f3eac8a0c4105818221b07390997808803b980adec37909a2653d107b6380da9e193eee4"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10467,8 +10488,8 @@
       "type": "library",
       "name": "runner",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/runner@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/runner@4.1.9",
       "description": "Vitest test runner",
       "licenses": [
         {
@@ -10478,7 +10499,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/runner@4.1.8",
+      "purl": "pkg:npm/%40vitest/runner@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/runner",
@@ -10496,12 +10517,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/runner/-/runner-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/runner/-/runner-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "12657178101f309bf271d8dde879be45b1416c0f5f2afa342b1dfb84da4162861e6af1f744db015d60e8a11d66803e76742af1208b8fed4a2da5f8b03a292f72"
+              "content": "2972cc0ed73ba1eef4fb79897c6acf5163deb2cc07fb7b13c40300325f031bb23c214413e175bbd7c758e480f7bcf51c9a5bb6ec270a7d8e0fde1dc8dbd48b26"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10522,8 +10543,8 @@
       "type": "library",
       "name": "snapshot",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/snapshot@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/snapshot@4.1.9",
       "description": "Vitest snapshot manager",
       "licenses": [
         {
@@ -10533,7 +10554,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/snapshot@4.1.8",
+      "purl": "pkg:npm/%40vitest/snapshot@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/snapshot",
@@ -10551,12 +10572,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/snapshot/-/snapshot-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "69c7d96e84660087f4e4310a701432df7557a231498ed51d2f2a3ba0e995f6479b6f6c5d534d549273623ee3d9a09650c8eec3174819753193a5e033113f503d"
+              "content": "25ced1286341a3c676f166089b43627a3e317523c1c917fa994e7c5691d091de99874e6b96703eb708db2b91f2788187c6bcec737989812e37b8cd0264acda20"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10577,8 +10598,8 @@
       "type": "library",
       "name": "spy",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.9",
       "description": "Lightweight Jest compatible spy implementation",
       "licenses": [
         {
@@ -10588,7 +10609,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/spy@4.1.8",
+      "purl": "pkg:npm/%40vitest/spy@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/spy",
@@ -10606,12 +10627,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "e847afb41a7a39938f17b6e6cf7e87ac631e3f7b718154ab81e6d6c4739a7c35c69212337d72b5e1ff0a17a32e15f8175d4787c66a43dc1431915d34ff7b3998"
+              "content": "7c7a6c4ba9888be3e2116faf71154e3245f5a1268f2a77b754e7254852023dc18e99f2a05cf5398806a1fb070d723db13eb08299fabdf480c67fe1288e186f84"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -10632,8 +10653,8 @@
       "type": "library",
       "name": "utils",
       "group": "@vitest",
-      "version": "4.1.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.8",
+      "version": "4.1.9",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.9",
       "description": "Shared Vitest utility functions",
       "licenses": [
         {
@@ -10643,7 +10664,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/utils@4.1.8",
+      "purl": "pkg:npm/%40vitest/utils@4.1.9",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/utils",
@@ -10661,12 +10682,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/utils/-/utils-4.1.8.tgz",
+          "url": "https://registry.npmjs.org/@vitest/utils/-/utils-4.1.9.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "b8e25a99800b3617c9ea2a25131c90338d32210c03a989e42ad4395428927b5ec4df71f4690feefb51a546ecf82d9064e8c9b7b20f741bd8446e612ddfb0b566"
+              "content": "039d68f3298ee4fa6a95636704ff591cf5c3229b8cb532e51928cdee56b8512f8b273a143328708c0e505e59b7f497b18301ca5b85e3b3c67677774b09739eb8"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -12938,8 +12959,8 @@
     {
       "type": "library",
       "name": "launch-editor",
-      "version": "2.12.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|launch-editor@2.12.0",
+      "version": "2.14.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|launch-editor@2.14.1",
       "author": "Evan You",
       "description": "launch editor from node.js",
       "licenses": [
@@ -12950,30 +12971,30 @@
           }
         }
       ],
-      "purl": "pkg:npm/launch-editor@2.12.0",
+      "purl": "pkg:npm/launch-editor@2.14.1",
       "externalReferences": [
         {
-          "url": "git+https://github.com/yyx990803/launch-editor.git",
+          "url": "git+https://github.com/vitejs/launch-editor.git",
           "type": "vcs",
           "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "url": "https://github.com/yyx990803/launch-editor#readme",
+          "url": "https://github.com/vitejs/launch-editor#readme",
           "type": "website",
           "comment": "as detected from PackageJson property \"homepage\""
         },
         {
-          "url": "https://github.com/yyx990803/launch-editor/issues",
+          "url": "https://github.com/vitejs/launch-editor/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/launch-editor/-/launch-editor-2.12.0.tgz",
+          "url": "https://registry.npmjs.org/launch-editor/-/launch-editor-2.14.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8223875e83ad89f8dd1ea51a9b02aae9ce3d1b305d2e3bf1addd83f90e15eae387a2926fee9f552718a40ec43f0815d96c4213814a925475cb4c6dd584f3f50e"
+              "content": "41606b42c3291fb80fafdeb976c283ff770a5a23684e3a404d07fef97abadcdeac29118cc25557cf8d4ed4865331f65080172d0ff2b966dd3afbf23aa4febe1c"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -13703,6 +13724,62 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/sockjs"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "uuid",
+          "version": "11.1.1",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|sockjs@0.3.24|uuid@11.1.1",
+          "description": "RFC9562 UUIDs",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/uuid@11.1.1",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/uuidjs/uuid.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/uuidjs/uuid#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/uuidjs/uuid/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/uuid/-/uuid-11.1.1.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "bc8631ac1082fcdfcaf89b37a9237cf20a3b9087cd3ecb2bfe11c27ac28240d0239a0bd84b6a2aafaf6422e7c41be3b8f8f7decce1f811b21e1c27c5a2ff1981"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/sockjs/node_modules/uuid"
+            }
+          ]
         }
       ]
     },
@@ -15582,6 +15659,118 @@
     },
     {
       "type": "library",
+      "name": "infra",
+      "group": "@oozcitak",
+      "version": "2.0.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "author": "Ozgur Ozcitak",
+      "description": "An implementation of the Infra Living Standard",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/infra@2.0.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/oozcitak/infra.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/infra",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/infra/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/infra/-/infra-2.0.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "da0f84ee1a04d9d802cff00f3ce10ae6cdeb32126f37148c06b3fe53e8f5396b086ed4a95b1c65523ab5954f1122c149358bfb34c96756c0ae1dc533256fbcbc"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/infra"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "util",
+      "group": "@oozcitak",
+      "version": "10.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
+      "author": "Ozgur Ozcitak",
+      "description": "Utility functions",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40oozcitak/util@10.0.0",
+      "externalReferences": [
+        {
+          "url": "git://github.com/oozcitak/util.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "http://github.com/oozcitak/util",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "http://github.com/oozcitak/util/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@oozcitak/util/-/util-10.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "8405f4a53ffbdf5f7434ba813cf592741546b5b63a54e85660adeaa87aad5d0d602bb912db2cf8fa2bec374ee1a49e88dda78cb4a3fa27a9e9b0428e033b932c"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@oozcitak/util"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "js-yaml",
       "version": "4.2.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0",
@@ -15632,6 +15821,58 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/js-yaml"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "canvas-win32-x64-msvc",
+      "group": "@napi-rs",
+      "version": "1.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0",
+      "description": "Canvas for Node.js with skia backend",
+      "scope": "optional",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@1.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Brooooooklyn/canvas.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Brooooooklyn/canvas#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Brooooooklyn/canvas/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-1.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "ab076187d37a1a07bf842e292fd4b5b50a7488ac214a5fdd62383bf911a9f64dba8911918b932aa94c8a18e5c85a58b4cce72ecb9636c081ff8e4dabcba8bf8c"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@napi-rs/canvas-win32-x64-msvc"
         }
       ]
     },
@@ -17775,58 +18016,6 @@
     },
     {
       "type": "library",
-      "name": "canvas-win32-x64-msvc",
-      "group": "@napi-rs",
-      "version": "1.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0",
-      "description": "Canvas for Node.js with skia backend",
-      "scope": "optional",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@1.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Brooooooklyn/canvas.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Brooooooklyn/canvas#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Brooooooklyn/canvas/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-1.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "ab076187d37a1a07bf842e292fd4b5b50a7488ac214a5fdd62383bf911a9f64dba8911918b932aa94c8a18e5c85a58b4cce72ecb9636c081ff8e4dabcba8bf8c"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@napi-rs/canvas-win32-x64-msvc"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "minipass",
       "version": "7.1.3",
       "bom-ref": "chargytransparenzsoftware@1.4.7|minipass@7.1.3",
@@ -18424,8 +18613,8 @@
       "type": "library",
       "name": "scope-manager",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.1",
       "description": "TypeScript scope analyser for ESLint",
       "licenses": [
         {
@@ -18435,7 +18624,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/scope-manager@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/scope-manager@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/scope-manager",
@@ -18453,12 +18642,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "2167571471526fa9a50b71cf73b42c2c39b9cd811b5256bab6b0c41dfdf60f7fdd9ee5325ddf3ba6549c48d5d26e6d3f47132f39ba48d7bb2ffc40d31ab19990"
+              "content": "2f66dd21ea104bc165280bce340af6d30e8e70b5de07eaa20ca6c0a284bd03405e9fe89222405e7f4171ab029662ab79b1ad22e0a26dc55c959a133294acc5e7"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18479,8 +18668,8 @@
       "type": "library",
       "name": "type-utils",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.61.1",
       "description": "Type utilities for working with TypeScript + ESLint together",
       "licenses": [
         {
@@ -18490,7 +18679,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/type-utils@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/type-utils@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/type-utils",
@@ -18508,12 +18697,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "4ee06241822477def205f2271c24ca55831b5f892f126a4e12e8b122ecc253da7c0464f549fcb23b477421f0cc6cf2077239ff8569eeb145f97bcbf95e0f97f0"
+              "content": "19846270a9952b40b87ec2a068009a92739402af4e6b6930b239e916115c4bfe69e07b7920ff4e54b6e022070ae12464f769d51c596ebab83596e983f5d05c2f"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18534,8 +18723,8 @@
       "type": "library",
       "name": "visitor-keys",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.1",
       "description": "Visitor keys used to help traverse the TypeScript-ESTree AST",
       "licenses": [
         {
@@ -18545,7 +18734,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/visitor-keys@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/visitor-keys@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/visitor-keys",
@@ -18563,12 +18752,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "4152d9bb764f40413e1c8090c80319db22d08717f499e63fc31e87c75e18713363d77241dea1e55f7949d362f77cb1878044511fbd64bd80f0897220b93dc08d"
+              "content": "e9f27d3075ad2b5e02d434a488c9475123a6ad579b2fbd79d316490652622fada38e1200e0998eaba7e5c01803c4874128a76889945e97e75f3c3e4c2df9f2df"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18644,8 +18833,8 @@
       "type": "library",
       "name": "types",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
       "description": "Types for the TypeScript-ESTree AST spec",
       "licenses": [
         {
@@ -18655,7 +18844,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/types@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/types@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/types",
@@ -18673,12 +18862,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "f504d0a59e488a7e02748a1d7db0d01527a24892a276060962e8353fd082db15a0513be59a2c558aa0d935c88c8f02c16722671b8b4698f97deeb54015bd4026"
+              "content": "1be09194fa8bbfb073d48655b34df1e4ae7d175bdea8bd0425444e01d1a12ac12af2a3a246265b23e1d4a233eae65d1f10638a328743f5bafa94e6e107cce4a0"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18699,8 +18888,8 @@
       "type": "library",
       "name": "project-service",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.61.1",
       "description": "Standalone TypeScript project service wrapper for linting.",
       "licenses": [
         {
@@ -18710,7 +18899,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/project-service@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/project-service@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/project-service",
@@ -18728,12 +18917,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "0d5e3617b30b24ee916b1ed22b5ca0e37b5c9c47c652bbab4a94b12ae557f9add1093cc1947ddfbb1a6bace25728224601ac3cdb15e8722909d2e41aab05e018"
+              "content": "3eb0b82581a6476e359589df8662864d7905aaff3eca66d31604806347d55e963cdbf424330e5364f97ebc6cee0c3536418264f5f2033814e7b45fb20eff4b10"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -18754,8 +18943,8 @@
       "type": "library",
       "name": "tsconfig-utils",
       "group": "@typescript-eslint",
-      "version": "8.61.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.0",
+      "version": "8.61.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.1",
       "description": "Utilities for collecting TSConfigs for linting scenarios.",
       "licenses": [
         {
@@ -18765,7 +18954,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/tsconfig-utils@8.61.0",
+      "purl": "pkg:npm/%40typescript-eslint/tsconfig-utils@8.61.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/tsconfig-utils",
@@ -18783,12 +18972,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.61.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.61.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "3b9026bddbfdced329c697febe61542c61bbf0813a43076bddb086beac06e27c1cf47daa5e43982499d16d11f23244138efd5dd37a25ab0c30cc72ccaa915e3d"
+              "content": "50dfc7e1d8be38eec45b1da8bcc13ef2ddf560ef8a5672b44512841d1de43addb5fc0cbc04eab733538cbd6b39bcd8aa705098198a312b73173d9ce631413eca"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -23261,60 +23450,6 @@
     },
     {
       "type": "library",
-      "name": "uuid",
-      "version": "11.1.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|uuid@11.1.1",
-      "description": "RFC9562 UUIDs",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/uuid@11.1.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/uuidjs/uuid.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/uuidjs/uuid#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/uuidjs/uuid/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/uuid/-/uuid-11.1.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "bc8631ac1082fcdfcaf89b37a9237cf20a3b9087cd3ecb2bfe11c27ac28240d0239a0bd84b6a2aafaf6422e7c41be3b8f8f7decce1f811b21e1c27c5a2ff1981"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/uuid"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "websocket-driver",
       "version": "0.7.4",
       "bom-ref": "chargytransparenzsoftware@1.4.7|websocket-driver@0.7.4",
@@ -25137,57 +25272,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/argparse"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "fflate",
-      "version": "0.8.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|fflate@0.8.3",
-      "author": "Arjun Barrett",
-      "description": "High performance (de)compression in an 8kB package",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/fflate@0.8.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/101arrowz/fflate.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://101arrowz.github.io/fflate",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/101arrowz/fflate/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/fflate/-/fflate-0.8.3.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "b5b64db89acbc06529df3b2106d772e16f8e47166e221f1ae629722044030b9ad8d5fdd4db424caf2d0b977581cd4e7c1192ac12e2455e16f9830bfc0ac3ef80"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/fflate"
         }
       ]
     },
@@ -33186,11 +33270,11 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@4.2.1",
+        "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@5.0.0",
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.2.0",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
         "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
@@ -33202,7 +33286,7 @@
         "chargytransparenzsoftware@1.4.7|css-loader@7.1.4",
         "chargytransparenzsoftware@1.4.7|decimal.js@10.6.0",
         "chargytransparenzsoftware@1.4.7|elliptic@6.6.1",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
         "chargytransparenzsoftware@1.4.7|file-loader@6.2.0",
         "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
         "chargytransparenzsoftware@1.4.7|html-webpack-plugin@5.6.7",
@@ -33218,24 +33302,25 @@
         "chargytransparenzsoftware@1.4.7|rimraf@6.1.3",
         "chargytransparenzsoftware@1.4.7|safe-stable-stringify@2.5.0",
         "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
-        "chargytransparenzsoftware@1.4.7|sass@1.100.0",
+        "chargytransparenzsoftware@1.4.7|sass@1.101.0",
         "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
         "chargytransparenzsoftware@1.4.7|stream-browserify@3.0.0",
         "chargytransparenzsoftware@1.4.7|stream-http@3.2.0",
         "chargytransparenzsoftware@1.4.7|style-loader@4.0.0",
-        "chargytransparenzsoftware@1.4.7|ts-loader@9.6.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.0",
+        "chargytransparenzsoftware@1.4.7|ts-loader@9.6.1",
+        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.1",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3",
         "chargytransparenzsoftware@1.4.7|url@0.11.4",
-        "chargytransparenzsoftware@1.4.7|vitest@4.1.8",
+        "chargytransparenzsoftware@1.4.7|uuid@14.0.0",
+        "chargytransparenzsoftware@1.4.7|vitest@4.1.9",
         "chargytransparenzsoftware@1.4.7|vm-browserify@1.1.2",
         "chargytransparenzsoftware@1.4.7|webpack-cli@7.0.3",
-        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4",
+        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5",
         "chargytransparenzsoftware@1.4.7|webpack@5.107.2"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@4.2.1",
+      "ref": "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@5.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-library@10.0.0",
         "chargytransparenzsoftware@1.4.7|ajv-formats-draft2019@1.6.1",
@@ -33251,69 +33336,46 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/infra@1.0.8",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/infra@1.0.8",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas@0.1.100",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.2.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
         "chargytransparenzsoftware@1.4.7|base32-decode@1.0.0",
         "chargytransparenzsoftware@1.4.7|buffer@6.0.3",
         "chargytransparenzsoftware@1.4.7|decimal.js@10.6.0",
         "chargytransparenzsoftware@1.4.7|elliptic@6.6.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|file-type@20.5.0",
+        "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
         "chargytransparenzsoftware@1.4.7|jpeg-js@0.4.4",
         "chargytransparenzsoftware@1.4.7|jsqr@1.4.0",
         "chargytransparenzsoftware@1.4.7|moment@2.30.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|pdfjs-dist@5.7.284",
+        "chargytransparenzsoftware@1.4.7|pdfjs-dist@6.0.227",
         "chargytransparenzsoftware@1.4.7|pngjs@7.0.0",
         "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas@0.1.100",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas-win32-x64-msvc@0.1.100"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|file-type@20.5.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@tokenizer/inflate@0.2.7",
-        "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
-        "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
-        "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|pdfjs-dist@5.7.284",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas@0.1.100"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@napi-rs/canvas-win32-x64-msvc@0.1.100"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.1.0|@tokenizer/inflate@0.2.7",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|fflate@0.8.3",
-        "chargytransparenzsoftware@1.4.7|token-types@6.1.2"
       ]
     },
     {
@@ -33400,7 +33462,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.9.1",
         "chargytransparenzsoftware@1.4.7|@eslint-community/regexpp@4.12.2",
@@ -33412,88 +33474,88 @@
         "chargytransparenzsoftware@1.4.7|@humanwhocodes/module-importer@1.0.1",
         "chargytransparenzsoftware@1.4.7|@humanwhocodes/retry@0.4.3",
         "chargytransparenzsoftware@1.4.7|@types/estree@1.0.9",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|ajv@6.15.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|ajv@6.15.0",
         "chargytransparenzsoftware@1.4.7|cross-spawn@7.0.6",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
         "chargytransparenzsoftware@1.4.7|escape-string-regexp@4.0.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|eslint-scope@9.1.2",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|eslint-scope@9.1.2",
         "chargytransparenzsoftware@1.4.7|eslint-visitor-keys@5.0.1",
         "chargytransparenzsoftware@1.4.7|espree@11.2.0",
         "chargytransparenzsoftware@1.4.7|esquery@1.7.0",
         "chargytransparenzsoftware@1.4.7|esutils@2.0.3",
         "chargytransparenzsoftware@1.4.7|fast-deep-equal@3.1.3",
         "chargytransparenzsoftware@1.4.7|file-entry-cache@8.0.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|find-up@5.0.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|find-up@5.0.0",
         "chargytransparenzsoftware@1.4.7|glob-parent@6.0.2",
         "chargytransparenzsoftware@1.4.7|ignore@5.3.2",
         "chargytransparenzsoftware@1.4.7|imurmurhash@0.1.4",
         "chargytransparenzsoftware@1.4.7|is-glob@4.0.3",
         "chargytransparenzsoftware@1.4.7|json-stable-stringify-without-jsonify@1.0.1",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|minimatch@10.2.5",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|minimatch@10.2.5",
         "chargytransparenzsoftware@1.4.7|natural-compare@1.4.0",
         "chargytransparenzsoftware@1.4.7|optionator@0.9.4"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|ajv@6.15.0",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|ajv@6.15.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|fast-deep-equal@3.1.3",
         "chargytransparenzsoftware@1.4.7|fast-json-stable-stringify@2.1.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|json-schema-traverse@0.4.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|json-schema-traverse@0.4.1",
         "chargytransparenzsoftware@1.4.7|uri-js@4.4.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|eslint-scope@9.1.2",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|eslint-scope@9.1.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/esrecurse@4.3.1",
         "chargytransparenzsoftware@1.4.7|@types/estree@1.0.9",
         "chargytransparenzsoftware@1.4.7|esrecurse@4.3.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|estraverse@5.3.0"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|estraverse@5.3.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|find-up@5.0.0",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|find-up@5.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|locate-path@6.0.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|locate-path@6.0.0",
         "chargytransparenzsoftware@1.4.7|path-exists@4.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|minimatch@10.2.5",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|minimatch@10.2.5",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|brace-expansion@5.0.6"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|brace-expansion@5.0.6"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|json-schema-traverse@0.4.1"
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|json-schema-traverse@0.4.1"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|estraverse@5.3.0"
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|estraverse@5.3.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|locate-path@6.0.0",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|locate-path@6.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|p-locate@5.0.0"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|p-locate@5.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|brace-expansion@5.0.6",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|brace-expansion@5.0.6",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|balanced-match@4.0.4"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|balanced-match@4.0.4"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|p-locate@5.0.0",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|p-locate@5.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1|p-limit@3.1.0"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0|p-limit@3.1.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|balanced-match@4.0.4"
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|balanced-match@4.0.4"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.4.1|p-limit@3.1.0",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.5.0|p-limit@3.1.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|yocto-queue@0.1.0"
       ]
@@ -33633,12 +33695,12 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|sass@1.100.0",
+        "chargytransparenzsoftware@1.4.7|sass@1.101.0",
         "chargytransparenzsoftware@1.4.7|webpack@5.107.2"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|sass@1.100.0",
+      "ref": "chargytransparenzsoftware@1.4.7|sass@1.101.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@parcel/watcher@2.5.1",
         "chargytransparenzsoftware@1.4.7|chokidar@5.0.0",
@@ -33694,29 +33756,29 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.0",
+      "ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|chalk@4.1.2",
         "chargytransparenzsoftware@1.4.7|enhanced-resolve@5.22.1",
         "chargytransparenzsoftware@1.4.7|loader-utils@2.0.4",
         "chargytransparenzsoftware@1.4.7|micromatch@4.0.8",
         "chargytransparenzsoftware@1.4.7|semver@7.7.3",
-        "chargytransparenzsoftware@1.4.7|ts-loader@9.6.0|source-map@0.7.6",
+        "chargytransparenzsoftware@1.4.7|ts-loader@9.6.1|source-map@0.7.6",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3",
         "chargytransparenzsoftware@1.4.7|webpack@5.107.2"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.0|source-map@0.7.6"
+      "ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.1|source-map@0.7.6"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
@@ -33734,22 +33796,25 @@
       "ref": "chargytransparenzsoftware@1.4.7|url@0.11.4|punycode@1.4.1"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|uuid@14.0.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.9",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
-        "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/runner@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/snapshot@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.8",
+        "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/runner@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/snapshot@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.9",
         "chargytransparenzsoftware@1.4.7|es-module-lexer@2.1.0",
         "chargytransparenzsoftware@1.4.7|expect-type@1.3.0",
         "chargytransparenzsoftware@1.4.7|magic-string@0.30.21",
         "chargytransparenzsoftware@1.4.7|obug@2.1.1",
         "chargytransparenzsoftware@1.4.7|pathe@2.0.3",
-        "chargytransparenzsoftware@1.4.7|vitest@4.1.8|picomatch@4.0.4",
+        "chargytransparenzsoftware@1.4.7|vitest@4.1.9|picomatch@4.0.4",
         "chargytransparenzsoftware@1.4.7|std-env@4.1.0",
         "chargytransparenzsoftware@1.4.7|tinybench@2.9.0",
         "chargytransparenzsoftware@1.4.7|tinyexec@1.2.4",
@@ -33760,7 +33825,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.8|picomatch@4.0.4"
+      "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.9|picomatch@4.0.4"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|vm-browserify@1.1.2"
@@ -33775,13 +33840,13 @@
         "chargytransparenzsoftware@1.4.7|import-local@3.2.0",
         "chargytransparenzsoftware@1.4.7|interpret@3.1.1",
         "chargytransparenzsoftware@1.4.7|rechoir@0.8.0",
-        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4",
+        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5",
         "chargytransparenzsoftware@1.4.7|webpack-merge@6.0.1",
         "chargytransparenzsoftware@1.4.7|webpack@5.107.2"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4",
+      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/bonjour@3.5.13",
         "chargytransparenzsoftware@1.4.7|@types/connect-history-api-fallback@1.5.4",
@@ -33793,7 +33858,7 @@
         "chargytransparenzsoftware@1.4.7|@types/ws@8.18.1",
         "chargytransparenzsoftware@1.4.7|ansi-html-community@0.0.8",
         "chargytransparenzsoftware@1.4.7|bonjour-service@1.3.0",
-        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|chokidar@3.6.0",
+        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|chokidar@3.6.0",
         "chargytransparenzsoftware@1.4.7|colorette@2.0.20",
         "chargytransparenzsoftware@1.4.7|compression@1.8.1",
         "chargytransparenzsoftware@1.4.7|connect-history-api-fallback@2.0.0",
@@ -33801,7 +33866,7 @@
         "chargytransparenzsoftware@1.4.7|graceful-fs@4.2.11",
         "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.9",
         "chargytransparenzsoftware@1.4.7|ipaddr.js@2.2.0",
-        "chargytransparenzsoftware@1.4.7|launch-editor@2.12.0",
+        "chargytransparenzsoftware@1.4.7|launch-editor@2.14.1",
         "chargytransparenzsoftware@1.4.7|open@10.2.0",
         "chargytransparenzsoftware@1.4.7|p-retry@6.2.1",
         "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
@@ -33815,25 +33880,25 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|chokidar@3.6.0",
+      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|chokidar@3.6.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|anymatch@3.1.3",
         "chargytransparenzsoftware@1.4.7|braces@3.0.3",
-        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|glob-parent@5.1.2",
+        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|glob-parent@5.1.2",
         "chargytransparenzsoftware@1.4.7|is-binary-path@2.1.0",
         "chargytransparenzsoftware@1.4.7|is-glob@4.0.3",
         "chargytransparenzsoftware@1.4.7|normalize-path@3.0.0",
-        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|readdirp@3.6.0"
+        "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|readdirp@3.6.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|glob-parent@5.1.2",
+      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|glob-parent@5.1.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|is-glob@4.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.4|readdirp@3.6.0",
+      "ref": "chargytransparenzsoftware@1.4.7|webpack-dev-server@5.2.5|readdirp@3.6.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|picomatch@2.3.2"
       ]
@@ -33929,27 +33994,48 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@oozcitak/dom@2.0.2",
+        "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/dom@2.0.2",
         "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
         "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0",
         "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/dom@2.0.2",
       "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+        "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/url@3.0.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@3.0.0",
+      "ref": "chargytransparenzsoftware@1.4.7|xmlbuilder2@4.0.3|@oozcitak/url@3.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
         "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/infra@1.0.8",
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/util@8.3.8"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/infra@1.0.8",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/util@8.3.8"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/url@1.0.4|@oozcitak/util@8.3.8"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bn.js@5.2.0",
@@ -34101,7 +34187,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.9.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.9.1|eslint-visitor-keys@3.4.3",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1"
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0"
       ]
     },
     {
@@ -34320,12 +34406,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|tapable@2.3.3"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|package-json-from-dist@1.0.1"
     },
     {
@@ -34381,45 +34461,45 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint-community/regexpp@4.12.2",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.0|ignore@7.0.5",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.1|ignore@7.0.5",
         "chargytransparenzsoftware@1.4.7|natural-compare@1.4.0",
         "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.0|ignore@7.0.5"
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.61.1|ignore@7.0.5"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.1",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.1",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|minimatch@10.2.5",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|minimatch@10.2.5",
         "chargytransparenzsoftware@1.4.7|semver@7.7.3",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
@@ -34427,28 +34507,28 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|minimatch@10.2.5",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|minimatch@10.2.5",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|brace-expansion@5.0.6"
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|brace-expansion@5.0.6"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|brace-expansion@5.0.6",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|brace-expansion@5.0.6",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|balanced-match@4.0.4"
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|balanced-match@4.0.4"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0|balanced-match@4.0.4"
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1|balanced-match@4.0.4"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.9.1",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
@@ -34459,54 +34539,54 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.9",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@standard-schema/spec@1.1.0",
         "chargytransparenzsoftware@1.4.7|@types/chai@5.2.3",
-        "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.8",
+        "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.9",
         "chargytransparenzsoftware@1.4.7|chai@6.2.2",
         "chargytransparenzsoftware@1.4.7|tinyrainbow@3.1.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.9",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.8",
+        "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.9",
         "chargytransparenzsoftware@1.4.7|estree-walker@3.0.3",
         "chargytransparenzsoftware@1.4.7|magic-string@0.30.21",
         "chargytransparenzsoftware@1.4.7|vite@8.0.16"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.9",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|tinyrainbow@3.1.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/runner@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/runner@4.1.9",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.8",
+        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.9",
         "chargytransparenzsoftware@1.4.7|pathe@2.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/snapshot@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/snapshot@4.1.9",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.8",
-        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.8",
+        "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.9",
+        "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.9",
         "chargytransparenzsoftware@1.4.7|magic-string@0.30.21",
         "chargytransparenzsoftware@1.4.7|pathe@2.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.8"
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@4.1.9"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.8",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/utils@4.1.9",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.8",
+        "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.9",
         "chargytransparenzsoftware@1.4.7|convert-source-map@2.0.0",
         "chargytransparenzsoftware@1.4.7|tinyrainbow@3.1.0"
       ]
@@ -34549,7 +34629,7 @@
         "chargytransparenzsoftware@1.4.7|vite@8.0.16|picomatch@4.0.4",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.15",
         "chargytransparenzsoftware@1.4.7|rolldown@1.0.3",
-        "chargytransparenzsoftware@1.4.7|sass@1.100.0",
+        "chargytransparenzsoftware@1.4.7|sass@1.101.0",
         "chargytransparenzsoftware@1.4.7|terser@5.44.1",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17"
       ]
@@ -34761,7 +34841,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|ipaddr.js@2.2.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|launch-editor@2.12.0",
+      "ref": "chargytransparenzsoftware@1.4.7|launch-editor@2.14.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|picocolors@1.1.1",
         "chargytransparenzsoftware@1.4.7|shell-quote@1.8.4"
@@ -34840,9 +34920,12 @@
       "ref": "chargytransparenzsoftware@1.4.7|sockjs@0.3.24",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|faye-websocket@0.11.4",
-        "chargytransparenzsoftware@1.4.7|uuid@11.1.1",
+        "chargytransparenzsoftware@1.4.7|sockjs@0.3.24|uuid@11.1.1",
         "chargytransparenzsoftware@1.4.7|websocket-driver@0.7.4"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|sockjs@0.3.24|uuid@11.1.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|spdy@4.0.2",
@@ -35033,10 +35116,22 @@
       "ref": "chargytransparenzsoftware@1.4.7|spdx-license-ids@3.0.22"
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/infra@2.0.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@10.0.0"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|js-yaml@4.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|argparse@2.0.1"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|ajv-keywords@5.1.0",
@@ -35214,9 +35309,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|renderkid@3.0.0|ansi-regex@5.0.1"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
     },
     {
@@ -35262,28 +35354,28 @@
       "ref": "chargytransparenzsoftware@1.4.7|picomatch@2.3.2"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.0"
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.61.1",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|eslint@10.4.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
         "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
         "chargytransparenzsoftware@1.4.7|eslint-visitor-keys@5.0.1"
       ]
     },
@@ -35294,19 +35386,19 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.61.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.61.1",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.61.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
@@ -35741,9 +35833,6 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|uuid@11.1.1"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|websocket-driver@0.7.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|http-parser-js@0.5.10",
@@ -35932,9 +36021,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|argparse@2.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|fflate@0.8.3"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|cssesc@3.0.0"

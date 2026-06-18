@@ -116,10 +116,6 @@ module.exports = {
           to:       path.resolve(__dirname, 'build/images')
         },
         {
-          from:     path.resolve(__dirname, 'src/i18n.json'),
-          to:       path.resolve(__dirname, 'build/i18n.json')
-        },
-        {
           from:     path.resolve(__dirname, 'package.json'),
           to:       path.resolve(__dirname, 'build/package.json')
         }

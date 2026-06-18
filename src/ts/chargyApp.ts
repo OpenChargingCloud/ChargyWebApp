@@ -1694,7 +1694,6 @@ export class ChargyApp {
             'index.html',
             'css/chargy.css',
             'chargyWebApp-bundle.js',
-            'i18n.json',
             'package.json'
         ];
 
