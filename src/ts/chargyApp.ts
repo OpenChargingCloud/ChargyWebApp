@@ -15,15 +15,18 @@
  * limitations under the License.
  */
 
-import { Chargy }                       from '@open-charging-cloud/chargy-core'
-import { readQRCodeTextFromImageData }  from '@open-charging-cloud/chargy-core'
-import * as chargyInterfaces            from '@open-charging-cloud/chargy-core'
-import * as chargeTransparencyRecord    from '@open-charging-cloud/chargy-core'
-import * as chargeTransparencyLiveLink  from '@open-charging-cloud/chargy-core'
-import * as publicKeyInfo               from '@open-charging-cloud/chargy-core'
+import {
+    Chargy,
+    ChargyInterfaces as chargyInterfaces,
+    ChargeTransparencyLiveLink as chargeTransparencyLiveLink,
+    ChargeTransparencyRecord as chargeTransparencyRecord,
+    PublicKeyInfo as publicKeyInfo,
+    readQRCodeTextFromImageData
+}                                      from '@open-charging-cloud/chargy-core'
 import * as chargyLib                   from '@open-charging-cloud/chargy-core'
 import * as L                           from 'leaflet';
 import Decimal                          from 'decimal.js';
+import corePackageJson                  from '@open-charging-cloud/chargy-core/package.json';
 import coreI18n                         from '@open-charging-cloud/chargy-core/i18n.json';
 import webAppI18n                       from '../i18n.json';
 
@@ -1034,6 +1037,10 @@ export class ChargyApp {
             const data = await response.json();
             Object.assign(this.packageJson, data);
 
+            const coreDependencies = corePackageJson.dependencies as Record<string, string>;
+            const packageVersion   = (packageName: string) =>
+                (this.packageJson.dependencies?.[packageName] ?? coreDependencies[packageName])?.replace(/[^0-9\.]/g, "") ?? "";
+
             //#region Set infos of the about section
 
                 (this.softwareInfosDiv. querySelector("#appEdition")             as HTMLSpanElement).innerHTML = this.appEdition;
@@ -1041,6 +1048,7 @@ export class ChargyApp {
                 (this.softwareInfosDiv. querySelector("#copyright")              as HTMLSpanElement).innerHTML = this.copyright;
 
                 (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.packageJson.version;
+                (this.openSourceLibsDiv.querySelector("#chargyCoreVersion")      as HTMLSpanElement).innerHTML = corePackageJson.version;
 
             if (this.packageJson.devDependencies)
             {
@@ -1051,21 +1059,20 @@ export class ChargyApp {
 
             if (this.packageJson.dependencies)
             {
-                (this.openSourceLibsDiv.querySelector("#fontAwesome")            as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["@fortawesome/fontawesome-free"]?.replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["elliptic"]?.               replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["moment"]?.                 replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["pdfjs-dist"]?.             replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#seekBzip")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["seek-bzip"]?.              replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["file-type"]?.              replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["jsqr"]?.                   replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["asn1.js"]?.                replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["buffer"]?.                 replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["base32-decode"]?.          replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#safeStableStringify")    as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["safe-stable-stringify"]?.  replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["leaflet"]?.                replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["leaflet.awesome-markers"]?.replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#chartJS")                as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["chart.js"]?.               replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#decimalJS")              as HTMLSpanElement).innerHTML = this.packageJson.dependencies   ["decimal.js"]?.             replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#fontAwesome")            as HTMLSpanElement).innerHTML = packageVersion("@fortawesome/fontawesome-free");
+                (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).innerHTML = packageVersion("elliptic");
+                (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).innerHTML = packageVersion("moment");
+                (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = packageVersion("pdfjs-dist");
+                (this.openSourceLibsDiv.querySelector("#seekBzip")               as HTMLSpanElement).innerHTML = packageVersion("seek-bzip");
+                (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = packageVersion("file-type");
+                (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).innerHTML = packageVersion("jsqr");
+                (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = packageVersion("asn1.js");
+                (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).innerHTML = packageVersion("buffer");
+                (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).innerHTML = packageVersion("base32-decode");
+                (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).innerHTML = packageVersion("leaflet");
+                (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).innerHTML = packageVersion("leaflet.awesome-markers");
+                (this.openSourceLibsDiv.querySelector("#chartJS")                as HTMLSpanElement).innerHTML = packageVersion("chart.js");
+                (this.openSourceLibsDiv.querySelector("#decimalJS")              as HTMLSpanElement).innerHTML = packageVersion("decimal.js");
             }
 
             //#endregion

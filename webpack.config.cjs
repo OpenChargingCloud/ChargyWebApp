@@ -98,10 +98,6 @@ module.exports = {
       }
     ]
   },
-  externals: {
-    'asn1':         'asn1.js',
-    'base32decode': 'base32-decode'
-  },
   output: {
     path:                          path.resolve(__dirname, 'build'),
     filename:                      'chargyWebApp-bundle.js',

@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:58426fab-301e-4645-8fe3-ed8654b0d41c",
+  "serialNumber": "urn:uuid:57174b4f-73c7-4065-be2a-e7e3a9964776",
   "metadata": {
-    "timestamp": "2026-06-18T04:15:50.188Z",
+    "timestamp": "2026-06-18T11:55:53.777Z",
     "tools": {
       "components": [
         {
@@ -456,10 +456,10 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.2.0",
+      "version": "0.4.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.4.0",
       "author": "GraphDefined GmbH",
-      "description": "Shared Chargy TypeScript core for Chargy desktop, web, and mobile applications.",
+      "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
         {
           "license": {
@@ -468,7 +468,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.2.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.4.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -486,12 +486,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.2.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.4.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "2c03287cf1a16d8eadd5d1e0e280c4b0221471abfbc74dc5f219c1e178db5e8e167b82249bc508163cc12e0b8bb428a1695a832106d53b1ba5e177c45ce329af"
+              "content": "8e5188204b1f8aa20b036d0f30efc588cdef0a23e8c510207198ad6276d0cc455b94a875841ad1000cbe1422070a01df63a746381dc0167b93988a0392015b1c"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -2019,57 +2019,6 @@
     },
     {
       "type": "library",
-      "name": "file-type",
-      "version": "22.0.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
-      "author": "Sindre Sorhus",
-      "description": "Detect the file type of a file, stream, or data",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/file-type@22.0.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/file-type.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/file-type#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/file-type/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/file-type/-/file-type-22.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "c30e4c86b7b4104fa3981bce5d399701b10cb9913bb97e1adfea1109014d8fcc3efa0ddebfdd7737ab57433d174d76ee790e535907e6e8175a5621071e7f1b84"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/file-type"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "html-webpack-plugin",
       "version": "5.6.7",
       "bom-ref": "chargytransparenzsoftware@1.4.7|html-webpack-plugin@5.6.7",
@@ -2175,56 +2124,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/jpeg-js"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "jsqr",
-      "version": "1.4.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|jsqr@1.4.0",
-      "description": "A pure javascript QR code reading library that takes in raw images and will locate, extract and parse any QR code found within.",
-      "licenses": [
-        {
-          "license": {
-            "id": "Apache-2.0",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/jsqr@1.4.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/cozmo/jsQR.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/cozmo/jsQR#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/cozmo/jsQR/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/jsqr/-/jsqr-1.4.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "7712e86fbabae578360efb2d624469918b662a6dac3c9f68161ae19ae753d5d66f34515396ba1a8b70164a92decbfc39bcc70b057460389b1b5e974df47cd4fc"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/jsqr"
         }
       ]
     },
@@ -2977,57 +2876,6 @@
     },
     {
       "type": "library",
-      "name": "safe-stable-stringify",
-      "version": "2.5.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|safe-stable-stringify@2.5.0",
-      "author": "Ruben Bridgewater",
-      "description": "Deterministic and safely JSON.stringify to quickly serialize JavaScript objects",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/safe-stable-stringify@2.5.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/BridgeAR/safe-stable-stringify.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/BridgeAR/safe-stable-stringify#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/BridgeAR/safe-stable-stringify/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/safe-stable-stringify/-/safe-stable-stringify-2.5.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "6f7ae9a532a6f53f8fb1508110e511e3a19623b7dd3acd3454a675fbd7351160da0ccbe341cead530b85c88a6b806813716a151d22ab53c1f7d591c0d9ed111c"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/safe-stable-stringify"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "sass-loader",
       "version": "17.0.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
@@ -3133,109 +2981,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/sass"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "seek-bzip",
-      "version": "2.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
-      "description": "a pure-JavaScript Node.JS module for random-access decoding bzip2 data",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/seek-bzip@2.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/cscott/seek-bzip.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/cscott/seek-bzip#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/cscott/seek-bzip/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/seek-bzip/-/seek-bzip-2.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "48c82e8939d8ae1a4b764dcfc1fcc77a8b6b7308bc6cd57889e98bf6dc7da6847fc9e68c63007d573475c3b6f9ec3b96a6ea91f27ea865ba22d218f703167142"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/seek-bzip"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "commander",
-          "version": "6.2.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1",
-          "author": "TJ Holowaychuk",
-          "description": "the complete solution for node.js command-line programs",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/commander@6.2.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/tj/commander.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/commander/-/commander-6.2.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "53b55dac9167260a38c63ac7a53ceed32ac73c622676c983f796658184846a3027d892b30e10d33c6f6405379f98e6cbdb0fe781e6678a593e395f421b777b50"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/seek-bzip/node_modules/commander"
-            }
-          ]
         }
       ]
     },
@@ -3877,56 +3622,6 @@
               "value": "node_modules/url/node_modules/punycode"
             }
           ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "uuid",
-      "version": "14.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|uuid@14.0.0",
-      "description": "RFC9562 UUIDs",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/uuid@14.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/uuidjs/uuid.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/uuidjs/uuid#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/uuidjs/uuid/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/uuid/-/uuid-14.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "428fae5a08a57d298085708c6afd6e605ca79503bb7cc16231566c42a6513085e9d0eeeb47baa3923f9c3ef0472e006a8bdeb4402a28fcf1f6ffa66d56a2afae"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/uuid"
         }
       ]
     },
@@ -5311,6 +5006,210 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@napi-rs/canvas"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "file-type",
+      "version": "22.0.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
+      "author": "Sindre Sorhus",
+      "description": "Detect the file type of a file, stream, or data",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/file-type@22.0.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/sindresorhus/file-type.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/sindresorhus/file-type#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/sindresorhus/file-type/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/file-type/-/file-type-22.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "c30e4c86b7b4104fa3981bce5d399701b10cb9913bb97e1adfea1109014d8fcc3efa0ddebfdd7737ab57433d174d76ee790e535907e6e8175a5621071e7f1b84"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/file-type"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jsqr",
+      "version": "1.4.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|jsqr@1.4.0",
+      "description": "A pure javascript QR code reading library that takes in raw images and will locate, extract and parse any QR code found within.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/jsqr@1.4.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/cozmo/jsQR.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/cozmo/jsQR#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/cozmo/jsQR/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/jsqr/-/jsqr-1.4.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "7712e86fbabae578360efb2d624469918b662a6dac3c9f68161ae19ae753d5d66f34515396ba1a8b70164a92decbfc39bcc70b057460389b1b5e974df47cd4fc"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/jsqr"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "seek-bzip",
+      "version": "2.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
+      "description": "a pure-JavaScript Node.JS module for random-access decoding bzip2 data",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/seek-bzip@2.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/cscott/seek-bzip.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/cscott/seek-bzip#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/cscott/seek-bzip/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/seek-bzip/-/seek-bzip-2.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "48c82e8939d8ae1a4b764dcfc1fcc77a8b6b7308bc6cd57889e98bf6dc7da6847fc9e68c63007d573475c3b6f9ec3b96a6ea91f27ea865ba22d218f703167142"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/seek-bzip"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "commander",
+          "version": "6.2.1",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1",
+          "author": "TJ Holowaychuk",
+          "description": "the complete solution for node.js command-line programs",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/commander@6.2.1",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/tj/commander.js.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/tj/commander.js#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/tj/commander.js/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/commander/-/commander-6.2.1.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "53b55dac9167260a38c63ac7a53ceed32ac73c622676c983f796658184846a3027d892b30e10d33c6f6405379f98e6cbdb0fe781e6678a593e395f421b777b50"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/seek-bzip/node_modules/commander"
+            }
+          ]
         }
       ]
     },
@@ -8742,211 +8641,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/loader-utils"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "inflate",
-      "group": "@tokenizer",
-      "version": "0.4.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
-      "author": "Borewit",
-      "description": "Tokenized zip support",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40tokenizer/inflate@0.4.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Borewit/tokenizer-inflate.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Borewit/tokenizer-inflate#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "hhttps://github.com/Borewit/tokenizer-inflate/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@tokenizer/inflate/-/inflate-0.4.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "da602ffbca641ba18866217590d8358c08e1dbb203c443cac1d1ae977b277f3b457ab7cf188d4b8c37b3669de2ec11255e89a9a84b4f9a83f1e9cdb082d5ac38"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@tokenizer/inflate"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "strtok3",
-      "version": "10.3.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
-      "author": "Borewit",
-      "description": "A promise based streaming tokenizer",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/strtok3@10.3.5",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Borewit/strtok3.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Borewit/strtok3#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Borewit/strtok3/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/strtok3/-/strtok3-10.3.5.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "922e216507e1e6b5f44032cb90e0a3fa1f8254d92a9a9fc231ff2ff2466990d54aea3190a28332b6accb65851560865c159eb20c1ef411f0fc3ce7055e2179a0"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/strtok3"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "token-types",
-      "version": "6.1.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
-      "author": "Borewit",
-      "description": "Common token types for decoding and encoding numeric and string values",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/token-types@6.1.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Borewit/token-types.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Borewit/token-types#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Borewit/token-types/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/token-types/-/token-types-6.1.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "7515dc872f82d0880af163c2eb1bc21c544859851baaa74420a3da2a8fc071350dcf02d32ba007ed18dd2d6b0465c00dfd305db5f530dcf60480faf954fafac3"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/token-types"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "uint8array-extras",
-      "version": "1.5.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0",
-      "author": "Sindre Sorhus",
-      "description": "Useful utilities for working with Uint8Array (and Buffer)",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/uint8array-extras@1.5.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/uint8array-extras.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/uint8array-extras#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/uint8array-extras/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/uint8array-extras/-/uint8array-extras-1.5.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "aef2920620b9cea08288367d9003accd9703bdd007c3020a246df76248f8dce29c5ac9e670144bd3d6135389ce78767c6366bb9753204ddd3c4817bd03c423e8"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/uint8array-extras"
         }
       ]
     },
@@ -15988,6 +15682,211 @@
     },
     {
       "type": "library",
+      "name": "inflate",
+      "group": "@tokenizer",
+      "version": "0.4.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
+      "author": "Borewit",
+      "description": "Tokenized zip support",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40tokenizer/inflate@0.4.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Borewit/tokenizer-inflate.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Borewit/tokenizer-inflate#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "hhttps://github.com/Borewit/tokenizer-inflate/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@tokenizer/inflate/-/inflate-0.4.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "da602ffbca641ba18866217590d8358c08e1dbb203c443cac1d1ae977b277f3b457ab7cf188d4b8c37b3669de2ec11255e89a9a84b4f9a83f1e9cdb082d5ac38"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@tokenizer/inflate"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "strtok3",
+      "version": "10.3.5",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
+      "author": "Borewit",
+      "description": "A promise based streaming tokenizer",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/strtok3@10.3.5",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Borewit/strtok3.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Borewit/strtok3#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Borewit/strtok3/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/strtok3/-/strtok3-10.3.5.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "922e216507e1e6b5f44032cb90e0a3fa1f8254d92a9a9fc231ff2ff2466990d54aea3190a28332b6accb65851560865c159eb20c1ef411f0fc3ce7055e2179a0"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/strtok3"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "token-types",
+      "version": "6.1.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
+      "author": "Borewit",
+      "description": "Common token types for decoding and encoding numeric and string values",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/token-types@6.1.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Borewit/token-types.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Borewit/token-types#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Borewit/token-types/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/token-types/-/token-types-6.1.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "7515dc872f82d0880af163c2eb1bc21c544859851baaa74420a3da2a8fc071350dcf02d32ba007ed18dd2d6b0465c00dfd305db5f530dcf60480faf954fafac3"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/token-types"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "uint8array-extras",
+      "version": "1.5.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0",
+      "author": "Sindre Sorhus",
+      "description": "Useful utilities for working with Uint8Array (and Buffer)",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/uint8array-extras@1.5.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/sindresorhus/uint8array-extras.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/sindresorhus/uint8array-extras#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/sindresorhus/uint8array-extras/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/uint8array-extras/-/uint8array-extras-1.5.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "aef2920620b9cea08288367d9003accd9703bdd007c3020a246df76248f8dce29c5ac9e670144bd3d6135389ce78767c6366bb9753204ddd3c4817bd03c423e8"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/uint8array-extras"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "ajv-keywords",
       "version": "5.1.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|ajv-keywords@5.1.0",
@@ -17463,110 +17362,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/json5"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "token",
-      "group": "@tokenizer",
-      "version": "0.3.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0",
-      "author": "Borewit",
-      "description": "TypeScript definition for strtok3 token",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40tokenizer/token@0.3.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Borewit/tokenizer-token.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Borewit/tokenizer-token#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Borewit/tokenizer-token/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@tokenizer/token/-/token-0.3.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "3af8c5fb3e752f7a2fd0ec8053476ecec62ebced353c7ef1e2de83271fa0b9a8604e704792125d1bbb2841e4d214b58ddde7e71f289b67867c97612e5b024ddc"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@tokenizer/token"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "text-codec",
-      "group": "@borewit",
-      "version": "0.2.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.2",
-      "author": "Borewit",
-      "description": "Text Decoder",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40borewit/text-codec@0.2.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Borewit/text-codec.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Borewit/text-codec#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Borewit/text-codec/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@borewit/text-codec/-/text-codec-0.2.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "0c36917a1b2c83568dac7e3eda19e3d41eef9d41848d4e8e225c9176431dd1a51d214bca5eb25f5eccbc2d5b57032ec346f61596e59b32ca6c461cf695c5b499"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@borewit/text-codec"
         }
       ]
     },
@@ -25382,6 +25177,110 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/argparse"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "token",
+      "group": "@tokenizer",
+      "version": "0.3.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0",
+      "author": "Borewit",
+      "description": "TypeScript definition for strtok3 token",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40tokenizer/token@0.3.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Borewit/tokenizer-token.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Borewit/tokenizer-token#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Borewit/tokenizer-token/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@tokenizer/token/-/token-0.3.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "3af8c5fb3e752f7a2fd0ec8053476ecec62ebced353c7ef1e2de83271fa0b9a8604e704792125d1bbb2841e4d214b58ddde7e71f289b67867c97612e5b024ddc"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@tokenizer/token"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "text-codec",
+      "group": "@borewit",
+      "version": "0.2.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.2",
+      "author": "Borewit",
+      "description": "Text Decoder",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40borewit/text-codec@0.2.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Borewit/text-codec.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Borewit/text-codec#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Borewit/text-codec/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@borewit/text-codec/-/text-codec-0.2.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "0c36917a1b2c83568dac7e3eda19e3d41eef9d41848d4e8e225c9176431dd1a51d214bca5eb25f5eccbc2d5b57032ec346f61596e59b32ca6c461cf695c5b499"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@borewit/text-codec"
         }
       ]
     },
@@ -33384,7 +33283,7 @@
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.2.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.4.0",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
         "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
@@ -33398,10 +33297,8 @@
         "chargytransparenzsoftware@1.4.7|elliptic@6.6.1",
         "chargytransparenzsoftware@1.4.7|eslint@10.5.0",
         "chargytransparenzsoftware@1.4.7|file-loader@6.2.0",
-        "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
         "chargytransparenzsoftware@1.4.7|html-webpack-plugin@5.6.7",
         "chargytransparenzsoftware@1.4.7|jpeg-js@0.4.4",
-        "chargytransparenzsoftware@1.4.7|jsqr@1.4.0",
         "chargytransparenzsoftware@1.4.7|leaflet.awesome-markers@2.0.5",
         "chargytransparenzsoftware@1.4.7|leaflet@1.9.4",
         "chargytransparenzsoftware@1.4.7|mini-css-extract-plugin@2.10.2",
@@ -33410,10 +33307,8 @@
         "chargytransparenzsoftware@1.4.7|pdfjs-dist@6.0.227",
         "chargytransparenzsoftware@1.4.7|pngjs@7.0.0",
         "chargytransparenzsoftware@1.4.7|rimraf@6.1.3",
-        "chargytransparenzsoftware@1.4.7|safe-stable-stringify@2.5.0",
         "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
         "chargytransparenzsoftware@1.4.7|sass@1.101.0",
-        "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
         "chargytransparenzsoftware@1.4.7|source-map-loader@5.0.0",
         "chargytransparenzsoftware@1.4.7|stream-browserify@3.0.0",
         "chargytransparenzsoftware@1.4.7|stream-http@3.2.0",
@@ -33422,7 +33317,6 @@
         "chargytransparenzsoftware@1.4.7|typescript-eslint@8.61.1",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3",
         "chargytransparenzsoftware@1.4.7|url@0.11.4",
-        "chargytransparenzsoftware@1.4.7|uuid@14.0.0",
         "chargytransparenzsoftware@1.4.7|vitest@4.1.9",
         "chargytransparenzsoftware@1.4.7|vm-browserify@1.1.2",
         "chargytransparenzsoftware@1.4.7|webpack-cli@7.0.3",
@@ -33471,7 +33365,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.2.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.4.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
@@ -33706,15 +33600,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|file-loader@6.2.0|json-schema-traverse@0.4.1"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
-        "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
-        "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
-        "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|html-webpack-plugin@5.6.7",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/html-minifier-terser@6.1.0",
@@ -33727,9 +33612,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|jpeg-js@0.4.4"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|jsqr@1.4.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|leaflet.awesome-markers@2.0.5"
@@ -33801,9 +33683,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|balanced-match@4.0.4"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|safe-stable-stringify@2.5.0"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|sass@1.101.0",
@@ -33818,15 +33697,6 @@
         "chargytransparenzsoftware@1.4.7|immutable@5.1.6",
         "chargytransparenzsoftware@1.4.7|source-map-js@1.2.1"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|source-map-loader@5.0.0",
@@ -33913,9 +33783,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|url@0.11.4|punycode@1.4.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|uuid@14.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.9",
@@ -34155,6 +34022,27 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
+        "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
+        "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
+        "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|jsqr@1.4.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bn.js@5.2.0",
@@ -34468,30 +34356,6 @@
         "chargytransparenzsoftware@1.4.7|emojis-list@3.0.0",
         "chargytransparenzsoftware@1.4.7|json5@2.2.3"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|token-types@6.1.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.2",
-        "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0",
-        "chargytransparenzsoftware@1.4.7|ieee754@1.2.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/html-minifier-terser@6.1.0"
@@ -35259,6 +35123,30 @@
       "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.0"
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
+        "chargytransparenzsoftware@1.4.7|token-types@6.1.2"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|strtok3@10.3.5",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.2",
+        "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0",
+        "chargytransparenzsoftware@1.4.7|ieee754@1.2.1"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|uint8array-extras@1.5.0"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|ajv-keywords@5.1.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|ajv@8.20.0",
@@ -35369,12 +35257,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|json5@2.2.3"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.2"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|camel-case@4.1.2",
@@ -36146,6 +36028,12 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|argparse@2.0.1"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.2"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|cssesc@3.0.0"
