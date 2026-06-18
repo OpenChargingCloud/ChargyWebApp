@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2018-2026 GraphDefined GmbH <achim.friedland@graphdefined.com>
  * This file is part of Chargy WebApp <https://github.com/OpenChargingCloud/ChargyWebApp>
  *
@@ -15,15 +15,17 @@
  * limitations under the License.
  */
 
-import { Chargy }                       from './chargy'
-import { readQRCodeTextFromImageData }  from './qrCodeReader'
-import * as chargyInterfaces            from './interfaces/chargyInterfaces'
-import * as chargeTransparencyRecord    from './interfaces/IChargeTransparencyRecord'
-import * as chargeTransparencyLiveLink  from './interfaces/IChargeTransparencyLiveLink'
-import * as publicKeyInfo               from './interfaces/IPublicKeyInfo'
-import * as chargyLib                   from './chargyLib'
+import { Chargy }                       from '@open-charging-cloud/chargy-core'
+import { readQRCodeTextFromImageData }  from '@open-charging-cloud/chargy-core'
+import * as chargyInterfaces            from '@open-charging-cloud/chargy-core'
+import * as chargeTransparencyRecord    from '@open-charging-cloud/chargy-core'
+import * as chargeTransparencyLiveLink  from '@open-charging-cloud/chargy-core'
+import * as publicKeyInfo               from '@open-charging-cloud/chargy-core'
+import * as chargyLib                   from '@open-charging-cloud/chargy-core'
 import * as L                           from 'leaflet';
 import Decimal                          from 'decimal.js';
+import coreI18n                         from '@open-charging-cloud/chargy-core/i18n.json';
+import webAppI18n                       from '../i18n.json';
 
 import '../scss/chargy.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -1014,19 +1016,7 @@ export class ChargyApp {
     //#region (private) loadI18n()
 
     private async loadI18n() {
-        try {
-
-            const response = await fetch('i18n.json');
-
-            if (!response.ok)
-                throw new Error('Network response was not ok');
-
-            const data = await response.json();
-            Object.assign(this.i18n, data);
-
-        } catch (error) {
-            console.error('There has been a problem with fetching "i18n.json":', error);
-        }
+        Object.assign(this.i18n, coreI18n, webAppI18n);
     }
 
     //#endregion

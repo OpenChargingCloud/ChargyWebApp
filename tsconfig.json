@@ -32,6 +32,7 @@
         "noUncheckedSideEffectImports":       true,
         "verbatimModuleSyntax":               true,
         "isolatedModules":                    true,
+        "resolveJsonModule":                  true,
         "allowUnusedLabels":                  false,
         "types":                              ["node"],
         // "noUnusedLocals":                     false,  // Report errors on unused locals

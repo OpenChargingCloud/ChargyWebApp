@@ -1,29 +1,29 @@
 import { expect, vi }     from 'vitest';
-import { Chargy }         from '../src/ts/chargy';
+import { Chargy }         from '@open-charging-cloud/chargy-core';
 import { readFileSync }   from "node:fs";
 import { createRequire }  from "node:module";
 import {
     IsAChargeTransparencyRecord
-} from '../src/ts/interfaces/IChargeTransparencyRecord';
+} from '@open-charging-cloud/chargy-core';
 import type {
     IChargeTransparencyRecord,
     IMeasurement,
     IMeasurementValue
-} from '../src/ts/interfaces/IChargeTransparencyRecord';
+} from '@open-charging-cloud/chargy-core';
 import type {
     IChargeTransparencyLiveLink
-} from '../src/ts/interfaces/IChargeTransparencyLiveLink';
+} from '@open-charging-cloud/chargy-core';
 import {
     IsAChargeTransparencyLiveLink
-} from '../src/ts/interfaces/IChargeTransparencyLiveLink';
+} from '@open-charging-cloud/chargy-core';
 import type {
     ICryptoResult,
     IFileInfo,
     ISessionCryptoResult
-} from '../src/ts/interfaces/chargyInterfaces';
+} from '@open-charging-cloud/chargy-core';
 import type {
     IPublicKeyInfo
-} from '../src/ts/interfaces/IPublicKeyInfo';
+} from '@open-charging-cloud/chargy-core';
 
 export {
     expectVerificationReport,
@@ -50,6 +50,7 @@ vi.stubGlobal('window', {
 });
 
 vi.stubGlobal('DOMParser', DOMParser);
+vi.stubGlobal('DOMMatrix', class DOMMatrix {});
 
 function readFixture(fileName: string): string {
     return readFileSync(new URL("fixtures/" + fileName, import.meta.url), "utf8").trim();
