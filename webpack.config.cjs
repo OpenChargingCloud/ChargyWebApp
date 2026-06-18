@@ -36,6 +36,12 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        enforce: 'pre',
+        include: path.resolve(__dirname, 'node_modules/@open-charging-cloud/chargy-core'),
+        use: ['source-map-loader']
+      },
+      {
         test: /\.ts$/,
         include: path.resolve(__dirname, 'src/ts'),
         use: [{

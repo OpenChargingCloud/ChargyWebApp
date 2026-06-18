@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:0a302fc4-4eb8-4a76-9aa7-b386e79b479b",
+  "serialNumber": "urn:uuid:c198181a-1a63-4ec7-8c84-9748117f1bb4",
   "metadata": {
-    "timestamp": "2026-06-18T04:04:05.240Z",
+    "timestamp": "2026-06-18T04:11:11.148Z",
     "tools": {
       "components": [
         {
@@ -3236,6 +3236,61 @@
               "value": "node_modules/seek-bzip/node_modules/commander"
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "source-map-loader",
+      "version": "5.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|source-map-loader@5.0.0",
+      "author": "Tobias Koppers @sokra",
+      "description": "extracts inlined source map and offers it to webpack",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/source-map-loader@5.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/webpack-contrib/source-map-loader.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/webpack-contrib/source-map-loader",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/webpack-contrib/source-map-loader/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/source-map-loader/-/source-map-loader-5.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "9360eeafb09b48b7001fbdec05c224579c633d5e12cea3b5349efe5da425f227f754e0c3523dc535c84d1a9aa025229bbd47c9ba155dbfc2b612ef3f4cd97678"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/source-map-loader"
         }
       ]
     },
@@ -9558,6 +9613,61 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/source-map-js"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "iconv-lite",
+      "version": "0.6.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|iconv-lite@0.6.3",
+      "author": "Alexander Shtuchkin",
+      "description": "Convert character encodings in pure javascript.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/iconv-lite@0.6.3",
+      "externalReferences": [
+        {
+          "url": "git://github.com/ashtuchkin/iconv-lite.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/ashtuchkin/iconv-lite",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/ashtuchkin/iconv-lite/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/iconv-lite/-/iconv-lite-0.6.3.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "e1f0a4efdc2c84c773329dab1f4eaa5ab244e22a25a8b842507f8e8ae22053ef91074fbde0d9432fcd5ab4eec65f9e6e50ab9ea34b711cdb6f13223a0fb59d33"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/iconv-lite"
         }
       ]
     },
@@ -33304,6 +33414,7 @@
         "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
         "chargytransparenzsoftware@1.4.7|sass@1.101.0",
         "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0",
+        "chargytransparenzsoftware@1.4.7|source-map-loader@5.0.0",
         "chargytransparenzsoftware@1.4.7|stream-browserify@3.0.0",
         "chargytransparenzsoftware@1.4.7|stream-http@3.2.0",
         "chargytransparenzsoftware@1.4.7|style-loader@4.0.0",
@@ -33716,6 +33827,14 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|seek-bzip@2.0.0|commander@6.2.1"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|source-map-loader@5.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|iconv-lite@0.6.3",
+        "chargytransparenzsoftware@1.4.7|source-map-js@1.2.1",
+        "chargytransparenzsoftware@1.4.7|webpack@5.107.2"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|stream-browserify@3.0.0",
@@ -34432,6 +34551,12 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|source-map-js@1.2.1"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|iconv-lite@0.6.3",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|safer-buffer@2.1.2"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|builtin-status-codes@3.0.0"
