@@ -3,15 +3,15 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:c87394f9-ec74-4395-9e73-73d6cc47187d",
+  "serialNumber": "urn:uuid:29c78855-8d0c-42e1-ac44-7733668126a6",
   "metadata": {
-    "timestamp": "2026-06-18T12:53:23.261Z",
+    "timestamp": "2026-06-20T05:01:56.098Z",
     "tools": {
       "components": [
         {
           "type": "application",
           "name": "npm",
-          "version": "11.16.0"
+          "version": "11.17.0"
         },
         {
           "type": "application",
@@ -456,8 +456,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.4.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.4.0",
+      "version": "0.5.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.5.0",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -468,7 +468,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.4.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.5.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -486,12 +486,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.4.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.5.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "8e5188204b1f8aa20b036d0f30efc588cdef0a23e8c510207198ad6276d0cc455b94a875841ad1000cbe1422070a01df63a746381dc0167b93988a0392015b1c"
+              "content": "4f495edd74887af47b204034bc1a43d9a91af457fa1bba21760d194b6580b18df084dddc72b4d5116baf01ad5043be58de57705cfa6505ab7ca5e7f37b10c65a"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -33283,7 +33283,7 @@
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.4.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.5.0",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
         "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
@@ -33365,7 +33365,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.4.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.5.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
