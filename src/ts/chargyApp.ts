@@ -39,6 +39,10 @@ import {
     withDeepLinkVerificationToken,
     type ExternalURLRule
 }                                      from './deepLinks';
+import {
+    browserFileTypeFromName,
+    normalizeDroppedSVGImageData
+}                                      from './browserFiles';
 
 import '../scss/chargy.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
@@ -1952,15 +1956,20 @@ export class ChargyApp {
 
             try {
 
-                const data = await file.arrayBuffer();
                 const name = file instanceof File && file.name.trim() !== ""
                                  ? file.name
                                  : "unknown";
+                const type = browserFileTypeFromName(name, file.type);
+                const data = normalizeDroppedSVGImageData(
+                                 name,
+                                 type,
+                                 await file.arrayBuffer()
+                             );
 
                 loadedFiles.push({
                     name: name,
                     path: "file://" + name,
-                    type: file.type,
+                    type: type,
                     data: data
                 });
 
