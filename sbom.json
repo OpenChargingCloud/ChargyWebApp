@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:29c78855-8d0c-42e1-ac44-7733668126a6",
+  "serialNumber": "urn:uuid:e3ea36da-4697-403f-88ba-17baef962641",
   "metadata": {
-    "timestamp": "2026-06-20T05:01:56.098Z",
+    "timestamp": "2026-06-21T05:06:31.827Z",
     "tools": {
       "components": [
         {
@@ -456,8 +456,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.5.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.5.0",
+      "version": "0.6.4",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.6.4",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -468,7 +468,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.5.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.6.4",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -486,12 +486,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.5.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.6.4.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "4f495edd74887af47b204034bc1a43d9a91af457fa1bba21760d194b6580b18df084dddc72b4d5116baf01ad5043be58de57705cfa6505ab7ca5e7f37b10c65a"
+              "content": "3e7646e7d4ad16c82cf6e11217c93a9a6bad9a887706752925aeef3d6f79c3fadc4e60ec9ca2b83198f2fb0f70b504300d2f3cf7c1276fe1ccc6df76dddeb47b"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -12653,8 +12653,8 @@
     {
       "type": "library",
       "name": "http-proxy-middleware",
-      "version": "2.0.9",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.9",
+      "version": "2.0.10",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.10",
       "author": "Steven Chim",
       "description": "The one-liner node.js proxy middleware for connect, express and browser-sync",
       "licenses": [
@@ -12665,7 +12665,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/http-proxy-middleware@2.0.9",
+      "purl": "pkg:npm/http-proxy-middleware@2.0.10",
       "externalReferences": [
         {
           "url": "git+https://github.com/chimurai/http-proxy-middleware.git",
@@ -12683,12 +12683,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-2.0.9.tgz",
+          "url": "https://registry.npmjs.org/http-proxy-middleware/-/http-proxy-middleware-2.0.10.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7352322582d8a69539ef8f9823b4784325f6cacb4cb555d9c087736b35083c826c1ee58d77e9a1a368fe6caa077ed9dd89c1a3f7287ec6377e974ca3ed5793d5"
+              "content": "44acd158d3f1519a9bba4dc10b99865496c19d682bf9d8849e325ec483b2b456c1cc3cbcf056e1fd8bc1af70ec36b9758d801f8d67e901312fd0d3b7e450ee3d"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -33283,7 +33283,7 @@
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.2.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.5.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.6.4",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
         "chargytransparenzsoftware@1.4.7|@types/node@25.9.3",
@@ -33365,7 +33365,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10|@oozcitak/util@8.3.8"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.5.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.6.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.0",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
@@ -33850,7 +33850,7 @@
         "chargytransparenzsoftware@1.4.7|connect-history-api-fallback@2.0.0",
         "chargytransparenzsoftware@1.4.7|express@4.22.2",
         "chargytransparenzsoftware@1.4.7|graceful-fs@4.2.11",
-        "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.9",
+        "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.10",
         "chargytransparenzsoftware@1.4.7|ipaddr.js@2.2.0",
         "chargytransparenzsoftware@1.4.7|launch-editor@2.14.1",
         "chargytransparenzsoftware@1.4.7|open@10.2.0",
@@ -34816,7 +34816,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|graceful-fs@4.2.11"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.9",
+      "ref": "chargytransparenzsoftware@1.4.7|http-proxy-middleware@2.0.10",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/express@4.17.25",
         "chargytransparenzsoftware@1.4.7|@types/http-proxy@1.17.17",

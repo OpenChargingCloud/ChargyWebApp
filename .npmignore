@@ -1,0 +1,30 @@
+# Development files
+.agents/
+.claude/
+.codex/
+.github/
+.npm-cache/
+.vscode/
+node_modules/
+coverage/
+
+# Sources, tests, and local documentation are not needed in the packaged web app.
+documentation/
+src/
+static/
+tests/
+versions/
+
+# Tooling and generated local metadata
+eslint.config.js
+tsconfig.json
+tsconfig.eslint.json
+webpack.config.cjs
+update.sh
+sbom.json
+package-lock.json
+
+# Local/editor artifacts
+*~
+.DS_Store
+*.tgz

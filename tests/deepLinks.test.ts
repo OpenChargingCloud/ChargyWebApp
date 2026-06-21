@@ -117,7 +117,7 @@ describe("Deep link helpers", () => {
     test("aborts streamed responses when configured limit is exceeded", async () => {
 
         const stream = new ReadableStream<Uint8Array>({
-            start(controller) {
+            start(controller): void {
                 controller.enqueue(new TextEncoder().encode("hello"));
                 controller.enqueue(new TextEncoder().encode("world"));
                 controller.close();

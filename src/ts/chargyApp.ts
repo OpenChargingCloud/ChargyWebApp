@@ -73,12 +73,22 @@ type WindowWithSaveFilePicker = Window & {
 const supportedLanguages = [ "de", "en" ] as const;
 
 type SupportedLanguage = typeof supportedLanguages[number];
+type SessionWarning = chargyInterfaces.IWarning & {
+    source?: string;
+};
+type MeasurementPhenomenon = {
+    name?:         string;
+    obis?:         string;
+    unit?:         string;
+    unitEncoded?:  number;
+    valueType?:    string;
+    scale?:        number;
+};
 
 export class ChargyApp {
 
     //#region Data
 
-    private readonly leaflet:                   any;
     private readonly map:                       L.Map;
 
     private readonly elliptic:                  any;
@@ -97,90 +107,89 @@ export class ChargyApp {
     public  i18n:                               chargyInterfaces.I18NDictionary = {};
     public  UILanguage:                         SupportedLanguage   = "en";
 
-    private currentAppInfos:                    any                 = null;
-    private currentVersionInfos:                any                 = null;
-    private currentPackage:                     any                 = null;
+    private readonly currentAppInfos:                    any                 = null;
+    private readonly currentVersionInfos:                any                 = null;
+    private readonly currentPackage:                     any                 = null;
     private applicationHash:                    string              = "";
 
-    private markers:                            any                 = [];
+    private readonly markers:                            any                 = [];
     private minlat:                             number              =  1000;
     private maxlat:                             number              = -1000;
     private minlng:                             number              =  1000;
     private maxlng:                             number              = -1000;
 
-    private appDiv:                             HTMLDivElement;
-    private headlineDiv:                        HTMLDivElement;
-    private verifyframeDiv:                     HTMLDivElement;
+    private readonly appDiv:                             HTMLDivElement;
+    private readonly headlineDiv:                        HTMLDivElement;
+    private readonly verifyframeDiv:                     HTMLDivElement;
 
-    private languageSelectorDiv:                HTMLDivElement;
-    private languageButton:                     HTMLButtonElement;
-    private languageMenuDiv:                    HTMLDivElement;
-    private languageFlagImage:                  HTMLImageElement;
-    private updateAvailableButton:              HTMLButtonElement;
-    private aboutButton:                        HTMLButtonElement;
-    private fullScreenButton:                   HTMLButtonElement;
+    private readonly languageButton:                     HTMLButtonElement;
+    private readonly languageMenuDiv:                    HTMLDivElement;
+    private readonly languageFlagImage:                  HTMLImageElement;
+    private readonly updateAvailableButton:              HTMLButtonElement;
+    private readonly aboutButton:                        HTMLButtonElement;
+    private readonly fullScreenButton:                   HTMLButtonElement;
 
-    private updateAvailableScreen:              HTMLDivElement;
-    private inputDiv:                           HTMLDivElement;
-    private inputInfosDiv:                      HTMLDivElement;
-    private aboutScreenDiv:                     HTMLDivElement;
-    private imprintScreenDiv:                   HTMLDivElement;
-    private applicationHashDiv:                 HTMLDivElement;
-    private applicationHashValueDiv:            HTMLDivElement;
-    private softwareInfosDiv:                   HTMLDivElement;
-    private openSourceLibsDiv:                  HTMLDivElement;
-    private chargingSessionScreenDiv:           HTMLDivElement;
-    private invalidDataSetsScreenDiv:           HTMLDivElement;
-    private inputButtonsDiv:                    HTMLDivElement;
-    private backButton:                         HTMLButtonElement;
-    private exportButtonDiv:                    HTMLDivElement;
-    private exportButton:                       HTMLButtonElement;
-    private fileInputButton:                    HTMLButtonElement;
-    private fileInput:                          HTMLInputElement;
-    private qrScanButton:                       HTMLButtonElement;
-    private pasteButton:                        HTMLButtonElement;
-    private detailedInfosDiv:                   HTMLDivElement;
-    private errorTextDiv:                       HTMLDivElement;
-    private feedbackDiv:                        HTMLDivElement;
+    private readonly updateAvailableScreen:              HTMLDivElement;
+    private readonly inputDiv:                           HTMLDivElement;
+    private readonly inputInfosDiv:                      HTMLDivElement;
+    private readonly aboutScreenDiv:                     HTMLDivElement;
+    private readonly imprintScreenDiv:                   HTMLDivElement;
+    private readonly applicationHashDiv:                 HTMLDivElement;
+    private readonly applicationHashValueDiv:            HTMLDivElement;
+    private readonly softwareInfosDiv:                   HTMLDivElement;
+    private readonly openSourceLibsDiv:                  HTMLDivElement;
+    private readonly chargingSessionScreenDiv:           HTMLDivElement;
+    private readonly invalidDataSetsScreenDiv:           HTMLDivElement;
+    private readonly inputButtonsDiv:                    HTMLDivElement;
+    private readonly backButton:                         HTMLButtonElement;
+    private readonly exportButtonDiv:                    HTMLDivElement;
+    private readonly exportButton:                       HTMLButtonElement;
+    private readonly fileInputButton:                    HTMLButtonElement;
+    private readonly fileInput:                          HTMLInputElement;
+    private readonly qrScanButton:                       HTMLButtonElement;
+    private readonly pasteButton:                        HTMLButtonElement;
+    private readonly detailedInfosDiv:                   HTMLDivElement;
+    private readonly errorTextDiv:                       HTMLDivElement;
+    private readonly feedbackDiv:                        HTMLDivElement;
 
-    private showFeedbackSection:                boolean;
-    private feedbackMethodsDiv:                 HTMLDivElement;
-    private feedbackEMailAnchor:                HTMLAnchorElement;
-    private feedbackHotlineAnchor:              HTMLAnchorElement;
-    private showIssueTrackerButton:             HTMLButtonElement;
-    private showImprintButton:                  HTMLButtonElement;
-    private issueTrackerText:                   HTMLDivElement;
+    private readonly showFeedbackSection:                boolean;
+    private readonly feedbackMethodsDiv:                 HTMLDivElement;
+    private readonly feedbackEMailAnchor:                HTMLAnchorElement;
+    private readonly feedbackHotlineAnchor:              HTMLAnchorElement;
+    private readonly showIssueTrackerButton:             HTMLButtonElement;
+    private readonly showImprintButton:                  HTMLButtonElement;
+    private readonly issueTrackerText:                   HTMLDivElement;
 
-    private chargingTariffDetailsDiv:           HTMLDivElement;
-    private chargingTariffDetailsLeftButton:    HTMLButtonElement;
+    private readonly chargingTariffDetailsDiv:           HTMLDivElement;
+    private readonly chargingTariffDetailsLeftButton:    HTMLButtonElement;
 
-    private chargingPeriodDetailsDiv:           HTMLDivElement;
-    private chargingPeriodDetailsLeftButton:    HTMLButtonElement;
+    private readonly chargingPeriodDetailsDiv:           HTMLDivElement;
+    private readonly chargingPeriodDetailsLeftButton:    HTMLButtonElement;
 
-    private measurementsDetailsDiv:             HTMLDivElement;
-    private measurementsDetailsLeftButton:      HTMLButtonElement;
+    private readonly measurementsDetailsDiv:             HTMLDivElement;
+    private readonly measurementsDetailsLeftButton:      HTMLButtonElement;
 
-    private issueTrackerDiv:                    HTMLDivElement;
-    private issueTrackerLeftButton:             HTMLButtonElement;
-    private privacyStatement:                   HTMLDivElement;
-    private showPrivacyStatement:               HTMLButtonElement;
-    private privacyStatementAccepted:           HTMLInputElement;
-    private sendIssueButton:                    HTMLButtonElement;
+    private readonly issueTrackerDiv:                    HTMLDivElement;
+    private readonly issueTrackerLeftButton:             HTMLButtonElement;
+    private readonly privacyStatement:                   HTMLDivElement;
+    private readonly showPrivacyStatement:               HTMLButtonElement;
+    private readonly privacyStatementAccepted:           HTMLInputElement;
+    private readonly sendIssueButton:                    HTMLButtonElement;
 
-    private pkiDetailsDiv:                      HTMLDivElement;
-    private pkiDetailsLeftButton:               HTMLButtonElement;
+    private readonly pkiDetailsDiv:                      HTMLDivElement;
+    private readonly pkiDetailsLeftButton:               HTMLButtonElement;
 
-    private qrCodeScannerDiv:                   HTMLDivElement;
-    private qrCodeScannerVideo:                 HTMLVideoElement;
-    private qrCodeScannerCanvas:                HTMLCanvasElement;
-    private qrCodeScannerStatusDiv:             HTMLDivElement;
-    private qrCodeScannerErrorDiv:              HTMLDivElement;
-    private qrCodeScannerResultDiv:             HTMLDivElement;
-    private qrCodeScannerResultText:            HTMLPreElement;
-    private qrCodeScannerURLActionsDiv:         HTMLDivElement;
-    private qrCodeScannerOpenURLButton:         HTMLButtonElement;
-    private qrCodeScannerRescanButton:          HTMLButtonElement;
-    private qrCodeScannerCancelButton:          HTMLButtonElement;
+    private readonly qrCodeScannerDiv:                   HTMLDivElement;
+    private readonly qrCodeScannerVideo:                 HTMLVideoElement;
+    private readonly qrCodeScannerCanvas:                HTMLCanvasElement;
+    private readonly qrCodeScannerStatusDiv:             HTMLDivElement;
+    private readonly qrCodeScannerErrorDiv:              HTMLDivElement;
+    private readonly qrCodeScannerResultDiv:             HTMLDivElement;
+    private readonly qrCodeScannerResultText:            HTMLPreElement;
+    private readonly qrCodeScannerURLActionsDiv:         HTMLDivElement;
+    private readonly qrCodeScannerOpenURLButton:         HTMLButtonElement;
+    private readonly qrCodeScannerRescanButton:          HTMLButtonElement;
+    private readonly qrCodeScannerCancelButton:          HTMLButtonElement;
     private qrCodeScannerStream:                MediaStream|null     = null;
     private qrCodeScannerAnimationFrame:        number|null          = null;
     private qrCodeScannerIsProcessing:          boolean              = false;
@@ -264,7 +273,6 @@ export class ChargyApp {
         this.softwareInfosDiv                         = this.aboutScreenDiv.    querySelector("#softwareInfos")             as HTMLDivElement;
         this.openSourceLibsDiv                        = this.aboutScreenDiv.    querySelector("#openSourceLibs")            as HTMLDivElement;
 
-        this.languageSelectorDiv                      = document.getElementById('languageSelector')                         as HTMLDivElement;
         this.languageButton                           = document.getElementById('languageButton')                           as HTMLButtonElement;
         this.languageMenuDiv                          = document.getElementById('languageMenu')                             as HTMLDivElement;
         this.languageFlagImage                        = document.getElementById('languageFlag')                             as HTMLImageElement;
@@ -333,7 +341,7 @@ export class ChargyApp {
 
         this.chargy                                   = new Chargy(
                                                             this.i18n,
-                                                            this.UILanguage,
+                                                            [ this.UILanguage ],
                                                             this.elliptic,
                                                             this.moment,
                                                             this.asn1,
@@ -454,7 +462,7 @@ export class ChargyApp {
                     try
                     {
 
-                        const ctr = JSON.stringify(this.chargy.currentCTR);
+                        const ctr = this.getChargeTransparencyRecordExportJSON();
 
                         if (ctr !== "{}")
                             data["chargeTransparencyRecord"] = ctr;
@@ -489,7 +497,7 @@ export class ChargyApp {
 
                         else
                         {
-                            alert(this.getLocalizedText("issueSubmitFailed"));
+                            alert(this.chargy.GetLocalizedMessage("issueSubmitFailed"));
                         }
 
                     }
@@ -503,7 +511,7 @@ export class ChargyApp {
             }
             catch (exception)
             {
-                alert(this.getLocalizedText("issueSubmitFailed") + ": " + (exception instanceof Error ? exception.message : String(exception)));
+                alert(this.chargy.GetLocalizedMessage("issueSubmitFailed") + ": " + (exception instanceof Error ? exception.message : String(exception)));
             }
 
         }
@@ -556,7 +564,7 @@ export class ChargyApp {
 
                     // Bad hash value
                     if (this.currentPackage.cryptoHashes.SHA512.replace("0x", "") !== this.applicationHash)
-                        sigHeadDiv.innerHTML = "<i class=\"fas fa-times-circle\"></i> " + this.getLocalizedText("invalidHashValue");
+                        sigHeadDiv.innerHTML = "<i class=\"fas fa-times-circle\"></i> " + this.chargy.GetLocalizedMessage("invalidHashValue");
 
                     // At least the same hash value...
                     else
@@ -564,14 +572,14 @@ export class ChargyApp {
 
                         if (this.currentPackage.signatures == null || this.currentPackage.signatures.length == 0)
                         {
-                            sigHeadDiv.innerHTML = "<i class=\"fas fa-check-circle\"></i> " + this.getLocalizedText("validHashValue");
+                            sigHeadDiv.innerHTML = "<i class=\"fas fa-check-circle\"></i> " + this.chargy.GetLocalizedMessage("validHashValue");
                         }
 
                         // Some crypto signatures found...
                         else
                         {
 
-                            sigHeadDiv.innerHTML = this.getLocalizedText("confirmedBy");
+                            sigHeadDiv.innerHTML = this.chargy.GetLocalizedMessage("confirmedBy");
 
                             const signaturesDiv = this.applicationHashDiv.children[3];
 
@@ -659,7 +667,7 @@ export class ChargyApp {
             try
             {
 
-                const json      = JSON.stringify(this.chargy.currentCTR, null, 4);
+                const json      = this.getChargeTransparencyRecordExportJSON();
                 const fileName  = "chargy-export.json";
 
                 const showSaveFilePicker = (window as WindowWithSaveFilePicker).showSaveFilePicker;
@@ -699,7 +707,7 @@ export class ChargyApp {
                     ? exception.message
                     : String(exception);
 
-                alert(`${this.getLocalizedText("exportFailed")}${message}`);
+                alert(`${this.chargy.GetLocalizedMessage("exportFailed")}${message}`);
             }
 
         }
@@ -815,7 +823,7 @@ export class ChargyApp {
             if (this.qrCodeScannerLastURL != null)
             {
                 window.open(this.qrCodeScannerLastURL.href, "_blank", "noopener");
-                this.setQRCodeScannerStatus(this.getLocalizedText("urlWasOpened"));
+                this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("urlWasOpened"));
             }
         }
 
@@ -827,7 +835,6 @@ export class ChargyApp {
         //#endregion
 
 
-        this.leaflet = L;
         this.map   = L.map(document.getElementById('map') as HTMLElement);
         this.map.setView([50.9279287, 11.5731785], 12);
 
@@ -885,34 +892,60 @@ export class ChargyApp {
 
     }
 
-    private getLocalizedText(key:        string,
-                             fallback?:  string): string {
+    private getSessionWarnings(chargingSession: chargeTransparencyRecord.IChargingSession): SessionWarning[] {
 
-        const multiLanguage = this.i18n[key];
+        const warnings: SessionWarning[] = [];
 
-        if (multiLanguage != null)
+        if (chargingSession.verificationResult?.warnings)
+            warnings.push(...chargingSession.verificationResult.warnings.map(warning => ({
+                ...warning,
+                source: this.chargy.GetLocalizedMessage("sessionValidationLabel")
+            })));
+
+        if (chargingSession.ctr?.warnings &&
+            chargingSession.verificationResult?.status === chargyInterfaces.SessionVerificationResult.InplausibleMeasurement)
         {
-            const localized = multiLanguage[this.UILanguage];
-            if (localized != null)
-                return localized;
-
-            const english = multiLanguage["en"];
-            if (english != null)
-                return english;
+            warnings.push(...chargingSession.ctr.warnings.map(warning => ({
+                ...warning,
+                source: this.chargy.GetLocalizedMessage("chargeTransparencyRecordLabel")
+            })));
         }
 
-        return fallback ?? key;
+        for (const measurement of chargingSession.measurements ?? []) {
+
+            if (measurement.verificationResult?.warnings)
+                warnings.push(...measurement.verificationResult.warnings.map(warning => ({
+                    ...warning,
+                    source: measurement.name
+                })));
+
+            for (const measurementValue of measurement.values ?? []) {
+                if (measurementValue.warnings)
+                    warnings.push(...measurementValue.warnings.map(warning => ({
+                        ...warning,
+                        source: measurementValue.timestamp
+                    })));
+
+                if (measurementValue.result?.warnings)
+                    warnings.push(...measurementValue.result.warnings.map(warning => ({
+                        ...warning,
+                        source: measurementValue.timestamp
+                    })));
+            }
+
+        }
+
+        return warnings;
 
     }
 
-    private getLocalizedDataText(data: chargyInterfaces.IMultilanguageText|undefined): string|undefined {
+    private hasSessionWarnings(chargingSession: chargeTransparencyRecord.IChargingSession): boolean {
+        return this.getSessionWarnings(chargingSession).length > 0;
+    }
 
-        if (data == null)
-            return undefined;
-
-        return data[this.UILanguage] ??
-               data["en"];
-
+    private isWarningSession(chargingSession: chargeTransparencyRecord.IChargingSession): boolean {
+        return chargingSession.verificationResult?.status === chargyInterfaces.SessionVerificationResult.InplausibleMeasurement ||
+               this.hasSessionWarnings(chargingSession);
     }
 
     private setupLanguageSelector(): void {
@@ -948,7 +981,7 @@ export class ChargyApp {
                                 persist:  boolean = true): Promise<void> {
 
         this.UILanguage = language;
-        this.chargy.SetUILanguage(language);
+        this.chargy.SetUILanguages([ language ]);
         this.moment.locale(language);
         chargyLib.setUILocale(language);
 
@@ -968,24 +1001,24 @@ export class ChargyApp {
         {
             const key = element.dataset["i18nKey"];
             if (key != null)
-                element.innerHTML = this.getLocalizedText(key, element.innerHTML);
+                element.innerHTML = this.chargy.GetLocalizedMessage(key);
         }
 
         for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-i18n-title-key]")))
         {
             const key = element.dataset["i18nTitleKey"];
             if (key != null)
-                element.title = this.getLocalizedText(key, element.title);
+                element.title = this.chargy.GetLocalizedMessage(key);
         }
 
         for (const element of Array.from(document.querySelectorAll<HTMLInputElement>("[data-i18n-placeholder-key]")))
         {
             const key = element.dataset["i18nPlaceholderKey"];
             if (key != null)
-                element.placeholder = this.getLocalizedText(key, element.placeholder);
+                element.placeholder = this.chargy.GetLocalizedMessage(key);
         }
 
-        this.languageButton.title = this.getLocalizedText("languageButtonTitle", this.languageButton.title);
+        this.languageButton.title = this.chargy.GetLocalizedMessage("languageButtonTitle");
         this.languageButton.setAttribute("aria-label", this.languageButton.title);
         this.languageMenuDiv.classList.remove("open");
         this.languageButton.setAttribute("aria-expanded", "false");
@@ -1339,7 +1372,7 @@ export class ChargyApp {
         {
             this.doGlobalError({
                 status:     chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
-                message:    this.getLocalizedText("UnknownOrInvalidChargeTransparencyRecord"),
+                message:    this.chargy.GetMultilanguageText("UnknownOrInvalidChargeTransparencyRecord"),
                 exception:  exception,
                 certainty:  0
             });
@@ -1370,7 +1403,7 @@ export class ChargyApp {
 
             this.showIssueTrackerButton.style.display = "block";
 
-            this.showIssueTrackerButton.onclick = (ev: MouseEvent) => {
+            this.showIssueTrackerButton.onclick = () => {
                 this.issueTrackerDiv.style.display    = 'block';
                 this.privacyStatement.style.display   = "none";
                 this.issueTrackerText.scrollTop       = 0;
@@ -1403,7 +1436,7 @@ export class ChargyApp {
 
         const feedbackEMail   = FeedbackEMail   ?? this.defaultFeedbackEMail;
 
-        if (feedbackEMail && feedbackEMail.length == 2)
+        if (feedbackEMail?.length == 2)
         {
             this.feedbackEMailAnchor.style.display = "block";
             this.feedbackEMailAnchor.href          = "mailto:" + feedbackEMail[0] + feedbackEMail[1];
@@ -1418,7 +1451,7 @@ export class ChargyApp {
 
         const feedbackHotline = FeedbackHotline ?? this.defaultFeedbackHotline;
 
-        if (feedbackHotline && feedbackHotline.length == 2)
+        if (feedbackHotline?.length == 2)
         {
             this.feedbackHotlineAnchor.style.display = "block";
             this.feedbackHotlineAnchor.href          = "tel:" + feedbackHotline[0];
@@ -1436,18 +1469,16 @@ export class ChargyApp {
     private getSessionCryptoResultText(result?: chargyInterfaces.ISessionCryptoResult|null): string
     {
 
-        let text = this.getLocalizedText("UnknownOrInvalidChargeTransparencyRecord");
+        let text = this.chargy.GetLocalizedMessage("UnknownOrInvalidChargeTransparencyRecord");
 
         if (result?.message !== undefined)
-            text = result.message.trim();
+            text = this.chargy.GetLocalizedText(result.message)?.trim() ?? text;
 
-        if (result !== null          &&
-            result !== undefined     &&
-            result.errors            &&
+        if (result?.errors            &&
             result.errors.length > 0 &&
             result.errors[0] !== undefined)
         {
-            text = result.errors[0].trim();
+            text = this.chargy.GetLocalizedText(result.errors[0].message)?.trim() ?? text;
         }
 
         return text;
@@ -1642,7 +1673,7 @@ export class ChargyApp {
 
             this.doGlobalError({
                 status:    chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
-                message:   this.chargy.GetLocalizedMessage("UnknownOrInvalidChargeTransparencyRecord"),
+                message:   this.chargy.GetMultilanguageText("UnknownOrInvalidChargeTransparencyRecord"),
                 certainty: 0
             });
         }
@@ -1659,13 +1690,13 @@ export class ChargyApp {
 
         if (typeof mediaDevices.getUserMedia !== "function")
         {
-            this.setQRCodeScannerButtonAvailability(false, this.getLocalizedText("cameraAccessUnsupported"));
+            this.setQRCodeScannerButtonAvailability(false, this.chargy.GetLocalizedMessage("cameraAccessUnsupported"));
             return;
         }
 
         if (typeof mediaDevices.enumerateDevices !== "function")
         {
-            this.setQRCodeScannerButtonAvailability(true, this.getLocalizedText("scanQRCodeWithCamera"));
+            this.setQRCodeScannerButtonAvailability(true, this.chargy.GetLocalizedMessage("scanQRCodeWithCamera"));
             return;
         }
 
@@ -1678,14 +1709,14 @@ export class ChargyApp {
             this.setQRCodeScannerButtonAvailability(
                 hasCamera,
                 hasCamera
-                    ? this.getLocalizedText("scanQRCodeWithCamera")
-                    : this.getLocalizedText("noCameraAvailable")
+                    ? this.chargy.GetLocalizedMessage("scanQRCodeWithCamera")
+                    : this.chargy.GetLocalizedMessage("noCameraAvailable")
             );
 
         }
         catch
         {
-            this.setQRCodeScannerButtonAvailability(true, this.getLocalizedText("scanQRCodeWithCamera"));
+            this.setQRCodeScannerButtonAvailability(true, this.chargy.GetLocalizedMessage("scanQRCodeWithCamera"));
         }
 
     }
@@ -1705,7 +1736,7 @@ export class ChargyApp {
         if (this.qrScanButton.disabled)
             return;
 
-        this.resetQRCodeScannerDialog(this.getLocalizedText("cameraStarting"));
+        this.resetQRCodeScannerDialog(this.chargy.GetLocalizedMessage("cameraStarting"));
 
         try
         {
@@ -1731,7 +1762,7 @@ export class ChargyApp {
             this.closeQRCodeScanner();
             this.doGlobalError({
                 status:     chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
-                message:    this.getLocalizedText("cameraCouldNotStart"),
+                message:    this.chargy.GetMultilanguageText("cameraCouldNotStart"),
                 exception:  exception,
                 certainty:  0
             });
@@ -1772,7 +1803,7 @@ export class ChargyApp {
         this.qrCodeScannerIsProcessing = false;
         this.qrCodeScannerLastText     = null;
         this.qrCodeScannerLastURL      = null;
-        this.resetQRCodeScannerDialog(this.getLocalizedText("cameraReady"));
+        this.resetQRCodeScannerDialog(this.chargy.GetLocalizedMessage("cameraReady"));
 
         if (this.qrCodeScannerAnimationFrame == null)
             this.scanQRCodeFrame();
@@ -1843,7 +1874,7 @@ export class ChargyApp {
     {
 
         this.qrCodeScannerIsProcessing = true;
-        this.setQRCodeScannerStatus(this.getLocalizedText("qrCodeDetected"));
+        this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("qrCodeDetected"));
 
         const detected = await this.detectAndConvertContentFormat(
             {
@@ -1878,8 +1909,8 @@ export class ChargyApp {
 
         this.setQRCodeScannerStatus(
             url != null
-                ? this.getLocalizedText("qrCodeContainsURL")
-                : this.getLocalizedText("qrCodeContainsNoRecord")
+                ? this.chargy.GetLocalizedMessage("qrCodeContainsURL")
+                : this.chargy.GetLocalizedMessage("qrCodeContainsNoRecord")
         );
 
     }
@@ -1939,7 +1970,7 @@ export class ChargyApp {
                 loadedFiles.push({
                     name:       file instanceof File ? file.name : "unknown",
                     type:       file.type,
-                    error:      this.getLocalizedText("invalidChargeTransparencyRecord"),
+                    error:      this.chargy.GetLocalizedMessage("invalidChargeTransparencyRecord"),
                     exception:  exception
                 });
 
@@ -1955,9 +1986,62 @@ export class ChargyApp {
     //#endregion
 
 
+    //#region Charge Transparency Record export helpers
+
+    private getChargeTransparencyRecordExportStatus(CTR: chargeTransparencyRecord.IChargeTransparencyRecord): chargyInterfaces.SessionVerificationResult|undefined {
+
+        if (CTR.verificationResult?.status != null)
+            return CTR.verificationResult.status;
+
+        if (CTR.chargingSessions?.length === 1)
+            return CTR.chargingSessions[0]?.verificationResult?.status;
+
+        return CTR.status;
+
+    }
+
+    private getChargeTransparencyRecordExportJSON(): string {
+
+        const CTR = this.currentChargeTransparencyRecord;
+
+        if (CTR == null)
+            return "{}";
+
+        const runtimeKeys = new Set([
+            "GUI",
+            "ctr",
+            "chargingSession",
+            "measurement",
+            "method",
+            "chargingStationOperator",
+            "chargingPool",
+            "chargingStation",
+            "EVSE",
+            "meter",
+            "publicKey"
+        ]);
+
+        const serializedCTR = JSON.stringify(
+            CTR,
+            (key: string, value: unknown) => runtimeKeys.has(key) ? undefined : value
+        );
+
+        const exportCTR = JSON.parse(serializedCTR) as chargeTransparencyRecord.IChargeTransparencyRecord;
+        const status    = this.getChargeTransparencyRecordExportStatus(CTR);
+
+        if (status != null)
+            exportCTR.status = status;
+
+        return JSON.stringify(exportCTR, null, 4);
+
+    }
+
+    //#endregion
+
+
     //#region calcApplicationHash           (...)
 
-    private async calcApplicationHash()
+    private async calcApplicationHash(): Promise<void>
     {
 
         const files = [
@@ -1970,7 +2054,7 @@ export class ChargyApp {
         try
         {
 
-            const hashes        = await Promise.all(files.map(url => chargyLib.hashFile(url)));
+            const hashes        = await Promise.all(files.map(async url => chargyLib.hashFile(url)));
             const combinedHash  = await crypto.subtle.digest('SHA-512', chargyLib.ConcatenateBuffers(hashes));
 
             this.applicationHash                    = chargyLib.buf2hex(combinedHash);
@@ -1978,7 +2062,6 @@ export class ChargyApp {
 
         } catch (error) {
             console.error("An error occurred:", error);
-            return "";
         }
 
     }
@@ -2089,7 +2172,7 @@ export class ChargyApp {
         {
             result = {
                 status:     chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
-                message:    this.getLocalizedText("UnknownOrInvalidChargeTransparencyRecord"),
+                message:    this.chargy.GetMultilanguageText("UnknownOrInvalidChargeTransparencyRecord"),
                 exception:  exception,
                 certainty:  0
             };
@@ -2173,14 +2256,14 @@ export class ChargyApp {
 
         const descriptionDiv       = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
         descriptionDiv.id          = "description";
-        descriptionDiv.innerText   = this.getLocalizedDataText(LiveLink.description) ?? "Charge Transparency Live-Link";
+        descriptionDiv.innerText   = this.chargy.GetLocalizedText(LiveLink.description) ?? "Charge Transparency Live-Link";
 
         if (LiveLink.timestamp)
         {
             const timestampDiv     = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
             timestampDiv.id        = "begin";
             timestampDiv.className = "dates";
-            timestampDiv.innerText = this.getLocalizedText("Timestamp") + " " + chargyLib.time2human(LiveLink.timestamp);
+            timestampDiv.innerText = this.chargy.GetLocalizedMessage("Timestamp") + " " + chargyLib.time2human(LiveLink.timestamp);
         }
 
         const liveLinksDiv         = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
@@ -2364,7 +2447,7 @@ export class ChargyApp {
 
         const descriptionDiv      = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
         descriptionDiv.id         = "description";
-        descriptionDiv.innerText  = this.getLocalizedDataText(CTR.description) ?? this.chargy.GetLocalizedMessage("All charging sessions");
+        descriptionDiv.innerText  = this.chargy.GetLocalizedText(CTR.description) ?? this.chargy.GetLocalizedMessage("All charging sessions");
 
         const ctrBeginText        = CTR.begin ? chargyLib.parseUTC(CTR.begin).format('dddd, D. MMMM YYYY') : null;
         const ctrEndText          = CTR.end   ? chargyLib.parseUTC(CTR.end).  format('dddd, D. MMMM YYYY') : null;
@@ -2405,6 +2488,7 @@ export class ChargyApp {
             {
 
                 const chargingSessionDiv    = chargyLib.CreateDiv(chargingSessionsDiv, "chargingSession");
+                chargingSession.ctr         = CTR;
                 chargingSession.GUI         = chargingSessionDiv;
                 chargingSessionDiv.onclick  = async (ev: MouseEvent) => {
 
@@ -2492,7 +2576,7 @@ export class ChargyApp {
                         else if (Math.floor(duration.asSeconds()) > 0) productDiv.innerHTML += duration.seconds() + " Sekunden";
 
 
-                        if (chargingSession.chargingProductRelevance != undefined && chargingSession.chargingProductRelevance.time != undefined)
+                        if (chargingSession.chargingProductRelevance?.time != undefined)
                         {
                             switch (chargingSession.chargingProductRelevance.time)
                             {
@@ -2526,12 +2610,14 @@ export class ChargyApp {
                                 if (measurement.phenomena && measurement.phenomena.length > 0)
                                 {
 
-                                    measurement.name         = measurement.phenomena[0].name;
-                                    measurement.obis         = measurement.phenomena[0].obis;
-                                    measurement.unit         = measurement.phenomena[0].unit;
-                                    measurement.unitEncoded  = measurement.phenomena[0].unitEncoded;
-                                    measurement.valueType    = measurement.phenomena[0].valueType;
-                                    measurement.scale        = measurement.phenomena[0].scale;
+                                    const phenomenon         = measurement.phenomena[0] as MeasurementPhenomenon;
+
+                                    measurement.name         = phenomenon.name        ?? measurement.name;
+                                    measurement.obis         = phenomenon.obis        ?? measurement.obis;
+                                    measurement.unit         = phenomenon.unit        ?? measurement.unit;
+                                    measurement.unitEncoded  = phenomenon.unitEncoded ?? measurement.unitEncoded;
+                                    measurement.valueType    = phenomenon.valueType   ?? measurement.valueType;
+                                    measurement.scale        = phenomenon.scale       ?? measurement.scale;
 
                                     if (measurement.scale == undefined || measurement.scale == null)
                                         measurement.scale = 0;
@@ -2559,7 +2645,7 @@ export class ChargyApp {
                                 productDiv.innerHTML += "<br />" + chargyLib.measurementName2human(measurement.name) + " " + amount.toString() + " kWh";// (" + measurement.values.length + " Messwerte)";
 
 
-                                if (chargingSession.chargingProductRelevance != undefined && chargingSession.chargingProductRelevance.energy != undefined)
+                                if (chargingSession.chargingProductRelevance?.energy != undefined)
                                 {
                                     switch (chargingSession.chargingProductRelevance.energy)
                                     {
@@ -2629,7 +2715,7 @@ export class ChargyApp {
                             else if (Math.floor(duration.asSeconds()) > 0) parkingDiv.innerHTML += duration.seconds();
 
 
-                            if (chargingSession.chargingProductRelevance != undefined && chargingSession.chargingProductRelevance.parking != undefined)
+                            if (chargingSession.chargingProductRelevance?.parking != undefined)
                             {
                                 switch (chargingSession.chargingProductRelevance.parking)
                                 {
@@ -2771,7 +2857,7 @@ export class ChargyApp {
 
                             chargingStationDiv.classList.add("EVSE");
                             chargingStationDiv.innerHTML      = (chargingSession.EVSE?.description != null
-                                                                    ? (this.getLocalizedDataText(chargingSession.EVSE.description) ?? "-") + "<br />"
+                                                                    ? (this.chargy.GetLocalizedText(chargingSession.EVSE.description) ?? "-") + "<br />"
                                                                     : "") +
                                                                 (chargingSession.EVSEId != null
                                                                     ? chargingSession.EVSEId
@@ -2810,7 +2896,7 @@ export class ChargyApp {
 
                                 chargingStationDiv.classList.add("chargingStation");
                                 chargingStationDiv.innerHTML      = (chargingSession.chargingStation.description != null
-                                                                        ? (this.getLocalizedDataText(chargingSession.chargingStation.description) ?? "-") + "<br />"
+                                                                        ? (this.chargy.GetLocalizedText(chargingSession.chargingStation.description) ?? "-") + "<br />"
                                                                         : "") +
                                                                     (chargingSession.chargingStationId != null
                                                                         ? chargingSession.chargingStationId
@@ -2841,7 +2927,7 @@ export class ChargyApp {
 
                                 chargingStationDiv.classList.add("chargingPool");
                                 chargingStationDiv.innerHTML      = (chargingSession.chargingPool.description != null
-                                                                        ? (this.getLocalizedDataText(chargingSession.chargingPool.description) ?? "-") + "<br />"
+                                                                        ? (this.chargy.GetLocalizedText(chargingSession.chargingPool.description) ?? "-") + "<br />"
                                                                         : "") +
                                                                     (chargingSession.chargingPoolId != null
                                                                         ? chargingSession.chargingPoolId
@@ -2869,10 +2955,10 @@ export class ChargyApp {
 
                     var address:chargyInterfaces.IAddress|undefined = undefined;
 
-                    if (chargingSession.chargingStation != null && chargingSession.chargingStation.address != null)
+                    if (chargingSession.chargingStation?.address != null)
                         address = chargingSession.chargingStation.address;
 
-                    else if (chargingSession.chargingPool != null && chargingSession.chargingPool.address != null)
+                    else if (chargingSession.chargingPool?.address != null)
                         address = chargingSession.chargingPool.address;
 
                     if (address != null)
@@ -2957,7 +3043,7 @@ export class ChargyApp {
                     this.map.removeLayer(this.markers.pop());
 
                 const leaflet       = require('leaflet');
-                const markers       = require('leaflet.awesome-markers');
+                require('leaflet.awesome-markers');
 
                 const redMarker     = leaflet.AwesomeMarkers?.icon({
                     prefix:               'fa',
@@ -2968,7 +3054,7 @@ export class ChargyApp {
 
                 const orangeMarker  = leaflet.AwesomeMarkers?.icon({
                     prefix:               'fa',
-                    icon:                 'question',
+                    icon:                 this.isWarningSession(chargingSession) ? 'exclamation' : 'question',
                     markerColor:          'orange',
                     iconColor:            '#ae6a0a'
                 });
@@ -2989,6 +3075,7 @@ export class ChargyApp {
                     switch (chargingSession.verificationResult.status) {
 
                         case chargyInterfaces.SessionVerificationResult.UnknownSessionFormat:
+                        case chargyInterfaces.SessionVerificationResult.InplausibleMeasurement:
                             markerIcon = orangeMarker;
                             break;
 
@@ -3010,14 +3097,12 @@ export class ChargyApp {
 
                 let geoLocation = null;
 
-                if (chargingSession.chargingPool                != null &&
-                    chargingSession.chargingPool.geoLocation    != null)
+                if (chargingSession.chargingPool?.geoLocation != null)
                 {
                     geoLocation = chargingSession.chargingPool.geoLocation;
                 }
 
-                if (chargingSession.chargingStation             != null &&
-                    chargingSession.chargingStation.geoLocation != null)
+                if (chargingSession.chargingStation?.geoLocation != null)
                 {
                     geoLocation = chargingSession.chargingStation.geoLocation;
                 }
@@ -3057,6 +3142,10 @@ export class ChargyApp {
 
                             case chargyInterfaces.SessionVerificationResult.UnknownSessionFormat:
                                 marker.bindPopup(this.chargy.GetLocalizedMessage("UnknownOrInvalidChargingSessionFormat"));
+                                break;
+
+                            case chargyInterfaces.SessionVerificationResult.InplausibleMeasurement:
+                                marker.bindPopup(this.chargy.GetLocalizedMessage("sessionValidationWarningsLabel"));
                                 break;
 
                             case chargyInterfaces.SessionVerificationResult.PublicKeyNotFound:
@@ -3109,6 +3198,11 @@ export class ChargyApp {
                             verificationStatusDiv.innerHTML = '<i class="fas fa-times-circle"></i> '    + this.chargy.GetLocalizedMessage("InvalidChargingSession");
                             break;
 
+                        case chargyInterfaces.SessionVerificationResult.InplausibleMeasurement:
+                            verificationStatusDiv.classList.add("warning");
+                            verificationStatusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + this.chargy.GetLocalizedMessage("sessionValidationWarningsLabel");
+                            break;
+
                         case chargyInterfaces.SessionVerificationResult.PublicKeyNotFound:
                             verificationStatusDiv.innerHTML = '<i class="fas fa-times-circle"></i> '    + this.chargy.GetLocalizedMessage("Public key not found");
                             break;
@@ -3119,7 +3213,12 @@ export class ChargyApp {
                             break;
 
                         case chargyInterfaces.SessionVerificationResult.ValidSignature:
-                            verificationStatusDiv.innerHTML = '<i class="fas fa-check-circle"></i> '    + this.chargy.GetLocalizedMessage("ValidChargingSession");
+                            if (this.hasSessionWarnings(chargingSession)) {
+                                verificationStatusDiv.classList.add("warning");
+                                verificationStatusDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> ' + this.chargy.GetLocalizedMessage("sessionValidationWarningsLabel");
+                            }
+                            else
+                                verificationStatusDiv.innerHTML = '<i class="fas fa-check-circle"></i> '    + this.chargy.GetLocalizedMessage("ValidChargingSession");
                             break;
 
                         default:
@@ -3162,7 +3261,7 @@ export class ChargyApp {
 
             const headlineDiv       = this.invalidDataSetsScreenDiv.appendChild(document.createElement('div'));
             headlineDiv.id          = "description";
-            headlineDiv.innerHTML   = this.getLocalizedText("invalidDataSets");
+            headlineDiv.innerHTML   = this.chargy.GetLocalizedMessage("invalidDataSets");
 
             const invalidDataSetsDiv  = this.invalidDataSetsScreenDiv.appendChild(document.createElement('div'));
             invalidDataSetsDiv.id   = "invalidDataSets";
@@ -3178,22 +3277,22 @@ export class ChargyApp {
                     const invalidDataSetDiv = chargyLib.CreateDiv(invalidDataSetsDiv, "invalidDataSet");
 
                     const filenameDiv = chargyLib.CreateDiv(invalidDataSetDiv, "row");
-                    chargyLib.CreateDiv(filenameDiv, "key",   this.getLocalizedText("fileNameLabel"));
+                    chargyLib.CreateDiv(filenameDiv, "key",   this.chargy.GetLocalizedMessage("fileNameLabel"));
                     chargyLib.CreateDiv(filenameDiv, "value", invalidDataSet.name);
 
                     const resultDiv = chargyLib.CreateDiv(invalidDataSetDiv, "row");
-                    chargyLib.CreateDiv(resultDiv,   "key",   this.getLocalizedText("errorLabel"));
+                    chargyLib.CreateDiv(resultDiv,   "key",   this.chargy.GetLocalizedMessage("errorLabel"));
                     const valueDiv  = chargyLib.CreateDiv(resultDiv, "value");
 
                     if (result.message)
-                        valueDiv.innerHTML  = result.message;
+                        valueDiv.innerHTML  = this.chargy.GetLocalizedText(result.message) ?? "";
 
                     else
                         switch (result.status)
                         {
 
                             case chargyInterfaces.SessionVerificationResult.InvalidSessionFormat:
-                                valueDiv.innerHTML  = this.getLocalizedText("invalidTransparencyFormat");
+                                valueDiv.innerHTML  = this.chargy.GetLocalizedMessage("invalidTransparencyFormat");
                                 break;
 
                             default:
@@ -3290,8 +3389,7 @@ export class ChargyApp {
                                                  measurement.chargingSession.chargingStation.firmwareVersion);
                         }
 
-                        if (measurement.chargingSession.chargingStation.legalCompliance &&
-                            measurement.chargingSession.chargingStation.legalCompliance.freeText &&
+                        if (measurement.chargingSession.chargingStation.legalCompliance?.freeText &&
                             measurement.chargingSession.chargingStation.legalCompliance.freeText.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "legalCompliance",
@@ -3299,8 +3397,7 @@ export class ChargyApp {
                                                  measurement.chargingSession.chargingStation.legalCompliance.freeText);
                         }
 
-                        if (measurement.chargingSession.chargingStation.legalCompliance &&
-                            measurement.chargingSession.chargingStation.legalCompliance.conformity &&
+                        if (measurement.chargingSession.chargingStation.legalCompliance?.conformity &&
                             measurement.chargingSession.chargingStation.legalCompliance.conformity.length > 0 &&
                             measurement.chargingSession.chargingStation.legalCompliance.conformity[0]?.freeText &&
                             measurement.chargingSession.chargingStation.legalCompliance.conformity[0]. freeText.length > 0)
@@ -3310,8 +3407,7 @@ export class ChargyApp {
                                                  measurement.chargingSession.chargingStation.legalCompliance.conformity[0].freeText);
                         }
 
-                        if (measurement.chargingSession.chargingStation.legalCompliance &&
-                            measurement.chargingSession.chargingStation.legalCompliance.calibration &&
+                        if (measurement.chargingSession.chargingStation.legalCompliance?.calibration &&
                             measurement.chargingSession.chargingStation.legalCompliance.calibration.length > 0 &&
                             measurement.chargingSession.chargingStation.legalCompliance.calibration[0]?.freeText &&
                             measurement.chargingSession.chargingStation.legalCompliance.calibration[0]. freeText.length > 0)
@@ -3382,11 +3478,11 @@ export class ChargyApp {
 
                     chargyLib.CreateDiv2(energyMeterInfosDiv, "measurement",
                                          this.chargy.GetLocalizedMessage("Measurement"),
-                                         measurement.phenomena?.[0]?.name ?? measurement.name);
+                                         (measurement.phenomena?.[0] as MeasurementPhenomenon | undefined)?.name ?? measurement.name);
 
                     chargyLib.CreateDiv2(energyMeterInfosDiv, "OBIS",
                                          this.chargy.GetLocalizedMessage("OBIS code"),
-                                         measurement.phenomena?.[0]?.obis ?? measurement.obis);
+                                         (measurement.phenomena?.[0] as MeasurementPhenomenon | undefined)?.obis ?? measurement.obis);
 
                     //#endregion
 
@@ -3942,6 +4038,35 @@ export class ChargyApp {
 
                     }
 
+                    const sessionWarnings = this.getSessionWarnings(chargingSession);
+
+                    if (sessionWarnings.length > 0) {
+
+                        const validationWarningsDiv = chargyLib.CreateDiv(this.detailedInfosDiv, "sessionValidationWarnings");
+                        chargyLib.CreateDiv(validationWarningsDiv, "headline2",
+                                            this.chargy.GetLocalizedMessage("sessionValidationLabel"));
+
+                        const warningRowsDiv = chargyLib.CreateDiv(validationWarningsDiv, "warningRows");
+
+                        /* const headerRowDiv = chargyLib.CreateDiv(warningRowsDiv, "warningRow header");
+                        chargyLib.CreateDiv(headerRowDiv, "level",
+                                            this.chargy.GetLocalizedMessage("warningLevelLabel"));
+                        chargyLib.CreateDiv(headerRowDiv, "text",
+                                            this.chargy.GetLocalizedMessage("warningTextLabel")); */
+
+                        for (const warning of sessionWarnings) {
+
+                            const warningRowDiv = chargyLib.CreateDiv(warningRowsDiv, "warningRow " + warning.level);
+                            const levelDiv      = chargyLib.CreateDiv(warningRowDiv, "level");
+                            const textDiv       = chargyLib.CreateDiv(warningRowDiv, "text");
+
+                            levelDiv.innerText  = this.chargy.GetLocalizedMessage("warningLevel_" + warning.level);
+                            textDiv.innerText   = this.chargy.GetLocalizedText(warning.message) ?? "";
+
+                        }
+
+                    }
+
                     //#endregion
 
                 }
@@ -3952,7 +4077,7 @@ export class ChargyApp {
         {
             this.doGlobalError({
                 status:     chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
-                message:    this.chargy.GetLocalizedMessage("Unknown or invalid charge transparency record!"),
+                message:    this.chargy.GetMultilanguageText("Unknown or invalid charge transparency record!"),
                 exception:  exception,
                 certainty:  0
             });
@@ -3964,14 +4089,8 @@ export class ChargyApp {
 
     //#region showChargingTariffDetails     (measurementValue)
 
-    private showChargingTariffDetails(measurementValue:  chargyInterfaces.IChargingTariff) : void
+    private showChargingTariffDetails(_measurementValue:  chargyInterfaces.IChargingTariff) : void
     {
-
-        function doError(text: string)
-        {
-            errorDiv.innerHTML          = '<i class="fas fa-times-circle"></i> ' + text;
-            introDiv.style.display      = "none";
-        }
 
         //#region Headline
 
@@ -4036,14 +4155,8 @@ export class ChargyApp {
 
     //#region showChargingPeriodDetails     (chargingPeriod)
 
-    private showChargingPeriodDetails(chargingPeriod:  chargyInterfaces.IChargingPeriod) : void
+    private showChargingPeriodDetails(_chargingPeriod:  chargyInterfaces.IChargingPeriod) : void
     {
-
-        function doError(text: string)
-        {
-            errorDiv.innerHTML          = '<i class="fas fa-times-circle"></i> ' + text;
-            introDiv.style.display      = "none";
-        }
 
         //#region Headline
 
@@ -4182,14 +4295,8 @@ export class ChargyApp {
 
     //#region showPKIDetails                (pkiData)
 
-    private showPKIDetails(pkiData:  any) : void
+    private showPKIDetails(_pkiData:  any) : void
     {
-
-        function doError(text: string)
-        {
-            errorDiv.innerHTML          = '<i class="fas fa-times-circle"></i> ' + text;
-            introDiv.style.display      = "none";
-        }
 
         //#region Headline
 
@@ -4260,12 +4367,12 @@ export class ChargyApp {
 // Remember to set Customer Privacy Statement!
 // Remember to set Customer Mapbox Access Token and MapId!
 
-const app = new ChargyApp(
-                "",
-                "&copy; 2018-2026 GraphDefined GmbH",
-                "https://chargy.charging.cloud/apps/web/versions",
-                true, // Show Feedback Section
-                ["support@open.charging.cloud", "?subject=Chargy%20WebApp%20Support"],
-                undefined, //["+4993219319101",         "+49 9321 9319 101"],
-                "https://chargy.charging.cloud/desktop/issues"
-            );
+new ChargyApp(
+    "",
+    "&copy; 2018-2026 GraphDefined GmbH",
+    "https://chargy.charging.cloud/apps/web/versions",
+    true, // Show Feedback Section
+    ["support@open.charging.cloud", "?subject=Chargy%20WebApp%20Support"],
+    undefined, //["+4993219319101",         "+49 9321 9319 101"],
+    "https://chargy.charging.cloud/desktop/issues"
+);

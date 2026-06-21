@@ -3,30 +3,30 @@ import { Chargy }         from '@open-charging-cloud/chargy-core';
 import { readFileSync }   from "node:fs";
 import { createRequire }  from "node:module";
 import {
-    IsAChargeTransparencyRecord
+    createTestChargy,
+    mergeI18NDictionaries,
+    parseValidationRules
+} from "./chargyTestRuntime";
+import {
+    IsAChargeTransparencyRecord,
+    IsAChargeTransparencyLiveLink
 } from '@open-charging-cloud/chargy-core';
 import type {
     IChargeTransparencyRecord,
     IMeasurement,
-    IMeasurementValue
-} from '@open-charging-cloud/chargy-core';
-import type {
-    IChargeTransparencyLiveLink
-} from '@open-charging-cloud/chargy-core';
-import {
-    IsAChargeTransparencyLiveLink
-} from '@open-charging-cloud/chargy-core';
-import type {
+    IMeasurementValue,
+    IMultilanguageText,
     ICryptoResult,
     IFileInfo,
     ISessionCryptoResult,
-    IValidationRules
+    IValidationRules,
+    IPublicKeyInfo,
+    IChargeTransparencyLiveLink
 } from '@open-charging-cloud/chargy-core';
-import type {
-    IPublicKeyInfo
-} from '@open-charging-cloud/chargy-core';
-import coreI18n from '@open-charging-cloud/chargy-core/i18n.json';
-import webAppI18n from '../src/i18n.json';
+
+import coreI18n  from '@open-charging-cloud/chargy-core/i18n.json';
+import localI18n from '../src/i18n.json';
+
 
 export {
     expectVerificationReport,
@@ -39,7 +39,7 @@ export {
 }
 
 const require = createRequire(import.meta.url);
-const { DOMParser } = require("@oozcitak/dom");
+const { DOMParser } = require("@oozcitak/dom") as { DOMParser: typeof globalThis.DOMParser };
 
 vi.mock('pdfjs-dist', async () => {
     const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
@@ -54,7 +54,11 @@ vi.stubGlobal('window', {
 });
 
 vi.stubGlobal('DOMParser', DOMParser);
-vi.stubGlobal('DOMMatrix', class DOMMatrix {});
+vi.stubGlobal('DOMMatrix', class DOMMatrix {
+    toString(): string {
+        return "matrix(1, 0, 0, 1, 0, 0)";
+    }
+});
 
 function readFixture(fileName: string): string {
     return readFileSync(new URL("fixtures/" + fileName, import.meta.url), "utf8").trim();
@@ -112,22 +116,17 @@ function archiveMimeType(fileName: string): string {
 
 }
 
-function createChargy(validationRules?: IValidationRules): Chargy {
+function createVerificationChargy(validationRules?: IValidationRules): Chargy {
 
-    return new Chargy(
-        Object.assign({}, coreI18n, webAppI18n),
-        "en",
-        require("elliptic"),
-        require("moment"),
-        require("asn1.js"),
-        require("base32-decode"),
-        () => "",
-        validationRules
-    );
+    const i18n = mergeI18NDictionaries(coreI18n, localI18n);
+
+    return validationRules === undefined
+               ? createTestChargy(Chargy, { i18n })
+               : createTestChargy(Chargy, { i18n, validationRules });
 
 }
 
-function expectReportLines(summary: string, expected: string) {
+function expectReportLines(summary: string, expected: string): void {
 
     const summaryLines  = summary. split(/\r?\n/);
     const expectedLines = expected.split(/\r?\n/);
@@ -138,7 +137,7 @@ function expectReportLines(summary: string, expected: string) {
 
 }
 
-async function expectVerificationReport(inputFixture: string, expectedFixture: string) {
+async function expectVerificationReport(inputFixture: string, expectedFixture: string): Promise<void> {
 
     const input    = readFixture(inputFixture);
     const expected = readFixture(expectedFixture);
@@ -152,11 +151,11 @@ async function expectVerificationReport(inputFixture: string, expectedFixture: s
 
 async function expectVerificationReportWithValidationRules(inputFixture:           string,
                                                            expectedFixture:        string,
-                                                           validationRulesFixture: string) {
+                                                           validationRulesFixture: string): Promise<void> {
 
     const input           = readFixture(inputFixture);
     const expected        = readFixture(expectedFixture);
-    const validationRules = JSON.parse(readFixture(validationRulesFixture)) as IValidationRules;
+    const validationRules = parseValidationRules(readFixture(validationRulesFixture));
 
     const report          = await verifyChargeData(inputFixture, input, undefined, validationRules);
     const summary         = formatChargeDataVerificationReport(report);
@@ -165,7 +164,7 @@ async function expectVerificationReportWithValidationRules(inputFixture:        
 
 }
 
-async function expectVerificationReportInline(inputFixture: string, expected: any) {
+async function expectVerificationReportInline(inputFixture: string, expected: object | unknown[]): Promise<void> {
 
     const input  = readFixture(inputFixture);
     const report = await verifyChargeData(inputFixture, input);
@@ -174,7 +173,7 @@ async function expectVerificationReportInline(inputFixture: string, expected: an
 
 }
 
-async function expectArchiveVerificationReport(archiveFixture: string, expectedFixture: string) {
+async function expectArchiveVerificationReport(archiveFixture: string, expectedFixture: string): Promise<void> {
 
     const archive  = readBinaryFixture(archiveFixture);
     const expected = readFixture(expectedFixture);
@@ -191,7 +190,7 @@ async function expectArchiveVerificationReport(archiveFixture: string, expectedF
 
 }
 
-async function expectMultiArchiveVerificationReport(inputFixtures: string[], expectedFixture: string) {
+async function expectMultiArchiveVerificationReport(inputFixtures: string[], expectedFixture: string): Promise<void> {
 
     const expected = readFixture(expectedFixture);
 
@@ -209,7 +208,7 @@ async function expectMultiArchiveVerificationReport(inputFixtures: string[], exp
 
 }
 
-async function expectBinaryVerificationReport(inputFixture: string, expectedFixture: string) {
+async function expectBinaryVerificationReport(inputFixture: string, expectedFixture: string): Promise<void> {
 
     const input    = readBinaryFixture(inputFixture);
     const expected = readFixture(expectedFixture);
@@ -226,7 +225,7 @@ async function expectBinaryVerificationReport(inputFixture: string, expectedFixt
 
 }
 
-async function expectVerificationReportWithPublicKey(inputFixture: string, publicKeyFixture: string, expectedFixture: string) {
+async function expectVerificationReportWithPublicKey(inputFixture: string, publicKeyFixture: string, expectedFixture: string): Promise<void> {
 
     const input    = readBinaryFixture(inputFixture);
     const expected = readFixture(expectedFixture);
@@ -270,7 +269,7 @@ async function verifyChargeData(fileName:  string,
             : input
     };
 
-    return await createChargy(validationRules).DetectAndConvertContentFormat([ fileInfo ]);
+    return createVerificationChargy(validationRules).DetectAndConvertContentFormat([ fileInfo ]);
 
 }
 
@@ -283,7 +282,7 @@ async function verifyChargeDataFiles(fileInfos: IFileInfo[],
               ISessionCryptoResult>
 
 {
-    return await createChargy(validationRules).DetectAndConvertContentFormat(fileInfos);
+    return createVerificationChargy(validationRules).DetectAndConvertContentFormat(fileInfos);
 }
 
 function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | IChargeTransparencyLiveLink | IPublicKeyInfo | ISessionCryptoResult): string {
@@ -295,12 +294,15 @@ function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | 
             "transports: " + ((report.transports?.length ?? 0).toString())
         ].join("\n");
 
-    if (!IsAChargeTransparencyRecord(report))
+    if (!IsAChargeTransparencyRecord(report)) {
+        const sessionResult = report as ISessionCryptoResult;
+
         return [
             "format: session-result",
-            "status: "  +  report.status,
-            "message: " + (report.message ?? "")
+            "status: "  +  sessionResult.status,
+            "message: " + formatOptionalMultilanguageText(sessionResult.message)
         ].join("\n");
+    }
 
     const sessions = report.chargingSessions ?? [];
     const lines    = [
@@ -318,7 +320,9 @@ function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | 
     for (const [sessionIndex, session] of sessions.entries()) {
 
         const measurements = session.measurements;
-        const meterId      = session.meterId ?? measurements[0]?.energyMeterId ?? "";
+        const meterId      = session.meterId
+                                ?? measurements[0]?.energyMeterId
+                                ?? "";
 
         lines.push("session " + ((sessionIndex + 1).toString()) + ": " + session["@id"]);
         lines.push("session " + ((sessionIndex + 1).toString()) + " evseId: " + session.EVSEId);
@@ -338,7 +342,7 @@ function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | 
 function appendMeasurementLines(lines:              string[],
                                 sessionNumber:      number,
                                 measurementNumber:  number,
-                                measurement:        IMeasurement) {
+                                measurement:        IMeasurement): void {
 
     lines.push("measurement " + sessionNumber.toString() + "." + measurementNumber.toString() + " name: " + measurement.name);
     lines.push("measurement " + sessionNumber.toString() + "." + measurementNumber.toString() + " obis: " + measurement.obis);
@@ -354,7 +358,7 @@ function appendMeasurementValueLines(lines:              string[],
                                      sessionNumber:      number,
                                      measurementNumber:  number,
                                      valueNumber:        number,
-                                     value:              IMeasurementValue) {
+                                     value:              IMeasurementValue): void {
 
     const prefix = "value " + sessionNumber.toString() + "." + measurementNumber.toString() + "." + valueNumber.toString();
 
@@ -369,9 +373,23 @@ function formatCryptoResult(result: ICryptoResult | undefined): string {
     return result?.status ?? "unknown";
 }
 
-function formatWarning(warning: { level: string; message: string }): string {
+function formatWarning(warning: { level: string; message: IMultilanguageText }): string {
 
-    return warning.level + ": " + warning.message;
+    return warning.level + ": " + formatMultilanguageText(warning.message);
 
 }
 
+function formatMultilanguageText(text: IMultilanguageText): string {
+
+    return text['en'] ?? Object.values(text)[0] ?? "";
+
+}
+
+function formatOptionalMultilanguageText(text: IMultilanguageText | undefined): string {
+
+    if (text == null)
+        return "";
+
+    return formatMultilanguageText(text);
+
+}

@@ -173,25 +173,22 @@ export async function readResponseWithinLimit(response:        Response,
     try
     {
 
-        while (true)
+        for (;;)
         {
             const { done, value } = await reader.read();
 
             if (done)
                 break;
 
-            if (value != null)
+            length += value.byteLength;
+
+            if (length > maxPayloadBytes)
             {
-                length += value.byteLength;
-
-                if (length > maxPayloadBytes)
-                {
-                    await reader.cancel();
-                    throw new Error("External verification payload exceeds configured limit.");
-                }
-
-                chunks.push(value);
+                await reader.cancel();
+                throw new Error("External verification payload exceeds configured limit.");
             }
+
+            chunks.push(value);
         }
 
     }
