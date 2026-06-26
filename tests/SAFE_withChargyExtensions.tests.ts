@@ -12,7 +12,9 @@ describe('SAFE Tests with Chargy Extensions', () => {
 <values>
     <chargingStation id="DE*GEF*STATION*CI*TESTS*1*A" xmlns="https://open.charging.cloud/CTR/2020/01">
         <description language="en">GraphDefined Charging Station - CI-Tests Pool 1 / Station A</description>
-        <softwareVersion>3.0.25.2089</softwareVersion>
+        <firmware>
+            <version>3.0.25.2089</version>
+        </firmware>
         <geoLocation>
             <latitude>50.387945</latitude>
             <longitude>10.4304</longitude>
@@ -30,53 +32,33 @@ describe('SAFE Tests with Chargy Extensions', () => {
 </values>`);
 
         const safeXml  = new SAFEXML(createTestChargy(Chargy));
-        const context  = SAFEXML.ParseChargingStationContext(xmlDocument);
+        const context  = SAFEXML.ParseContainerInfos(xmlDocument, createTestChargy(Chargy));
 
         expect(safeXml).toBeDefined();
         expect(context).toEqual({
-            ChargingStationId: "DE*GEF*STATION*CI*TESTS*1*A",
-            EVSEId:            "DE*GEF*EVSE*CI*TESTS*1*A*1",
-            chargingStation: {
+            chargingStations: [{
                 "@id":             "DE*GEF*STATION*CI*TESTS*1*A",
                 description:       {
                     en: "GraphDefined Charging Station - CI-Tests Pool 1 / Station A"
                 },
-                firmwareVersion:   "3.0.25.2089",
-                softwareVersion:   "3.0.25.2089",
+                firmware:          {
+                    version: "3.0.25.2089"
+                },
                 geoLocation:       {
                     lat: 50.387945,
                     lng: 10.4304
                 },
-                EVSE: {
+                EVSEs: [{
                     "@id":         "DE*GEF*EVSE*CI*TESTS*1*A*1",
                     description:   {
                         en: "GraphDefined EVSE - CI-Tests Pool 1 / Station A / EVSE 1"
                     },
-                    meters:        [],
-                    connector:     {
+                    connectors:    [{
                         "@id": "1",
-                        type: "Type-2",
-                        looses: 0
-                    }
-                }
-            },
-            EVSE: {
-                "@id":         "DE*GEF*EVSE*CI*TESTS*1*A*1",
-                description:   {
-                    en: "GraphDefined EVSE - CI-Tests Pool 1 / Station A / EVSE 1"
-                },
-                meters:        [],
-                connector:     {
-                    "@id": "1",
-                    type: "Type-2",
-                    looses: 0
-                }
-            },
-            connector: {
-                "@id": "1",
-                type: "Type-2",
-                looses: 0
-            }
+                        type: "Type-2"
+                    }]
+                }]
+            }]
         });
 
     });
@@ -130,21 +112,21 @@ describe('SAFE Tests with Chargy Extensions', () => {
         const result       = await new SAFEXML(createTestChargy(Chargy)).tryToParseSAFEXML(xmlDocument);
 
         expect(result).toMatchObject({
-            chargingPools: [{
-                chargingStations: [{
-                    "@id":             "DE*GEF*STATION*CI*TESTS*1*A",
-                    description:       { en: "GraphDefined Charging Station - CI-Tests Pool 1 / Station A" },
-                    firmwareVersion:   "3.0.25.2089",
-                    geoLocation:       { lat: 50.387945, lng: 10.4304 },
-                    EVSEs: [{
-                        "@id":         "DE*GEF*EVSE*CI*TESTS*1*A*1",
-                        description:   { en: "GraphDefined EVSE - CI-Tests Pool 1 / Station A / EVSE 1" },
-                        connectors:    [{ type: "Type-2", looses: 0 }]
-                    }]
+            chargingStations: [{
+                "@id":             "DE*GEF*STATION*CI*TESTS*1*A",
+                description:       { en: "GraphDefined Charging Station - CI-Tests Pool 1 / Station A" },
+                firmware:          { version: "3.0.25.2089" },
+                geoLocation:       { lat: 50.387945, lng: 10.4304 },
+                EVSEs: [{
+                    "@id":         "DE*GEF*EVSE*CI*TESTS*1*A*1",
+                    description:   { en: "GraphDefined EVSE - CI-Tests Pool 1 / Station A / EVSE 1" },
+                    connectors:    [{ "@id": "1", type: "Type-2" }]
                 }]
             }],
             chargingSessions: [{
-                EVSEId: "DE*GEF*EVSE*CI*TESTS*1*A*1"
+                measurements: [{
+                    energyMeterId: "BQ27400330016"
+                }]
             }]
         });
 
@@ -157,7 +139,7 @@ describe('SAFE Tests with Chargy Extensions', () => {
             {
                 status:  "InvalidSessionFormat",
                 message: {
-                    en: "Exception occured: The SAFE chargingStation XML element must not contain more than one EVSE element!"
+                    en: "Only one EVSE element is allowed within the given SAFE XML chargingStation element!"
                 }
             }
         );
@@ -174,7 +156,7 @@ describe('SAFE Tests with Chargy Extensions', () => {
             {
                 status:  "InvalidSessionFormat",
                 message: {
-                    en: "Exception occured: The SAFE EVSE XML element must not contain more than one connector element!"
+                    en: "Only one connector element is allowed within the given SAFE XML EVSE element!"
                 }
             }
         );

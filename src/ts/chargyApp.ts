@@ -42,7 +42,8 @@ import {
     type ExternalURLRule
 }                                      from './deepLinks';
 import {
-    browserFileTypeFromName,
+    browserFileNameFromNameAndType,
+    browserFileTypeFromNameOrData,
     normalizeDroppedSVGImageData
 }                                      from './browserFiles';
 
@@ -51,7 +52,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 
 type DetectionResult = chargeTransparencyRecord.  IChargeTransparencyRecord   |
                        chargeTransparencyLiveLink.IChargeTransparencyLiveLink |
-                       publicKeyInfo.             IPublicKeyInfo              |
+                       publicKeyInfo.             IPublicKey                  |
                        chargyInterfaces.          ISessionCryptoResult;
 
 type DetectionOptions = {
@@ -115,6 +116,27 @@ type ChargingProgressChartData = {
     yAxisLabel:     string;
 };
 
+function namedDeviceValue(value: string | { name?: string | undefined } | undefined): string | undefined {
+
+    if (typeof value === "string")
+        return value;
+
+    return value?.name;
+
+}
+
+function linkedDeviceValue(text: string | undefined,
+                           url:  string | undefined): string | undefined {
+
+    if (text == null || text.length === 0)
+        return undefined;
+
+    return url != null && url.length > 0
+        ? "<a href=\"javascript:OpenLink('" + url + "')\">" + text + "</a>"
+        : text;
+
+}
+
 export class ChargyApp {
 
     //#region Data
@@ -132,7 +154,7 @@ export class ChargyApp {
     public           defaultFeedbackHotline:             string[]                          = [];
     public           defaultIssueURL:                    string                            = "";
     public           packageJson:                        any                               = {};
-    public           i18n:                               chargyInterfaces.I18NDictionary   = {};
+    public           i18n:                               chargyLib.I18NDictionary           = {};
     public           UILanguage:                         SupportedLanguage                 = "en";
 
     private readonly currentAppInfos:                    any                               = null;
@@ -1498,6 +1520,31 @@ export class ChargyApp {
 
     //#endregion
 
+    private clearMapMarkers(): void
+    {
+
+        while (this.markers.length > 0)
+            this.map.removeLayer(this.markers.pop());
+
+        this.minlat =  1000;
+        this.maxlat = -1000;
+        this.minlng =  1000;
+        this.maxlng = -1000;
+
+    }
+
+    private clearRenderedChargeData(resetMapView: boolean = false): void
+    {
+
+        this.clearChargingSessionCharts();
+        this.detailedInfosDiv.innerHTML = "";
+        this.clearMapMarkers();
+
+        if (resetMapView)
+            this.map.setView([50.9279287, 11.5731785], 12);
+
+    }
+
     private getSessionCryptoResultText(result?: chargyInterfaces.ISessionCryptoResult|null): string
     {
 
@@ -1526,6 +1573,7 @@ export class ChargyApp {
         this.currentGlobalError                = result;
         this.currentChargeTransparencyRecord   = null;
         this.currentChargeTransparencyLiveLink = null;
+        this.clearRenderedChargeData(true);
 
         const text = this.getSessionCryptoResultText(result);
 
@@ -1537,6 +1585,8 @@ export class ChargyApp {
         this.chargingSessionScreenDiv.innerHTML      = '';
         this.invalidDataSetsScreenDiv.style.display  = "none";
         this.invalidDataSetsScreenDiv.innerText      = "";
+        this.inputButtonsDiv.style.display           = "none";
+        this.exportButtonDiv.style.display           = "none";
         this.errorTextDiv.style.display              = 'inline-block';
         this.errorTextDiv.innerHTML                  = '<i class="fas fa-times-circle"></i> ' + text;
 
@@ -1987,16 +2037,18 @@ export class ChargyApp {
                 const name = file instanceof File && file.name.trim() !== ""
                                  ? file.name
                                  : "unknown";
-                const type = browserFileTypeFromName(name, file.type);
+                const rawData = await file.arrayBuffer();
+                const type = browserFileTypeFromNameOrData(name, file.type, rawData);
+                const normalizedName = browserFileNameFromNameAndType(name, type);
                 const data = normalizeDroppedSVGImageData(
-                                 name,
+                                 normalizedName,
                                  type,
-                                 await file.arrayBuffer()
+                                 rawData
                              );
 
                 loadedFiles.push({
-                    name: name,
-                    path: "file://" + name,
+                    name: normalizedName,
+                    path: "file://" + normalizedName,
                     type: type,
                     data: data
                 });
@@ -2246,7 +2298,7 @@ export class ChargyApp {
 
         }
 
-        if (publicKeyInfo.IsAPublicKeyInfo(result))
+        if (publicKeyInfo.IsAPublicKey(result))
         {
 
             if (options?.prepareUI === false)
@@ -2280,6 +2332,7 @@ export class ChargyApp {
         this.currentChargeTransparencyLiveLink       = LiveLink;
         this.currentChargeTransparencyRecord         = null;
         this.currentGlobalError                      = null;
+        this.clearRenderedChargeData();
 
         this.inputDiv.style.flexDirection            = "column";
         this.aboutScreenDiv.style.display            = "none";
@@ -2467,6 +2520,7 @@ export class ChargyApp {
         this.currentChargeTransparencyRecord         = CTR;
         this.currentChargeTransparencyLiveLink       = null;
         this.currentGlobalError                      = null;
+        this.clearRenderedChargeData();
 
         //#region Prepare View
 
@@ -2793,32 +2847,37 @@ export class ChargyApp {
                 try
                 {
 
-                    const authorizationStartDiv            = tableDiv.appendChild(document.createElement('div'));
-                        authorizationStartDiv.className  = "authorizationStart";
-
-                    const authorizationStartIconDiv                   = authorizationStartDiv.appendChild(document.createElement('div'));
-                    authorizationStartIconDiv.className             = "icon";
-                    switch (chargingSession.authorizationStart.type)
+                    if (chargingSession.authorizationStart != null)
                     {
 
-                        case "cryptoKey":
-                            authorizationStartIconDiv.innerHTML     = '<i class="fas fa-key"></i>';
-                            break;
+                        const authorizationStartDiv            = tableDiv.appendChild(document.createElement('div'));
+                            authorizationStartDiv.className  = "authorizationStart";
 
-                        case "eMAId":
-                        case "EVCOId":
-                            authorizationStartIconDiv.innerHTML     = '<i class="fas fa-mobile-alt"></i>';
-                            break;
+                        const authorizationStartIconDiv                   = authorizationStartDiv.appendChild(document.createElement('div'));
+                        authorizationStartIconDiv.className             = "icon";
+                        switch (chargingSession.authorizationStart.type)
+                        {
 
-                        default:
-                            authorizationStartIconDiv.innerHTML     = '<i class="fas fa-id-card"></i>';
-                            break;
+                            case "cryptoKey":
+                                authorizationStartIconDiv.innerHTML     = '<i class="fas fa-key"></i>';
+                                break;
+
+                            case "eMAId":
+                            case "EVCOId":
+                                authorizationStartIconDiv.innerHTML     = '<i class="fas fa-mobile-alt"></i>';
+                                break;
+
+                            default:
+                                authorizationStartIconDiv.innerHTML     = '<i class="fas fa-id-card"></i>';
+                                break;
+
+                        }
+
+                        const authorizationStartIdDiv                     = authorizationStartDiv.appendChild(document.createElement('div'));
+                        authorizationStartIdDiv.className                 = "id";
+                        authorizationStartIdDiv.innerHTML = chargingSession.authorizationStart["@id"];
 
                     }
-
-                    const authorizationStartIdDiv                     = authorizationStartDiv.appendChild(document.createElement('div'));
-                    authorizationStartIdDiv.className                 = "id";
-                    authorizationStartIdDiv.innerHTML = chargingSession.authorizationStart["@id"];
 
 
                     if (chargingSession.authorizationStop != null)
@@ -2888,7 +2947,8 @@ export class ChargyApp {
 
                             // if (chargingSession.EVSE == null || typeof chargingSession.EVSE !== 'object')
                             //     chargingSession.EVSE = this.chargy.GetEVSE(chargingSession.EVSEId);
-                            if (!chargingSession.EVSE)
+                            if (!chargingSession.EVSE &&
+                                chargingSession.EVSEId != null)
                             {
                                 const evse = this.chargy.GetEVSE(chargingSession.EVSEId);
                                 if (evse)
@@ -3883,86 +3943,92 @@ export class ChargyApp {
 
                     //#region Show Charging Station Infos
 
-                    if (measurement.chargingSession.chargingStation != null &&
-                       (measurement.chargingSession.chargingStation["@id"] !== "DE*GEF*STATION*CHARGY*1" ||
-                        measurement.chargingSession.chargingStation.manufacturer                         ||
-                        measurement.chargingSession.chargingStation.model                                ||
-                        measurement.chargingSession.chargingStation.serialNumber                         ||
-                        measurement.chargingSession.chargingStation.firmwareVersion                      ||
-                        measurement.chargingSession.chargingStation.legalCompliance))
+                    const chargingStation = measurement.chargingSession.chargingStation;
+                    const chargingStationManufacturer = namedDeviceValue(chargingStation?.manufacturer);
+                    const chargingStationModel        = namedDeviceValue(chargingStation?.model);
+                    const chargingStationSerialNumber = chargingStation?.hardware?.serialNumber;
+                    const chargingStationFirmware     = chargingStation?.firmware?.version;
+
+                    if (chargingStation != null &&
+                       (chargingStation["@id"] !== "DE*GEF*STATION*CHARGY*1" ||
+                        chargingStationManufacturer                         ||
+                        chargingStationModel                                ||
+                        chargingStationSerialNumber                         ||
+                        chargingStationFirmware                             ||
+                        chargingStation.legalCompliance))
                     {
 
                         const chargingStationInfosDiv  = chargyLib.CreateDiv(this.detailedInfosDiv,  "chargingStationInfos");
                                                          chargyLib.CreateDiv(chargingStationInfosDiv,  "headline2",
                                                                              this.chargy.GetLocalizedMessage("Charging Station"));
 
-                        if (measurement.chargingSession.chargingStation["@id"] &&
-                            measurement.chargingSession.chargingStation["@id"].length > 0 &&
-                            measurement.chargingSession.chargingStation["@id"] !== "DE*GEF*STATION*CHARGY*1")
+                        if (chargingStation["@id"] &&
+                            chargingStation["@id"].length > 0 &&
+                            chargingStation["@id"] !== "DE*GEF*STATION*CHARGY*1")
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "chargingStationId",
                                                  this.chargy.GetLocalizedMessage("Identification"),
-                                                 measurement.chargingSession.chargingStation["@id"]);
+                                                 chargingStation["@id"]);
                         }
 
-                        if (measurement.chargingSession.chargingStation.manufacturer &&
-                            measurement.chargingSession.chargingStation.manufacturer.length > 0)
+                        if (chargingStationManufacturer != null &&
+                            chargingStationManufacturer.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "manufacturer",
                                                  this.chargy.GetLocalizedMessage("Manufacturer"),
-                                                 measurement.chargingSession.chargingStation.manufacturer);
+                                                 chargingStationManufacturer);
                         }
 
-                        if (measurement.chargingSession.chargingStation.model &&
-                            measurement.chargingSession.chargingStation.model.length > 0)
+                        if (chargingStationModel != null &&
+                            chargingStationModel.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "model",
                                                  this.chargy.GetLocalizedMessage("Model"),
-                                                 measurement.chargingSession.chargingStation.model);
+                                                 chargingStationModel);
                         }
 
-                        if (measurement.chargingSession.chargingStation.serialNumber &&
-                            measurement.chargingSession.chargingStation.serialNumber.length > 0)
+                        if (chargingStationSerialNumber != null &&
+                            chargingStationSerialNumber.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "serialNumber",
                                                  this.chargy.GetLocalizedMessage("Serial Number"),
-                                                 measurement.chargingSession.chargingStation.serialNumber);
+                                                 chargingStationSerialNumber);
                         }
 
-                        if (measurement.chargingSession.chargingStation.firmwareVersion &&
-                            measurement.chargingSession.chargingStation.firmwareVersion.length > 0)
+                        if (chargingStationFirmware != null &&
+                            chargingStationFirmware.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "firmwareVersion",
                                                  this.chargy.GetLocalizedMessage("Firmware Version"),
-                                                 measurement.chargingSession.chargingStation.firmwareVersion);
+                                                 chargingStationFirmware);
                         }
 
-                        if (measurement.chargingSession.chargingStation.legalCompliance?.freeText &&
-                            measurement.chargingSession.chargingStation.legalCompliance.freeText.length > 0)
+                        if (chargingStation.legalCompliance?.freeText &&
+                            chargingStation.legalCompliance.freeText.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "legalCompliance",
                                                  this.chargy.GetLocalizedMessage("Legal Compliance"),
-                                                 measurement.chargingSession.chargingStation.legalCompliance.freeText);
+                                                 chargingStation.legalCompliance.freeText);
                         }
 
-                        if (measurement.chargingSession.chargingStation.legalCompliance?.conformity &&
-                            measurement.chargingSession.chargingStation.legalCompliance.conformity.length > 0 &&
-                            measurement.chargingSession.chargingStation.legalCompliance.conformity[0]?.freeText &&
-                            measurement.chargingSession.chargingStation.legalCompliance.conformity[0]. freeText.length > 0)
+                        if (chargingStation.legalCompliance?.conformity &&
+                            chargingStation.legalCompliance.conformity.length > 0 &&
+                            chargingStation.legalCompliance.conformity[0]?.freeText &&
+                            chargingStation.legalCompliance.conformity[0].freeText.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "conformity",
                                                  this.chargy.GetLocalizedMessage("Conformity"),
-                                                 measurement.chargingSession.chargingStation.legalCompliance.conformity[0].freeText);
+                                                 chargingStation.legalCompliance.conformity[0].freeText);
                         }
 
-                        if (measurement.chargingSession.chargingStation.legalCompliance?.calibration &&
-                            measurement.chargingSession.chargingStation.legalCompliance.calibration.length > 0 &&
-                            measurement.chargingSession.chargingStation.legalCompliance.calibration[0]?.freeText &&
-                            measurement.chargingSession.chargingStation.legalCompliance.calibration[0]. freeText.length > 0)
+                        if (chargingStation.legalCompliance?.calibration &&
+                            chargingStation.legalCompliance.calibration.length > 0 &&
+                            chargingStation.legalCompliance.calibration[0]?.freeText &&
+                            chargingStation.legalCompliance.calibration[0].freeText.length > 0)
                         {
                             chargyLib.CreateDiv2(chargingStationInfosDiv, "calibration",
                                                  this.chargy.GetLocalizedMessage("Calibration"),
-                                                 measurement.chargingSession.chargingStation.legalCompliance.calibration[0].freeText);
+                                                 chargingStation.legalCompliance.calibration[0].freeText);
                         }
 
                     }
@@ -3980,34 +4046,34 @@ export class ChargyApp {
                     const meter = this.chargy.GetMeter(measurement.energyMeterId);
                     if (meter != null)
                     {
+                        const meterManufacturer = namedDeviceValue(meter.manufacturer);
+                        const meterModel        = namedDeviceValue(meter.model);
+                        const meterHardware     = meter.hardware?.revision;
+                        const meterFirmware     = meter.firmware?.version;
 
                             chargyLib.CreateDiv2(energyMeterInfosDiv, "meterId",
                                                  this.chargy.GetLocalizedMessage("Serial Number"),
                                                  measurement.energyMeterId);
 
-                        if (meter.manufacturer && meter.manufacturer.length > 0)
+                        if (meterManufacturer != null && meterManufacturer.length > 0)
                             chargyLib.CreateDiv2(energyMeterInfosDiv, "meterManufacturer",
                                                  this.chargy.GetLocalizedMessage("Manufacturer"),
-                                                 meter.manufacturerURL && meter.manufacturerURL.length > 0
-                                                     ? "<a href=\"javascript:OpenLink('" + meter.manufacturerURL + "')\">" + meter.manufacturer + "</a>"
-                                                     : meter.manufacturer);
+                                                 linkedDeviceValue(meterManufacturer, meter.manufacturer?.contact?.web) ?? meterManufacturer);
 
-                        if (meter.model && meter.model.length > 0)
+                        if (meterModel != null && meterModel.length > 0)
                             chargyLib.CreateDiv2(energyMeterInfosDiv, "meterModel",
                                                  this.chargy.GetLocalizedMessage("Model"),
-                                                 meter.modelURL && meter.modelURL.length > 0
-                                                     ? "<a href=\"javascript:OpenLink('" + meter.modelURL + "')\">" + meter.model + "</a>"
-                                                     : meter.model);
+                                                 linkedDeviceValue(meterModel, meter.model?.url) ?? meterModel);
 
-                        if (meter.hardwareVersion && meter.hardwareVersion.length > 0)
+                        if (meterHardware != null && meterHardware.length > 0)
                             chargyLib.CreateDiv2(energyMeterInfosDiv, "meterHardwareVersion",
                                                  this.chargy.GetLocalizedMessage("Hardware Version"),
-                                                 meter.hardwareVersion);
+                                                 meterHardware);
 
-                        if (meter.firmwareVersion && meter.firmwareVersion.length > 0)
+                        if (meterFirmware != null && meterFirmware.length > 0)
                             chargyLib.CreateDiv2(energyMeterInfosDiv, "meterFirmwareVersion",
                                                  this.chargy.GetLocalizedMessage("Firmware Version"),
-                                                 meter.firmwareVersion);
+                                                 meterFirmware);
 
                     }
 
