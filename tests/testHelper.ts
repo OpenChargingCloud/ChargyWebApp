@@ -35,7 +35,9 @@ export {
     expectArchiveVerificationReport,
     expectMultiArchiveVerificationReport,
     expectVerificationReportWithPublicKey,
-    expectVerificationReportWithValidationRules
+    expectVerificationReportWithValidationRules,
+    verifyChargeData,
+    verifyChargeDataFiles
 }
 
 const require = createRequire(import.meta.url);
@@ -319,18 +321,18 @@ function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | 
 
     for (const [sessionIndex, session] of sessions.entries()) {
 
-        const measurements = session.measurements ?? [];
+        const measurements = session.measurements;
         const meterId      = session.meterId
-                                ?? measurements[0]?.energyMeterId
+                                ?? measurements?.[0]?.energyMeterId
                                 ?? "";
 
         lines.push("session " + ((sessionIndex + 1).toString()) + ": " + session["@id"]);
-        lines.push("session " + ((sessionIndex + 1).toString()) + " evseId: " + (session.EVSEId ?? "undefined"));
-        lines.push("session " + ((sessionIndex + 1).toString()) + " meterId: " + meterId);
-        lines.push("session " + ((sessionIndex + 1).toString()) + " status: " + (session.verificationResult?.status ?? "unknown"));
-        lines.push("session " + ((sessionIndex + 1).toString()) + " measurements: " + measurements.length.toString());
+        lines.push("session " + ((sessionIndex + 1).toString()) + " evseId: "       + (session.EVSEId                     ?? "unknown"));
+        lines.push("session " + ((sessionIndex + 1).toString()) + " meterId: "      +  meterId);
+        lines.push("session " + ((sessionIndex + 1).toString()) + " status: "       + (session.verificationResult?.status ?? "unknown"));
+        lines.push("session " + ((sessionIndex + 1).toString()) + " measurements: " + (measurements?.length.toString()    ?? "0"));
 
-        for (const [measurementIndex, measurement] of measurements.entries())
+        for (const [measurementIndex, measurement] of (measurements?.entries() ?? []))
             appendMeasurementLines(lines, sessionIndex + 1, measurementIndex + 1, measurement);
 
     }

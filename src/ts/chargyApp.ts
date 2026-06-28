@@ -957,7 +957,8 @@ export class ChargyApp {
             })));
 
         if (chargingSession.ctr?.warnings &&
-            chargingSession.verificationResult?.status === chargyInterfaces.SessionVerificationResult.InplausibleMeasurement)
+            chargingSession.ctr.warnings.length > 0)
+            //chargingSession.verificationResult?.status === chargyInterfaces.SessionVerificationResult.InplausibleMeasurement)
         {
             warnings.push(...chargingSession.ctr.warnings.map(warning => ({
                 ...warning,
@@ -973,7 +974,8 @@ export class ChargyApp {
                     source: measurement.name
                 })));
 
-            for (const measurementValue of measurement.values ?? []) {
+            for (const measurementValue of measurement.values) {
+
                 if (measurementValue.warnings)
                     warnings.push(...measurementValue.warnings.map(warning => ({
                         ...warning,
@@ -985,6 +987,7 @@ export class ChargyApp {
                         ...warning,
                         source: measurementValue.timestamp
                     })));
+
             }
 
         }
@@ -2657,7 +2660,7 @@ export class ChargyApp {
                     productDiv.className                 = "text";
                     productDiv.innerHTML = chargingSession.product != null ? chargingSession.product["@id"] + "<br />" : "";
 
-                    if (chargingSession.begin && chargingSession.end)
+                    if (chargingSession.begin !== undefined && chargingSession.end !== undefined)
                     {
 
                         const duration = this.moment.duration(chargyLib.parseUTC(chargingSession.end).valueOf() - chargyLib.parseUTC(chargingSession.begin).valueOf());
@@ -2924,12 +2927,12 @@ export class ChargyApp {
                 try
                 {
 
-                    if ((chargingSession.EVSEId            || chargingSession.EVSE            ||
-                         chargingSession.chargingStationId || chargingSession.chargingStation ||
-                         chargingSession.chargingPoolId    || chargingSession.chargingPool) &&
+                    if (chargingSession.EVSEId            || chargingSession.EVSE            ||
+                        chargingSession.chargingStationId || chargingSession.chargingStation ||
+                        chargingSession.chargingPoolId    || chargingSession.chargingPool)
 
-                         chargingSession.EVSEId            != "DE*GEF*EVSE*CHARGY*1" &&
-                         chargingSession.chargingStationId != "DE*GEF*STATION*CHARGY*1")
+                         //chargingSession.EVSEId            != "DE*GEF*EVSE*CHARGY*1" &&
+                         //chargingSession.chargingStationId != "DE*GEF*STATION*CHARGY*1")
 
                     {
 
