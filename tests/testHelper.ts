@@ -29,6 +29,7 @@ import localI18n from '../src/i18n.json';
 
 
 export {
+    createVerificationChargy,
     expectVerificationReport,
     expectVerificationReportInline,
     expectBinaryVerificationReport,
