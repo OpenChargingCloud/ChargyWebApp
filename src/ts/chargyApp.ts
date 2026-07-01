@@ -455,6 +455,9 @@ export class ChargyApp {
     private readonly imprintScreenDiv:                   HTMLDivElement;
     private readonly applicationHashDiv:                 HTMLDivElement;
     private readonly applicationHashValueDiv:            HTMLDivElement;
+    private readonly chargyCoreHashDiv:                  HTMLDivElement;
+    private readonly chargyCoreHashTextDiv:              HTMLDivElement;
+    private readonly chargyCoreHashValueDiv:             HTMLDivElement;
     private readonly softwareInfosDiv:                   HTMLDivElement;
     private readonly openSourceLibsDiv:                  HTMLDivElement;
     private readonly chargingSessionScreenDiv:           HTMLDivElement;
@@ -579,6 +582,10 @@ export class ChargyApp {
 
         this.applicationHashDiv                       = document.getElementById('applicationHash')                          as HTMLDivElement;
         this.applicationHashValueDiv                  = this.applicationHashDiv.querySelector("#value")                     as HTMLDivElement;
+
+        this.chargyCoreHashDiv                        = document.getElementById('chargyCoreHash')                           as HTMLDivElement;
+        this.chargyCoreHashTextDiv                    = this.chargyCoreHashDiv. querySelector("#text")                      as HTMLDivElement;
+        this.chargyCoreHashValueDiv                   = this.chargyCoreHashDiv. querySelector("#value")                     as HTMLDivElement;
 
         this.feedbackDiv                              = document.getElementById('feedback')                                 as HTMLDivElement;
         this.feedbackMethodsDiv                       = this.feedbackDiv.       querySelector("#feedbackMethods")           as HTMLDivElement;
@@ -1416,6 +1423,8 @@ export class ChargyApp {
 
                 (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.packageJson.version;
                 (this.openSourceLibsDiv.querySelector("#chargyCoreVersion")      as HTMLSpanElement).innerHTML = corePackageJson.version;
+                this.chargyCoreHashTextDiv.innerHTML  = `SHA512-Hashwert der Chargy Core v${corePackageJson.version}:`;
+                this.chargyCoreHashValueDiv.innerHTML = __CHARGY_CORE_SHA512__.match(/.{1,8}/g)?.join(" ") ?? "";
 
             if (this.packageJson.devDependencies)
             {

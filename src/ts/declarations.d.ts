@@ -1,6 +1,8 @@
 declare module "*.css";
 declare module "*.scss";
 
+declare const __CHARGY_CORE_SHA512__: string;
+
 declare module "asn1.js" {
     interface Asn1Builder {
         bitstr(): Asn1Builder;

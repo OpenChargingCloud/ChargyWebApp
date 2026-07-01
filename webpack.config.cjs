@@ -3,10 +3,18 @@ const webpack              = require('webpack');
 const HtmlWebpackPlugin    = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin    = require('copy-webpack-plugin');
+const packageLock          = require('./package-lock.json');
 
 const modeArgIndex = process.argv.indexOf('--mode');
 const cliMode      = modeArgIndex >= 0 ? process.argv[modeArgIndex + 1] : undefined;
 const mode         = process.env.NODE_ENV === 'production' ? 'production' : cliMode || 'development';
+
+const chargyCorePackageName  = '@open-charging-cloud/chargy-core';
+const chargyCorePackage      = packageLock.packages?.[`node_modules/${chargyCorePackageName}`];
+const chargyCoreIntegrity    = chargyCorePackage?.integrity ?? '';
+const chargyCoreSHA512       = chargyCoreIntegrity.startsWith('sha512-')
+  ? Buffer.from(chargyCoreIntegrity.substring('sha512-'.length), 'base64').toString('hex')
+  : '';
 
 const sourceMapModuleName = info => {
   let resourcePath = (info.resourcePath || info.absoluteResourcePath || '').replace(/\\/g, '/');
@@ -104,6 +112,9 @@ module.exports = {
     devtoolModuleFilenameTemplate: sourceMapModuleName
   },
   plugins: [
+    new webpack.DefinePlugin({
+      __CHARGY_CORE_SHA512__: JSON.stringify(chargyCoreSHA512)
+    }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
