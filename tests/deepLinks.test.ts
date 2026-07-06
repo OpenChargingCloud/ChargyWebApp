@@ -12,10 +12,19 @@ import {
 
 describe("Deep link helpers", () => {
 
-    test("decodes standard Base64 and Base64URL payloads", () => {
+    test("decodes unpadded Base64URL payloads", () => {
 
-        expect(decodeUtf8(decodeBase64Url("eyJoZWxsbyI6IndvcmxkIn0="))).toBe('{"hello":"world"}');
+        expect(decodeUtf8(decodeBase64Url("eyJoZWxsbyI6IndvcmxkIn0"))).toBe('{"hello":"world"}');
         expect(decodeUtf8(decodeBase64Url("SGVsbG8td29ybGQ"))).toBe("Hello-world");
+        expect(decodeBase64Url("-_8")).toEqual(new Uint8Array([251, 255]));
+
+    });
+
+    test("rejects standard Base64, padding and whitespace", () => {
+
+        expect(() => decodeBase64Url("+/8=")).toThrow("must use unpadded Base64URL");
+        expect(() => decodeBase64Url("eyJoZWxsbyI6IndvcmxkIn0=")).toThrow("must use unpadded Base64URL");
+        expect(() => decodeBase64Url(" SGVsbG8td29ybGQ")).toThrow("must use unpadded Base64URL");
 
     });
 

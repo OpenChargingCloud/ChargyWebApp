@@ -68,10 +68,10 @@ The hosted WebApp supports deep links for CPOs and backend systems that want to 
 Small charge transparency records can be embedded directly in the URL via the `verify` query parameter:
 
 ```
-https://chargy.charging.cloud?verify=<base64-or-base64url-encoded-data>
+https://chargy.charging.cloud?verify=<unpadded-base64url-encoded-data>
 ```
 
-The payload is decoded by the browser and then processed like data received via drag and drop or clipboard paste. Both standard Base64 and Base64URL are accepted. Base64URL without padding is recommended for links.
+The `verify` value **must use unpadded Base64URL encoding** as defined by RFC 4648 section 5. Standard Base64 is not accepted: use `-` and `_` instead of `+` and `/`, and omit trailing `=` padding. The payload is decoded by the browser and then processed like data received via drag and drop or clipboard paste.
 
 This variant should only be used for small text payloads such as compact JSON, XML or OCMF data. Large payloads are not recommended because URL size limits vary between browsers, proxies, mail clients and QR-code workflows. As a practical rule of thumb, keep the full URL below a few kilobytes whenever possible.
 

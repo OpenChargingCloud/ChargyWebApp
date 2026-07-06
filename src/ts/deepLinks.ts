@@ -73,11 +73,15 @@ export function withDeepLinkVerificationToken(verifyURL: URL,
 export function decodeBase64Url(base64Value: string): Uint8Array
 {
 
+    if (!/^[A-Za-z0-9_-]+$/.test(base64Value) ||
+        base64Value.length % 4 === 1)
+    {
+        throw new Error("Deep-link verification data must use unpadded Base64URL encoding.");
+    }
+
     const normalizedBase64 = base64Value.
-        trim().
         replace(/-/g, "+").
-        replace(/_/g, "/").
-        replace(/\s/g, "");
+        replace(/_/g, "/");
 
     const paddedBase64 = normalizedBase64.padEnd(
         normalizedBase64.length + ((4 - normalizedBase64.length % 4) % 4),
