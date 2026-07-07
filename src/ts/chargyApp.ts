@@ -21,6 +21,7 @@ import {
     ChargeTransparencyLiveLink as chargeTransparencyLiveLink,
     ChargeTransparencyRecord   as chargeTransparencyRecord,
     PublicKeyInfo              as publicKeyInfo,
+    SimpleURL                  as simpleURL,
     readQRCodeTextFromImageData
 }                                       from '@open-charging-cloud/chargy-core'
 import * as chargyLib                   from '@open-charging-cloud/chargy-core'
@@ -55,11 +56,7 @@ import { calculateBETTariffTotal }     from './betTariffCosts';
 import '../scss/chargy.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-type DetectionResult = chargeTransparencyRecord.  IChargeTransparencyRecord   |
-                       chargeTransparencyLiveLink.IChargeTransparencyLiveLink |
-                       publicKeyInfo.             IPublicKey                  |
-                       publicKeyInfo.             IPublicKeyLookup            |
-                       chargyInterfaces.          ISessionCryptoResult;
+type DetectionResult = Awaited<ReturnType<Chargy["DetectAndConvertContentFormat"]>>;
 
 type DetectionOptions = {
     prepareUI?: boolean;
@@ -526,6 +523,7 @@ export class ChargyApp {
     private currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord|null = null;
     private currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink|null = null;
     private currentPublicKeyLookup:             publicKeyInfo.IPublicKeyLookup|null = null;
+    private currentSimpleURL:                   simpleURL.IURL|null = null;
     private currentGlobalError:                 chargyInterfaces.ISessionCryptoResult|null = null;
 
     //#endregion
@@ -982,6 +980,7 @@ export class ChargyApp {
             this.currentChargeTransparencyRecord         = null;
             this.currentChargeTransparencyLiveLink       = null;
             this.currentPublicKeyLookup                  = null;
+            this.currentSimpleURL                        = null;
             this.currentGlobalError                      = null;
 
             this.minlat =  1000;
@@ -1390,6 +1389,13 @@ export class ChargyApp {
             this.chargingSessionScreenDiv.style.display !== "none")
         {
             this.showPublicKeyInfo(this.currentPublicKeyLookup);
+            return;
+        }
+
+        if (this.currentSimpleURL != null &&
+            this.chargingSessionScreenDiv.style.display !== "none")
+        {
+            this.showSimpleURL(this.currentSimpleURL);
             return;
         }
 
@@ -1865,6 +1871,7 @@ export class ChargyApp {
         this.currentChargeTransparencyRecord         = null;
         this.currentChargeTransparencyLiveLink       = null;
         this.currentPublicKeyLookup                  = null;
+        this.currentSimpleURL                        = null;
         this.clearRenderedChargeData(true);
 
         const text = this.getSessionCryptoResultText(result);
@@ -2605,6 +2612,19 @@ export class ChargyApp {
 
         }
 
+        if (simpleURL.IsAURL(result))
+        {
+            if (options?.prepareUI === false)
+            {
+                this.inputInfosDiv.style.display = 'none';
+                this.errorTextDiv.style.display  = 'none';
+            }
+
+            this.showSimpleURL(result);
+
+            return true;
+        }
+
         if (options?.onError !== undefined)
             options.onError(result);
         else
@@ -2628,6 +2648,7 @@ export class ChargyApp {
         this.currentPublicKeyLookup                 = { publicKeys };
         this.currentChargeTransparencyRecord        = null;
         this.currentChargeTransparencyLiveLink      = null;
+        this.currentSimpleURL                       = null;
         this.currentGlobalError                     = null;
         this.clearRenderedChargeData();
 
@@ -2761,6 +2782,68 @@ export class ChargyApp {
     //#endregion
 
 
+    //#region showSimpleURL(URLInfo)
+
+    private showSimpleURL(URLInfo: simpleURL.IURL): void
+    {
+
+        this.currentSimpleURL                       = URLInfo;
+        this.currentChargeTransparencyRecord        = null;
+        this.currentChargeTransparencyLiveLink      = null;
+        this.currentPublicKeyLookup                 = null;
+        this.currentGlobalError                     = null;
+        this.clearRenderedChargeData();
+
+        this.inputDiv.style.flexDirection           = "column";
+        this.aboutScreenDiv.style.display           = "none";
+        this.imprintScreenDiv.style.display         = "none";
+        this.chargingSessionScreenDiv.style.display = "flex";
+        this.chargingSessionScreenDiv.innerText     = "";
+        this.invalidDataSetsScreenDiv.style.display = "none";
+        this.invalidDataSetsScreenDiv.innerText     = "";
+        this.inputButtonsDiv.style.display          = "flex";
+        this.exportButtonDiv.style.display          = "none";
+
+        const descriptionDiv       = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
+        descriptionDiv.id          = "description";
+        descriptionDiv.innerText   = this.chargy.GetLocalizedMessage("urlDetailsTitle");
+
+        const urlsDiv              = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
+        urlsDiv.id                 = "chargingSessions";
+
+        const urlDiv               = chargyLib.CreateDiv(urlsDiv, "chargingSession");
+        urlDiv.classList.add("publicKeyCard");
+
+        const cardTitleDiv         = urlDiv.appendChild(document.createElement('div'));
+        cardTitleDiv.className     = "date";
+        cardTitleDiv.innerText     = this.chargy.GetLocalizedMessage("urlLabel");
+
+        const tableDiv             = urlDiv.appendChild(document.createElement('div'));
+        tableDiv.className         = "table publicKeyTable";
+
+        this.appendPublicKeyInfoRow(tableDiv, "fa-globe", "urlContextLabel", URLInfo["@context"]);
+        this.appendPublicKeyInfoRow(tableDiv, "fa-link",  "urlAddressLabel", URLInfo.url, true);
+
+        if (URLInfo.method !== undefined)
+            this.appendPublicKeyInfoRow(tableDiv, "fa-right-left", "urlMethodLabel", URLInfo.method);
+
+        if (URLInfo.acceptType !== undefined)
+            this.appendPublicKeyInfoRow(tableDiv, "fa-file-arrow-down", "urlAcceptTypeLabel", URLInfo.acceptType);
+
+        if (URLInfo.actions !== undefined)
+            this.appendPublicKeyInfoRow(tableDiv, "fa-bolt", "urlActionsLabel", URLInfo.actions.join(", "));
+
+        if (URLInfo.serviceTypes !== undefined)
+            this.appendPublicKeyInfoRow(tableDiv, "fa-gears", "urlServiceTypesLabel", URLInfo.serviceTypes.join(", "));
+
+        if (URLInfo.serviceData !== undefined)
+            this.appendPublicKeyInfoRow(tableDiv, "fa-code", "urlServiceDataLabel", JSON.stringify(URLInfo.serviceData, null, 2), true);
+
+    }
+
+    //#endregion
+
+
     //#region showChargeTransparencyLiveLink(LiveLink)
 
     private showChargeTransparencyLiveLink(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink) : void
@@ -2769,6 +2852,7 @@ export class ChargyApp {
         this.currentChargeTransparencyLiveLink       = LiveLink;
         this.currentChargeTransparencyRecord         = null;
         this.currentPublicKeyLookup                  = null;
+        this.currentSimpleURL                        = null;
         this.currentGlobalError                      = null;
         this.clearRenderedChargeData();
 
@@ -2958,6 +3042,7 @@ export class ChargyApp {
         this.currentChargeTransparencyRecord         = CTR;
         this.currentChargeTransparencyLiveLink       = null;
         this.currentPublicKeyLookup                  = null;
+        this.currentSimpleURL                        = null;
         this.currentGlobalError                      = null;
         this.clearRenderedChargeData();
 

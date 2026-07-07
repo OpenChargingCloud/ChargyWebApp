@@ -12,20 +12,19 @@ import {
     IsAChargeTransparencyLiveLink
 } from '@open-charging-cloud/chargy-core';
 import type {
-    IChargeTransparencyRecord,
     IMeasurement,
     IMeasurementValue,
     I18NString,
     ICryptoResult,
     IFileInfo,
     ISessionCryptoResult,
-    IValidationRules,
-    IPublicKey,
-    IChargeTransparencyLiveLink
+    IValidationRules
 } from '@open-charging-cloud/chargy-core';
 
 import coreI18n  from '@open-charging-cloud/chargy-core/i18n.json';
 import localI18n from '../src/i18n.json';
+
+type DetectionResult = Awaited<ReturnType<Chargy["DetectAndConvertContentFormat"]>>;
 
 
 export {
@@ -257,10 +256,7 @@ async function verifyChargeData(fileName:  string,
                                 type?:     string,
                                 validationRules?: IValidationRules)
 
-    : Promise<IChargeTransparencyRecord   |
-              IChargeTransparencyLiveLink |
-              IPublicKey                  |
-              ISessionCryptoResult>
+    : Promise<DetectionResult>
 
 {
 
@@ -279,16 +275,13 @@ async function verifyChargeData(fileName:  string,
 async function verifyChargeDataFiles(fileInfos: IFileInfo[],
                                      validationRules?: IValidationRules)
 
-    : Promise<IChargeTransparencyRecord   |
-              IChargeTransparencyLiveLink |
-              IPublicKey                  |
-              ISessionCryptoResult>
+    : Promise<DetectionResult>
 
 {
     return createVerificationChargy(validationRules).DetectAndConvertContentFormat(fileInfos);
 }
 
-function formatChargeDataVerificationReport(report: IChargeTransparencyRecord | IChargeTransparencyLiveLink | IPublicKey | ISessionCryptoResult): string {
+function formatChargeDataVerificationReport(report: DetectionResult): string {
 
     if (IsAChargeTransparencyLiveLink(report))
         return [
