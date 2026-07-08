@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:05467091-c9bf-4625-aa73-4faa2af865c6",
+  "serialNumber": "urn:uuid:f68dd457-6a2e-49c0-a868-7c53dc0977d2",
   "metadata": {
-    "timestamp": "2026-07-07T22:28:59.872Z",
+    "timestamp": "2026-07-08T15:53:44.664Z",
     "tools": {
       "components": [
         {
@@ -342,8 +342,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.10.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.10.0",
+      "version": "0.11.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.11.3",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -354,7 +354,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.10.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.11.3",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -372,12 +372,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.10.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.11.3.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "5b9010bd1d79ebdb31a7b09bb0fc1d66938f58645aed04910ab1f1b48810878dc131182b37e4b8f7a374816d3d698d4f55c01f10e6f8fcd91937394d71c8df20"
+              "content": "32f438ce72d4509b7d2a8be12532343ee025eaa3e42ac457478cd757c901fb4ad98d31b3e17fe51ff23f974df836232c609cdaf1e7bf63673b6b5ab9c6e79eaa"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -4346,6 +4346,218 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@napi-rs/canvas"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "curves",
+      "group": "@noble",
+      "version": "2.2.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0",
+      "author": "Paul Miller",
+      "description": "Audited & minimal JS implementation of elliptic curve cryptography",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40noble/curves@2.2.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/paulmillr/noble-curves.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://paulmillr.com/noble/",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/paulmillr/noble-curves/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@noble/curves/-/curves-2.2.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "4ff0681e01578ab6f410d48f06abb35f4adc8d778ce8ba3cf766b68e560992a93cdcba99c7497539fec3ce5289ea3929bccae41d29c07206f925e80bf1278891"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@noble/curves"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "hashes",
+          "group": "@noble",
+          "version": "2.2.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0|@noble/hashes@2.2.0",
+          "author": "Paul Miller",
+          "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40noble/hashes@2.2.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/paulmillr/noble-hashes.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://paulmillr.com/noble/",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/paulmillr/noble-hashes/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@noble/hashes/-/hashes-2.2.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "218a831a24d769be859e20209d2759c2059ba26c69cbd16d62f2cab3bc0252cd9af119084c6f831463b50ccf5cafe137fd18000d1a458eb295689d73eac8ed12"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@noble/curves/node_modules/@noble/hashes"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "post-quantum",
+      "group": "@noble",
+      "version": "0.6.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.6.1",
+      "author": "Paul Miller",
+      "description": "Auditable & minimal JS implementation of post-quantum cryptography: FIPS 203, 204, 205, Falcon",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40noble/post-quantum@0.6.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/paulmillr/noble-post-quantum.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://paulmillr.com/noble/",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/paulmillr/noble-post-quantum/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@noble/post-quantum/-/post-quantum-0.6.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "fa9a2b9ab0d9c23470d3953c0032b82691de8e8f3bfa005dfa6b91041fe8cf3b47e728432cc0c5e231d058ddcd41002cbb5cc134f5931b4670548d02476f47d0"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@noble/post-quantum"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "hashes",
+          "group": "@noble",
+          "version": "2.2.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.6.1|@noble/hashes@2.2.0",
+          "author": "Paul Miller",
+          "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40noble/hashes@2.2.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/paulmillr/noble-hashes.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://paulmillr.com/noble/",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/paulmillr/noble-hashes/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@noble/hashes/-/hashes-2.2.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "218a831a24d769be859e20209d2759c2059ba26c69cbd16d62f2cab3bc0252cd9af119084c6f831463b50ccf5cafe137fd18000d1a458eb295689d73eac8ed12"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@noble/post-quantum/node_modules/@noble/hashes"
+            }
+          ]
         }
       ]
     },
@@ -14282,6 +14494,58 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@napi-rs/canvas-win32-x64-msvc"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ciphers",
+      "group": "@noble",
+      "version": "2.2.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.2.0",
+      "author": "Paul Miller",
+      "description": "Audited & minimal JS implementation of Salsa20, ChaCha and AES",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40noble/ciphers@2.2.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/paulmillr/noble-ciphers.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://paulmillr.com/noble/",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/paulmillr/noble-ciphers/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@noble/ciphers/-/ciphers-2.2.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "67aa63219ffc2097021b36f64bfd0fc7927cd728a3f39c404ae935b5e2cd7a0ef96df4f4ecc5776bf3b632d9f5236b1ee37937964544705691d7437872041c64"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@noble/ciphers"
         }
       ]
     },
@@ -33121,7 +33385,7 @@
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@1.15.10",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.10.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.11.3",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.21",
         "chargytransparenzsoftware@1.4.7|@types/node@26.0.1",
@@ -33195,9 +33459,11 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.10.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.11.3",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.1",
+        "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0",
+        "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.6.1",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
         "chargytransparenzsoftware@1.4.7|base32-decode@1.0.0",
         "chargytransparenzsoftware@1.4.7|buffer@6.0.3",
@@ -33788,6 +34054,26 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.1"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0|@noble/hashes@2.2.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0|@noble/hashes@2.2.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.6.1",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.2.0",
+        "chargytransparenzsoftware@1.4.7|@noble/curves@2.2.0",
+        "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.6.1|@noble/hashes@2.2.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.6.1|@noble/hashes@2.2.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|file-type@22.0.1",
@@ -34838,6 +35124,9 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.1"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.2.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
