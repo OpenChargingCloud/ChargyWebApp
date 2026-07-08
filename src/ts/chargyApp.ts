@@ -1457,10 +1457,13 @@ export class ChargyApp {
             {
                 (this.openSourceLibsDiv.querySelector("#fontAwesome")            as HTMLSpanElement).innerHTML = packageVersion("@fortawesome/fontawesome-free");
                 (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).innerHTML = packageVersion("elliptic");
+                (this.openSourceLibsDiv.querySelector("#nobleCurves")            as HTMLSpanElement).innerHTML = packageVersion("@noble/curves");
+                (this.openSourceLibsDiv.querySelector("#noblePostQuantum")       as HTMLSpanElement).innerHTML = packageVersion("@noble/post-quantum");
                 (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).innerHTML = packageVersion("moment");
                 (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = packageVersion("pdfjs-dist");
                 (this.openSourceLibsDiv.querySelector("#seekBzip")               as HTMLSpanElement).innerHTML = packageVersion("seek-bzip");
                 (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = packageVersion("file-type");
+                (this.openSourceLibsDiv.querySelector("#isURLSuperb")            as HTMLSpanElement).innerHTML = packageVersion("is-url-superb");
                 (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).innerHTML = packageVersion("jsqr");
                 (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = packageVersion("asn1.js");
                 (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).innerHTML = packageVersion("buffer");
