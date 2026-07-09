@@ -553,10 +553,9 @@ export class ChargyApp {
 
         //#region Load external data from web server
 
-        void this.loadI18n().then(async () => {
-            this.applyTranslations();
-            await this.updateQRCodeScannerAvailability();
-        });
+        this.loadI18n();
+        this.applyTranslations();
+        void this.updateQRCodeScannerAvailability();
         void this.loadPackageJSON();
 
         //#endregion
@@ -1051,13 +1050,9 @@ export class ChargyApp {
 
         const linkButtons  = document.getElementsByClassName('linkButton') as HTMLCollectionOf<HTMLButtonElement>;
 
-        for (let i = 0; i < linkButtons.length; i++) {
+        for (const linkButton of linkButtons) {
 
-            const linkButton = linkButtons[i];
-
-            if (linkButton)
-            {
-                linkButton.onclick = function (this: GlobalEventHandlers, ev: MouseEvent) {
+            linkButton.onclick = function (this: GlobalEventHandlers, ev: MouseEvent) {
 
                     ev.preventDefault();
                     const link = linkButton.getAttribute("href");
@@ -1065,8 +1060,7 @@ export class ChargyApp {
                     if (link && (link.startsWith("http://") || link.startsWith("https://")))
                         window.open(link, '_blank');
 
-                }
-            }
+            };
 
         }
 
@@ -1302,7 +1296,7 @@ export class ChargyApp {
                 const language = languageMenuButton.dataset["language"];
                 if (this.isSupportedLanguage(language))
                     await this.setUILanguage(language);
-            };
+                };
         }
 
         document.addEventListener("click", () => {
@@ -1412,7 +1406,7 @@ export class ChargyApp {
 
     //#region (private) loadI18n()
 
-    private async loadI18n() {
+    private loadI18n(): void {
         Object.assign(this.i18n, coreI18n, webAppI18n);
     }
 
@@ -1448,9 +1442,9 @@ export class ChargyApp {
 
             if (this.packageJson.devDependencies)
             {
-                (this.openSourceLibsDiv.querySelector("#SASS")                   as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["sass"]?.                   replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#typeScript")             as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["typescript"]?.             replace(/[^0-9\.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#webpack")                as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["webpack"]?.                replace(/[^0-9\.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#SASS")                   as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["sass"]?.                   replace(/[^0-9.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#typeScript")             as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["typescript"]?.             replace(/[^0-9.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#webpack")                as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["webpack"]?.                replace(/[^0-9.]/g, "");
             }
 
             if (this.packageJson.dependencies)
@@ -1740,7 +1734,7 @@ export class ChargyApp {
     //#region UpdateFeedbackSection()
 
     public UpdateFeedbackSection(FeedbackEMail?:   string[],
-                                 FeedbackHotline?: string[]) {
+                                 FeedbackHotline?: string[]): void {
 
         if (!this.showFeedbackSection)
         {
@@ -2518,8 +2512,10 @@ export class ChargyApp {
 
 
         }
-        catch (exception)
-        { }
+        catch (_exception)
+        {
+            // Ignore malformed signatures and use the invalid-signature fallback below.
+        }
 
         return "<i class=\"fas fa-times-circle\"></i>" + signature.signer;
 
@@ -3047,6 +3043,7 @@ export class ChargyApp {
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
         this.currentGlobalError                      = null;
+        let address: chargyInterfaces.IAddress | undefined;
         this.clearRenderedChargeData();
 
         //#region Prepare View
@@ -3579,8 +3576,6 @@ export class ChargyApp {
 
                 try
                 {
-
-                    var address:chargyInterfaces.IAddress|undefined = undefined;
 
                     if (chargingSession.chargingStation?.address != null)
                         address = chargingSession.chargingStation.address;
@@ -4420,8 +4415,8 @@ export class ChargyApp {
         powerButton.textContent        = this.chargy.GetLocalizedMessage("chargingProgressPowerLinkLabel");
 
         measurementsButton.onclick = showRows;
-        energyButton.onclick       = () => showChart("energy", energyButton);
-        powerButton.onclick        = () => showChart("power",  powerButton);
+        energyButton.onclick       = () => { showChart("energy", energyButton); };
+        powerButton.onclick        = () => { showChart("power",  powerButton); };
 
         chartDiv.style.display = "none";
 
@@ -4652,7 +4647,7 @@ export class ChargyApp {
                                                   key => this.chargy.GetLocalizedMessage(key)))
                                 continue;
 
-                            var chargingPeriodRow      = tariffTableDiv.appendChild(document.createElement('div'));
+                            const chargingPeriodRow      = tariffTableDiv.appendChild(document.createElement('div'));
                             chargingPeriodRow.classList.add("chargingTariffRow");
                             chargingPeriodRow.onclick  = () => {
                                 this.showChargingTariffDetails(tariff);
@@ -4723,7 +4718,7 @@ export class ChargyApp {
                             if (chargingPeriod)
                             {
 
-                                var chargingPeriodRow        = chargingPeriodsTableDiv.appendChild(document.createElement('div'));
+                                const chargingPeriodRow        = chargingPeriodsTableDiv.appendChild(document.createElement('div'));
                                 chargingPeriodRow.classList.add("chargingPeriodRow");
                                 chargingPeriodRow.onclick    = () => {
                                     this.showChargingPeriodDetails(chargingPeriod);
