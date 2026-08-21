@@ -16,3 +16,5 @@ src/ts/*.js.map
 .DS_Store
 .claude/
 .npm-cache/
+artifacts/
+audit-*.json

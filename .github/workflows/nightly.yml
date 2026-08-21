@@ -1,0 +1,201 @@
+name: Nightly
+
+# Scheduled checks cover moving inputs that do not belong in the merge gate:
+# runner images, newly released dependencies and npm security advisories.
+on:
+  schedule:
+    # Avoid the heavily loaded top of the hour.
+    - cron: '17 3 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nightly-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  full-suite:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node: '22.13'
+            leg: ubuntu-node-22.13
+          - os: ubuntu-latest
+            node: '26'
+            leg: ubuntu-node-26
+          - os: windows-latest
+            node: '24'
+            leg: windows-node-24
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck application
+        run: npm run typecheck
+
+      - name: Typecheck tests
+        run: npm run test:typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test -- --reporter=default --reporter=junit --outputFile.junit=artifacts/tests-${{ matrix.leg }}.xml
+
+      - name: Build production application
+        run: npm run build:production
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: nightly-results-${{ matrix.leg }}
+          path: artifacts/*.xml
+          if-no-files-found: ignore
+
+  # Resolve every semver range without consulting package-lock.json. A failure
+  # here warns about a future dependency update without blocking pull requests.
+  floating-dependencies:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    continue-on-error: true
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26'
+
+      - name: Install newest permitted dependencies
+        run: npm install --no-package-lock
+
+      - name: Report resolved versions
+        shell: bash
+        run: |
+          {
+            echo '## Dependency versions with the lockfile ignored'
+            echo
+            echo '| Package | Range | Locked | Resolved |'
+            echo '| --- | --- | --- | --- |'
+          } >> "$GITHUB_STEP_SUMMARY"
+          node -e '
+            const fs = require("fs");
+            const pkg  = JSON.parse(fs.readFileSync("package.json", "utf8"));
+            const lock = JSON.parse(fs.readFileSync("package-lock.json", "utf8"));
+            for (const [name, range] of Object.entries({
+              ...(pkg.dependencies ?? {}),
+              ...(pkg.devDependencies ?? {})
+            })) {
+              let resolved = "(missing)";
+              try {
+                resolved = JSON.parse(
+                  fs.readFileSync(`node_modules/${name}/package.json`, "utf8")
+                ).version;
+              } catch {}
+              const locked = lock.packages?.[`node_modules/${name}`]?.version ?? "?";
+              const mark = locked !== resolved ? " **changed**" : "";
+              console.log(`| \`${name}\` | \`${range}\` | ${locked} | ${resolved}${mark} |`);
+            }
+          ' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Typecheck application
+        run: npm run typecheck
+
+      - name: Typecheck tests
+        run: npm run test:typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test
+        run: npm test -- --reporter=default --reporter=junit --outputFile.junit=artifacts/tests-floating.xml
+
+      # The normal build also generates an SBOM from package-lock.json. This
+      # job deliberately ignored that lockfile, so only bundle the installed
+      # dependency tree here instead of producing a misleading locked SBOM.
+      - name: Build production application
+        run: npm run clean && npm run bundle:production
+
+      - name: Upload test results
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: nightly-results-floating
+          path: artifacts/*.xml
+          if-no-files-found: ignore
+
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Audit dependencies
+        shell: bash
+        run: |
+          npm audit --omit=dev --json > audit-production.json || true
+          npm audit --json > audit-all.json || true
+          node -e '
+            const fs = require("fs");
+            const render = (file, title) => {
+              let report;
+              try {
+                report = JSON.parse(fs.readFileSync(file, "utf8"));
+              } catch {
+                return `### ${title}\n\nReport could not be read.\n`;
+              }
+              const counts = report.metadata?.vulnerabilities ?? {};
+              const rows = Object.values(report.vulnerabilities ?? {}).map(
+                vulnerability =>
+                  `| \`${vulnerability.name}\` | ${vulnerability.severity} | ${vulnerability.fixAvailable ? "yes" : "**no**"} |`
+              );
+              return `### ${title}\n\n`
+                + `critical ${counts.critical ?? 0} · high ${counts.high ?? 0} · `
+                + `moderate ${counts.moderate ?? 0} · low ${counts.low ?? 0}\n\n`
+                + (rows.length
+                    ? `| Package | Severity | Fix available |\n| --- | --- | --- |\n${rows.join("\n")}\n`
+                    : "Nothing reported.\n");
+            };
+            console.log("## npm audit\n");
+            console.log(render("audit-production.json", "Runtime dependencies"));
+            console.log(render("audit-all.json", "Including build-time dependencies"));
+          ' >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload audit reports
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: nightly-audit
+          path: audit-*.json
+          if-no-files-found: ignore
