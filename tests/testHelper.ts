@@ -1,7 +1,7 @@
 import { expect, vi }     from 'vitest';
 import { Chargy }         from '@open-charging-cloud/chargy-core';
+import { DOMParser as OozcitakDOMParser } from '@oozcitak/dom';
 import { readFileSync }   from "node:fs";
-import { createRequire }  from "node:module";
 import {
     createTestChargy,
     mergeI18NDictionaries,
@@ -40,8 +40,7 @@ export {
     verifyChargeDataFiles
 }
 
-const require = createRequire(import.meta.url);
-const { DOMParser } = require("@oozcitak/dom") as { DOMParser: typeof globalThis.DOMParser };
+const DOMParser = OozcitakDOMParser as unknown as typeof globalThis.DOMParser;
 
 vi.mock('pdfjs-dist', async () => {
     const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');

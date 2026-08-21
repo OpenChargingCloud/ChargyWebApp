@@ -119,6 +119,44 @@ type ChargingProgressChartData = {
     yAxisLabel:     string;
 };
 
+interface IApplicationHashSignaturesResponse {
+    name:        string;
+    edition:     string;
+    description: Record<string, string>;
+    versions:    IApplicationVersion[];
+}
+
+interface IApplicationVersion {
+    version:     string;
+    releaseDate: string;
+    description: Record<string, string>;
+    tags:        string[];
+    packages:    IApplicationPackage[];
+}
+
+interface IApplicationPackage {
+    name:           string;
+    description:    Record<string, string>;
+    additionalInfo?: Record<string, string>;
+    tags:           string[];
+    cryptoHashes:   IApplicationCryptoHash[];
+    signatures:     IApplicationSignature[];
+}
+
+interface IApplicationCryptoHash {
+    SHA512: string;
+}
+
+interface IApplicationSignature {
+    signer:     string;
+    timestamp:  string;
+    comment:    Record<string, string>;
+    publicKey:  string;
+    algorithm:  string;
+    format:     string;
+    signature:  string;
+}
+
 function namedDeviceValue(value: string | { name?: string | undefined } | undefined): string | undefined {
 
     if (typeof value === "string")
@@ -414,6 +452,7 @@ export class ChargyApp {
     private readonly asn1:                               any;
     private readonly base32Decode:                       any;
 
+    public           appVersion:                         string                            = "";
     public           appEdition:                         string                            = "";
     public           copyright:                          string                            = "";
     public           versionsURL:                        string                            = "";
@@ -421,7 +460,7 @@ export class ChargyApp {
     public           defaultFeedbackHotline:             string[]                          = [];
     public           defaultIssueURL:                    string                            = "";
     public           packageJson:                        any                               = {};
-    public           i18n:                               chargyLib.I18NDictionary           = {};
+    public           i18n:                               chargyLib.I18NDictionary          = {};
     public           UILanguage:                         SupportedLanguage                 = "en";
 
     private readonly currentAppInfos:                    any                               = null;
@@ -457,6 +496,7 @@ export class ChargyApp {
     private readonly imprintScreenDiv:                   HTMLDivElement;
     private readonly applicationHashDiv:                 HTMLDivElement;
     private readonly applicationHashValueDiv:            HTMLDivElement;
+    private readonly equalityCheckDiv:                   HTMLDivElement;
     private readonly chargyCoreHashDiv:                  HTMLDivElement;
     private readonly chargyCoreHashTextDiv:              HTMLDivElement;
     private readonly chargyCoreHashValueDiv:             HTMLDivElement;
@@ -514,17 +554,17 @@ export class ChargyApp {
     private readonly qrCodeScannerOpenURLButton:         HTMLButtonElement;
     private readonly qrCodeScannerRescanButton:          HTMLButtonElement;
     private readonly qrCodeScannerCancelButton:          HTMLButtonElement;
-    private qrCodeScannerStream:                MediaStream|null     = null;
-    private qrCodeScannerAnimationFrame:        number|null          = null;
-    private qrCodeScannerIsProcessing:          boolean              = false;
-    private qrCodeScannerLastText:              string|null          = null;
-    private qrCodeScannerLastURL:               URL|null             = null;
+    private          qrCodeScannerStream:                MediaStream | null   = null;
+    private          qrCodeScannerAnimationFrame:        number      | null   = null;
+    private          qrCodeScannerIsProcessing:          boolean              = false;
+    private          qrCodeScannerLastText:              string      | null   = null;
+    private          qrCodeScannerLastURL:               URL         | null   = null;
 
-    private currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord|null = null;
-    private currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink|null = null;
-    private currentPublicKeyLookup:             publicKeyInfo.IPublicKeyLookup|null = null;
-    private currentSimpleURL:                   simpleURL.IURL|null = null;
-    private currentGlobalError:                 chargyInterfaces.ISessionCryptoResult|null = null;
+    private          currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
+    private          currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink | null   = null;
+    private          currentPublicKeyLookup:             publicKeyInfo.IPublicKeyLookup                         | null   = null;
+    private          currentSimpleURL:                   simpleURL.IURL                                         | null   = null;
+    private          currentGlobalError:                 chargyInterfaces.ISessionCryptoResult                  | null   = null;
 
     //#endregion
 
@@ -540,9 +580,9 @@ export class ChargyApp {
 
         //#region Set parameters
 
-        this.appEdition                = appEdition          ?? "";
+        this.appEdition                = appEdition          ?? "default";
         this.copyright                 = copyright           ?? "";
-        this.versionsURL               = versionsURL         ?? "https://chargy.charging.cloud/apps/web/versions";
+        this.versionsURL               = versionsURL         ?? "https://chargy.charging.cloud/apps/web/" + this.appEdition + "/versions/";
         this.showFeedbackSection       = showFeedbackSection ?? false;
         this.defaultFeedbackEMail      = feedbackEMail       ?? [];
         this.defaultFeedbackHotline    = feedbackHotline     ?? [];
@@ -554,7 +594,6 @@ export class ChargyApp {
         //#region Load external data from web server
 
         this.loadI18n();
-        this.applyTranslations();
         void this.updateQRCodeScannerAvailability();
         void this.loadPackageJSON();
 
@@ -585,6 +624,7 @@ export class ChargyApp {
 
         this.applicationHashDiv                       = document.getElementById('applicationHash')                          as HTMLDivElement;
         this.applicationHashValueDiv                  = this.applicationHashDiv.querySelector("#value")                     as HTMLDivElement;
+        this.equalityCheckDiv                         = this.applicationHashDiv.querySelector("#equalityCheck")              as HTMLDivElement;
 
         this.chargyCoreHashDiv                        = document.getElementById('chargyCoreHash')                           as HTMLDivElement;
         this.chargyCoreHashTextDiv                    = this.chargyCoreHashDiv. querySelector("#text")                      as HTMLDivElement;
@@ -611,19 +651,19 @@ export class ChargyApp {
 
         this.chargingTariffDetailsDiv                 = document.getElementById('chargingTariffDetails')                    as HTMLDivElement;
         this.chargingTariffDetailsLeftButton          = this.chargingTariffDetailsDiv.querySelector(".overlayLeftButton")   as HTMLButtonElement;
-        this.chargingTariffDetailsLeftButton.onclick  = () => {
+        this.chargingTariffDetailsLeftButton.onclick  = ():void => {
                                                             this.chargingTariffDetailsDiv.style.display = 'none';
                                                         }
 
         this.chargingPeriodDetailsDiv                 = document.getElementById('chargingPeriodDetails')                    as HTMLDivElement;
         this.chargingPeriodDetailsLeftButton          = this.chargingPeriodDetailsDiv.querySelector(".overlayLeftButton")   as HTMLButtonElement;
-        this.chargingPeriodDetailsLeftButton.onclick  = () => {
+        this.chargingPeriodDetailsLeftButton.onclick  = ():void => {
                                                             this.chargingPeriodDetailsDiv.style.display = 'none';
                                                         }
 
         this.measurementsDetailsDiv                   = document.getElementById('measurementsDetails')                      as HTMLDivElement;
         this.measurementsDetailsLeftButton            = this.measurementsDetailsDiv.querySelector(".overlayLeftButton")     as HTMLButtonElement;
-        this.measurementsDetailsLeftButton.onclick    = () => {
+        this.measurementsDetailsLeftButton.onclick    = ():void => {
                                                             this.measurementsDetailsDiv.style.display = 'none';
                                                         }
 
@@ -634,13 +674,13 @@ export class ChargyApp {
         this.privacyStatementAccepted                 = this.issueTrackerDiv.   querySelector("#privacyStatementAccepted")  as HTMLInputElement;
         this.sendIssueButton                          = this.issueTrackerDiv.   querySelector("#sendIssueButton")           as HTMLButtonElement;
         this.issueTrackerLeftButton                   = this.issueTrackerDiv.   querySelector(".overlayLeftButton")         as HTMLButtonElement;
-        this.issueTrackerLeftButton.onclick           = () => {
+        this.issueTrackerLeftButton.onclick           = ():void => {
                                                             this.issueTrackerDiv.style.display = 'none';
                                                         }
 
         this.pkiDetailsDiv                            = document.getElementById('pkiDetails')                               as HTMLDivElement;
         this.pkiDetailsLeftButton                     = this.pkiDetailsDiv.querySelector(".overlayLeftButton")              as HTMLButtonElement;
-        this.pkiDetailsLeftButton.onclick             = () => {
+        this.pkiDetailsLeftButton.onclick             = ():void => {
                                                             this.pkiDetailsDiv.style.display = 'none';
                                                         }
 
@@ -684,7 +724,7 @@ export class ChargyApp {
 
         //#region OnWindowResize
 
-        window.onresize = () => {
+        window.onresize = (): void => {
             this.verifyframeDiv.style.maxHeight = (this.appDiv.clientHeight - this.headlineDiv.clientHeight).toString() + "px";
         }
 
@@ -703,17 +743,17 @@ export class ChargyApp {
 
         //#region The Issue tracker
 
-        this.showPrivacyStatement.onclick = (ev: MouseEvent) => {
+        this.showPrivacyStatement.onclick = (ev: MouseEvent): void => {
             ev.preventDefault();
             this.privacyStatement.style.display = "block";
             this.issueTrackerText.scrollTop = this.issueTrackerText.scrollHeight;
         }
 
-        this.privacyStatementAccepted.onchange = () => {
+        this.privacyStatementAccepted.onchange = (): void => {
             this.sendIssueButton.disabled  = !this.privacyStatementAccepted.checked;
         }
 
-        this.sendIssueButton.onclick = (ev: MouseEvent) => {
+        this.sendIssueButton.onclick = (ev: MouseEvent): void => {
 
             ev.preventDefault();
 
@@ -814,7 +854,7 @@ export class ChargyApp {
                                true);
                 sendIssue.setRequestHeader('Content-type', 'application/json');
 
-                sendIssue.onreadystatechange = () => {
+                sendIssue.onreadystatechange = (): void => {
 
                     // 0 UNSENT | 1 OPENED | 2 HEADERS_RECEIVED | 3 LOADING | 4 DONE
                     if (sendIssue.readyState == 4) {
@@ -850,7 +890,7 @@ export class ChargyApp {
 
         //#region Handle the 'Update available'-button
 
-        this.updateAvailableButton.onclick = () => {
+        this.updateAvailableButton.onclick = (): void => {
             this.updateAvailableScreen.style.display     = "block";
             this.inputDiv.style.flexDirection            = "";
             this.inputInfosDiv.style.display             = "none";
@@ -866,7 +906,7 @@ export class ChargyApp {
 
         //#region Handle the 'About'-button
 
-        this.aboutButton.onclick = async () => {
+        this.aboutButton.onclick = async (): Promise<void> => {
 
             this.updateAvailableScreen.style.display     = "none";
             this.inputDiv.style.flexDirection            = "";
@@ -943,7 +983,7 @@ export class ChargyApp {
 
         //#region Handle the 'Full Screen'-button
 
-        this.fullScreenButton.onclick = () => {
+        this.fullScreenButton.onclick = (): void => {
             if (document.fullscreenElement)
             {
                 this.measurementsDetailsDiv.classList.remove("fullScreen");
@@ -963,7 +1003,7 @@ export class ChargyApp {
 
         //#region Handle the 'back'-button
 
-        this.backButton.onclick  = () => {
+        this.backButton.onclick = (): void => {
 
             this.updateAvailableScreen.style.display     = "none";
             this.inputDiv.style.flexDirection            = "";
@@ -993,7 +1033,7 @@ export class ChargyApp {
 
         //#region Handle the 'export'-button
 
-        this.exportButton.onclick  = async () => {
+        this.exportButton.onclick = async (): Promise<void> => {
 
             try
             {
@@ -1052,13 +1092,13 @@ export class ChargyApp {
 
         for (const linkButton of linkButtons) {
 
-            linkButton.onclick = function (this: GlobalEventHandlers, ev: MouseEvent) {
+            linkButton.onclick = function (this: GlobalEventHandlers, ev: MouseEvent): void {
 
-                    ev.preventDefault();
-                    const link = linkButton.getAttribute("href");
+                ev.preventDefault();
+                const link = linkButton.getAttribute("href") ?? "";
 
-                    if (link && (link.startsWith("http://") || link.startsWith("https://")))
-                        window.open(link, '_blank');
+                if (link && (link.startsWith("http://") || link.startsWith("https://")))
+                    window.open(link, '_blank');
 
             };
 
@@ -1070,12 +1110,12 @@ export class ChargyApp {
         //#region Handle the 'fileInput'-button
 
         this.fileInput  = document.getElementById('fileInput')  as HTMLInputElement;
-        this.fileInputButton.onclick = () => {
+        this.fileInputButton.onclick = (): void => {
             this.fileInput.value = '';
             this.fileInput.click();
         }
 
-        this.fileInput.onchange = async (ev: Event) => {
+        this.fileInput.onchange = async (ev: Event): Promise<void> => {
 
             const input = ev.target;
 
@@ -1120,7 +1160,7 @@ export class ChargyApp {
 
         //#region Handle the 'paste'-button
 
-        this.pasteButton.onclick = async ()  => {
+        this.pasteButton.onclick = async (): Promise<void>  => {
             await this.readClipboard();
         }
 
@@ -1128,22 +1168,22 @@ export class ChargyApp {
 
         //#region Handle the 'qrScan'-button
 
-        this.qrScanButton.onclick = async (ev: MouseEvent) => {
+        this.qrScanButton.onclick = async (ev: MouseEvent): Promise<void> => {
             ev.preventDefault();
             await this.openQRCodeScanner();
         }
 
-        this.qrCodeScannerCancelButton.onclick = (ev: MouseEvent) => {
+        this.qrCodeScannerCancelButton.onclick = (ev: MouseEvent): void => {
             ev.preventDefault();
             this.closeQRCodeScanner();
         }
 
-        this.qrCodeScannerRescanButton.onclick = (ev: MouseEvent) => {
+        this.qrCodeScannerRescanButton.onclick = (ev: MouseEvent): void => {
             ev.preventDefault();
             this.resumeQRCodeScanner();
         }
 
-        this.qrCodeScannerOpenURLButton.onclick = (ev: MouseEvent) => {
+        this.qrCodeScannerOpenURLButton.onclick = (ev: MouseEvent): void => {
             ev.preventDefault();
 
             if (this.qrCodeScannerLastURL != null)
@@ -1175,7 +1215,7 @@ export class ChargyApp {
         }).addTo(this.map);
 
 
-        //#region Calculate application hash
+        //#region Calculate application hash and load signatures
 
         void this.calcApplicationHash();
 
@@ -1279,7 +1319,7 @@ export class ChargyApp {
 
     private setupLanguageSelector(): void {
 
-        this.languageButton.onclick = (ev: MouseEvent) => {
+        this.languageButton.onclick = (ev: MouseEvent): void => {
             ev.preventDefault();
             ev.stopPropagation();
 
@@ -1289,7 +1329,8 @@ export class ChargyApp {
 
         for (const languageMenuButton of Array.from(this.languageMenuDiv.querySelectorAll<HTMLButtonElement>("button[data-language]")))
         {
-            languageMenuButton.onclick = async (ev: MouseEvent) => {
+            languageMenuButton.onclick = async (ev: MouseEvent): Promise<void> => {
+
                 ev.preventDefault();
                 ev.stopPropagation();
 
@@ -1297,6 +1338,7 @@ export class ChargyApp {
                 if (this.isSupportedLanguage(language))
                     await this.setUILanguage(language);
                 };
+
         }
 
         document.addEventListener("click", () => {
@@ -1318,7 +1360,7 @@ export class ChargyApp {
             localStorage.setItem("ChargyUILanguage", language);
 
         this.applyTranslations();
-        await this.rerenderCurrentView();
+        this.rerenderCurrentView();
 
     }
 
@@ -1414,7 +1456,7 @@ export class ChargyApp {
 
     //#region (private) loadPackageJSON()
 
-    private async loadPackageJSON() {
+    private async loadPackageJSON(): Promise<void> {
         try {
 
             const response = await fetch('package.json');
@@ -1425,52 +1467,55 @@ export class ChargyApp {
             const data = await response.json();
             Object.assign(this.packageJson, data);
 
+            const asString = (txt: any): string => typeof txt === 'string' ? txt : txt.toString();
+
             const coreDependencies = corePackageJson.dependencies as Record<string, string>;
-            const packageVersion   = (packageName: string) =>
+            const packageVersion   = (packageName: string): string =>
                 (this.packageJson.dependencies?.[packageName] ?? coreDependencies[packageName])?.replace(/[^0-9\.]/g, "") ?? "";
 
             //#region Set infos of the about section
 
-                (this.softwareInfosDiv. querySelector("#appEdition")             as HTMLSpanElement).innerHTML = this.appEdition;
-                (this.softwareInfosDiv. querySelector("#appVersion")             as HTMLSpanElement).innerHTML = this.packageJson.version;
-                (this.softwareInfosDiv. querySelector("#copyright")              as HTMLSpanElement).innerHTML = this.copyright;
+                this.appVersion = asString(this.packageJson.version);
 
-                (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).innerHTML = this.packageJson.version;
-                (this.openSourceLibsDiv.querySelector("#chargyCoreVersion")      as HTMLSpanElement).innerHTML = corePackageJson.version;
-                this.chargyCoreHashTextDiv.innerHTML  = `SHA512-Hashwert der Chargy Core v${corePackageJson.version}:`;
-                this.chargyCoreHashValueDiv.innerHTML = __CHARGY_CORE_SHA512__.match(/.{1,8}/g)?.join(" ") ?? "";
+
+                (this.softwareInfosDiv. querySelector("#appEdition")             as HTMLSpanElement).textContent = this.appEdition;
+                (this.softwareInfosDiv. querySelector("#appVersion")             as HTMLSpanElement).textContent = this.appVersion;
+                (this.softwareInfosDiv. querySelector("#copyright")              as HTMLSpanElement).textContent = this.copyright;
+
+                (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).textContent = this.appVersion;
+                (this.openSourceLibsDiv.querySelector("#chargyCoreVersion")      as HTMLSpanElement).textContent = corePackageJson.version;
+                 this.chargyCoreHashTextDiv. innerHTML  = `SHA512-Hashwert der Chargy Core v${corePackageJson.version}:`;
+                 this.chargyCoreHashValueDiv.innerHTML = __CHARGY_CORE_SHA512__.match(/.{1,8}/g)?.join(" ") ?? "";
 
             if (this.packageJson.devDependencies)
             {
-                (this.openSourceLibsDiv.querySelector("#SASS")                   as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["sass"]?.                   replace(/[^0-9.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#typeScript")             as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["typescript"]?.             replace(/[^0-9.]/g, "");
-                (this.openSourceLibsDiv.querySelector("#webpack")                as HTMLSpanElement).innerHTML = this.packageJson.devDependencies["webpack"]?.                replace(/[^0-9.]/g, "");
+                (this.openSourceLibsDiv.querySelector("#SASS")                   as HTMLSpanElement).textContent = asString(this.packageJson.devDependencies["sass"]?.      replace(/[^0-9.]/g, ""));
+                (this.openSourceLibsDiv.querySelector("#typeScript")             as HTMLSpanElement).textContent = asString(this.packageJson.devDependencies["typescript"]?.replace(/[^0-9.]/g, ""));
+                (this.openSourceLibsDiv.querySelector("#webpack")                as HTMLSpanElement).textContent = asString(this.packageJson.devDependencies["webpack"]?.   replace(/[^0-9.]/g, ""));
             }
 
             if (this.packageJson.dependencies)
             {
-                (this.openSourceLibsDiv.querySelector("#fontAwesome")            as HTMLSpanElement).innerHTML = packageVersion("@fortawesome/fontawesome-free");
-                (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).innerHTML = packageVersion("elliptic");
-                (this.openSourceLibsDiv.querySelector("#nobleCurves")            as HTMLSpanElement).innerHTML = packageVersion("@noble/curves");
-                (this.openSourceLibsDiv.querySelector("#noblePostQuantum")       as HTMLSpanElement).innerHTML = packageVersion("@noble/post-quantum");
-                (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).innerHTML = packageVersion("moment");
-                (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).innerHTML = packageVersion("pdfjs-dist");
-                (this.openSourceLibsDiv.querySelector("#seekBzip")               as HTMLSpanElement).innerHTML = packageVersion("seek-bzip");
-                (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).innerHTML = packageVersion("file-type");
-                (this.openSourceLibsDiv.querySelector("#isURLSuperb")            as HTMLSpanElement).innerHTML = packageVersion("is-url-superb");
-                (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).innerHTML = packageVersion("jsqr");
-                (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).innerHTML = packageVersion("asn1.js");
-                (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).innerHTML = packageVersion("buffer");
-                (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).innerHTML = packageVersion("base32-decode");
-                (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).innerHTML = packageVersion("leaflet");
-                (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).innerHTML = packageVersion("leaflet.awesome-markers");
-                (this.openSourceLibsDiv.querySelector("#chartJS")                as HTMLSpanElement).innerHTML = packageVersion("chart.js");
-                (this.openSourceLibsDiv.querySelector("#decimalJS")              as HTMLSpanElement).innerHTML = packageVersion("decimal.js");
+                (this.openSourceLibsDiv.querySelector("#fontAwesome")            as HTMLSpanElement).textContent = packageVersion("@fortawesome/fontawesome-free");
+                (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).textContent = packageVersion("elliptic");
+                (this.openSourceLibsDiv.querySelector("#nobleCurves")            as HTMLSpanElement).textContent = packageVersion("@noble/curves");
+                (this.openSourceLibsDiv.querySelector("#noblePostQuantum")       as HTMLSpanElement).textContent = packageVersion("@noble/post-quantum");
+                (this.openSourceLibsDiv.querySelector("#momentJS")               as HTMLSpanElement).textContent = packageVersion("moment");
+                (this.openSourceLibsDiv.querySelector("#pdfjsdist")              as HTMLSpanElement).textContent = packageVersion("pdfjs-dist");
+                (this.openSourceLibsDiv.querySelector("#seekBzip")               as HTMLSpanElement).textContent = packageVersion("seek-bzip");
+                (this.openSourceLibsDiv.querySelector("#fileType")               as HTMLSpanElement).textContent = packageVersion("file-type");
+                (this.openSourceLibsDiv.querySelector("#isURLSuperb")            as HTMLSpanElement).textContent = packageVersion("is-url-superb");
+                (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).textContent = packageVersion("jsqr");
+                (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).textContent = packageVersion("asn1.js");
+                (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).textContent = packageVersion("buffer");
+                (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).textContent = packageVersion("base32-decode");
+                (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).textContent = packageVersion("leaflet");
+                (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).textContent = packageVersion("leaflet.awesome-markers");
+                (this.openSourceLibsDiv.querySelector("#chartJS")                as HTMLSpanElement).textContent = packageVersion("chart.js");
+                (this.openSourceLibsDiv.querySelector("#decimalJS")              as HTMLSpanElement).textContent = packageVersion("decimal.js");
             }
 
             //#endregion
-
-
 
         } catch (error) {
             console.error('There has been a problem with fetching "package.json":', error);
@@ -1751,7 +1796,7 @@ export class ChargyApp {
 
             this.showIssueTrackerButton.style.display = "block";
 
-            this.showIssueTrackerButton.onclick = () => {
+            this.showIssueTrackerButton.onclick = (): void => {
                 this.issueTrackerDiv.style.display    = 'block';
                 this.privacyStatement.style.display   = "none";
                 this.issueTrackerText.scrollTop       = 0;
@@ -1765,7 +1810,7 @@ export class ChargyApp {
         //#region Imprint
 
         this.showImprintButton.style.display = "block";
-        this.showImprintButton.onclick = (ev: MouseEvent) => {
+        this.showImprintButton.onclick = (ev: MouseEvent): void => {
             ev.preventDefault();
             this.updateAvailableScreen.style.display     = "none";
             this.inputDiv.style.flexDirection            = "";
@@ -1784,11 +1829,11 @@ export class ChargyApp {
 
         const feedbackEMail   = FeedbackEMail   ?? this.defaultFeedbackEMail;
 
-        if (feedbackEMail?.length == 2)
+        if (feedbackEMail.length == 2)
         {
             this.feedbackEMailAnchor.style.display = "block";
-            this.feedbackEMailAnchor.href          = "mailto:" + feedbackEMail[0] + feedbackEMail[1];
-            this.feedbackEMailAnchor.innerHTML    += feedbackEMail[0];
+            this.feedbackEMailAnchor.href          = "mailto:" + (feedbackEMail[0] ?? "") + (feedbackEMail[1] ?? "");
+            this.feedbackEMailAnchor.innerHTML    += feedbackEMail[0] ?? "";
         }
         else
             this.feedbackEMailAnchor.style.display = "none";
@@ -1799,11 +1844,11 @@ export class ChargyApp {
 
         const feedbackHotline = FeedbackHotline ?? this.defaultFeedbackHotline;
 
-        if (feedbackHotline?.length == 2)
+        if (feedbackHotline.length == 2)
         {
             this.feedbackHotlineAnchor.style.display = "block";
-            this.feedbackHotlineAnchor.href          = "tel:" + feedbackHotline[0];
-            this.feedbackHotlineAnchor.innerHTML    += feedbackHotline[1];
+            this.feedbackHotlineAnchor.href          = "tel:" + (feedbackHotline[0] ?? "");
+            this.feedbackHotlineAnchor.innerHTML    += feedbackHotline[1] ?? "";
         }
         else
             this.feedbackHotlineAnchor.style.display = "none";
@@ -1990,7 +2035,7 @@ export class ChargyApp {
 
     }
 
-    private async readClipboard()
+    private async readClipboard(): Promise<void>
     {
         try
         {
@@ -2317,7 +2362,7 @@ export class ChargyApp {
 
     //#region readFile(s)FromDisk()
 
-    private async readFilesFromDiskInBrowser(files: Blob|File|FileList)
+    private async readFilesFromDiskInBrowser(files: Blob|File|FileList): Promise<void>
     {
 
         const filesToLoad = files instanceof FileList
@@ -2442,8 +2487,62 @@ export class ChargyApp {
             const hashes        = await Promise.all(files.map(async url => chargyLib.hashFile(url)));
             const combinedHash  = await crypto.subtle.digest('SHA-512', chargyLib.ConcatenateBuffers(hashes));
 
-            this.applicationHash                    = chargyLib.buf2hex(combinedHash);
-            this.applicationHashValueDiv.innerHTML  = this.applicationHash.match(/.{1,8}/g)?.join(" ") ?? "";
+            this.applicationHash                      = chargyLib.buf2hex(combinedHash);
+            this.applicationHashValueDiv.textContent  = this.applicationHash.match(/.{1,8}/g)?.join(" ") ?? "";
+
+            const getApplicationHashSignaturesHTTPRequest = new XMLHttpRequest();
+            getApplicationHashSignaturesHTTPRequest.open(
+                "GET",
+                this.versionsURL + "/" + this.appVersion,
+                true
+            );
+            getApplicationHashSignaturesHTTPRequest.setRequestHeader('Accept', 'application/json');
+
+            getApplicationHashSignaturesHTTPRequest.onreadystatechange = (): void => {
+
+                // 0 UNSENT | 1 OPENED | 2 HEADERS_RECEIVED | 3 LOADING | 4 DONE
+                if (getApplicationHashSignaturesHTTPRequest.readyState === XMLHttpRequest.DONE) {
+                    this.equalityCheckDiv.textContent = "false";
+
+                    switch (getApplicationHashSignaturesHTTPRequest.status)
+                    {
+
+                        case 200: // HTTP 200 - OK
+                            try
+                            {
+                                const response = JSON.parse(getApplicationHashSignaturesHTTPRequest.responseText) as IApplicationHashSignaturesResponse;
+                                const version  = response.versions.find(versionInfo => versionInfo.version === this.appVersion);
+                                const _package = version?.packages.find(packageInfo => packageInfo.name === "webpack") ?? version?.packages[0];
+                                const remoteHash = _package?.cryptoHashes[0]?.SHA512;
+
+                                const normalizeHash = (hash: string): string => hash
+                                    .replace(/^0x/i, "")
+                                    .replace(/\s/g, "")
+                                    .toLowerCase();
+
+                                const hashesAreEqual = remoteHash !== undefined &&
+                                                       normalizeHash(remoteHash) === normalizeHash(this.applicationHash);
+
+                                this.equalityCheckDiv.textContent = hashesAreEqual.toString();
+                            }
+                            catch (_exception)
+                            {
+                                // Keep the explicit false result for malformed responses.
+                            }
+                        break;
+
+                        case 401: // HTTP 401 - Unauthorized
+                            {
+                                // Keep the explicit false result for unauthorized requests.
+                            }
+                        break;
+
+                    }
+                }
+
+            }
+
+            getApplicationHashSignaturesHTTPRequest.send();
 
         } catch (error) {
             console.error("An error occurred:", error);

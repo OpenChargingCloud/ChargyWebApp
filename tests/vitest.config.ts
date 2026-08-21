@@ -4,6 +4,9 @@ export default defineConfig({
   resolve: {
     extensions: ['.ts', '.tsx', '.mts', '.cts', '.mjs', '.js', '.jsx', '.json'],
   },
+  ssr: {
+    noExternal: [/^@oozcitak\//],
+  },
   test: {
     include: [
       ...configDefaults.include,

@@ -1,4 +1,5 @@
 import { createRequire } from "node:module";
+import { DOMParser as OozcitakDOMParser } from "@oozcitak/dom";
 import type {
     Chargy,
     I18NDictionary,
@@ -92,11 +93,7 @@ export function parseSignedJSONMessage(json: string): SignedJSONMessage {
 
 
 
-type DOMParserModule = {
-    DOMParser: typeof globalThis.DOMParser;
-};
-
-const { DOMParser: TestDOMParser } = requireModule("@oozcitak/dom") as DOMParserModule;
+const TestDOMParser = OozcitakDOMParser as unknown as typeof globalThis.DOMParser;
 
 class TestDOMMatrix {
 
