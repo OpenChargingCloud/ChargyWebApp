@@ -14,8 +14,7 @@
 #   npm install "$PACKAGE"@latest
 # done
 
-npx npm-check-updates --peer
 
+# npx npm-check-updates --peer
 npx npm-check-updates --peer -u
-
 npm install
