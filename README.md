@@ -1,5 +1,8 @@
 # Chargy WebApp
 
+[![CI](https://github.com/OpenChargingCloud/ChargyWebApp/actions/workflows/ci.yml/badge.svg)](https://github.com/OpenChargingCloud/ChargyWebApp/actions/workflows/ci.yml)
+[![Nightly](https://github.com/OpenChargingCloud/ChargyWebApp/actions/workflows/nightly.yml/badge.svg)](https://github.com/OpenChargingCloud/ChargyWebApp/actions/workflows/nightly.yml)
+
 Chargy is a transparency software library for the validation of secure and transparent e-mobility charging processes, as defined by the *German Calibration Law ("Eichrecht")* in combination with the [Alternative Fuels Infrastructure Regulation (AFIR)](https://transport.ec.europa.eu/transport-themes/clean-transport/alternative-fuels-sustainable-mobility-europe/alternative-fuels-infrastructure_en) and the new [Measuring instruments (MID-11)](https://single-market-economy.ec.europa.eu/single-market/goods/european-standards/harmonised-standards/measuring-instruments-mid_en) of the European Commission and the [European Digital Quality Infrastructure](https://www.qi-digital.de/en/). The software allows you to verify the cryptographic signatures of energy measurements within charge detail records and comes with a couple of useful extentions to simplify the entire process for endusers and operators.
 
 <kbd>
@@ -60,7 +63,7 @@ This software is also available as [DesktopApp](https://github.com/OpenChargingC
 
 ## Installation
 
-Assuming you have a current Node.js (~v21.7) installation you can just clone this git repository, install all the JavaScript dependencies, compile it and run the webpack development server...
+Assuming you have Node.js 22.13 or newer installed, you can clone this repository, install all JavaScript dependencies, compile it and run the webpack development server...
 
 ```
 git clone https://github.com/OpenChargingCloud/ChargyWebApp.git
