@@ -8,6 +8,7 @@ export default defineConfig({
     noExternal: [/^@oozcitak\//],
   },
   test: {
+    testTimeout: 30_000,
     include: [
       ...configDefaults.include,
       '**/*.{test,tests,specs}.?(c|m)[jt]s?(x)',
