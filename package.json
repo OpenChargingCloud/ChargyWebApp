@@ -70,7 +70,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.3.1",
-    "@open-charging-cloud/chargy-core": "^0.11.3",
+    "@open-charging-cloud/chargy-core": "^0.12.0",
     "asn1.js": "^5.4.1",
     "base32-decode": "^1.0.0",
     "buffer": "^6.0.3",
@@ -88,7 +88,6 @@
     "vm-browserify": "^1.1.2"
   },
   "overrides": {
-    "pdfjs-dist": "6.0.227",
     "sockjs": {
       "uuid": "^11.1.1"
     }

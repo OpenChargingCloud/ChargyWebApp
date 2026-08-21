@@ -1,4 +1,3 @@
-import { ec as EC } from "elliptic";
 import { describe, expect, test } from "vitest";
 
 import {
@@ -31,8 +30,8 @@ describe("CryptoUtils", () => {
         await expect(signMessage(message, keyPair)).resolves.toBe(true);
 
         expect(message.signatures).toHaveLength(1);
-        expect(message.signatures?.[0]?.publicKeyHEX).toBe(Buffer.from(keyPair.publicKey).toString("hex"));
-        expect(message.signatures?.[0]?.publicKey).toBe(Buffer.from(keyPair.publicKey).toString("base64"));
+        expect(message.signatures?.[0]?.publicKeyHEX).toBe(Buffer.from(keyPair.publicKey ?? []).toString("hex"));
+        expect(message.signatures?.[0]?.publicKey).toBe(Buffer.from(keyPair.publicKey ?? []).toString("base64"));
         expect(message.signatures?.[0]?.signatureHEX).toMatch(/^30[0-9a-f]+$/);
 
         if (message.signatures && message.signatures.length > 0)
@@ -185,8 +184,7 @@ describe("CryptoUtils", () => {
 
     test("returns false for missing input or non-array signatures", async () => {
 
-        const curve   = new EC("p256");
-        const keyPair = curve.genKeyPair();
+        const keyPair = generateSignatureKeyPair("ECDSA-P256");
 
         await expect(signJSONMessage(null, [keyPair])).resolves.toBe(false);
         await expect(signJSONMessage({}, [])).resolves.toBe(false);
@@ -194,13 +192,15 @@ describe("CryptoUtils", () => {
 
     });
 
-    test("skips invalid key pairs and keeps the alias matching the C# name", async () => {
+    test("reports failure when no key pair could be used, and keeps the alias matching the C# name", async () => {
 
-        const curve         = new EC("p256");
-        const publicOnlyKey = curve.keyFromPublic(curve.genKeyPair().getPublic(false, "hex"), "hex");
+        const invalidKey = {
+            algorithm:  "ECDSA-P256" as const,
+            privateKey: new Uint8Array()
+        };
         const message: SignedJSONMessage = { a: 1 };
 
-        await expect(SignMessage(message, publicOnlyKey)).resolves.toBe(true);
+        await expect(SignMessage(message, invalidKey)).resolves.toBe(false);
         expect(message.signatures).toBeUndefined();
 
     });
