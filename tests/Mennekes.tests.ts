@@ -25,12 +25,6 @@ import {
 
 type DetectionResult = ReturnType<Chargy["DetectAndConvertContentFormat"]>;
 
-vi.mock('pdfjs-dist', async () => {
-    const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
-    pdfjs.GlobalWorkerOptions.workerSrc = 'pdfjs-dist/legacy/build/pdf.worker.mjs';
-    return pdfjs;
-});
-
 vi.stubGlobal('window', {
     navigator: {
         language: 'en-US'

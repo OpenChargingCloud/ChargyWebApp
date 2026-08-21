@@ -25,6 +25,11 @@ import coreI18n  from '@open-charging-cloud/chargy-core/i18n.json';
 import localI18n from '../src/i18n.json';
 
 type DetectionResult = Awaited<ReturnType<Chargy["DetectAndConvertContentFormat"]>>;
+type PdfJsTestModule = {
+    GlobalWorkerOptions: {
+        workerSrc: string;
+    };
+};
 
 
 export {
@@ -42,8 +47,10 @@ export {
 
 const DOMParser = OozcitakDOMParser as unknown as typeof globalThis.DOMParser;
 
+// Vitest runs in Node, so route ChargyCore's PDF.js import to its legacy build.
+// Browser builds select the regular PDF.js entry point inside ChargyCore itself.
 vi.mock('pdfjs-dist', async () => {
-    const pdfjs = await import('pdfjs-dist/legacy/build/pdf.mjs');
+    const pdfjs = await vi.importActual<PdfJsTestModule>('pdfjs-dist/legacy/build/pdf.mjs');
     pdfjs.GlobalWorkerOptions.workerSrc = 'pdfjs-dist/legacy/build/pdf.worker.mjs';
     return pdfjs;
 });

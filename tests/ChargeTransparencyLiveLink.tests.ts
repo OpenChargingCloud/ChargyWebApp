@@ -18,10 +18,6 @@ import {
     parseJSONRecord
 } from "./chargyTestRuntime";
 
-vi.mock("pdfjs-dist", () => ({
-    GlobalWorkerOptions: {}
-}));
-
 vi.stubGlobal("window", {
     navigator: {
         language: "en"

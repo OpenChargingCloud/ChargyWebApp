@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import './testHelper';   // Mocks 'pdfjs-dist' and stubs 'window' before chargy.ts is imported!
+import './testHelper';   // Stubs the browser globals before chargy.ts is imported.
 import { Chargy } from '@open-charging-cloud/chargy-core';
 import { OCPI } from '@open-charging-cloud/chargy-core';
 import { createTestChargy } from './chargyTestRuntime';
