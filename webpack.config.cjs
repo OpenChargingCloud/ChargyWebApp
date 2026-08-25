@@ -3,6 +3,7 @@ const webpack              = require('webpack');
 const HtmlWebpackPlugin    = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin    = require('copy-webpack-plugin');
+const MinimizerPlugin      = require('minimizer-webpack-plugin');
 const packageLock          = require('./package-lock.json');
 
 const modeArgIndex = process.argv.indexOf('--mode');
@@ -15,6 +16,15 @@ const chargyCoreIntegrity    = chargyCorePackage?.integrity ?? '';
 const chargyCoreSHA512       = chargyCoreIntegrity.startsWith('sha512-')
   ? Buffer.from(chargyCoreIntegrity.substring('sha512-'.length), 'base64').toString('hex')
   : '';
+
+/**
+ * pdfjs-dist 6.2.108 uses private fields inside dynamic WASM imports. Terser
+ * 5.50.0 renames their declarations inconsistently and produces
+ * "Private field '#wasmUrl' must be declared in an enclosing class".
+ * Keep only the PDF worker unminified until its minified production chunk
+ * passes `node --check`; named chunk IDs keep this matcher stable in production.
+ */
+const pdfWorkerAssetPattern = /pdf[_-]worker/i;
 
 const sourceMapModuleName = info => {
   let resourcePath = (info.resourcePath || info.absoluteResourcePath || '').replace(/\\/g, '/');
@@ -38,6 +48,14 @@ module.exports = {
       warning.module?.resource?.includes(`${path.sep}node_modules${path.sep}file-type${path.sep}source${path.sep}index.js`) &&
       warning.message.includes('Critical dependency: the request of a dependency is an expression')
   ],
+  optimization: {
+    chunkIds: 'named',
+    minimizer: [
+      new MinimizerPlugin({
+        exclude: pdfWorkerAssetPattern
+      })
+    ]
+  },
   resolve: {
     extensions: [".ts", ".js"],
     fallback: {
@@ -109,6 +127,8 @@ module.exports = {
   output: {
     path:                          path.resolve(__dirname, 'build'),
     filename:                      'chargyWebApp-bundle.js',
+    // Remove stale numeric worker chunks created before chunkIds became stable.
+    clean:                         true,
     devtoolModuleFilenameTemplate: sourceMapModuleName
   },
   plugins: [
