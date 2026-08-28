@@ -2968,12 +2968,12 @@ export class ChargyApp {
         descriptionDiv.id          = "description";
         descriptionDiv.innerText   = this.chargy.GetLocalizedText(LiveLink.description) ?? "Charge Transparency Live-Link";
 
-        if (typeof(LiveLink.timestamp) === "string" && LiveLink.timestamp !== "")
+        if (typeof(LiveLink.created) === "string" && LiveLink.created !== "")
         {
             const timestampDiv     = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
             timestampDiv.id        = "begin";
             timestampDiv.className = "dates";
-            timestampDiv.innerText = this.chargy.GetLocalizedMessage("Timestamp") + " " + chargyLib.time2human(LiveLink.timestamp);
+            timestampDiv.innerText = this.chargy.GetLocalizedMessage("Timestamp") + " " + chargyLib.time2human(LiveLink.created);
         }
 
         const liveLinksDiv         = this.chargingSessionScreenDiv.appendChild(document.createElement('div'));
@@ -3009,12 +3009,12 @@ export class ChargyApp {
                 ].filter(value => value != null && value !== "").join(", ")
             );
 
-        if (LiveLink.transports && LiveLink.transports.length > 0)
+        if (LiveLink.liveTransports && LiveLink.liveTransports.length > 0)
         {
             const transportsDiv = document.createElement('div');
             transportsDiv.className = "liveLinkTransports";
 
-            for (const transport of LiveLink.transports)
+            for (const transport of LiveLink.liveTransports)
                 transportsDiv.appendChild(this.createLiveLinkTransportDiv(transport));
 
             this.appendLiveLinkInfoRow(
