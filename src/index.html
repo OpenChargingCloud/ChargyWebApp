@@ -30,15 +30,26 @@
 
         <meta http-equiv="Content-Security-Policy" content="
             default-src 'self';
-            connect-src 'self' 
-            https://chargy.charging.cloud
-            wss://chargy.chargeit-mobility.com:1608
-            https://open.charging.cloud/chargy/
-            https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/;
+            connect-src 'self' https: wss:;
             img-src 'self' data: blob: https:;
             script-src 'self' 'unsafe-inline' 'unsafe-eval';
             style-src 'self' 'unsafe-inline';
         ">
+<!-- connect-src pins the schemes and leaves the host decision to the
+     application FOR LIVE-LINK TRANSPORTS: one of those URLs is fetched only
+     when externalURLs.conf allows it, it is same-origin, or the user has
+     approved its origin (trust on first use). This does NOT gate the app's own
+     endpoints (version check, issue reporting), which remain trusted by the
+     code; narrow connect-src to specific hosts to bound those too.
+     Narrowing connect-src is what the BROWSER enforces; it does not by itself
+     suppress the trust dialog (the app never reads the CSP) - listing an
+     operator's hosts in externalURLs.conf is what avoids the dialog for them.
+     A tightly-scoped example:
+     connect-src 'self'
+                 https://chargy.charging.cloud
+                 wss://chargy.chargeit-mobility.com:1608
+                 https://open.charging.cloud/chargy/
+                 https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/; -->
 <!-- style-src 'unsafe-inline' required for leaflet and markers! -->
 <!-- script-src 'unsafe-eval' only required for faster WebPack during development! -->
 
@@ -72,6 +83,7 @@
                         </div>
                     </div>
                     <button id="updateAvailableButton"><i class="fas fa-exclamation-circle"></i></button>
+                    <button id="settingsButton"       ><i class="fas fa-cog"                ></i></button>
                     <button id="aboutButton"          ><i class="far fa-question-circle"   ></i></button>
                     <button id="fullScreenButton"     ><i class="fas fa-expand"            ></i></button>
                 </div>
@@ -275,6 +287,28 @@
 
                         </div>
 
+                        <div id="settingsScreen">
+
+                            <h1 data-i18n-key="settingsLabel">Einstellungen</h1>
+
+                            <div id="settingsMenu">
+                                <button id="settingsTrustedOriginsEntry" class="settingsEntry">
+                                    <i class="fas fa-satellite-dish"></i>
+                                    <div class="text">
+                                        <div class="title" data-i18n-key="settingsTrustedOriginsTitle">Server f&uuml;r Live-Daten</div>
+                                        <div class="description" data-i18n-key="settingsTrustedOriginsDescription">Welchen Servern das Nachladen laufender Ladevorg&auml;nge erlaubt oder verboten wurde.</div>
+                                    </div>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+
+                            <div id="settingsTrustedOrigins">
+                                <div id="text" data-i18n-key="trustedOriginsLabel">F&uuml;r das Nachladen von Live-Daten gemerkte Server:</div>
+                                <div id="trustedOriginsList"></div>
+                                <div id="noTrustedOrigins" data-i18n-key="noTrustedOriginsLabel">Bisher wurde kein Server gemerkt.</div>
+                            </div>
+
+                        </div>
                         <div id="imprintScreen">
 
                             <h1 data-i18n-key="imprintLabel">Imprint</h1>
@@ -612,6 +646,24 @@
                 </div>
             </div>
 
+            <div id="liveLinkTrustDialog" class="overlay">
+                <div class="overlayText">
+                    <div class="headline">
+                        <div class="error"></div>
+                        <div class="intro" data-i18n-key="liveLinkTrustTitle">Live-Daten laden?</div>
+                    </div>
+                    <div class="data">
+                        <div id="liveLinkTrustDocument"></div>
+                        <div id="liveLinkTrustQuestion" data-i18n-key="liveLinkTrustQuestion">Dieser Transparenz-Live-Link beschreibt einen laufenden Ladevorgang und m&ouml;chte dessen aktuelle Messwerte von folgenden Servern laden:</div>
+                        <div id="liveLinkTrustOrigins"></div>
+                        <div id="liveLinkTrustHint" data-i18n-key="liveLinkTrustHint">&bdquo;Immer erlauben&ldquo; und &bdquo;Nicht erlauben&ldquo; werden f&uuml;r diese Server gemerkt und k&ouml;nnen jederzeit ge&auml;ndert werden.</div>
+                    </div>
+                    <div class="spacer"></div>
+                    <div class="footer">
+                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                    </div>
+                </div>
+            </div>
             <div id="pkiDetails" class="overlay">
                 <div class="overlayText">
 

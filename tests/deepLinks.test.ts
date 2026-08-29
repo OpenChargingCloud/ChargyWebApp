@@ -6,6 +6,7 @@ import {
     findExternalURLRule,
     getDeepLinkFileName,
     parseExternalURLConfig,
+    parseExternalURLConfigMode,
     readResponseWithinLimit,
     withDeepLinkVerificationToken
 } from "../src/ts/deepLinks";
@@ -48,6 +49,31 @@ describe("Deep link helpers", () => {
                 maxPayloadBytes: 1536
             }
         ]);
+
+    });
+
+    test("reads the reload mode, defaulting to open", () => {
+
+        // The mode directive coexists with prefixes and does not become a rule.
+        const config = `
+            mode strict
+            https://api.example.org/ctrs/ 100
+        `;
+
+        expect(parseExternalURLConfigMode(config)).toBe("strict");
+        expect(parseExternalURLConfig(config)).toEqual([
+            { prefix: "https://api.example.org/ctrs/", maxPayloadBytes: 102400 }
+        ]);
+
+        expect(parseExternalURLConfigMode("")).toBe("open");
+        expect(parseExternalURLConfigMode("https://api.example.org/ctrs/ 100")).toBe("open");
+        expect(parseExternalURLConfigMode("mode open")).toBe("open");
+        expect(parseExternalURLConfigMode("# mode strict")).toBe("open");   // commented out
+        expect(parseExternalURLConfigMode("mode nonsense")).toBe("open");   // unknown value ignored
+
+        // The last directive wins.
+        expect(parseExternalURLConfigMode("mode strict\nmode open")).toBe("open");
+        expect(parseExternalURLConfigMode("mode open\nmode strict")).toBe("strict");
 
     });
 

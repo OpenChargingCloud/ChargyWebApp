@@ -303,13 +303,126 @@
     "chargyCoreHashLabel": {
         "de": "SHA-512-Hashwert der Chargy Core v{version}:",
         "en": "SHA-512 hash of Chargy Core v{version}:"
+    },
+
+    "liveLinkTrustTitle": {
+        "de": "Live-Daten laden?",
+        "en": "Load live data?"
+    },
+
+    "liveLinkTrustQuestion": {
+        "de": "Dieser Transparenz-Live-Link beschreibt einen laufenden Ladevorgang und möchte dessen aktuelle Messwerte von folgenden Servern laden:",
+        "en": "This transparency live link describes a running charging session and wants to load its current meter values from the following servers:"
+    },
+
+    "liveLinkTrustHint": {
+        "de": "„Immer erlauben“ und „Nicht erlauben“ werden für diese Server gemerkt und können jederzeit geändert werden.",
+        "en": "“Always allow” and “Do not allow” are remembered for these servers and can be changed at any time."
+    },
+
+    "allowOnceLabel": {
+        "de": "Einmal erlauben",
+        "en": "Allow once"
+    },
+
+    "allowAlwaysLabel": {
+        "de": "Immer erlauben",
+        "en": "Always allow"
+    },
+
+    "doNotAllowLabel": {
+        "de": "Nicht erlauben",
+        "en": "Do not allow"
+    },
+
+    "liveReloadActive": {
+        "de": "Live-Aktualisierung aktiv",
+        "en": "Live reload active"
+    },
+
+    "liveReloadBlocked": {
+        "de": "Live-Aktualisierung blockiert",
+        "en": "Live reload blocked"
+    },
+
+    "liveReloadNotActive": {
+        "de": "Live-Aktualisierung nicht aktiv",
+        "en": "Live reload not active"
+    },
+
+    "liveReloadNotPossible": {
+        "de": "Live-Aktualisierung nicht möglich",
+        "en": "Live reload not possible"
+    },
+
+    "allowedByThisInstallation": {
+        "de": "von dieser Installation erlaubt",
+        "en": "allowed by this installation"
+    },
+
+    "thisSessionOnly": {
+        "de": "nur diese Sitzung",
+        "en": "this session only"
+    },
+
+    "trustedSince": {
+        "de": "vertraut seit",
+        "en": "trusted since"
+    },
+
+    "changeLabel": {
+        "de": "ändern",
+        "en": "change"
+    },
+
+    "allowLabel": {
+        "de": "erlauben",
+        "en": "allow"
+    },
+
+    "trustedOriginsLabel": {
+        "de": "Für das Nachladen von Live-Daten gemerkte Server:",
+        "en": "Servers remembered for reloading live data:"
+    },
+
+    "settingsLabel": {
+        "de": "Einstellungen",
+        "en": "Settings"
+    },
+
+    "settingsTrustedOriginsTitle": {
+        "de": "Server für Live-Daten",
+        "en": "Servers for live data"
+    },
+
+    "settingsTrustedOriginsDescription": {
+        "de": "Welchen Servern das Nachladen laufender Ladevorgänge erlaubt oder verboten wurde.",
+        "en": "Which servers were allowed or forbidden to reload running charging sessions."
+    },
+
+    "noTrustedOriginsLabel": {
+        "de": "Bisher wurde kein Server gemerkt.",
+        "en": "No server has been remembered yet."
+    },
+
+    "sinceLabel": {
+        "de": "seit",
+        "en": "since"
+    },
+
+    "deleteLabel": {
+        "de": "löschen",
+        "en": "delete"
+    },
+
+    "allowedLabel": {
+        "de": "erlaubt",
+        "en": "allowed"
+    },
+
+    "blockedLabel": {
+        "de": "blockiert",
+        "en": "blocked"
     }
-
-
-
-
-
-
-
 
 }
