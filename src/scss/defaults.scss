@@ -2923,7 +2923,23 @@ body {
 
             .overlayText {
 
+                // Unlike the other overlays, this one carries a short, known
+                // amount of content, so it is sized to fit it and centred
+                // rather than filling most of the viewport. It only scrolls
+                // when a document lists so many origins that it would otherwise
+                // outgrow the screen.
+                top:                    50%;
+                transform:              translateY(-50%);
+                width:                  fit-content;
+                min-width:              min(360px, calc(100vw - 60px));
+                max-width:              min(560px, calc(100vw - 60px));
+                height:                 auto;
+                max-height:             calc(100vh - 80px);
+                overflow-y:             auto;
+
                 .data {
+
+                    margin-bottom:      12px;
 
                     #liveLinkTrustDocument {
                         font-weight:        bold;
@@ -2941,9 +2957,10 @@ body {
 
                             .origin {
                                 font-family:        monospace;
-                                font-size:          110%;
-                                margin-bottom:      6px;
+                                font-size:          150%;
+                                margin-bottom:      16px;
                                 word-break:         break-all;
+                                margin-top:         10px;
                             }
 
                             .trustOriginButtons {
