@@ -326,6 +326,38 @@ plain list of documents:
 Format and encoding do not change from one meter value to the next, which is
 the same hoisting criterion as for `keyIdGeneration`.
 
+### What ChargyCore reads
+
+Recognizing a live link does not touch this section: `signedMeterValues` is not
+part of `IChargeTransparencyLiveLink` and `IsAChargeTransparencyLiveLink()`
+never looks at it. It is read on request, by
+`Chargy.TryToParseLiveLinkMeterValues()`, which returns the values as an
+ordinary charge transparency record — verified with the public keys of the
+very same document, and leaving the live link a live link.
+
+The candidate keys are collected from `chargingStationOperator.publicKeys` and
+`chargingStation.EVSE.energyMeter.publicKeys`, keeping the entries whose
+`keyUsage`, if stated at all, contains `signMeterValues` or
+`signEnergyMeterValues`. That is why the meter key and the operator's
+`signEnergyMeterValues` key both have to be listed: between them they cover the
+start, the intermediate and the end values, and a session signed by two keys
+cannot be verified from one of them.
+
+Two of the conventions above are load-bearing for that path, and a document
+that ignores either still verifies by hand but yields nothing through
+ChargyCore:
+
+- only `encodings[0] == "OCMF"` is read. A value carried as `base64`, or in
+  another meter value format, is left alone rather than guessed at.
+- a public key whose `encodings` do not end in `hex` is skipped, because `hex`
+  is what is passed on to the OCMF parser. This is a real limit on the freedom
+  [hex is a convention here, not a rule](#hex-is-a-convention-here-not-a-rule)
+  describes: the choice is per value in the format, but not yet in this reader.
+
+Neither is reported. A live link whose keys are written in `base64` is a valid
+live link with working transports whose meter values simply do not verify, so
+the two limits are worth knowing before a producer exercises the freedom.
+
 ## Live transports
 
 A live link describes a charging session that is still running, so it says
