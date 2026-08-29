@@ -3223,12 +3223,14 @@ export class ChargyApp {
                 "Position " + latitude.toString() + ", " + longitude.toString()
             );
 
-        if (LiveLink.liveTransports && LiveLink.liveTransports.length > 0)
+        const transports = this.liveLinkTransports(LiveLink);
+
+        if (transports.length > 0)
         {
             const transportsDiv = document.createElement('div');
             transportsDiv.className = "liveLinkTransports";
 
-            for (const transport of LiveLink.liveTransports)
+            for (const transport of transports)
                 transportsDiv.appendChild(this.createLiveLinkTransportDiv(transport));
 
             this.appendLiveLinkInfoRow(
@@ -3244,9 +3246,9 @@ export class ChargyApp {
         // Only when there is something to reload: an https transport stating a
         // refresh period. Filled in asynchronously, once conf, store or the
         // user have spoken.
-        if (LiveLink.liveTransports?.some(transport => transport.type === "https"          &&
-                                                       typeof transport.refresh === "number" &&
-                                                       transport.refresh > 0) === true)
+        if (transports.some(transport => transport.type === "https"          &&
+                                         typeof transport.refresh === "number" &&
+                                         transport.refresh > 0))
         {
 
             const trustContentDiv         = document.createElement('div');
@@ -3346,7 +3348,7 @@ export class ChargyApp {
                                          generation:  number): Promise<void>
     {
 
-        const transport = LiveLink.liveTransports?.find(
+        const transport = this.liveLinkTransports(LiveLink).find(
                               (candidate): candidate is chargeTransparencyLiveLink.TransportHTTPS =>
                                   candidate.type === "https"              &&
                                   typeof candidate.refresh === "number"   &&
@@ -3650,7 +3652,7 @@ export class ChargyApp {
 
         const stored = this.loadTrustedOrigins();
 
-        for (const transport of LiveLink.liveTransports ?? [])
+        for (const transport of this.liveLinkTransports(LiveLink))
         {
 
             if (transport.type !== "https")
@@ -3940,6 +3942,23 @@ export class ChargyApp {
             clearTimeout(this.liveLinkRefreshTimer);
             this.liveLinkRefreshTimer = null;
         }
+
+    }
+
+    // The well-formed transports of a live link. liveTransports is optional and
+    // comes from a document written elsewhere, so it may be missing, not an
+    // array, or hold entries that are not transports at all; every reader goes
+    // through here, so a broken transport is simply dropped and the rest still
+    // work instead of the whole live link failing over it.
+    private liveLinkTransports(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink): Array<chargeTransparencyLiveLink.Transport>
+    {
+
+        return Array.isArray(LiveLink.liveTransports)
+                   ? LiveLink.liveTransports.filter(
+                         (transport): transport is chargeTransparencyLiveLink.Transport =>
+                             chargeTransparencyLiveLink.isTransport(transport)
+                     )
+                   : [];
 
     }
 
