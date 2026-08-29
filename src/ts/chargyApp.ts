@@ -562,9 +562,12 @@ export class ChargyApp {
 
     private          currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
     private          currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink | null   = null;
+    private          currentLiveLinkMeterValues:         chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
     private          currentPublicKeyLookup:             publicKeyInfo.IPublicKeyLookup                         | null   = null;
     private          currentSimpleURL:                   simpleURL.IURL                                         | null   = null;
     private          currentGlobalError:                 chargyInterfaces.ISessionCryptoResult                  | null   = null;
+
+    private          liveLinkRefreshTimer:               ReturnType<typeof setTimeout>                          | null   = null;
 
     //#endregion
 
@@ -1018,6 +1021,7 @@ export class ChargyApp {
             this.detailedInfosDiv.innerHTML              = "";
             this.currentChargeTransparencyRecord         = null;
             this.currentChargeTransparencyLiveLink       = null;
+            this.currentLiveLinkMeterValues              = null;
             this.currentPublicKeyLookup                  = null;
             this.currentSimpleURL                        = null;
             this.currentGlobalError                      = null;
@@ -1417,7 +1421,8 @@ export class ChargyApp {
         if (this.currentChargeTransparencyLiveLink != null &&
             this.chargingSessionScreenDiv.style.display !== "none")
         {
-            this.showChargeTransparencyLiveLink(this.currentChargeTransparencyLiveLink);
+            this.showChargeTransparencyLiveLink(this.currentChargeTransparencyLiveLink,
+                                                this.currentLiveLinkMeterValues);
             return;
         }
 
@@ -1912,6 +1917,7 @@ export class ChargyApp {
         this.currentGlobalError                      = result;
         this.currentChargeTransparencyRecord         = null;
         this.currentChargeTransparencyLiveLink       = null;
+        this.currentLiveLinkMeterValues              = null;
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
         this.clearRenderedChargeData(true);
@@ -2689,7 +2695,10 @@ export class ChargyApp {
                 this.errorTextDiv.style.display  = 'none';
             }
 
-            this.showChargeTransparencyLiveLink(result);
+            this.showChargeTransparencyLiveLink(
+                result,
+                await this.chargy.TryToParseLiveLinkMeterValues(result) ?? null
+            );
 
             return true;
 
@@ -2746,6 +2755,7 @@ export class ChargyApp {
         this.currentPublicKeyLookup                 = { publicKeys };
         this.currentChargeTransparencyRecord        = null;
         this.currentChargeTransparencyLiveLink      = null;
+        this.currentLiveLinkMeterValues             = null;
         this.currentSimpleURL                       = null;
         this.currentGlobalError                     = null;
         this.clearRenderedChargeData();
@@ -2888,6 +2898,7 @@ export class ChargyApp {
         this.currentSimpleURL                       = URLInfo;
         this.currentChargeTransparencyRecord        = null;
         this.currentChargeTransparencyLiveLink      = null;
+        this.currentLiveLinkMeterValues             = null;
         this.currentPublicKeyLookup                 = null;
         this.currentGlobalError                     = null;
         this.clearRenderedChargeData();
@@ -2942,12 +2953,17 @@ export class ChargyApp {
     //#endregion
 
 
-    //#region showChargeTransparencyLiveLink(LiveLink)
+    //#region showChargeTransparencyLiveLink(LiveLink, MeterValues)
 
-    private showChargeTransparencyLiveLink(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink) : void
+    private showChargeTransparencyLiveLink(LiveLink:     chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                                           MeterValues:  chargeTransparencyRecord.IChargeTransparencyRecord|null = null) : void
     {
 
+        if (this.currentChargeTransparencyLiveLink !== LiveLink)
+            this.measurementValuesViewMode           = "measurements";
+
         this.currentChargeTransparencyLiveLink       = LiveLink;
+        this.currentLiveLinkMeterValues              = MeterValues;
         this.currentChargeTransparencyRecord         = null;
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
@@ -2982,31 +2998,103 @@ export class ChargyApp {
         const liveLinkDiv          = chargyLib.CreateDiv(liveLinksDiv, "chargingSession");
         liveLinkDiv.classList.add("chargeTransparencyLiveLink");
 
+        //#region What the live link knows about its charging session
+
+        // A live link describes exactly one charging session, so it carries
+        // single objects where a charge transparency record carries lists.
+        // None of these properties is part of IChargeTransparencyLiveLink yet,
+        // hence the untyped reads.
+        const chargingStation      = chargyLib.asJSONObject(LiveLink["chargingStation"]);
+        const evse                 = chargyLib.asJSONObject(chargingStation?.["EVSE"]);
+        const connector            = chargyLib.asJSONObject(evse?.["connector"]);
+        const contract             = chargyLib.asJSONObject(LiveLink["contract"]);
+        const geoLocation          = chargyLib.asJSONObject(chargingStation?.["geoLocation"]);
+
+        const chargingSession      = MeterValues?.chargingSessions?.[0];
+        const measurement          = chargingSession?.measurements?.[0];
+        const measurementValues    = measurement != null
+                                         ? this.distinctValuesInTimeOrder(measurement.values)
+                                         : [];
+        const firstValue           = measurementValues[0];
+        const lastValue            = measurementValues[measurementValues.length - 1];
+
+        //#endregion
+
+        // When the charging session began. Where a finished session also shows
+        // when it ended, a live link cannot: it has not ended yet.
+        if (chargingSession?.begin != null)
+        {
+            const dateDiv          = liveLinkDiv.appendChild(document.createElement('div'));
+            dateDiv.className      = "date";
+            dateDiv.innerHTML      = chargyLib.time2human(chargingSession.begin);
+        }
+
         const tableDiv             = liveLinkDiv.appendChild(document.createElement('div'));
         tableDiv.className         = "table";
 
-        if (LiveLink.geoLocation)
+        // How long it has been charging and how much energy the meter has seen
+        // so far: the same two lines a finished charging session shows here.
+        if (measurement != null && firstValue != null && lastValue != null)
+        {
+
+            const elapsed = chargyLib.parseUTC(lastValue. timestamp).valueOf() -
+                            chargyLib.parseUTC(firstValue.timestamp).valueOf();
+
+            const energy  = this.getMeasurementValueInKWh(measurement, lastValue).
+                                 minus(this.getMeasurementValueInKWh(measurement, firstValue));
+
+            this.appendLiveLinkInfoRow(
+                tableDiv,
+                "productInfos",
+                '<i class="fas fa-chart-pie"></i>',
+                [
+                    elapsed > 0
+                        ? "Ladedauer " + this.formatChargingDuration(elapsed)
+                        : "",
+                    chargyLib.measurementName2human(measurement.name) + " " +
+                        parseFloat(energy.toFixed(10)).toString() + " kWh"
+                ].filter(line => line !== "").join("\n")
+            );
+
+        }
+
+        const contractId           = chargyLib.asString(contract?.["@id"]);
+
+        if (contractId != null && contractId !== "")
+            this.appendLiveLinkInfoRow(
+                tableDiv,
+                "contractInfos",
+                '<i class="fas fa-id-card"></i>',
+                contractId
+            );
+
+        const evseId               = chargyLib.asString(evse?.["@id"]);
+        const connectorText        = connector == null
+                                         ? ""
+                                         : [
+                                               chargyLib.asString(connector["standard"]),
+                                               chargyLib.asString(connector["format"]),
+                                               chargyLib.asString(connector["powerType"]),
+                                               chargyLib.asString(connector["maxPower"])
+                                           ].filter(value => value != null && value !== "").join(", ");
+
+        if ((evseId != null && evseId !== "") || connectorText !== "")
+            this.appendLiveLinkInfoRow(
+                tableDiv,
+                "chargingStationInfos",
+                '<i class="fas fa-charging-station"></i>',
+                [ evseId ?? "", connectorText ].filter(line => line !== "").join("\n")
+            );
+
+        const latitude             = chargyLib.asNumber(geoLocation?.["lat"]);
+        const longitude            = chargyLib.asNumber(geoLocation?.["lng"]);
+
+        if (latitude != null && longitude != null)
             this.appendLiveLinkInfoRow(
                 tableDiv,
                 "locationInfos",
                 '<i class="fas fa-map-marker-alt"></i>',
-                "Position " + [
-                    LiveLink.geoLocation.lat,
-                    LiveLink.geoLocation.lng
-                ].join(", ")
-            );
-
-        if (LiveLink.connector)
-            this.appendLiveLinkInfoRow(
-                tableDiv,
-                "chargingStationInfos",
-                '<i class="fas fa-plug"></i>',
-                [
-                    LiveLink.connector.standard,
-                    LiveLink.connector.format,
-                    LiveLink.connector.powerType,
-                    LiveLink.connector.maxPower
-                ].filter(value => value != null && value !== "").join(", ")
+                "Position " + latitude.toString() + ", " + longitude.toString()
             );
 
         if (LiveLink.liveTransports && LiveLink.liveTransports.length > 0)
@@ -3019,7 +3107,7 @@ export class ChargyApp {
 
             this.appendLiveLinkInfoRow(
                 tableDiv,
-                "productInfos",
+                "transportInfos",
                 '<i class="fas fa-satellite-dish"></i>',
                 transportsDiv
             );
@@ -3050,7 +3138,263 @@ export class ChargyApp {
                     : LiveLink.signatures.length.toString() + " Signaturen"
             );
 
+        //#region Show the signed meter values the live link already carries
+
+        // Every single meter value, on the right, exactly like those of a
+        // finished session: one that arrived a moment ago is read and verified
+        // just like one from an archive. A live link describes a single
+        // charging session, so there is no session list to choose from and the
+        // details are shown right away.
+        if (chargingSession != null)
+        {
+            chargingSession.ctr = MeterValues ?? undefined;
+            this.showChargingSessionDetails(chargingSession);
+        }
+
+        //#endregion
+
+        this.startLiveLinkRefresh(LiveLink);
+
     }
+
+    //#region Reloading a live link
+
+    // A live link points at a charging session that is still running, so an
+    // https transport may say how often to ask for the document again. Every
+    // "refresh" seconds it is fetched in the background: a newer document is
+    // processed and displayed like any other, the same one changes nothing.
+    //
+    // Neither does a request that fails. The transports belong to the operator,
+    // and a station that is unreachable for a while must not take a document
+    // that was loaded successfully off the screen.
+    private startLiveLinkRefresh(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink): void
+    {
+
+        this.stopLiveLinkRefresh();
+
+        void this.prepareLiveLinkRefresh(LiveLink);
+
+    }
+
+    private async prepareLiveLinkRefresh(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink): Promise<void>
+    {
+
+        const transport = LiveLink.liveTransports?.find(
+                              (candidate): candidate is chargeTransparencyLiveLink.TransportHTTPS =>
+                                  candidate.type === "https"              &&
+                                  typeof candidate.refresh === "number"   &&
+                                  candidate.refresh > 0
+                          );
+
+        const refresh   = transport?.refresh;
+
+        if (transport === undefined || refresh === undefined)
+            return;
+
+        // A live link is a document from outside and may name any URL at all,
+        // so only the endpoints this installation has allowed in
+        // "externalURLs.conf" are ever asked - the same rule that governs deep
+        // link verification URLs, and for the same reason. The browser's
+        // Content-Security-Policy has to allow the host as well; both are set
+        // per deployment, and until they are, a live link is simply not
+        // reloaded.
+        const rules     = await this.loadExternalURLRules().catch(() => new Array<ExternalURLRule>());
+        const targets   = new Array<{ url: URL, rule: ExternalURLRule }>();
+
+        for (const url of this.liveLinkTransportURLs(transport))
+        {
+
+            let transportURL: URL;
+
+            try
+            {
+                transportURL = new URL(url, window.location.href);
+            }
+            catch
+            {
+                continue;
+            }
+
+            const rule = this.findExternalURLRule(transportURL, rules);
+
+            if (rule !== null)
+                targets.push({ url: transportURL, rule: rule });
+
+        }
+
+        if (targets.length === 0)
+        {
+            console.log("Not reloading this charge transparency live link: none of the URLs of its https transport is allowed by externalURLs.conf.");
+            return;
+        }
+
+        // A timer that fires after the view has moved on does nothing and does
+        // not schedule the next one.
+        const poll      = async (): Promise<void> => {
+
+            if (this.currentChargeTransparencyLiveLink !== LiveLink)
+                return;
+
+            try
+            {
+                await this.reloadLiveLink(LiveLink, targets);
+            }
+            catch
+            {
+                // Whatever went wrong out there, what is on screen was loaded
+                // successfully once and stays.
+            }
+
+            if (this.currentChargeTransparencyLiveLink === LiveLink)
+                this.liveLinkRefreshTimer = setTimeout(() => void poll(), refresh * 1000);
+
+        };
+
+        if (this.currentChargeTransparencyLiveLink === LiveLink)
+            this.liveLinkRefreshTimer = setTimeout(() => void poll(), refresh * 1000);
+
+    }
+
+    private stopLiveLinkRefresh(): void
+    {
+
+        if (this.liveLinkRefreshTimer !== null)
+        {
+            clearTimeout(this.liveLinkRefreshTimer);
+            this.liveLinkRefreshTimer = null;
+        }
+
+    }
+
+    // The URLs of a transport: the single "url" first, then the "urls" in the
+    // order of their priority.
+    private liveLinkTransportURLs(transport: chargeTransparencyLiveLink.Transport): Array<string>
+    {
+
+        const urls           = new Array<string>();
+
+        if (transport.url != null && transport.url !== "")
+            urls.push(transport.url);
+
+        const additionalURLs = [ ...(transport.urls ?? []) ].sort(
+                                   (url1, url2) => (typeof url1 === "string" ? 0 : url1.priority ?? 0) -
+                                                   (typeof url2 === "string" ? 0 : url2.priority ?? 0)
+                               );
+
+        for (const additionalURL of additionalURLs)
+        {
+
+            const url = typeof additionalURL === "string" ? additionalURL : additionalURL.url;
+
+            if (url !== "")
+                urls.push(url);
+
+        }
+
+        return urls;
+
+    }
+
+    // Asks each URL in turn until one answers with a live link. A document that
+    // describes a different session is ignored, and so is one that is not newer
+    // than what is on screen.
+    private async reloadLiveLink(LiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                                 targets:   Array<{ url: URL, rule: ExternalURLRule }>): Promise<void>
+    {
+
+        for (const target of targets)
+        {
+
+            const requestURL = this.liveLinkRefreshURL(target.url, LiveLink);
+
+            // Adding the timestamp must not move the URL out of the prefix it
+            // was allowed under.
+            if (!requestURL.href.startsWith(target.rule.prefix))
+                continue;
+
+            const response = await fetch(requestURL.href,
+                                         { cache: "no-store", credentials: "omit" }).
+                                   catch(() => null);
+
+            if (response?.ok !== true)
+                continue;
+
+            const text     = new TextDecoder().decode(
+                                 await this.readResponseWithinLimit(response, target.rule.maxPayloadBytes)
+                             );
+
+            let   reloaded: unknown;
+
+            try
+            {
+                reloaded = JSON.parse(text);
+            }
+            catch
+            {
+                continue;
+            }
+
+            if (!chargeTransparencyLiveLink.IsAChargeTransparencyLiveLink(reloaded) ||
+                reloaded["@id"] !== LiveLink["@id"])
+            {
+                continue;
+            }
+
+            if (this.isNewerLiveLink(reloaded, LiveLink))
+                await this.detectAndConvertContentFormat(text, {
+                                prepareUI:  false,
+                                onError:    () => { /* keep what is on screen */ }
+                            });
+
+            // The endpoint answered. Whether it had something new or not, there
+            // is no reason to ask the next one.
+            return;
+
+        }
+
+    }
+
+    // The request says which version the client already has, as
+    // "lastUpdated=<timestamp>" next to whatever the URL already carries. A
+    // server that keeps track of that can answer with less than the whole
+    // document; one that does not care ignores the parameter.
+    private liveLinkRefreshURL(url:       URL,
+                               LiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink): URL
+    {
+
+        const refreshURL  = new URL(url.href);
+        const lastUpdated = chargyLib.asString(LiveLink["lastUpdated"]);
+
+        if (lastUpdated !== undefined && lastUpdated !== "")
+            refreshURL.searchParams.set("lastUpdated", lastUpdated);
+
+        return refreshURL;
+
+    }
+
+    // "lastUpdated" is what a document says about its own recency, and it is
+    // what decides here. A document that does not carry it cannot be told apart
+    // from the one already loaded, so it is left alone.
+    private isNewerLiveLink(reloaded:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                            current:   chargeTransparencyLiveLink.IChargeTransparencyLiveLink): boolean
+    {
+
+        const reloadedLastUpdated = chargyLib.asString(reloaded["lastUpdated"]);
+
+        if (reloadedLastUpdated === undefined)
+            return false;
+
+        const currentLastUpdated  = chargyLib.asString(current["lastUpdated"]);
+
+        if (currentLastUpdated === undefined)
+            return true;
+
+        return chargyLib.parseUTC(reloadedLastUpdated).valueOf() >
+               chargyLib.parseUTC(currentLastUpdated). valueOf();
+
+    }
+
+    //#endregion
 
     private appendLiveLinkInfoRow(tableDiv:   HTMLDivElement,
                                   className:  string,
@@ -3139,6 +3483,7 @@ export class ChargyApp {
 
         this.currentChargeTransparencyRecord         = CTR;
         this.currentChargeTransparencyLiveLink       = null;
+        this.currentLiveLinkMeterValues              = null;
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
         this.currentGlobalError                      = null;
@@ -3283,14 +3628,11 @@ export class ChargyApp {
                     if (chargingSession.begin !== undefined && chargingSession.end !== undefined)
                     {
 
-                        const duration = this.moment.duration(chargyLib.parseUTC(chargingSession.end).valueOf() - chargyLib.parseUTC(chargingSession.begin).valueOf());
-
-                        productDiv.innerHTML += "Ladedauer ";
-                        if      (Math.floor(duration.asDays())    > 1) productDiv.innerHTML += duration.days()    + " Tage "    + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
-                        else if (Math.floor(duration.asDays())    > 0) productDiv.innerHTML += duration.days()    + " Tag "     + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
-                        else if (Math.floor(duration.asHours())   > 0) productDiv.innerHTML += duration.hours()   + " Std. "    + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
-                        else if (Math.floor(duration.asMinutes()) > 0) productDiv.innerHTML += duration.minutes() + " Minuten " + duration.seconds() + " Sekunden";
-                        else if (Math.floor(duration.asSeconds()) > 0) productDiv.innerHTML += duration.seconds() + " Sekunden";
+                        productDiv.innerHTML += "Ladedauer " +
+                                                this.formatChargingDuration(
+                                                    chargyLib.parseUTC(chargingSession.end).  valueOf() -
+                                                    chargyLib.parseUTC(chargingSession.begin).valueOf()
+                                                );
 
 
                         if (chargingSession.chargingProductRelevance?.time != undefined)
@@ -4045,6 +4387,58 @@ export class ChargyApp {
 
     }
 
+    // The readings in the order the meter took them, each one only once.
+    //
+    // Documents overlap: the classic OCMF transaction document repeats the
+    // start reading next to the end reading, an OCMF file may carry the same
+    // document twice, and some meters send every reading again and again -
+    // KEBA sends 190 of them where 17 readings were taken. Sorted by timestamp
+    // those repetitions come to lie next to each other, and a reading that
+    // repeats the one before it, same instant and same value, is not a new
+    // reading: it gets no row of its own, no bar and no interval.
+    //
+    // The measurement itself is left alone. Its values are the attestations,
+    // and a reading attested twice was attested twice - only the presentation
+    // shows it once. Two readings that share a timestamp but differ in value
+    // are both kept, and readings sharing a timestamp keep their relative
+    // order, which matters for meters whose clock was never set and that stamp
+    // every reading with the same instant.
+    private distinctValuesInTimeOrder(measurementValues: Array<chargeTransparencyRecord.IMeasurementValue>)
+        : Array<chargeTransparencyRecord.IMeasurementValue>
+    {
+
+        const inTimeOrder    = measurementValues.
+                                   map(measurementValue => ({
+                                       measurementValue,
+                                       timestamp:  chargyLib.parseUTC(measurementValue.timestamp).valueOf()
+                                   })).
+                                   sort((entry1, entry2) => entry1.timestamp - entry2.timestamp);
+
+        const distinctValues = new Array<chargeTransparencyRecord.IMeasurementValue>();
+
+        let   previousTimestamp:  number  | undefined;
+        let   previousValue:      Decimal | undefined;
+
+        for (const entry of inTimeOrder)
+        {
+
+            if (previousTimestamp === entry.timestamp &&
+                previousValue?.equals(entry.measurementValue.value) === true)
+            {
+                continue;
+            }
+
+            distinctValues.push(entry.measurementValue);
+
+            previousTimestamp = entry.timestamp;
+            previousValue     = entry.measurementValue.value;
+
+        }
+
+        return distinctValues;
+
+    }
+
     private getMeasurementValueInKWh(measurement:       chargeTransparencyRecord.IMeasurement,
                                      measurementValue:  chargeTransparencyRecord.IMeasurementValue): Decimal
     {
@@ -4062,6 +4456,21 @@ export class ChargyApp {
                 return value.div(1000);
 
         }
+
+    }
+
+    private formatChargingDuration(milliseconds: number): string
+    {
+
+        const duration = this.moment.duration(milliseconds);
+
+        if (Math.floor(duration.asDays())    > 1) return duration.days()    + " Tage "    + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
+        if (Math.floor(duration.asDays())    > 0) return duration.days()    + " Tag "     + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
+        if (Math.floor(duration.asHours())   > 0) return duration.hours()   + " Std. "    + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
+        if (Math.floor(duration.asMinutes()) > 0) return duration.minutes() + " Minuten " + duration.seconds() + " Sekunden";
+        if (Math.floor(duration.asSeconds()) > 0) return duration.seconds() + " Sekunden";
+
+        return "";
 
     }
 
@@ -4173,7 +4582,9 @@ export class ChargyApp {
                                          mode:         ChargingProgressChartMode): ChargingProgressChartData | null
     {
 
-        if (measurement.values.length <= 2)
+        const measurementValues = this.distinctValuesInTimeOrder(measurement.values);
+
+        if (measurementValues.length <= 2)
             return null;
 
         const points: ChargingProgressChartPoint[] = [];
@@ -4182,11 +4593,20 @@ export class ChargyApp {
         let   previousValue: Decimal | null = null;
         let   previousTimestamp: number | null = null;
 
-        for (const measurementValue of measurement.values)
+        for (const measurementValue of measurementValues)
         {
 
             const currentValue     = this.getMeasurementValueInKWh(measurement, measurementValue);
             const currentTimestamp = chargyLib.parseUTC(measurementValue.timestamp).valueOf();
+
+            // A measurement value that does not advance the clock cannot describe an
+            // interval. The classic OCMF transaction document repeats the start reading
+            // next to the end reading, so a session assembled from separate documents
+            // carries that reading a second time and out of order. Charting it would
+            // draw one bar running backwards and a second one spanning the whole
+            // session. Such a value is skipped and the last one still stands.
+            if (previousTimestamp !== null && currentTimestamp <= previousTimestamp)
+                continue;
 
             tickTimestamps.push(currentTimestamp);
             tickStatuses.push({
@@ -5004,7 +5424,9 @@ export class ChargyApp {
 
                     //#region Show measurement values...
 
-                    if (measurement.values.length > 0)
+                    const measurementValues     = this.distinctValuesInTimeOrder(measurement.values);
+
+                    if (measurementValues.length > 0)
                     {
 
                         let   measurementCounter    = 0;
@@ -5014,7 +5436,7 @@ export class ChargyApp {
                                                       chargyLib.CreateDiv(measurementValuesDiv,  "headline2",
                                                                           this.chargy.GetLocalizedMessage("Meter Values"));
 
-                        const viewLinksDiv          = measurement.values.length > 2
+                        const viewLinksDiv          = measurementValues.length > 2
                                                           ? chargyLib.CreateDiv(measurementValuesDiv, "measurementValueViews")
                                                           : null;
                         const measurementRowsDiv    = chargyLib.CreateDiv(measurementValuesDiv, "measurementValueRows");
@@ -5035,7 +5457,7 @@ export class ChargyApp {
 
                         }
 
-                        for (const measurementValue of measurement.values)
+                        for (const measurementValue of measurementValues)
                         {
 
                             measurementCounter++;
