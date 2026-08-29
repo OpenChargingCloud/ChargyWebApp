@@ -562,6 +562,7 @@ export class ChargyApp {
 
     private          currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
     private          currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink | null   = null;
+    private          currentLiveLinkMeterValues:         chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
     private          currentPublicKeyLookup:             publicKeyInfo.IPublicKeyLookup                         | null   = null;
     private          currentSimpleURL:                   simpleURL.IURL                                         | null   = null;
     private          currentGlobalError:                 chargyInterfaces.ISessionCryptoResult                  | null   = null;
@@ -1018,6 +1019,7 @@ export class ChargyApp {
             this.detailedInfosDiv.innerHTML              = "";
             this.currentChargeTransparencyRecord         = null;
             this.currentChargeTransparencyLiveLink       = null;
+            this.currentLiveLinkMeterValues              = null;
             this.currentPublicKeyLookup                  = null;
             this.currentSimpleURL                        = null;
             this.currentGlobalError                      = null;
@@ -1417,7 +1419,8 @@ export class ChargyApp {
         if (this.currentChargeTransparencyLiveLink != null &&
             this.chargingSessionScreenDiv.style.display !== "none")
         {
-            this.showChargeTransparencyLiveLink(this.currentChargeTransparencyLiveLink);
+            this.showChargeTransparencyLiveLink(this.currentChargeTransparencyLiveLink,
+                                                this.currentLiveLinkMeterValues);
             return;
         }
 
@@ -1912,6 +1915,7 @@ export class ChargyApp {
         this.currentGlobalError                      = result;
         this.currentChargeTransparencyRecord         = null;
         this.currentChargeTransparencyLiveLink       = null;
+        this.currentLiveLinkMeterValues              = null;
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
         this.clearRenderedChargeData(true);
@@ -2689,7 +2693,10 @@ export class ChargyApp {
                 this.errorTextDiv.style.display  = 'none';
             }
 
-            this.showChargeTransparencyLiveLink(result);
+            this.showChargeTransparencyLiveLink(
+                result,
+                await this.chargy.TryToParseLiveLinkMeterValues(result) ?? null
+            );
 
             return true;
 
@@ -2746,6 +2753,7 @@ export class ChargyApp {
         this.currentPublicKeyLookup                 = { publicKeys };
         this.currentChargeTransparencyRecord        = null;
         this.currentChargeTransparencyLiveLink      = null;
+        this.currentLiveLinkMeterValues             = null;
         this.currentSimpleURL                       = null;
         this.currentGlobalError                     = null;
         this.clearRenderedChargeData();
@@ -2888,6 +2896,7 @@ export class ChargyApp {
         this.currentSimpleURL                       = URLInfo;
         this.currentChargeTransparencyRecord        = null;
         this.currentChargeTransparencyLiveLink      = null;
+        this.currentLiveLinkMeterValues             = null;
         this.currentPublicKeyLookup                 = null;
         this.currentGlobalError                     = null;
         this.clearRenderedChargeData();
@@ -2942,12 +2951,17 @@ export class ChargyApp {
     //#endregion
 
 
-    //#region showChargeTransparencyLiveLink(LiveLink)
+    //#region showChargeTransparencyLiveLink(LiveLink, MeterValues)
 
-    private showChargeTransparencyLiveLink(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink) : void
+    private showChargeTransparencyLiveLink(LiveLink:     chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                                           MeterValues:  chargeTransparencyRecord.IChargeTransparencyRecord|null = null) : void
     {
 
+        if (this.currentChargeTransparencyLiveLink !== LiveLink)
+            this.measurementValuesViewMode           = "measurements";
+
         this.currentChargeTransparencyLiveLink       = LiveLink;
+        this.currentLiveLinkMeterValues              = MeterValues;
         this.currentChargeTransparencyRecord         = null;
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
@@ -2982,31 +2996,103 @@ export class ChargyApp {
         const liveLinkDiv          = chargyLib.CreateDiv(liveLinksDiv, "chargingSession");
         liveLinkDiv.classList.add("chargeTransparencyLiveLink");
 
+        //#region What the live link knows about its charging session
+
+        // A live link describes exactly one charging session, so it carries
+        // single objects where a charge transparency record carries lists.
+        // None of these properties is part of IChargeTransparencyLiveLink yet,
+        // hence the untyped reads.
+        const chargingStation      = chargyLib.asJSONObject(LiveLink["chargingStation"]);
+        const evse                 = chargyLib.asJSONObject(chargingStation?.["EVSE"]);
+        const connector            = chargyLib.asJSONObject(evse?.["connector"]);
+        const contract             = chargyLib.asJSONObject(LiveLink["contract"]);
+        const geoLocation          = chargyLib.asJSONObject(chargingStation?.["geoLocation"]);
+
+        const chargingSession      = MeterValues?.chargingSessions?.[0];
+        const measurement          = chargingSession?.measurements?.[0];
+        const measurementValues    = measurement != null
+                                         ? this.distinctValuesInTimeOrder(measurement.values)
+                                         : [];
+        const firstValue           = measurementValues[0];
+        const lastValue            = measurementValues[measurementValues.length - 1];
+
+        //#endregion
+
+        // When the charging session began. Where a finished session also shows
+        // when it ended, a live link cannot: it has not ended yet.
+        if (chargingSession?.begin != null)
+        {
+            const dateDiv          = liveLinkDiv.appendChild(document.createElement('div'));
+            dateDiv.className      = "date";
+            dateDiv.innerHTML      = chargyLib.time2human(chargingSession.begin);
+        }
+
         const tableDiv             = liveLinkDiv.appendChild(document.createElement('div'));
         tableDiv.className         = "table";
 
-        if (LiveLink.geoLocation)
+        // How long it has been charging and how much energy the meter has seen
+        // so far: the same two lines a finished charging session shows here.
+        if (measurement != null && firstValue != null && lastValue != null)
+        {
+
+            const elapsed = chargyLib.parseUTC(lastValue. timestamp).valueOf() -
+                            chargyLib.parseUTC(firstValue.timestamp).valueOf();
+
+            const energy  = this.getMeasurementValueInKWh(measurement, lastValue).
+                                 minus(this.getMeasurementValueInKWh(measurement, firstValue));
+
+            this.appendLiveLinkInfoRow(
+                tableDiv,
+                "productInfos",
+                '<i class="fas fa-chart-pie"></i>',
+                [
+                    elapsed > 0
+                        ? "Ladedauer " + this.formatChargingDuration(elapsed)
+                        : "",
+                    chargyLib.measurementName2human(measurement.name) + " " +
+                        parseFloat(energy.toFixed(10)).toString() + " kWh"
+                ].filter(line => line !== "").join("\n")
+            );
+
+        }
+
+        const contractId           = chargyLib.asString(contract?.["@id"]);
+
+        if (contractId != null && contractId !== "")
+            this.appendLiveLinkInfoRow(
+                tableDiv,
+                "contractInfos",
+                '<i class="fas fa-id-card"></i>',
+                contractId
+            );
+
+        const evseId               = chargyLib.asString(evse?.["@id"]);
+        const connectorText        = connector == null
+                                         ? ""
+                                         : [
+                                               chargyLib.asString(connector["standard"]),
+                                               chargyLib.asString(connector["format"]),
+                                               chargyLib.asString(connector["powerType"]),
+                                               chargyLib.asString(connector["maxPower"])
+                                           ].filter(value => value != null && value !== "").join(", ");
+
+        if ((evseId != null && evseId !== "") || connectorText !== "")
+            this.appendLiveLinkInfoRow(
+                tableDiv,
+                "chargingStationInfos",
+                '<i class="fas fa-charging-station"></i>',
+                [ evseId ?? "", connectorText ].filter(line => line !== "").join("\n")
+            );
+
+        const latitude             = chargyLib.asNumber(geoLocation?.["lat"]);
+        const longitude            = chargyLib.asNumber(geoLocation?.["lng"]);
+
+        if (latitude != null && longitude != null)
             this.appendLiveLinkInfoRow(
                 tableDiv,
                 "locationInfos",
                 '<i class="fas fa-map-marker-alt"></i>',
-                "Position " + [
-                    LiveLink.geoLocation.lat,
-                    LiveLink.geoLocation.lng
-                ].join(", ")
-            );
-
-        if (LiveLink.connector)
-            this.appendLiveLinkInfoRow(
-                tableDiv,
-                "chargingStationInfos",
-                '<i class="fas fa-plug"></i>',
-                [
-                    LiveLink.connector.standard,
-                    LiveLink.connector.format,
-                    LiveLink.connector.powerType,
-                    LiveLink.connector.maxPower
-                ].filter(value => value != null && value !== "").join(", ")
+                "Position " + latitude.toString() + ", " + longitude.toString()
             );
 
         if (LiveLink.liveTransports && LiveLink.liveTransports.length > 0)
@@ -3019,7 +3105,7 @@ export class ChargyApp {
 
             this.appendLiveLinkInfoRow(
                 tableDiv,
-                "productInfos",
+                "transportInfos",
                 '<i class="fas fa-satellite-dish"></i>',
                 transportsDiv
             );
@@ -3049,6 +3135,21 @@ export class ChargyApp {
                     ? "1 Signatur"
                     : LiveLink.signatures.length.toString() + " Signaturen"
             );
+
+        //#region Show the signed meter values the live link already carries
+
+        // Every single meter value, on the right, exactly like those of a
+        // finished session: one that arrived a moment ago is read and verified
+        // just like one from an archive. A live link describes a single
+        // charging session, so there is no session list to choose from and the
+        // details are shown right away.
+        if (chargingSession != null)
+        {
+            chargingSession.ctr = MeterValues ?? undefined;
+            this.showChargingSessionDetails(chargingSession);
+        }
+
+        //#endregion
 
     }
 
@@ -3139,6 +3240,7 @@ export class ChargyApp {
 
         this.currentChargeTransparencyRecord         = CTR;
         this.currentChargeTransparencyLiveLink       = null;
+        this.currentLiveLinkMeterValues              = null;
         this.currentPublicKeyLookup                  = null;
         this.currentSimpleURL                        = null;
         this.currentGlobalError                      = null;
@@ -3283,14 +3385,11 @@ export class ChargyApp {
                     if (chargingSession.begin !== undefined && chargingSession.end !== undefined)
                     {
 
-                        const duration = this.moment.duration(chargyLib.parseUTC(chargingSession.end).valueOf() - chargyLib.parseUTC(chargingSession.begin).valueOf());
-
-                        productDiv.innerHTML += "Ladedauer ";
-                        if      (Math.floor(duration.asDays())    > 1) productDiv.innerHTML += duration.days()    + " Tage "    + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
-                        else if (Math.floor(duration.asDays())    > 0) productDiv.innerHTML += duration.days()    + " Tag "     + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
-                        else if (Math.floor(duration.asHours())   > 0) productDiv.innerHTML += duration.hours()   + " Std. "    + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
-                        else if (Math.floor(duration.asMinutes()) > 0) productDiv.innerHTML += duration.minutes() + " Minuten " + duration.seconds() + " Sekunden";
-                        else if (Math.floor(duration.asSeconds()) > 0) productDiv.innerHTML += duration.seconds() + " Sekunden";
+                        productDiv.innerHTML += "Ladedauer " +
+                                                this.formatChargingDuration(
+                                                    chargyLib.parseUTC(chargingSession.end).  valueOf() -
+                                                    chargyLib.parseUTC(chargingSession.begin).valueOf()
+                                                );
 
 
                         if (chargingSession.chargingProductRelevance?.time != undefined)
@@ -4045,6 +4144,58 @@ export class ChargyApp {
 
     }
 
+    // The readings in the order the meter took them, each one only once.
+    //
+    // Documents overlap: the classic OCMF transaction document repeats the
+    // start reading next to the end reading, an OCMF file may carry the same
+    // document twice, and some meters send every reading again and again -
+    // KEBA sends 190 of them where 17 readings were taken. Sorted by timestamp
+    // those repetitions come to lie next to each other, and a reading that
+    // repeats the one before it, same instant and same value, is not a new
+    // reading: it gets no row of its own, no bar and no interval.
+    //
+    // The measurement itself is left alone. Its values are the attestations,
+    // and a reading attested twice was attested twice - only the presentation
+    // shows it once. Two readings that share a timestamp but differ in value
+    // are both kept, and readings sharing a timestamp keep their relative
+    // order, which matters for meters whose clock was never set and that stamp
+    // every reading with the same instant.
+    private distinctValuesInTimeOrder(measurementValues: Array<chargeTransparencyRecord.IMeasurementValue>)
+        : Array<chargeTransparencyRecord.IMeasurementValue>
+    {
+
+        const inTimeOrder    = measurementValues.
+                                   map(measurementValue => ({
+                                       measurementValue,
+                                       timestamp:  chargyLib.parseUTC(measurementValue.timestamp).valueOf()
+                                   })).
+                                   sort((entry1, entry2) => entry1.timestamp - entry2.timestamp);
+
+        const distinctValues = new Array<chargeTransparencyRecord.IMeasurementValue>();
+
+        let   previousTimestamp:  number  | undefined;
+        let   previousValue:      Decimal | undefined;
+
+        for (const entry of inTimeOrder)
+        {
+
+            if (previousTimestamp === entry.timestamp &&
+                previousValue?.equals(entry.measurementValue.value) === true)
+            {
+                continue;
+            }
+
+            distinctValues.push(entry.measurementValue);
+
+            previousTimestamp = entry.timestamp;
+            previousValue     = entry.measurementValue.value;
+
+        }
+
+        return distinctValues;
+
+    }
+
     private getMeasurementValueInKWh(measurement:       chargeTransparencyRecord.IMeasurement,
                                      measurementValue:  chargeTransparencyRecord.IMeasurementValue): Decimal
     {
@@ -4062,6 +4213,21 @@ export class ChargyApp {
                 return value.div(1000);
 
         }
+
+    }
+
+    private formatChargingDuration(milliseconds: number): string
+    {
+
+        const duration = this.moment.duration(milliseconds);
+
+        if (Math.floor(duration.asDays())    > 1) return duration.days()    + " Tage "    + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
+        if (Math.floor(duration.asDays())    > 0) return duration.days()    + " Tag "     + duration.hours()   + " Std. " + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
+        if (Math.floor(duration.asHours())   > 0) return duration.hours()   + " Std. "    + duration.minutes() + " Min. " + duration.seconds() + " Sek.";
+        if (Math.floor(duration.asMinutes()) > 0) return duration.minutes() + " Minuten " + duration.seconds() + " Sekunden";
+        if (Math.floor(duration.asSeconds()) > 0) return duration.seconds() + " Sekunden";
+
+        return "";
 
     }
 
@@ -4173,7 +4339,9 @@ export class ChargyApp {
                                          mode:         ChargingProgressChartMode): ChargingProgressChartData | null
     {
 
-        if (measurement.values.length <= 2)
+        const measurementValues = this.distinctValuesInTimeOrder(measurement.values);
+
+        if (measurementValues.length <= 2)
             return null;
 
         const points: ChargingProgressChartPoint[] = [];
@@ -4182,11 +4350,20 @@ export class ChargyApp {
         let   previousValue: Decimal | null = null;
         let   previousTimestamp: number | null = null;
 
-        for (const measurementValue of measurement.values)
+        for (const measurementValue of measurementValues)
         {
 
             const currentValue     = this.getMeasurementValueInKWh(measurement, measurementValue);
             const currentTimestamp = chargyLib.parseUTC(measurementValue.timestamp).valueOf();
+
+            // A measurement value that does not advance the clock cannot describe an
+            // interval. The classic OCMF transaction document repeats the start reading
+            // next to the end reading, so a session assembled from separate documents
+            // carries that reading a second time and out of order. Charting it would
+            // draw one bar running backwards and a second one spanning the whole
+            // session. Such a value is skipped and the last one still stands.
+            if (previousTimestamp !== null && currentTimestamp <= previousTimestamp)
+                continue;
 
             tickTimestamps.push(currentTimestamp);
             tickStatuses.push({
@@ -5004,7 +5181,9 @@ export class ChargyApp {
 
                     //#region Show measurement values...
 
-                    if (measurement.values.length > 0)
+                    const measurementValues     = this.distinctValuesInTimeOrder(measurement.values);
+
+                    if (measurementValues.length > 0)
                     {
 
                         let   measurementCounter    = 0;
@@ -5014,7 +5193,7 @@ export class ChargyApp {
                                                       chargyLib.CreateDiv(measurementValuesDiv,  "headline2",
                                                                           this.chargy.GetLocalizedMessage("Meter Values"));
 
-                        const viewLinksDiv          = measurement.values.length > 2
+                        const viewLinksDiv          = measurementValues.length > 2
                                                           ? chargyLib.CreateDiv(measurementValuesDiv, "measurementValueViews")
                                                           : null;
                         const measurementRowsDiv    = chargyLib.CreateDiv(measurementValuesDiv, "measurementValueRows");
@@ -5035,7 +5214,7 @@ export class ChargyApp {
 
                         }
 
-                        for (const measurementValue of measurement.values)
+                        for (const measurementValue of measurementValues)
                         {
 
                             measurementCounter++;
