@@ -567,6 +567,8 @@ export class ChargyApp {
     private          currentSimpleURL:                   simpleURL.IURL                                         | null   = null;
     private          currentGlobalError:                 chargyInterfaces.ISessionCryptoResult                  | null   = null;
 
+    private          liveLinkRefreshTimer:               ReturnType<typeof setTimeout>                          | null   = null;
+
     //#endregion
 
     //#region Constructor
@@ -3151,7 +3153,248 @@ export class ChargyApp {
 
         //#endregion
 
+        this.startLiveLinkRefresh(LiveLink);
+
     }
+
+    //#region Reloading a live link
+
+    // A live link points at a charging session that is still running, so an
+    // https transport may say how often to ask for the document again. Every
+    // "refresh" seconds it is fetched in the background: a newer document is
+    // processed and displayed like any other, the same one changes nothing.
+    //
+    // Neither does a request that fails. The transports belong to the operator,
+    // and a station that is unreachable for a while must not take a document
+    // that was loaded successfully off the screen.
+    private startLiveLinkRefresh(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink): void
+    {
+
+        this.stopLiveLinkRefresh();
+
+        void this.prepareLiveLinkRefresh(LiveLink);
+
+    }
+
+    private async prepareLiveLinkRefresh(LiveLink: chargeTransparencyLiveLink.IChargeTransparencyLiveLink): Promise<void>
+    {
+
+        const transport = LiveLink.liveTransports?.find(
+                              (candidate): candidate is chargeTransparencyLiveLink.TransportHTTPS =>
+                                  candidate.type === "https"              &&
+                                  typeof candidate.refresh === "number"   &&
+                                  candidate.refresh > 0
+                          );
+
+        const refresh   = transport?.refresh;
+
+        if (transport === undefined || refresh === undefined)
+            return;
+
+        // A live link is a document from outside and may name any URL at all,
+        // so only the endpoints this installation has allowed in
+        // "externalURLs.conf" are ever asked - the same rule that governs deep
+        // link verification URLs, and for the same reason. The browser's
+        // Content-Security-Policy has to allow the host as well; both are set
+        // per deployment, and until they are, a live link is simply not
+        // reloaded.
+        const rules     = await this.loadExternalURLRules().catch(() => new Array<ExternalURLRule>());
+        const targets   = new Array<{ url: URL, rule: ExternalURLRule }>();
+
+        for (const url of this.liveLinkTransportURLs(transport))
+        {
+
+            let transportURL: URL;
+
+            try
+            {
+                transportURL = new URL(url, window.location.href);
+            }
+            catch
+            {
+                continue;
+            }
+
+            const rule = this.findExternalURLRule(transportURL, rules);
+
+            if (rule !== null)
+                targets.push({ url: transportURL, rule: rule });
+
+        }
+
+        if (targets.length === 0)
+        {
+            console.log("Not reloading this charge transparency live link: none of the URLs of its https transport is allowed by externalURLs.conf.");
+            return;
+        }
+
+        // A timer that fires after the view has moved on does nothing and does
+        // not schedule the next one.
+        const poll      = async (): Promise<void> => {
+
+            if (this.currentChargeTransparencyLiveLink !== LiveLink)
+                return;
+
+            try
+            {
+                await this.reloadLiveLink(LiveLink, targets);
+            }
+            catch
+            {
+                // Whatever went wrong out there, what is on screen was loaded
+                // successfully once and stays.
+            }
+
+            if (this.currentChargeTransparencyLiveLink === LiveLink)
+                this.liveLinkRefreshTimer = setTimeout(() => void poll(), refresh * 1000);
+
+        };
+
+        if (this.currentChargeTransparencyLiveLink === LiveLink)
+            this.liveLinkRefreshTimer = setTimeout(() => void poll(), refresh * 1000);
+
+    }
+
+    private stopLiveLinkRefresh(): void
+    {
+
+        if (this.liveLinkRefreshTimer !== null)
+        {
+            clearTimeout(this.liveLinkRefreshTimer);
+            this.liveLinkRefreshTimer = null;
+        }
+
+    }
+
+    // The URLs of a transport: the single "url" first, then the "urls" in the
+    // order of their priority.
+    private liveLinkTransportURLs(transport: chargeTransparencyLiveLink.Transport): Array<string>
+    {
+
+        const urls           = new Array<string>();
+
+        if (transport.url != null && transport.url !== "")
+            urls.push(transport.url);
+
+        const additionalURLs = [ ...(transport.urls ?? []) ].sort(
+                                   (url1, url2) => (typeof url1 === "string" ? 0 : url1.priority ?? 0) -
+                                                   (typeof url2 === "string" ? 0 : url2.priority ?? 0)
+                               );
+
+        for (const additionalURL of additionalURLs)
+        {
+
+            const url = typeof additionalURL === "string" ? additionalURL : additionalURL.url;
+
+            if (url !== "")
+                urls.push(url);
+
+        }
+
+        return urls;
+
+    }
+
+    // Asks each URL in turn until one answers with a live link. A document that
+    // describes a different session is ignored, and so is one that is not newer
+    // than what is on screen.
+    private async reloadLiveLink(LiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                                 targets:   Array<{ url: URL, rule: ExternalURLRule }>): Promise<void>
+    {
+
+        for (const target of targets)
+        {
+
+            const requestURL = this.liveLinkRefreshURL(target.url, LiveLink);
+
+            // Adding the timestamp must not move the URL out of the prefix it
+            // was allowed under.
+            if (!requestURL.href.startsWith(target.rule.prefix))
+                continue;
+
+            const response = await fetch(requestURL.href,
+                                         { cache: "no-store", credentials: "omit" }).
+                                   catch(() => null);
+
+            if (response?.ok !== true)
+                continue;
+
+            const text     = new TextDecoder().decode(
+                                 await this.readResponseWithinLimit(response, target.rule.maxPayloadBytes)
+                             );
+
+            let   reloaded: unknown;
+
+            try
+            {
+                reloaded = JSON.parse(text);
+            }
+            catch
+            {
+                continue;
+            }
+
+            if (!chargeTransparencyLiveLink.IsAChargeTransparencyLiveLink(reloaded) ||
+                reloaded["@id"] !== LiveLink["@id"])
+            {
+                continue;
+            }
+
+            if (this.isNewerLiveLink(reloaded, LiveLink))
+                await this.detectAndConvertContentFormat(text, {
+                                prepareUI:  false,
+                                onError:    () => { /* keep what is on screen */ }
+                            });
+
+            // The endpoint answered. Whether it had something new or not, there
+            // is no reason to ask the next one.
+            return;
+
+        }
+
+    }
+
+    // The request says which version the client already has, as
+    // "lastUpdated=<timestamp>" next to whatever the URL already carries. A
+    // server that keeps track of that can answer with less than the whole
+    // document; one that does not care ignores the parameter.
+    private liveLinkRefreshURL(url:       URL,
+                               LiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink): URL
+    {
+
+        const refreshURL  = new URL(url.href);
+        const lastUpdated = chargyLib.asString(LiveLink["lastUpdated"]);
+
+        if (lastUpdated !== undefined && lastUpdated !== "")
+            refreshURL.searchParams.set("lastUpdated", lastUpdated);
+
+        return refreshURL;
+
+    }
+
+    // "lastUpdated" is what a document says about its own recency, and it is
+    // what decides here. A document that does not carry it cannot be told apart
+    // from the one already loaded, so it is left alone.
+    private isNewerLiveLink(reloaded:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                            current:   chargeTransparencyLiveLink.IChargeTransparencyLiveLink): boolean
+    {
+
+        const reloadedLastUpdated = chargyLib.asString(reloaded["lastUpdated"]);
+
+        if (reloadedLastUpdated === undefined)
+            return false;
+
+        const currentLastUpdated  = chargyLib.asString(current["lastUpdated"]);
+
+        if (currentLastUpdated === undefined)
+            return true;
+
+        return chargyLib.parseUTC(reloadedLastUpdated).valueOf() >
+               chargyLib.parseUTC(currentLastUpdated). valueOf();
+
+    }
+
+    //#endregion
 
     private appendLiveLinkInfoRow(tableDiv:   HTMLDivElement,
                                   className:  string,

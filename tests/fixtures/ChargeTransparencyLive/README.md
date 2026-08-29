@@ -348,6 +348,11 @@ so it may state how often to ask:
 
 `refresh` is a number of **seconds**. Its absence means: do not poll.
 
+The request says which version the client already has, as
+`lastUpdated=<timestamp>` next to whatever the URL already carries, so a server
+that keeps track of it can answer with less than the whole document instead of
+sending everything again. A server that does not care ignores the parameter.
+
 What comes back replaces the document on screen only if it is **newer**, and
 `lastUpdated` is what decides that — the same document, an older one, or one
 whose `@id` names a different session changes nothing. Neither does a request
