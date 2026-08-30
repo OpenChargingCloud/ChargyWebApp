@@ -3,6 +3,50 @@ export type ExternalURLRule = {
     maxPayloadBytes:  number;
 };
 
+/**
+ * How a live link's transport URLs that no prefix covers are treated.
+ *
+ * "open"   (the default): an uncovered origin is offered to the user, once per
+ *          origin, remembered - trust on first use.
+ * "strict": an uncovered origin is never offered and never polled. Only the
+ *          prefixes below and the installation's own origin are reloaded. A
+ *          self-hosting operator that lists its own servers here wants this, so
+ *          its drivers are never asked a trust question they cannot judge.
+ *
+ * Set with a directive line `mode strict` (or `mode open`) anywhere in
+ * externalURLs.conf; the last one wins, and an unknown mode leaves the default.
+ * This does not touch the deep-link "verifyURL" path, which always requires a
+ * prefix and never shows a dialog regardless of the mode.
+ */
+export type ExternalURLMode = "open" | "strict";
+
+export function parseExternalURLConfigMode(configText: string): ExternalURLMode
+{
+
+    let mode: ExternalURLMode = "open";
+
+    for (const rawLine of configText.split(/\r?\n/))
+    {
+
+        const line = rawLine.trim();
+
+        if (line === "" || line.startsWith("#"))
+            continue;
+
+        const parts = line.split(/\s+/);
+
+        if (parts[0] !== "mode")
+            continue;
+
+        if (parts[1] === "strict" || parts[1] === "open")
+            mode = parts[1];
+
+    }
+
+    return mode;
+
+}
+
 export function parseExternalURLConfig(configText: string): ExternalURLRule[]
 {
 

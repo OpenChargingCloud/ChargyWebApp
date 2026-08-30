@@ -3,15 +3,15 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:445cdf9f-f1ef-43cf-b00c-7dca95839a68",
+  "serialNumber": "urn:uuid:907b10f3-440c-4d75-b7f1-ca71f950c45f",
   "metadata": {
-    "timestamp": "2026-08-21T03:56:42.284Z",
+    "timestamp": "2026-08-30T04:55:37.737Z",
     "tools": {
       "components": [
         {
           "type": "application",
           "name": "npm",
-          "version": "11.16.0"
+          "version": "11.17.0"
         },
         {
           "type": "application",
@@ -382,8 +382,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.12.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.12.0",
+      "version": "0.14.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.14.1",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -394,7 +394,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.12.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.14.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -412,12 +412,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.12.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.14.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "f50d0de0cee8b75e1f63beeacb0ab6580b1c1c65aa2ee4e4dcd99fe5c87fe83ce67d0cb12fc977dd7a3b9fb7febeff5d5a8b953675c21997254c42e9a226b052"
+              "content": "b5ad344f658bb448dbb15a0393735fbeb1c607cf81f2cfd681271addfa10e458529d6bc82f04f5c16c9530ed75f37397c4a35dca3319870f4b151cb0e0d53615"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -548,8 +548,8 @@
       "type": "library",
       "name": "node",
       "group": "@types",
-      "version": "26.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
+      "version": "26.4.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
       "description": "TypeScript definitions for node",
       "licenses": [
         {
@@ -559,7 +559,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40types/node@26.2.0",
+      "purl": "pkg:npm/%40types/node@26.4.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/DefinitelyTyped/DefinitelyTyped.git#types/node",
@@ -577,12 +577,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@types/node/-/node-26.2.0.tgz",
+          "url": "https://registry.npmjs.org/@types/node/-/node-26.4.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "e48be2ba54d9791369daf009e75e1c73f1d4958e6767d7c26eaf433320b9d81ae1159002a379c8d11eea0718509a8fdddbb3457bdeaeaff6fb5b0c6495d6be92"
+              "content": "7da8869e822b2c7fd5f1c89b38c10067ca4cc3aa17a92ba4976f6b6b898df0675a07665ec3379a2e3f8836957937e67578a5b363e233688647d84211e9865135"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -596,6 +596,176 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@types/node"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "cose",
+      "group": "@vanaheimr",
+      "version": "0.9.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0",
+      "author": "GraphDefined GmbH",
+      "description": "CBOR Object Signing and Encryption (RFC 9052) in TypeScript, on top of the Metrological CBOR codec — the TypeScript counterpart of Vanaheimr Styx's Illias/COSE.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40vanaheimr/cose@0.9.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Vanaheimr/COSE.TS.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Vanaheimr/COSE.TS#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Vanaheimr/COSE.TS/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@vanaheimr/cose/-/cose-0.9.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "aa1067385dcebeb5a2be2f0573b74fa41323d00b492ac687ae9cfa909fc8199403d72cf93f25d3ca55d02eef057f87ffc17aee603e18255a7d0757b4d1af1241"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">=20"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@vanaheimr/cose"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "metrological-cbor",
+          "group": "@vanaheimr",
+          "version": "0.10.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0",
+          "author": "GraphDefined GmbH",
+          "description": "Reference implementation of Metrological CBOR (mCBOR), CBOR tag 44252: quantity values with unit of measure, SI prefix and GUM measurement uncertainty.",
+          "licenses": [
+            {
+              "license": {
+                "id": "Apache-2.0",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40vanaheimr/metrological-cbor@0.10.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/Vanaheimr/MetrologicalCBOR.TS.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/Vanaheimr/MetrologicalCBOR.TS#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/Vanaheimr/MetrologicalCBOR.TS/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@vanaheimr/metrological-cbor/-/metrological-cbor-0.10.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "1bdbb84345d94289b8052e223457575620f060a43183eec310d3311221d76df7de6ef3693f0bad43c6814519a69602e755add7f67baa27fddb967bee311b15bc"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": ">=20"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@vanaheimr/cose/node_modules/@vanaheimr/metrological-cbor"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "metrological-cbor",
+      "group": "@vanaheimr",
+      "version": "0.11.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vanaheimr/metrological-cbor@0.11.0",
+      "author": "GraphDefined GmbH",
+      "description": "Reference implementation of Metrological CBOR (mCBOR), CBOR tag 44252: quantity values with unit of measure, SI prefix and GUM measurement uncertainty.",
+      "licenses": [
+        {
+          "license": {
+            "id": "Apache-2.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40vanaheimr/metrological-cbor@0.11.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Vanaheimr/MetrologicalCBOR.TS.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Vanaheimr/MetrologicalCBOR.TS#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Vanaheimr/MetrologicalCBOR.TS/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@vanaheimr/metrological-cbor/-/metrological-cbor-0.11.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "ec8885be3130ab673a8408773b67ca9c1d39ef7626712f488dc4a42ccc1c39d79f7e02ad5eb10a8506ae27a7d4ed9ee2e10eb1bbf944e004b84ba826e1ac8c78"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">=20"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@vanaheimr/metrological-cbor"
         }
       ]
     },
@@ -1027,8 +1197,8 @@
     {
       "type": "library",
       "name": "eslint",
-      "version": "10.8.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
+      "version": "10.9.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
       "author": "Nicholas C. Zakas",
       "description": "An AST-based pattern checker for JavaScript.",
       "licenses": [
@@ -1039,7 +1209,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/eslint@10.8.1",
+      "purl": "pkg:npm/eslint@10.9.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/eslint/eslint.git",
@@ -1057,12 +1227,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/eslint/-/eslint-10.8.1.tgz",
+          "url": "https://registry.npmjs.org/eslint/-/eslint-10.9.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "c2a03b5b68dbb02fc19d5f48bf5519a4a54590ed4074da129985bc3561b81cd3816e400cbc8a83676ee92367f4eddaa7e7cdcd7080b8e1c92301c3970cbd506d"
+              "content": "f556809035117a48b1510272d282589760dc37aa0a31fc5acbb5f3686600590c2c6faa9f29ffb1efa4769352fc91bd5ba1cf85c8201a4c0f469a229a6a2685f8"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -1087,7 +1257,7 @@
           "type": "library",
           "name": "ajv",
           "version": "6.15.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.8.1|ajv@6.15.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.9.1|ajv@6.15.0",
           "author": "Evgeny Poberezkin",
           "description": "Another JSON Schema Validator",
           "licenses": [
@@ -1142,7 +1312,7 @@
           "type": "library",
           "name": "json-schema-traverse",
           "version": "0.4.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.8.1|json-schema-traverse@0.4.1",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|eslint@10.9.1|json-schema-traverse@0.4.1",
           "author": "Evgeny Poberezkin",
           "description": "Traverse JSON Schema passing each schema object to callback",
           "licenses": [
@@ -1751,6 +1921,65 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/mini-css-extract-plugin"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "minimizer-webpack-plugin",
+      "version": "5.8.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.8.0",
+      "author": "webpack Contrib Team",
+      "description": "Minimizer plugin for webpack",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/minimizer-webpack-plugin@5.8.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/webpack/minimizer-webpack-plugin.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/webpack/minimizer-webpack-plugin",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/webpack/minimizer-webpack-plugin/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/minimizer-webpack-plugin/-/minimizer-webpack-plugin-5.8.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "d9c4fdfa0a097c186d333fa026a7a349fd3d0a58266213e171c45bfdf6f4ced55b8b1b740643bc991b88dba1683cfb94364464ea2103af2580228b9ce56f1e24"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">= 10.13.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/minimizer-webpack-plugin"
         }
       ]
     },
@@ -2617,8 +2846,8 @@
     {
       "type": "library",
       "name": "typescript-eslint",
-      "version": "8.67.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.68.0",
       "description": "Tooling which enables you to use TypeScript with ESLint",
       "licenses": [
         {
@@ -2628,7 +2857,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/typescript-eslint@8.67.0",
+      "purl": "pkg:npm/typescript-eslint@8.68.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/typescript-eslint",
@@ -2646,12 +2875,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.67.0.tgz",
+          "url": "https://registry.npmjs.org/typescript-eslint/-/typescript-eslint-8.68.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "4b6b9d16cf2d08a10a7dfb89e1307589d1946625dd08f1a2dc83c11965daadb2d0e543d739157c40457327880245db9444c6f9124a4d09d8db93478322e23c62"
+              "content": "307cb4634ca7a9e11bc7f4b8e7e8bf6c1b2c772dd7e8a3417e62403f7e46ae0b4dc6ed934392b9c6c1438409e6b2ad63be976864e3c6d4b1ad268d075aa602ad"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -2669,484 +2898,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/typescript-eslint"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "eslint-plugin",
-          "group": "@typescript-eslint",
-          "version": "8.67.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/eslint-plugin@8.67.0",
-          "description": "TypeScript plugin for ESLint",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40typescript-eslint/eslint-plugin@8.67.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/eslint-plugin",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-            },
-            {
-              "url": "https://typescript-eslint.io/packages/eslint-plugin",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.67.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "527ec77a8ca3eb935111b280c88ac5c5e335e37359a44c569b2d4d7a9e032de40e78b9537ae98f8e834a9c1ad4e43e66a165db3c98116b953071dbb47da54d19"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/eslint-plugin"
-            }
-          ],
-          "components": [
-            {
-              "type": "library",
-              "name": "type-utils",
-              "group": "@typescript-eslint",
-              "version": "8.67.0",
-              "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/eslint-plugin@8.67.0|@typescript-eslint/type-utils@8.67.0",
-              "description": "Type utilities for working with TypeScript + ESLint together",
-              "licenses": [
-                {
-                  "license": {
-                    "id": "MIT",
-                    "acknowledgement": "declared"
-                  }
-                }
-              ],
-              "purl": "pkg:npm/%40typescript-eslint/type-utils@8.67.0",
-              "externalReferences": [
-                {
-                  "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/type-utils",
-                  "type": "vcs",
-                  "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-                },
-                {
-                  "url": "https://typescript-eslint.io",
-                  "type": "website",
-                  "comment": "as detected from PackageJson property \"homepage\""
-                },
-                {
-                  "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-                  "type": "issue-tracker",
-                  "comment": "as detected from PackageJson property \"bugs.url\""
-                },
-                {
-                  "url": "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.67.0.tgz",
-                  "type": "distribution",
-                  "hashes": [
-                    {
-                      "alg": "SHA-512",
-                      "content": "6955835db4667573bdb224df5f8762b502354fdfb355c35acd3e3c109083d2fe34ffd448168520674e4298612af47da08b14698d49ff8a9970be572fbad256fd"
-                    }
-                  ],
-                  "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-                }
-              ],
-              "properties": [
-                {
-                  "name": "cdx:npm:package:constraint:engine:node",
-                  "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-                },
-                {
-                  "name": "cdx:npm:package:development",
-                  "value": "true"
-                },
-                {
-                  "name": "cdx:npm:package:path",
-                  "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/eslint-plugin/node_modules/@typescript-eslint/type-utils"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "parser",
-          "group": "@typescript-eslint",
-          "version": "8.67.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/parser@8.67.0",
-          "description": "An ESLint custom parser which leverages TypeScript ESTree",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40typescript-eslint/parser@8.67.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/parser",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-            },
-            {
-              "url": "https://typescript-eslint.io/packages/parser",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.67.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "7d405f4eeb84ba55aa5fa57cf8edcfb52715d35b736184540d3022ac714aa1102dee73b3a0688fb7433f6c1e3bc16372d1ca0e39c804c00314b41a7290cc65eb"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/parser"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "typescript-estree",
-          "group": "@typescript-eslint",
-          "version": "8.67.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0",
-          "description": "A parser that converts TypeScript source code into an ESTree compatible form",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40typescript-eslint/typescript-estree@8.67.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/typescript-estree",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-            },
-            {
-              "url": "https://typescript-eslint.io/packages/typescript-estree",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.67.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "10a401084f72365449626ee37535b90210da7035264b041bd050090262b610a62b35722c6b6bf1712671e8fbc9fdd11d23a952f98f56f845dc90b8f488f14673"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/typescript-estree"
-            }
-          ],
-          "components": [
-            {
-              "type": "library",
-              "name": "project-service",
-              "group": "@typescript-eslint",
-              "version": "8.67.0",
-              "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/project-service@8.67.0",
-              "description": "Standalone TypeScript project service wrapper for linting.",
-              "licenses": [
-                {
-                  "license": {
-                    "id": "MIT",
-                    "acknowledgement": "declared"
-                  }
-                }
-              ],
-              "purl": "pkg:npm/%40typescript-eslint/project-service@8.67.0",
-              "externalReferences": [
-                {
-                  "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/project-service",
-                  "type": "vcs",
-                  "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-                },
-                {
-                  "url": "https://typescript-eslint.io",
-                  "type": "website",
-                  "comment": "as detected from PackageJson property \"homepage\""
-                },
-                {
-                  "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-                  "type": "issue-tracker",
-                  "comment": "as detected from PackageJson property \"bugs.url\""
-                },
-                {
-                  "url": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.67.0.tgz",
-                  "type": "distribution",
-                  "hashes": [
-                    {
-                      "alg": "SHA-512",
-                      "content": "72f13c73bba561e5cdf5f62eb33842782b1bcf25445ee86b442c9b9c1adeed3526a9be6746605f400c028f43b75891437b2019b78558bf9d6f3020bd2c749d63"
-                    }
-                  ],
-                  "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-                }
-              ],
-              "properties": [
-                {
-                  "name": "cdx:npm:package:constraint:engine:node",
-                  "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-                },
-                {
-                  "name": "cdx:npm:package:development",
-                  "value": "true"
-                },
-                {
-                  "name": "cdx:npm:package:path",
-                  "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/typescript-estree/node_modules/@typescript-eslint/project-service"
-                }
-              ]
-            },
-            {
-              "type": "library",
-              "name": "tsconfig-utils",
-              "group": "@typescript-eslint",
-              "version": "8.67.0",
-              "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/tsconfig-utils@8.67.0",
-              "description": "Utilities for collecting TSConfigs for linting scenarios.",
-              "licenses": [
-                {
-                  "license": {
-                    "id": "MIT",
-                    "acknowledgement": "declared"
-                  }
-                }
-              ],
-              "purl": "pkg:npm/%40typescript-eslint/tsconfig-utils@8.67.0",
-              "externalReferences": [
-                {
-                  "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/tsconfig-utils",
-                  "type": "vcs",
-                  "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-                },
-                {
-                  "url": "https://typescript-eslint.io",
-                  "type": "website",
-                  "comment": "as detected from PackageJson property \"homepage\""
-                },
-                {
-                  "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-                  "type": "issue-tracker",
-                  "comment": "as detected from PackageJson property \"bugs.url\""
-                },
-                {
-                  "url": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.67.0.tgz",
-                  "type": "distribution",
-                  "hashes": [
-                    {
-                      "alg": "SHA-512",
-                      "content": "bd5f8b512bf99e3516b249c4ef57ea29395752f6be47be9269e39177a6688dcba793fe83bca15738d53706b02cd87e3d99bca0517b7a81b62e9f3c2a37096176"
-                    }
-                  ],
-                  "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-                }
-              ],
-              "properties": [
-                {
-                  "name": "cdx:npm:package:constraint:engine:node",
-                  "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-                },
-                {
-                  "name": "cdx:npm:package:development",
-                  "value": "true"
-                },
-                {
-                  "name": "cdx:npm:package:path",
-                  "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/typescript-estree/node_modules/@typescript-eslint/tsconfig-utils"
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "utils",
-          "group": "@typescript-eslint",
-          "version": "8.67.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/utils@8.67.0",
-          "description": "Utilities for working with TypeScript + ESLint together",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40typescript-eslint/utils@8.67.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/utils",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-            },
-            {
-              "url": "https://typescript-eslint.io/packages/utils",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.67.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "53d0f515dc04581c28937871c5276172531bd2dc2fb7d4278c843455f4350225f67a99e94a0bf6b9b543b1ac8e17263c2ba157f8043b13414a5951b788ab23d4"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/typescript-eslint/node_modules/@typescript-eslint/utils"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ignore",
-          "version": "7.0.6",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|ignore@7.0.6",
-          "author": "kael",
-          "description": "Ignore is a manager and filter for .gitignore rules, the one used by eslint, gitbook and many others.",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ignore@7.0.6",
-          "externalReferences": [
-            {
-              "url": "git+ssh://git@github.com/kaelzhang/node-ignore.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/kaelzhang/node-ignore#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/kaelzhang/node-ignore/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ignore/-/ignore-7.0.6.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "04083a42413c5be4ee40baebc34520afb1de81776e46eba3f3fb62da448e73e8f3d5d9b1f3f58d723afa5c69eae58a435b1170c1a6afa83d3e8c850e29e953b3"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">= 4"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/typescript-eslint/node_modules/ignore"
-            }
-          ]
         }
       ]
     },
@@ -3597,8 +3348,8 @@
     {
       "type": "library",
       "name": "webpack",
-      "version": "5.109.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|webpack@5.109.2",
+      "version": "5.110.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|webpack@5.110.1",
       "author": "Tobias Koppers @sokra",
       "description": "Packs ECMAScript/CommonJs/AMD modules for the browser. Allows you to split your codebase into multiple bundles, which can be loaded on demand. Supports loaders to preprocess files, i.e. json, jsx, es7, css, less, ... and your custom stuff.",
       "licenses": [
@@ -3609,7 +3360,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/webpack@5.109.2",
+      "purl": "pkg:npm/webpack@5.110.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/webpack/webpack.git",
@@ -3627,12 +3378,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/webpack/-/webpack-5.109.2.tgz",
+          "url": "https://registry.npmjs.org/webpack/-/webpack-5.110.1.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "53dfdcbcbcf139b28d119f7e4ed76aac7339ffdcf796097673e7380736ea1b1150bd0bc102af3bcaa97903ca50fabacc6d2e3de8c649785e5e9d5067748cb687"
+              "content": "8089d007e8f15f1827672bcfc2ecd3e4d190984083a9ebbce68c5cae38a7ad81ea3e805ec7484200dd92153255c8f56b2b43eaf44e385453fe7bcf5f01cd74ff"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -3650,124 +3401,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/webpack"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "eslint-scope",
-          "version": "5.1.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack@5.109.2|eslint-scope@5.1.1",
-          "description": "ECMAScript scope analyzer for ESLint",
-          "licenses": [
-            {
-              "license": {
-                "id": "BSD-2-Clause",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/eslint-scope@5.1.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/eslint/eslint-scope.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "http://github.com/eslint/eslint-scope",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/eslint/eslint-scope/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/eslint-scope/-/eslint-scope-5.1.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "d8dc706c5fe16742a97a960dd1c35ba3e14de97a0aec6687950860c7f848665e956b46c5e3945038ec212c8cbc9500dbb8289a7522c20671f608562aba2b796f"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8.0.0"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/webpack/node_modules/eslint-scope"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "estraverse",
-          "version": "4.3.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|webpack@5.109.2|estraverse@4.3.0",
-          "description": "ECMAScript JS AST traversal functions",
-          "licenses": [
-            {
-              "license": {
-                "id": "BSD-2-Clause",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/estraverse@4.3.0",
-          "externalReferences": [
-            {
-              "url": "git+ssh://git@github.com/estools/estraverse.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/estools/estraverse",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/estools/estraverse/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/estraverse/-/estraverse-4.3.0.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "dfd9e729f7d6cfcc4dd4153fd9cefd9fd9c1f470f3a349e2614ab1eb1caa527ca8027432c96a4e4dd6447a209c87c041bb9d79b78c29f599a055f5619fd101a7"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=4.0"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/webpack/node_modules/estraverse"
-            }
-          ]
         }
       ]
     },
@@ -4711,8 +4344,8 @@
       "type": "library",
       "name": "canvas",
       "group": "@napi-rs",
-      "version": "1.0.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.7",
+      "version": "1.0.8",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8",
       "description": "Canvas for Node.js with skia backend",
       "scope": "optional",
       "licenses": [
@@ -4723,7 +4356,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40napi-rs/canvas@1.0.7",
+      "purl": "pkg:npm/%40napi-rs/canvas@1.0.8",
       "externalReferences": [
         {
           "url": "git+https://github.com/Brooooooklyn/canvas.git",
@@ -4741,12 +4374,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-1.0.7.tgz",
+          "url": "https://registry.npmjs.org/@napi-rs/canvas/-/canvas-1.0.8.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "dbac1514482cea06deef09b30abb9dd692bcabaa0e81c52eece385db806e6b307c6540ac914f5948bac28e8588155c71d3dae3031b17c4f95e696a301ef74f08"
+              "content": "fd268b72f96a196766d0748258c807bbb7232624177cff3f98e63ee9d53257d7e5433eec3c1059f9e776cd8b68ba4a233e6c4e68bedb9be77f1b819e596a0dee"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -5413,6 +5046,62 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/undici-types"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "ciphers",
+      "group": "@noble",
+      "version": "2.3.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0",
+      "author": "Paul Miller",
+      "description": "Audited & minimal JS implementation of Salsa20, ChaCha and AES",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40noble/ciphers@2.3.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/paulmillr/noble-ciphers.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://paulmillr.com/noble/",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/paulmillr/noble-ciphers/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@noble/ciphers/-/ciphers-2.3.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "0a5bbfc5d7e05537fda3b9e02ce5116b178fc11d23f2c8dc94a12d5628f5d3f8c6ba5c05b0f582bef4601bf5e35157fc35e8be8cb1babb0c97cd44c66350d0af"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">= 20.19.0"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@noble/ciphers"
         }
       ]
     },
@@ -8900,6 +8589,296 @@
     },
     {
       "type": "library",
+      "name": "trace-mapping",
+      "group": "@jridgewell",
+      "version": "0.3.31",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
+      "author": "Justin Ridgewell",
+      "description": "Trace the original position through a source map",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/trace-mapping",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/trace-mapping",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "cf3351f9275048327373c8e869e3fc410a0242bf0db98c76748232b65d507811191c9f6e5ba85e6ecad881bcfc849c1441aa374d608cb667d5f0dbb5b7038b03"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@jridgewell/trace-mapping"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "jest-worker",
+      "version": "27.5.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/jest-worker@27.5.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/facebook/jest.git#packages/jest-worker",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://github.com/facebook/jest#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/facebook/jest/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/jest-worker/-/jest-worker-27.5.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "eefba1f3957971d0e87cfcb19f9f27acf8c192d668d2ef71d60f16b6342897e8d90da13e7e137e708bd38f5d469dd067327c9fad4386d6c650c427632a1f832a"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">= 10.13.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/jest-worker"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "supports-color",
+          "version": "8.1.1",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1",
+          "author": "Sindre Sorhus",
+          "description": "Detect whether a terminal supports color",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/supports-color@8.1.1",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/chalk/supports-color.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/chalk/supports-color#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/chalk/supports-color/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/supports-color/-/supports-color-8.1.1.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "3295043763a876d533c6f29097bd9c505ed14391221ec1af4ac546d226bd73945b5862f6088e02ec4a4f4bc513048a659e5cd988db95e7ac3e16e371cb7b72d9"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": ">=10"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/jest-worker/node_modules/supports-color"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "terser",
+      "version": "5.51.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|terser@5.51.2",
+      "author": "Mihai Bazon",
+      "description": "JavaScript parser, mangler/compressor and beautifier toolkit for ES6+",
+      "licenses": [
+        {
+          "license": {
+            "id": "BSD-2-Clause",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/terser@5.51.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/terser/terser.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://terser.org",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/terser/terser/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/terser/-/terser-5.51.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "6d69e348db1c9ae23e189cdee99ba99c73fc1bf71372c245f9b5c279092793648742c81b3499cbaea887f636765b84933d55c7da60ca2915f78b03e173d0a7fd"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">=10"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/terser"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "commander",
+          "version": "2.20.3",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|terser@5.51.2|commander@2.20.3",
+          "author": "TJ Holowaychuk",
+          "description": "the complete solution for node.js command-line programs",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/commander@2.20.3",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/tj/commander.js.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/tj/commander.js#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/tj/commander.js/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "1a956498cf2f176bd05248f62ef6660f7e49c5e24e2c2c09f5c524ba0ca4da7ba16efdfe989be92d862dfb4f9448cc44fa88fe7b2fe52449e1670ef9c7f38c71"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/terser/node_modules/commander"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "package-json-from-dist",
       "version": "1.0.1",
       "bom-ref": "chargytransparenzsoftware@1.4.7|package-json-from-dist@1.0.1",
@@ -9519,6 +9498,303 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/picomatch"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "eslint-plugin",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.68.0",
+      "description": "TypeScript plugin for ESLint",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/eslint-plugin@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/eslint-plugin",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io/packages/eslint-plugin",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "5804870e90a6eaa3b98e3f60d5afbc3625b9f860a40322d1791e7aff856bb9898d81f526aa9c4e7d9d987dbf3119f24f5afe508ba2d20fcb1775c7acdef6e9fd"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/eslint-plugin"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "ignore",
+          "version": "7.0.6",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.68.0|ignore@7.0.6",
+          "author": "kael",
+          "description": "Ignore is a manager and filter for .gitignore rules, the one used by eslint, gitbook and many others.",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/ignore@7.0.6",
+          "externalReferences": [
+            {
+              "url": "git+ssh://git@github.com/kaelzhang/node-ignore.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/kaelzhang/node-ignore#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/kaelzhang/node-ignore/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/ignore/-/ignore-7.0.6.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "04083a42413c5be4ee40baebc34520afb1de81776e46eba3f3fb62da448e73e8f3d5d9b1f3f58d723afa5c69eae58a435b1170c1a6afa83d3e8c850e29e953b3"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": ">= 4"
+            },
+            {
+              "name": "cdx:npm:package:development",
+              "value": "true"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@typescript-eslint/eslint-plugin/node_modules/ignore"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "parser",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.68.0",
+      "description": "An ESLint custom parser which leverages TypeScript ESTree",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/parser@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/parser",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io/packages/parser",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/parser/-/parser-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "7c7ab6542d64a7261fbc471b88c8cea72498e164bbbe8129f3dc804e1ac7457e6c9bd8f6973629a426f6ba614c11e7787d673278b8c7c6bcf49a98cd05a07131"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/parser"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "typescript-estree",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.68.0",
+      "description": "A parser that converts TypeScript source code into an ESTree compatible form",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/typescript-estree@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/typescript-estree",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io/packages/typescript-estree",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/typescript-estree/-/typescript-estree-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "38a2ac0f4b589a83625393d6db37a13b5c8ee7a8d83a6d52858971a27fd9d1224d89d02475583ce9e83daee46ea177fcc5f9ee59919bc03b12b64a176d9b4820"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/typescript-estree"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "utils",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.68.0",
+      "description": "Utilities for working with TypeScript + ESLint together",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/utils@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/utils",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io/packages/utils",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/utils/-/utils-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "3c1e6024c30e8344393f5b6c816b4402a41a7095ead2a12a4470d7fd827815a4cc2df64fa47077823976109ba26723c00719a3e19418898f66d5b740279cbbb5"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/utils"
         }
       ]
     },
@@ -13573,65 +13849,6 @@
     },
     {
       "type": "library",
-      "name": "minimizer-webpack-plugin",
-      "version": "5.6.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.6.1",
-      "author": "webpack Contrib Team",
-      "description": "Minimizer plugin for webpack",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/minimizer-webpack-plugin@5.6.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/webpack/minimizer-webpack-plugin.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/webpack/minimizer-webpack-plugin",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/webpack/minimizer-webpack-plugin/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/minimizer-webpack-plugin/-/minimizer-webpack-plugin-5.6.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "0e8780673f10d42d739f0b14cde8f57dda22e2309fefff849b6ee8b8ba9f2bffb79bc1be0fbc83854c2b73708d8634b3194375927ec8bf8b169a37e54077a7a7"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">= 10.13.0"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/minimizer-webpack-plugin"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "neo-async",
       "version": "2.6.2",
       "bom-ref": "chargytransparenzsoftware@1.4.7|neo-async@2.6.2",
@@ -14546,8 +14763,8 @@
       "type": "library",
       "name": "canvas-win32-x64-msvc",
       "group": "@napi-rs",
-      "version": "1.0.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.7",
+      "version": "1.0.8",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.8",
       "description": "Canvas for Node.js with skia backend",
       "scope": "optional",
       "licenses": [
@@ -14558,7 +14775,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@1.0.7",
+      "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@1.0.8",
       "externalReferences": [
         {
           "url": "git+https://github.com/Brooooooklyn/canvas.git",
@@ -14576,12 +14793,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-1.0.7.tgz",
+          "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-1.0.8.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "48a4cd74157f9637e190fb0b8578e6e31d8f43420ba5cd0f864073447baba095e275951a179ca1d23decddd23307c3eb4665be9c4012cf23136964f79c7d72c1"
+              "content": "5e4ad5a8a6fea71c9b6bb923cb62c9bc00455414c4d03369125eccac6e0e61499a59aaeb5c7fade78cff0b38f663108ab62cd84d5e2683aa61366df1db8aa385"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -14595,62 +14812,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@napi-rs/canvas-win32-x64-msvc"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ciphers",
-      "group": "@noble",
-      "version": "2.3.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0",
-      "author": "Paul Miller",
-      "description": "Audited & minimal JS implementation of Salsa20, ChaCha and AES",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40noble/ciphers@2.3.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/paulmillr/noble-ciphers.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://paulmillr.com/noble/",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/paulmillr/noble-ciphers/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@noble/ciphers/-/ciphers-2.3.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "0a5bbfc5d7e05537fda3b9e02ce5116b178fc11d23f2c8dc94a12d5628f5d3f8c6ba5c05b0f582bef4601bf5e35157fc35e8be8cb1babb0c97cd44c66350d0af"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">= 20.19.0"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@noble/ciphers"
         }
       ]
     },
@@ -16891,122 +17052,6 @@
     },
     {
       "type": "library",
-      "name": "terser",
-      "version": "5.50.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|terser@5.50.0",
-      "author": "Mihai Bazon",
-      "description": "JavaScript parser, mangler/compressor and beautifier toolkit for ES6+",
-      "licenses": [
-        {
-          "license": {
-            "id": "BSD-2-Clause",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/terser@5.50.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/terser/terser.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://terser.org",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/terser/terser/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/terser/-/terser-5.50.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "08df415715a1812fe1471b54323b42dae4564937127d01473035a66bab0a29f222bc20fdd6c33e14e3dfbf0a1a44ca824ab5297b59efde30da99df5e110e32fb"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=10"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/terser"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "commander",
-          "version": "2.20.3",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|terser@5.50.0|commander@2.20.3",
-          "author": "TJ Holowaychuk",
-          "description": "the complete solution for node.js command-line programs",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/commander@2.20.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/tj/commander.js.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/tj/commander.js/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "1a956498cf2f176bd05248f62ef6660f7e49c5e24e2c2c09f5c524ba0ca4da7ba16efdfe989be92d862dfb4f9448cc44fa88fe7b2fe52449e1670ef9c7f38c71"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/terser/node_modules/commander"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "renderkid",
       "version": "3.0.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|renderkid@3.0.0",
@@ -17177,6 +17222,287 @@
               "value": "node_modules/renderkid/node_modules/ansi-regex"
             }
           ]
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "resolve-uri",
+      "group": "@jridgewell",
+      "version": "3.1.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/resolve-uri@3.1.2",
+      "author": "Justin Ridgewell",
+      "description": "Resolve a URI relative to an optional base URI",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jridgewell/resolve-uri@3.1.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/jridgewell/resolve-uri.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/jridgewell/resolve-uri#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/jridgewell/resolve-uri/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "6d12128022233f6d3fb5b5923d63048b9e1054f45913192e0fd9492fe508c542adc15240f305b54eb6f58ccb354455e8d42053359ff98690bd42f98a59da292b"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">=6.0.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@jridgewell/resolve-uri"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "sourcemap-codec",
+      "group": "@jridgewell",
+      "version": "1.5.5",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5",
+      "author": "Justin Ridgewell",
+      "description": "Encode/decode sourcemap mappings",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jridgewell/sourcemap-codec@1.5.5",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/sourcemap-codec",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/sourcemap-codec",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "71843ddf5d20aeac6e7966e5f96b885086a251a0dc8fb58eab97d58449633558117ce52163d7f2db34ef7e8a96b2779b87c4a5ef45527056c80af2672ca0743a"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@jridgewell/sourcemap-codec"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "merge-stream",
+      "version": "2.0.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0",
+      "author": "Stephen Sugden",
+      "description": "Create a stream that emits events from multiple other streams",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/merge-stream@2.0.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/grncdr/merge-stream.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/grncdr/merge-stream#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/grncdr/merge-stream/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/merge-stream/-/merge-stream-2.0.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "69bbffa8e72e3df9375113df0f39995352ca9aec3c913fb49c81ef2ab2a016bc227e897f76859c740e19aac590f0436b14a91debb31fa68fcba2f6c852c6eddf"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/merge-stream"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "source-map",
+      "group": "@jridgewell",
+      "version": "0.3.11",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/source-map@0.3.11",
+      "author": "Justin Ridgewell",
+      "description": "Packages @jridgewell/trace-mapping and @jridgewell/gen-mapping into the familiar source-map API",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jridgewell/source-map@0.3.11",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/source-map",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/source-map",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@jridgewell/source-map/-/source-map-0.3.11.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "64ca7557c64570f1b97485a740baf7352235322094ed4113752fc0d06f15fd7587bc9bf766c16abad267d58e513e600f5fa177062137f7b3aabde53ff4d0ae20"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@jridgewell/source-map"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "source-map-support",
+      "version": "0.5.21",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|source-map-support@0.5.21",
+      "description": "Fixes stack traces for files with source maps",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/source-map-support@0.5.21",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/evanw/node-source-map-support.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/evanw/node-source-map-support#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/evanw/node-source-map-support/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.21.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "b811d4dcbddccec232617297f3c7ddac6a2fc5d482a13183459e92617b524712d95331e0e4fffae87b7aba85251eef4466877e8a75e12a8dea420c17513ff2d7"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/source-map-support"
         }
       ]
     },
@@ -17695,8 +18021,8 @@
       "type": "library",
       "name": "scope-manager",
       "group": "@typescript-eslint",
-      "version": "8.67.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.67.0",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.68.0",
       "description": "TypeScript scope analyser for ESLint",
       "licenses": [
         {
@@ -17706,7 +18032,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/scope-manager@8.67.0",
+      "purl": "pkg:npm/%40typescript-eslint/scope-manager@8.68.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/scope-manager",
@@ -17724,12 +18050,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.67.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/scope-manager/-/scope-manager-8.68.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "120bec95e4f04b813e5b3cd2bde9bc7c052e6cbc1ab4c345d41e611d22d0c5cbeceead9db51846cae8c7c0b2526251b8d67889ec63f6e0085adbed266f56f692"
+              "content": "4f9797a5c689360f1b8631c9f118e9ebc56afd006d798b53298f1366a54d3da51bbb3d1fea323db7a683932970bda969001f574d315e14e8eb8d7019dd8be654"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -17752,10 +18078,69 @@
     },
     {
       "type": "library",
+      "name": "type-utils",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.68.0",
+      "description": "Type utilities for working with TypeScript + ESLint together",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/type-utils@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/type-utils",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/type-utils/-/type-utils-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "5fbef3aa86351237961acff424dc5e68c7e9e42e65233e13c3ccbae85d4d7bc15aaba838db8b0135833ac4102a1257c664f2e9592f82640a740d7c8a0f35a21e"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/type-utils"
+        }
+      ]
+    },
+    {
+      "type": "library",
       "name": "visitor-keys",
       "group": "@typescript-eslint",
-      "version": "8.67.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.67.0",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.68.0",
       "description": "Visitor keys used to help traverse the TypeScript-ESTree AST",
       "licenses": [
         {
@@ -17765,7 +18150,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/visitor-keys@8.67.0",
+      "purl": "pkg:npm/%40typescript-eslint/visitor-keys@8.68.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/visitor-keys",
@@ -17783,12 +18168,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.67.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/visitor-keys/-/visitor-keys-8.68.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "7e4bfc747443a9f1ad4c7b8979e6ddad0edc5fa01de16012d34ae01e1f541af332705d668c17ecc6bcb55ec2c8161599e89b9d961e947732be4d895ba425e09c"
+              "content": "611eb9806746bd350058b95d0b7c4b3af3b36a6746cc1e00e7f37cade844687b3766fa1edfd061818faed123dc8753afad54df2dc739e70b1280ad8d7274d2fc"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -17872,8 +18257,8 @@
       "type": "library",
       "name": "types",
       "group": "@typescript-eslint",
-      "version": "8.67.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
       "description": "Types for the TypeScript-ESTree AST spec",
       "licenses": [
         {
@@ -17883,7 +18268,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40typescript-eslint/types@8.67.0",
+      "purl": "pkg:npm/%40typescript-eslint/types@8.68.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/types",
@@ -17901,12 +18286,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.67.0.tgz",
+          "url": "https://registry.npmjs.org/@typescript-eslint/types/-/types-8.68.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "b01b60b25c30f27b0c6148e174f0624b252a4b34fcb91ea0f770364179d00bcf9c19d8f3d02c9a39da870d125bd40b4e45b64235424105e140fed351dae426c3"
+              "content": "f519e9b06263ac096508c79f19556c22624cdb862eae10b443587851bbe2bedbcea97991fef10981ed8ea04fbecfd9ba87283c4f543cb7948d4fab4749baf172"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -17924,6 +18309,124 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@typescript-eslint/types"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "project-service",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.68.0",
+      "description": "Standalone TypeScript project service wrapper for linting.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/project-service@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/project-service",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/project-service/-/project-service-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "e4642d59909715c158bb1f79e69be84b4d962dce3da57365bc8c6870a8d2d1c96fc28de29f545d97354aca2a901fdbc4e4029614b4da52079090ead34bed10c7"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/project-service"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "tsconfig-utils",
+      "group": "@typescript-eslint",
+      "version": "8.68.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.68.0",
+      "description": "Utilities for collecting TSConfigs for linting scenarios.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40typescript-eslint/tsconfig-utils@8.68.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/typescript-eslint/typescript-eslint.git#packages/tsconfig-utils",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://typescript-eslint.io",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/typescript-eslint/typescript-eslint/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@typescript-eslint/tsconfig-utils/-/tsconfig-utils-8.68.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "17bceb1907e2247a233f08bcbe1c59402d6d5ad273bcbef870afe7aab8b6964f18517bd8698c25dbadf1389ebd8c358f524d6199c7686b217093d957d3d9e957"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^18.18.0 || ^20.9.0 || >=21.1.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@typescript-eslint/tsconfig-utils"
         }
       ]
     },
@@ -18314,62 +18817,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/convert-source-map"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "sourcemap-codec",
-      "group": "@jridgewell",
-      "version": "1.5.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5",
-      "author": "Justin Ridgewell",
-      "description": "Encode/decode sourcemap mappings",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40jridgewell/sourcemap-codec@1.5.5",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/sourcemap-codec",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/sourcemap-codec",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "71843ddf5d20aeac6e7966e5f96b885086a251a0dc8fb58eab97d58449633558117ce52163d7f2db34ef7e8a96b2779b87c4a5ef45527056c80af2672ca0743a"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@jridgewell/sourcemap-codec"
         }
       ]
     },
@@ -23565,180 +24012,6 @@
     },
     {
       "type": "library",
-      "name": "trace-mapping",
-      "group": "@jridgewell",
-      "version": "0.3.31",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
-      "author": "Justin Ridgewell",
-      "description": "Trace the original position through a source map",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40jridgewell/trace-mapping@0.3.31",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/trace-mapping",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/trace-mapping",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@jridgewell/trace-mapping/-/trace-mapping-0.3.31.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "cf3351f9275048327373c8e869e3fc410a0242bf0db98c76748232b65d507811191c9f6e5ba85e6ecad881bcfc849c1441aa374d608cb667d5f0dbb5b7038b03"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@jridgewell/trace-mapping"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "jest-worker",
-      "version": "27.5.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/jest-worker@27.5.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/facebook/jest.git#packages/jest-worker",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-        },
-        {
-          "url": "https://github.com/facebook/jest#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/facebook/jest/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/jest-worker/-/jest-worker-27.5.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "eefba1f3957971d0e87cfcb19f9f27acf8c192d668d2ef71d60f16b6342897e8d90da13e7e137e708bd38f5d469dd067327c9fad4386d6c650c427632a1f832a"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">= 10.13.0"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/jest-worker"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "supports-color",
-          "version": "8.1.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1",
-          "author": "Sindre Sorhus",
-          "description": "Detect whether a terminal supports color",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/supports-color@8.1.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/supports-color.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/supports-color#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/supports-color/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/supports-color/-/supports-color-8.1.1.tgz",
-              "type": "distribution",
-              "hashes": [
-                {
-                  "alg": "SHA-512",
-                  "content": "3295043763a876d533c6f29097bd9c505ed14391221ec1af4ac546d226bd73945b5862f6088e02ec4a4f4bc513048a659e5cd988db95e7ac3e16e371cb7b72d9"
-                }
-              ],
-              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=10"
-            },
-            {
-              "name": "cdx:npm:package:development",
-              "value": "true"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/jest-worker/node_modules/supports-color"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "extend",
       "version": "3.0.2",
       "bom-ref": "chargytransparenzsoftware@1.4.7|extend@3.0.2",
@@ -24748,116 +25021,6 @@
     },
     {
       "type": "library",
-      "name": "source-map",
-      "group": "@jridgewell",
-      "version": "0.3.11",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/source-map@0.3.11",
-      "author": "Justin Ridgewell",
-      "description": "Packages @jridgewell/trace-mapping and @jridgewell/gen-mapping into the familiar source-map API",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40jridgewell/source-map@0.3.11",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/source-map",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/source-map",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@jridgewell/source-map/-/source-map-0.3.11.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "64ca7557c64570f1b97485a740baf7352235322094ed4113752fc0d06f15fd7587bc9bf766c16abad267d58e513e600f5fa177062137f7b3aabde53ff4d0ae20"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@jridgewell/source-map"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "source-map-support",
-      "version": "0.5.21",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|source-map-support@0.5.21",
-      "description": "Fixes stack traces for files with source maps",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/source-map-support@0.5.21",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/evanw/node-source-map-support.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/evanw/node-source-map-support#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/evanw/node-source-map-support/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.21.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "b811d4dcbddccec232617297f3c7ddac6a2fc5d482a13183459e92617b524712d95331e0e4fffae87b7aba85251eef4466877e8a75e12a8dea420c17513ff2d7"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/source-map-support"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "css-select",
       "version": "4.3.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|css-select@4.3.0",
@@ -25023,65 +25186,6 @@
     },
     {
       "type": "library",
-      "name": "color-convert",
-      "version": "2.0.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|color-convert@2.0.1",
-      "author": "Heather Arthur",
-      "description": "Plain color conversion functions",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/color-convert@2.0.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/Qix-/color-convert.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/Qix-/color-convert#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/Qix-/color-convert/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "4511023ec8fb8aeff16f9a0a61cb051d2a6914d9ec8ffe763954d129be333f9a275f0545df3566993a0d70e7c60be0910e97cafd4e7ce1f320dfc64709a12529"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=7.0.0"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/color-convert"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "has-flag",
       "version": "4.0.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|has-flag@4.0.0",
@@ -25136,6 +25240,174 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/has-flag"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "gen-mapping",
+      "group": "@jridgewell",
+      "version": "0.3.13",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/gen-mapping@0.3.13",
+      "author": "Justin Ridgewell",
+      "description": "Generate source maps",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40jridgewell/gen-mapping@0.3.13",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/gen-mapping",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/jridgewell/sourcemaps/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "da492dffb9e227a32010fc45d1b61d43a7ad65a03e7d0bc370b29c921cb5c8840ecdaa0a8c10634a3eb7fda2d58d8137aa146de5dbccfae5327c283a50a0816c"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@jridgewell/gen-mapping"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "buffer-from",
+      "version": "1.1.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|buffer-from@1.1.2",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/buffer-from@1.1.2",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/LinusU/buffer-from.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/LinusU/buffer-from#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/LinusU/buffer-from/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "13e5d0091c126da6a20a1b6fea4e83c2073e6f1f81b3abee2891c7979928c7f05a29b8625f3a903b02b870edb6c84946a763829a3c15853dc79b18323c69c97d"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/buffer-from"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "color-convert",
+      "version": "2.0.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|color-convert@2.0.1",
+      "author": "Heather Arthur",
+      "description": "Plain color conversion functions",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/color-convert@2.0.1",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/Qix-/color-convert.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/Qix-/color-convert#readme",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/Qix-/color-convert/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/color-convert/-/color-convert-2.0.1.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "4511023ec8fb8aeff16f9a0a61cb051d2a6914d9ec8ffe763954d129be333f9a275f0545df3566993a0d70e7c60be0910e97cafd4e7ce1f320dfc64709a12529"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">=7.0.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/color-convert"
         }
       ]
     },
@@ -29572,121 +29844,6 @@
     },
     {
       "type": "library",
-      "name": "resolve-uri",
-      "group": "@jridgewell",
-      "version": "3.1.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/resolve-uri@3.1.2",
-      "author": "Justin Ridgewell",
-      "description": "Resolve a URI relative to an optional base URI",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40jridgewell/resolve-uri@3.1.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/jridgewell/resolve-uri.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/jridgewell/resolve-uri#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/jridgewell/resolve-uri/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@jridgewell/resolve-uri/-/resolve-uri-3.1.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "6d12128022233f6d3fb5b5923d63048b9e1054f45913192e0fd9492fe508c542adc15240f305b54eb6f58ccb354455e8d42053359ff98690bd42f98a59da292b"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=6.0.0"
-        },
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@jridgewell/resolve-uri"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "merge-stream",
-      "version": "2.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0",
-      "author": "Stephen Sugden",
-      "description": "Create a stream that emits events from multiple other streams",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/merge-stream@2.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/grncdr/merge-stream.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/grncdr/merge-stream#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/grncdr/merge-stream/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/merge-stream/-/merge-stream-2.0.0.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "69bbffa8e72e3df9375113df0f39995352ca9aec3c913fb49c81ef2ab2a016bc227e897f76859c740e19aac590f0436b14a91debb31fa68fcba2f6c852c6eddf"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/merge-stream"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "moo",
       "version": "0.5.3",
       "bom-ref": "chargytransparenzsoftware@1.4.7|moo@0.5.3",
@@ -30023,115 +30180,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/no-case"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "gen-mapping",
-      "group": "@jridgewell",
-      "version": "0.3.13",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@jridgewell/gen-mapping@0.3.13",
-      "author": "Justin Ridgewell",
-      "description": "Generate source maps",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40jridgewell/gen-mapping@0.3.13",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/jridgewell/sourcemaps.git#packages/gen-mapping",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\" and \"repository.directory\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/tree/main/packages/gen-mapping",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/jridgewell/sourcemaps/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.13.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "da492dffb9e227a32010fc45d1b61d43a7ad65a03e7d0bc370b29c921cb5c8840ecdaa0a8c10634a3eb7fda2d58d8137aa146de5dbccfae5327c283a50a0816c"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@jridgewell/gen-mapping"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "buffer-from",
-      "version": "1.1.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|buffer-from@1.1.2",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/buffer-from@1.1.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/LinusU/buffer-from.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/LinusU/buffer-from#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/LinusU/buffer-from/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/buffer-from/-/buffer-from-1.1.2.tgz",
-          "type": "distribution",
-          "hashes": [
-            {
-              "alg": "SHA-512",
-              "content": "13e5d0091c126da6a20a1b6fea4e83c2073e6f1f81b3abee2891c7979928c7f05a29b8625f3a903b02b870edb6c84946a763829a3c15853dc79b18323c69c97d"
-            }
-          ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:development",
-          "value": "true"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/buffer-from"
         }
       ]
     },
@@ -32536,10 +32584,12 @@
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.1",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.12.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.14.1",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.22",
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
+        "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0",
+        "chargytransparenzsoftware@1.4.7|@vanaheimr/metrological-cbor@0.11.0",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
         "chargytransparenzsoftware@1.4.7|base32-decode@1.0.0",
         "chargytransparenzsoftware@1.4.7|buffer@6.0.3",
@@ -32548,13 +32598,14 @@
         "chargytransparenzsoftware@1.4.7|css-loader@7.1.4",
         "chargytransparenzsoftware@1.4.7|decimal.js@10.6.0",
         "chargytransparenzsoftware@1.4.7|elliptic@6.6.1",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
         "chargytransparenzsoftware@1.4.7|file-loader@6.2.0",
         "chargytransparenzsoftware@1.4.7|html-webpack-plugin@5.6.8",
         "chargytransparenzsoftware@1.4.7|jpeg-js@0.4.4",
         "chargytransparenzsoftware@1.4.7|leaflet.awesome-markers@2.0.5",
         "chargytransparenzsoftware@1.4.7|leaflet@1.9.4",
         "chargytransparenzsoftware@1.4.7|mini-css-extract-plugin@2.10.2",
+        "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.8.0",
         "chargytransparenzsoftware@1.4.7|moment@2.30.1",
         "chargytransparenzsoftware@1.4.7|path-browserify@1.0.1",
         "chargytransparenzsoftware@1.4.7|pngjs@7.0.0",
@@ -32566,7 +32617,7 @@
         "chargytransparenzsoftware@1.4.7|stream-http@3.2.0",
         "chargytransparenzsoftware@1.4.7|style-loader@4.0.0",
         "chargytransparenzsoftware@1.4.7|ts-loader@9.6.2",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0",
+        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.68.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3",
         "chargytransparenzsoftware@1.4.7|url@0.11.4",
         "chargytransparenzsoftware@1.4.7|uuid@14.0.2",
@@ -32574,7 +32625,7 @@
         "chargytransparenzsoftware@1.4.7|vm-browserify@1.1.2",
         "chargytransparenzsoftware@1.4.7|webpack-cli@7.2.2",
         "chargytransparenzsoftware@1.4.7|webpack-dev-server@6.0.0",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32594,7 +32645,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1"
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1"
       ]
     },
     {
@@ -32609,12 +32660,14 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.12.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.14.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.7",
+        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0",
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0",
         "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0",
+        "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0",
+        "chargytransparenzsoftware@1.4.7|@vanaheimr/metrological-cbor@0.11.0",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
         "chargytransparenzsoftware@1.4.7|base32-decode@1.0.0",
         "chargytransparenzsoftware@1.4.7|buffer@6.0.3",
@@ -32644,9 +32697,31 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|undici-types@8.3.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0",
+        "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0",
+        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0",
+        "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0",
+        "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@vanaheimr/metrological-cbor@0.11.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
     },
     {
@@ -32682,7 +32757,7 @@
         "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
         "chargytransparenzsoftware@1.4.7|serialize-javascript@7.1.0",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32696,7 +32771,7 @@
         "chargytransparenzsoftware@1.4.7|postcss-value-parser@4.2.0",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.26",
         "chargytransparenzsoftware@1.4.7|semver@7.8.5",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32715,7 +32790,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.10.1",
         "chargytransparenzsoftware@1.4.7|@eslint-community/regexpp@4.12.2",
@@ -32727,7 +32802,7 @@
         "chargytransparenzsoftware@1.4.7|@humanwhocodes/module-importer@1.0.1",
         "chargytransparenzsoftware@1.4.7|@humanwhocodes/retry@0.4.3",
         "chargytransparenzsoftware@1.4.7|@types/estree@1.0.9",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1|ajv@6.15.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1|ajv@6.15.0",
         "chargytransparenzsoftware@1.4.7|cross-spawn@7.0.6",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
         "chargytransparenzsoftware@1.4.7|escape-string-regexp@4.0.0",
@@ -32750,23 +32825,23 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.8.1|ajv@6.15.0",
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.9.1|ajv@6.15.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|fast-deep-equal@3.1.3",
         "chargytransparenzsoftware@1.4.7|fast-json-stable-stringify@2.1.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1|json-schema-traverse@0.4.1",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1|json-schema-traverse@0.4.1",
         "chargytransparenzsoftware@1.4.7|uri-js@4.4.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.8.1|json-schema-traverse@0.4.1"
+      "ref": "chargytransparenzsoftware@1.4.7|eslint@10.9.1|json-schema-traverse@0.4.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|file-loader@6.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|loader-utils@2.0.4",
         "chargytransparenzsoftware@1.4.7|file-loader@6.2.0|schema-utils@3.3.0",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32803,7 +32878,7 @@
         "chargytransparenzsoftware@1.4.7|lodash@4.18.1",
         "chargytransparenzsoftware@1.4.7|pretty-error@4.0.0",
         "chargytransparenzsoftware@1.4.7|tapable@2.3.3",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32820,7 +32895,17 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
         "chargytransparenzsoftware@1.4.7|tapable@2.3.3",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.8.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
+        "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
+        "chargytransparenzsoftware@1.4.7|terser@5.51.2",
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32861,7 +32946,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|sass-loader@17.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|sass@1.103.1",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32878,7 +32963,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|iconv-lite@0.6.3",
         "chargytransparenzsoftware@1.4.7|source-map-js@1.2.1",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32900,7 +32985,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|style-loader@4.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -32911,106 +32996,22 @@
         "chargytransparenzsoftware@1.4.7|picomatch@4.0.5",
         "chargytransparenzsoftware@1.4.7|ts-loader@9.6.2|source-map@0.7.6",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|ts-loader@9.6.2|source-map@0.7.6"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0",
+      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.68.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/eslint-plugin@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/parser@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/utils@8.67.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.68.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/eslint-plugin@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@eslint-community/regexpp@4.12.2",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/parser@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/eslint-plugin@8.67.0|@typescript-eslint/type-utils@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/utils@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.67.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|ignore@7.0.6",
-        "chargytransparenzsoftware@1.4.7|natural-compare@1.4.0",
-        "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/eslint-plugin@8.67.0|@typescript-eslint/type-utils@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/utils@8.67.0",
-        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
-        "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/parser@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.67.0",
-        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/project-service@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/tsconfig-utils@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.67.0",
-        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5",
-        "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
-        "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/project-service@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/tsconfig-utils@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
-        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0|@typescript-eslint/tsconfig-utils@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/utils@8.67.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.10.1",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
-        "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|@typescript-eslint/typescript-estree@8.67.0",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1",
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|typescript-eslint@8.67.0|ignore@7.0.6"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
@@ -33031,7 +33032,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|vitest@4.1.11",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
         "chargytransparenzsoftware@1.4.7|@vitest/expect@4.1.11",
         "chargytransparenzsoftware@1.4.7|@vitest/mocker@4.1.11",
         "chargytransparenzsoftware@1.4.7|@vitest/pretty-format@4.1.11",
@@ -33071,7 +33072,7 @@
         "chargytransparenzsoftware@1.4.7|rechoir@0.8.0",
         "chargytransparenzsoftware@1.4.7|webpack-dev-server@6.0.0",
         "chargytransparenzsoftware@1.4.7|webpack-merge@6.0.1",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -33101,12 +33102,12 @@
         "chargytransparenzsoftware@1.4.7|serve-index@1.9.2",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|webpack-dev-middleware@8.1.1",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2",
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1",
         "chargytransparenzsoftware@1.4.7|ws@8.21.3"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack@5.109.2",
+      "ref": "chargytransparenzsoftware@1.4.7|webpack@5.110.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/estree@1.0.9",
         "chargytransparenzsoftware@1.4.7|@types/json-schema@7.0.15",
@@ -33118,27 +33119,16 @@
         "chargytransparenzsoftware@1.4.7|chrome-trace-event@1.0.4",
         "chargytransparenzsoftware@1.4.7|enhanced-resolve@5.24.5",
         "chargytransparenzsoftware@1.4.7|es-module-lexer@2.3.2",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2|eslint-scope@5.1.1",
         "chargytransparenzsoftware@1.4.7|events@3.3.0",
         "chargytransparenzsoftware@1.4.7|graceful-fs@4.2.11",
         "chargytransparenzsoftware@1.4.7|mime-db@1.54.0",
-        "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.6.1",
+        "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.8.0",
         "chargytransparenzsoftware@1.4.7|neo-async@2.6.2",
         "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
         "chargytransparenzsoftware@1.4.7|tapable@2.3.3",
         "chargytransparenzsoftware@1.4.7|watchpack@2.5.2",
         "chargytransparenzsoftware@1.4.7|webpack-sources@3.5.1"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack@5.109.2|eslint-scope@5.1.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|esrecurse@4.3.0",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2|estraverse@4.3.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack@5.109.2|estraverse@4.3.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-library@10.2.0",
@@ -33247,9 +33237,9 @@
       "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/util@11.0.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.7",
+      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.7"
+        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.8"
       ]
     },
     {
@@ -33287,7 +33277,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|pdfjs-dist@6.2.108",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.7"
+        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8"
       ]
     },
     {
@@ -33302,7 +33292,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bn.js@5.2.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
@@ -33310,6 +33300,9 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|undici-types@8.3.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|bn.js@4.12.5"
@@ -33440,7 +33433,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.10.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.10.1|eslint-visitor-keys@3.4.3",
-        "chargytransparenzsoftware@1.4.7|eslint@10.8.1"
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1"
       ]
     },
     {
@@ -33610,7 +33603,7 @@
         "chargytransparenzsoftware@1.4.7|he@1.2.0",
         "chargytransparenzsoftware@1.4.7|param-case@3.0.4",
         "chargytransparenzsoftware@1.4.7|relateurl@0.2.7",
-        "chargytransparenzsoftware@1.4.7|terser@5.50.0"
+        "chargytransparenzsoftware@1.4.7|terser@5.51.2"
       ]
     },
     {
@@ -33628,6 +33621,39 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|tapable@2.3.3"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@jridgewell/resolve-uri@3.1.2",
+        "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
+        "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0",
+        "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|has-flag@4.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|terser@5.51.2",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@jridgewell/source-map@0.3.11",
+        "chargytransparenzsoftware@1.4.7|acorn@8.18.0",
+        "chargytransparenzsoftware@1.4.7|terser@5.51.2|commander@2.20.3",
+        "chargytransparenzsoftware@1.4.7|source-map-support@0.5.21"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|terser@5.51.2|commander@2.20.3"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|package-json-from-dist@1.0.1"
@@ -33683,6 +33709,63 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|picomatch@4.0.5"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@eslint-community/regexpp@4.12.2",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.68.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.68.0|ignore@7.0.6",
+        "chargytransparenzsoftware@1.4.7|natural-compare@1.4.0",
+        "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/eslint-plugin@8.68.0|ignore@7.0.6"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/parser@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.68.0",
+        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.68.0",
+        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
+        "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
+        "chargytransparenzsoftware@1.4.7|semver@7.8.5",
+        "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
+        "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@eslint-community/eslint-utils@4.10.1",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.68.0",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|qs@6.15.3",
@@ -33777,13 +33860,13 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|vite@8.2.2",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
         "chargytransparenzsoftware@1.4.7|lightningcss@1.33.0",
         "chargytransparenzsoftware@1.4.7|picomatch@4.0.5",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.26",
         "chargytransparenzsoftware@1.4.7|rolldown@1.2.5",
         "chargytransparenzsoftware@1.4.7|sass@1.103.1",
-        "chargytransparenzsoftware@1.4.7|terser@5.50.0",
+        "chargytransparenzsoftware@1.4.7|terser@5.51.2",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17"
       ]
     },
@@ -33836,20 +33919,20 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/bonjour@3.5.13",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/connect-history-api-fallback@1.5.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/express-serve-static-core@5.1.3",
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/express-serve-static-core@5.1.3",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0",
         "chargytransparenzsoftware@1.4.7|@types/qs@6.15.1",
         "chargytransparenzsoftware@1.4.7|@types/range-parser@1.2.7",
         "chargytransparenzsoftware@1.4.7|@types/send@1.2.1"
@@ -33873,13 +33956,13 @@
       "ref": "chargytransparenzsoftware@1.4.7|@types/serve-static@2.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/http-errors@2.0.5",
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/ws@8.18.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
@@ -34059,7 +34142,7 @@
         "chargytransparenzsoftware@1.4.7|webpack-dev-middleware@8.1.1|mime-types@3.0.2",
         "chargytransparenzsoftware@1.4.7|range-parser@1.3.0",
         "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
+        "chargytransparenzsoftware@1.4.7|webpack@5.110.1"
       ]
     },
     {
@@ -34135,16 +34218,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|mime-db@1.54.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.6.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
-        "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.3.3",
-        "chargytransparenzsoftware@1.4.7|terser@5.50.0",
-        "chargytransparenzsoftware@1.4.7|webpack@5.109.2"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|neo-async@2.6.2"
     },
     {
@@ -34216,10 +34289,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|spdx-license-ids@3.0.23"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.7"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.8"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
@@ -34405,18 +34475,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|relateurl@0.2.7"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|terser@5.50.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@jridgewell/source-map@0.3.11",
-        "chargytransparenzsoftware@1.4.7|acorn@8.18.0",
-        "chargytransparenzsoftware@1.4.7|terser@5.50.0|commander@2.20.3",
-        "chargytransparenzsoftware@1.4.7|source-map-support@0.5.21"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|terser@5.50.0|commander@2.20.3"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|renderkid@3.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|css-select@4.3.0",
@@ -34434,6 +34492,29 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|renderkid@3.0.0|ansi-regex@5.0.1"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/resolve-uri@3.1.2"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/source-map@0.3.11",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@jridgewell/gen-mapping@0.3.13",
+        "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|source-map-support@0.5.21",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|buffer-from@1.1.2",
+        "chargytransparenzsoftware@1.4.7|source-map@0.6.1"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
@@ -34472,16 +34553,28 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.67.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/scope-manager@8.68.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.67.0"
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.68.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.67.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/type-utils@8.68.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/typescript-estree@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/utils@8.68.0",
+        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
+        "chargytransparenzsoftware@1.4.7|eslint@10.9.1",
+        "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
         "chargytransparenzsoftware@1.4.7|eslint-visitor-keys@5.0.1"
       ]
     },
@@ -34492,7 +34585,22 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.67.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/project-service@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.68.0",
+        "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.68.0",
+        "chargytransparenzsoftware@1.4.7|debug@4.4.3",
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@typescript-eslint/tsconfig-utils@8.68.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
+      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|es-define-property@1.0.1"
@@ -34528,9 +34636,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|convert-source-map@2.0.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|lightningcss@1.33.0",
@@ -34625,14 +34730,14 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/send@1.2.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/body-parser@1.19.6",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/connect@3.4.38",
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
@@ -35030,27 +35135,6 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@jridgewell/resolve-uri@3.1.2",
-        "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0",
-        "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0",
-        "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1|supports-color@8.1.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|has-flag@4.0.0"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|extend@3.0.2"
     },
     {
@@ -35133,20 +35217,6 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/source-map@0.3.11",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@jridgewell/gen-mapping@0.3.13",
-        "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|source-map-support@0.5.21",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|buffer-from@1.1.2",
-        "chargytransparenzsoftware@1.4.7|source-map@0.6.1"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|css-select@4.3.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|boolbase@1.0.0",
@@ -35172,13 +35242,23 @@
       ]
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|has-flag@4.0.0"
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/gen-mapping@0.3.13",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5",
+        "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|buffer-from@1.1.2"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|color-convert@2.0.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|color-name@1.1.4"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|has-flag@4.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|es-errors@1.3.0"
@@ -35263,7 +35343,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/connect@3.4.38",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@types/node@26.2.0"
+        "chargytransparenzsoftware@1.4.7|@types/node@26.4.0"
       ]
     },
     {
@@ -35625,12 +35705,6 @@
       "ref": "chargytransparenzsoftware@1.4.7|escalade@3.2.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/resolve-uri@3.1.2"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|merge-stream@2.0.0"
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|moo@0.5.3"
     },
     {
@@ -35658,16 +35732,6 @@
         "chargytransparenzsoftware@1.4.7|lower-case@2.0.2",
         "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@jridgewell/gen-mapping@0.3.13",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@jridgewell/sourcemap-codec@1.5.5",
-        "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|buffer-from@1.1.2"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|boolbase@1.0.0"
