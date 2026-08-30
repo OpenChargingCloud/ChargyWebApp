@@ -10,7 +10,8 @@ import type {
 import {
     Chargy,
     IsAChargeTransparencyLiveLink,
-    IsAChargeTransparencyRecord
+    IsAChargeTransparencyRecord,
+    verifyDocumentSignatures
 } from "@open-charging-cloud/chargy-core";
 import coreI18n  from "@open-charging-cloud/chargy-core/i18n.json";
 import localI18n from "../src/i18n.json";
@@ -19,6 +20,12 @@ import {
     mergeI18NDictionaries,
     parseJSONRecord
 } from "./chargyTestRuntime";
+import {
+    documentSignatureState,
+    measurementValueState,
+    meterValueSessionState,
+    worstLiveLinkState
+} from "../src/ts/liveLinkStatus";
 
 vi.stubGlobal("window", {
     navigator: {
@@ -138,6 +145,54 @@ describe("Charge Transparency LiveLink", () => {
                           );
 
         expect(ctr).toBeUndefined();
+
+    });
+
+    test("carries the verification of the signatures over the whole document", async () => {
+
+        // ChargyCore verifies the operator's signatures over the live link
+        // itself - the ones that tie its transport URLs and public keys to
+        // whoever signed them - and hands the outcome on with the document.
+        const liveLink = await verifyChargeTransparencyLiveLink("ChargeTransparencyLive/ChargeTransparencyLiveLink_1.json");
+
+        expect(IsAChargeTransparencyLiveLink(liveLink)).toBe(true);
+
+        if (IsAChargeTransparencyLiveLink(liveLink))
+        {
+            expect(liveLink.signatureVerification?.status).toBe("allValid");
+            expect(liveLink.signatureVerification?.validCount).toBe(2);
+            expect(liveLink.warnings ?? []).toHaveLength(0);
+        }
+
+    });
+
+    test("treats the first document of a series as valid, not as broken", async () => {
+
+        // The first meter value of a running session is a start value, and a
+        // single one of them is perfectly legal in a live link: there is simply
+        // nothing to compute a consumption from yet. ChargyCore says so with
+        // "AtLeastTwoMeasurementsRequired", which for a finished record would be
+        // a defect - here it must not make the document look invalid, because
+        // every signature it carries verified.
+        const liveLink = readLiveLink("ChargeTransparencyLive/OCMF-Test-01/OCMF-Test-01__0001.json");
+        const chargy   = createChargy();
+        const ctr      = await chargy.TryToParseLiveLinkMeterValues(liveLink);
+
+        const chargingSession = ctr?.chargingSessions?.[0];
+
+        expect(chargingSession?.verificationResult?.status).toBe("AtLeastTwoMeasurementsRequired");
+        expect(meterValueSessionState(chargingSession?.verificationResult?.status)).toBeNull();
+
+        const measurementValues = chargingSession?.measurements?.[0]?.values ?? [];
+
+        expect(measurementValues).toHaveLength(1);
+
+        const states = [
+            documentSignatureState(verifyDocumentSignatures(liveLink)),
+            ...measurementValues.map(value => measurementValueState(value.result?.status))
+        ];
+
+        expect(worstLiveLinkState(states)).toBe("valid");
 
     });
 

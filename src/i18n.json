@@ -120,6 +120,51 @@
         "en": "signatures"
     },
 
+    "documentOneSignatureLabel": {
+        "de": "1 Signatur über das Dokument",
+        "en": "1 signature over the document"
+    },
+
+    "documentSignaturesLabel": {
+        "de": "%p Signaturen über das Dokument",
+        "en": "%p signatures over the document"
+    },
+
+    "documentSignaturesVerifiedLabel": {
+        "de": "geprüft",
+        "en": "verified"
+    },
+
+    "documentSignaturesNotVerifiedLabel": {
+        "de": "nicht geprüft",
+        "en": "not verified"
+    },
+
+    "documentSignaturesPartiallyVerifiedLabel": {
+        "de": "%p geprüft",
+        "en": "%p verified"
+    },
+
+    "documentNotSignedLabel": {
+        "de": "Dokument nicht signiert",
+        "en": "Document not signed"
+    },
+
+    "liveLinkValidLabel": {
+        "de": "Gültiger Live-Link",
+        "en": "Valid live link"
+    },
+
+    "liveLinkWarningsLabel": {
+        "de": "Live-Link mit Warnungen",
+        "en": "Live link with warnings"
+    },
+
+    "liveLinkInvalidLabel": {
+        "de": "Ungültiger Live-Link!",
+        "en": "Invalid live link!"
+    },
+
     "imprintLabel": {
         "de": "Impressum",
         "en": "Imprint"

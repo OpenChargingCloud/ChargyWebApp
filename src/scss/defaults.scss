@@ -1092,6 +1092,36 @@ body {
                                     overflow-wrap:      anywhere;
                                 }
 
+                                .signatureInfos {
+
+                                    // What the document's own signatures came
+                                    // to: verified, partly verified, not
+                                    // verified, or never signed at all. The
+                                    // colour follows the same vocabulary as the
+                                    // rest of the application - a plain check
+                                    // when everything is in order, amber when
+                                    // something cannot be judged, red when a
+                                    // signature demonstrably does not match.
+                                    .signatureStatus {
+
+                                        &.warning {
+                                            color:              #7a5a00;
+                                        }
+
+                                        &.invalid {
+                                            color:              #ab1e1e;
+                                        }
+
+                                    }
+
+                                    .signatureWarning {
+                                        font-size:          90%;
+                                        color:              #6e8195;
+                                        padding-top:        2px;
+                                    }
+
+                                }
+
                                 .trustInfos {
 
                                     .status {
