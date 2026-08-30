@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:907b10f3-440c-4d75-b7f1-ca71f950c45f",
+  "serialNumber": "urn:uuid:24fd5702-aee9-47a5-b30d-72a1239a5c91",
   "metadata": {
-    "timestamp": "2026-08-30T04:55:37.737Z",
+    "timestamp": "2026-08-30T06:02:15.200Z",
     "tools": {
       "components": [
         {
@@ -315,6 +315,62 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@fortawesome/fontawesome-free"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "hashes",
+      "group": "@noble",
+      "version": "2.4.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
+      "author": "Paul Miller",
+      "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40noble/hashes@2.4.0",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/paulmillr/noble-hashes.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://paulmillr.com/noble/",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/paulmillr/noble-hashes/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@noble/hashes/-/hashes-2.4.0.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "5f95da5566480424fb1c76469b923b6505c3c0b1be6c65ee4ab310016fbb66f97cee1d6499cd5907555244972951fa14ac6429e05928c66e6467e32cf9a5be78"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": ">= 20.19.0"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@noble/hashes"
         }
       ]
     },
@@ -4450,61 +4506,63 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/@noble/curves"
         }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "hashes",
-      "group": "@noble",
-      "version": "2.3.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0",
-      "author": "Paul Miller",
-      "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
       ],
-      "purl": "pkg:npm/%40noble/hashes@2.3.0",
-      "externalReferences": [
+      "components": [
         {
-          "url": "git+https://github.com/paulmillr/noble-hashes.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://paulmillr.com/noble/",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/paulmillr/noble-hashes/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@noble/hashes/-/hashes-2.3.0.tgz",
-          "type": "distribution",
-          "hashes": [
+          "type": "library",
+          "name": "hashes",
+          "group": "@noble",
+          "version": "2.3.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0|@noble/hashes@2.3.0",
+          "author": "Paul Miller",
+          "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
+          "licenses": [
             {
-              "alg": "SHA-512",
-              "content": "a0df90c325fb5521e8b626f0b9b1b7929cdbc0aadf9f247a38e3bedcd93fe770032fb1668071f3e1382b6da60abef3b0d3dbba413c74a221f570d0883ae37409"
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
             }
           ],
-          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">= 20.19.0"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@noble/hashes"
+          "purl": "pkg:npm/%40noble/hashes@2.3.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/paulmillr/noble-hashes.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://paulmillr.com/noble/",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/paulmillr/noble-hashes/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@noble/hashes/-/hashes-2.3.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "a0df90c325fb5521e8b626f0b9b1b7929cdbc0aadf9f247a38e3bedcd93fe770032fb1668071f3e1382b6da60abef3b0d3dbba413c74a221f570d0883ae37409"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": ">= 20.19.0"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@noble/curves/node_modules/@noble/hashes"
+            }
+          ]
         }
       ]
     },
@@ -4561,6 +4619,64 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@noble/post-quantum"
+        }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "hashes",
+          "group": "@noble",
+          "version": "2.3.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0|@noble/hashes@2.3.0",
+          "author": "Paul Miller",
+          "description": "Audited & minimal 0-dependency JS implementation of SHA, RIPEMD, BLAKE, HMAC, HKDF, PBKDF & Scrypt",
+          "licenses": [
+            {
+              "license": {
+                "id": "MIT",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/%40noble/hashes@2.3.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/paulmillr/noble-hashes.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://paulmillr.com/noble/",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/paulmillr/noble-hashes/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/@noble/hashes/-/hashes-2.3.0.tgz",
+              "type": "distribution",
+              "hashes": [
+                {
+                  "alg": "SHA-512",
+                  "content": "a0df90c325fb5521e8b626f0b9b1b7929cdbc0aadf9f247a38e3bedcd93fe770032fb1668071f3e1382b6da60abef3b0d3dbba413c74a221f570d0883ae37409"
+                }
+              ],
+              "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": ">= 20.19.0"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/@noble/post-quantum/node_modules/@noble/hashes"
+            }
+          ]
         }
       ]
     },
@@ -32583,6 +32699,7 @@
         "chargytransparenzsoftware@1.4.7|@cyclonedx/cyclonedx-npm@6.0.1",
         "chargytransparenzsoftware@1.4.7|@eslint/js@10.0.1",
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.1",
+        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
         "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.14.1",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
@@ -32652,6 +32769,9 @@
       "ref": "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.1"
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@oozcitak/infra@3.0.0",
@@ -32664,7 +32784,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0",
-        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0",
+        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/metrological-cbor@0.11.0",
@@ -32707,7 +32827,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0",
-        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0",
+        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0"
       ]
@@ -33245,19 +33365,22 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0"
+        "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0|@noble/hashes@2.3.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0|@noble/hashes@2.3.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.3.0",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.3.0",
-        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.3.0"
+        "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0|@noble/hashes@2.3.0"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.0|@noble/hashes@2.3.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|file-type@22.0.2",
