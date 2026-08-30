@@ -528,9 +528,11 @@ body {
 
                                         flex-grow:          1;
 
+                                        // Holds the operator label, not a URL:
+                                        // the origins themselves are stored
+                                        // hashed and cannot be shown.
                                         .origin {
-                                            font-family:        monospace;
-                                            font-size:          110%;
+                                            font-weight:        bold;
                                         }
 
                                         .details {
@@ -588,6 +590,47 @@ body {
                             #noTrustedOrigins {
                                 color:              #6e8195;
                                 font-style:         italic;
+                            }
+
+                            #trustRetention {
+
+                                margin-top:         22px;
+                                padding-top:        14px;
+                                border-top:         1px solid #d5dee6;
+
+                                label.toggle {
+
+                                    cursor:             pointer;
+
+                                    input[type="checkbox"] {
+                                        margin-right:       6px;
+                                        vertical-align:     -1px;
+                                        cursor:             pointer;
+                                    }
+
+                                }
+
+                                input[type="number"] {
+                                    width:              64px;
+                                    margin:             0 6px;
+                                    padding:            3px 6px;
+                                    border:             1px solid #517692;
+                                    border-radius:      4px;
+                                    font-size:          100%;
+                                }
+
+                                input[type="number"]:disabled {
+                                    border-color:       #d5dee6;
+                                    color:              #9aa8b5;
+                                    background:         #f5f5f5;
+                                }
+
+                                .description {
+                                    margin-top:         8px;
+                                    font-size:          90%;
+                                    color:              #6e8195;
+                                }
+
                             }
 
                         }

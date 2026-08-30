@@ -45,13 +45,25 @@ import {
 }                                      from './deepLinks';
 import {
     defaultTrustedPayloadBytes,
+    emptyTrustedOriginsStore,
+    findTrustedOrigin,
     isLoopbackHost,
     maximumRefreshSeconds,
+    maximumRetentionMonths,
     minimumRefreshSeconds,
-    parseTrustedOrigins,
+    minimumRetentionMonths,
+    parseTrustedOriginsStore,
     pollTargetProblem,
-    serializeTrustedOrigins,
-    type TrustedOrigins
+    pruneExpiredTrustedOrigins,
+    removeTrustedOrigin,
+    sanitizeRetentionMonths,
+    sanitizeTrustLabel,
+    serializeTrustedOriginsStore,
+    touchTrustedOrigin,
+    trustLabelForOrigin,
+    trustedOriginExpiry,
+    upsertTrustedOrigin,
+    type ITrustedOriginsStore
 }                                      from './liveLinkTrust';
 import {
     documentSignatureState,
@@ -595,6 +607,8 @@ export class ChargyApp {
     private readonly liveLinkTrustOriginsDiv:            HTMLDivElement;
     private readonly liveLinkTrustLeftButton:            HTMLButtonElement;
     private readonly trustedOriginsListDiv:              HTMLDivElement;
+    private readonly trustRetentionEnabledInput:         HTMLInputElement;
+    private readonly trustRetentionMonthsInput:          HTMLInputElement;
     private readonly pkiDetailsLeftButton:               HTMLButtonElement;
 
     private readonly qrCodeScannerDiv:                   HTMLDivElement;
@@ -707,6 +721,15 @@ export class ChargyApp {
         this.settingsTrustedOriginsEntry              = this.settingsScreenDiv. querySelector("#settingsTrustedOriginsEntry") as HTMLButtonElement;
         this.trustedOriginsListDiv                    = this.settingsScreenDiv. querySelector("#trustedOriginsList")        as HTMLDivElement;
         this.noTrustedOriginsDiv                      = this.settingsScreenDiv. querySelector("#noTrustedOrigins")          as HTMLDivElement;
+        this.trustRetentionEnabledInput               = this.settingsScreenDiv. querySelector("#trustRetentionEnabled")     as HTMLInputElement;
+        this.trustRetentionMonthsInput                = this.settingsScreenDiv. querySelector("#trustRetentionMonths")      as HTMLInputElement;
+        this.trustRetentionMonthsInput.min            = minimumRetentionMonths.toString();
+        this.trustRetentionMonthsInput.max            = maximumRetentionMonths.toString();
+
+        // Loading the store prunes expired decisions and rewrites anything
+        // stored in an outdated shape - worth doing once at startup, so stale
+        // entries leave storage even in a session that never touches trust.
+        this.loadTrustedOrigins();
         this.imprintScreenDiv                         = document.getElementById('imprintScreen')                            as HTMLDivElement;
         this.softwareInfosDiv                         = this.aboutScreenDiv.    querySelector("#softwareInfos")             as HTMLDivElement;
         this.openSourceLibsDiv                        = this.aboutScreenDiv.    querySelector("#openSourceLibs")            as HTMLDivElement;
@@ -1009,6 +1032,37 @@ export class ChargyApp {
             this.settingsMenuDiv.style.display           = "none";
             this.settingsTrustedOriginsDiv.style.display = "block";
         }
+
+        // How long decisions are kept. Turning retention on prunes on the very
+        // next load, so entries older than the chosen span disappear right
+        // away - which is the point, not an accident: the setting says what
+        // may still exist, not only what may be newly written.
+        this.trustRetentionEnabledInput.onchange = (): void => {
+
+            const store = this.loadTrustedOrigins();
+
+            store.retentionMonths = this.trustRetentionEnabledInput.checked
+                                        ? sanitizeRetentionMonths(this.trustRetentionMonthsInput.valueAsNumber)
+                                        : null;
+
+            this.saveTrustedOrigins(store);
+            this.refreshTrustedOriginsList();
+
+        };
+
+        this.trustRetentionMonthsInput.onchange = (): void => {
+
+            const store = this.loadTrustedOrigins();
+
+            if (store.retentionMonths !== null)
+            {
+                store.retentionMonths = sanitizeRetentionMonths(this.trustRetentionMonthsInput.valueAsNumber);
+                this.saveTrustedOrigins(store);
+            }
+
+            this.refreshTrustedOriginsList();
+
+        };
 
         //#endregion
 
@@ -3406,6 +3460,11 @@ export class ChargyApp {
         const askByOrigin    = new Map<string, Array<URL>>();
         const currentChoice  = new Map<string, LiveLinkOriginChoice>();
 
+        // The origins whose remembered decision actually decided something
+        // here: expiry runs on disuse, so every application of a decision
+        // restarts its clock.
+        const usedOrigins    = new Set<string>();
+
         const enqueueForAsk  = (origin: string, url: URL, choice?: LiveLinkOriginChoice): void => {
 
             const urls = askByOrigin.get(origin);
@@ -3491,7 +3550,7 @@ export class ChargyApp {
                 continue;
             }
 
-            const remembered = trustedOrigins[transportURL.origin];
+            const remembered = findTrustedOrigin(trustedOrigins, transportURL.origin);
 
             if (remembered?.decision === "allow")
             {
@@ -3503,6 +3562,7 @@ export class ChargyApp {
                 targets.push({ url: transportURL, maxPayloadBytes: defaultTrustedPayloadBytes });
                 hasAlways    = true;
                 alwaysSince ??= remembered.since;
+                usedOrigins.add(transportURL.origin);
                 continue;
             }
 
@@ -3514,12 +3574,33 @@ export class ChargyApp {
                     continue;
                 }
                 denied = true;
+                usedOrigins.add(transportURL.origin);
                 continue;
             }
 
             enqueueForAsk(transportURL.origin, transportURL);
 
         }
+
+        //#region Using a decision restarts its idle-expiry clock
+
+        if (usedOrigins.size > 0)
+        {
+
+            const nowDate = new Date();
+            let   touched = false;
+
+            for (const origin of usedOrigins)
+                touched = touchTrustedOrigin(trustedOrigins, origin, nowDate) || touched;
+
+            // A use is persisted no more than hourly, so a live link that
+            // reloads every few seconds does not churn the storage.
+            if (touched)
+                this.saveTrustedOrigins(trustedOrigins);
+
+        }
+
+        //#endregion
 
         //#region Ask about the unknown origins, before any request goes out
 
@@ -3544,6 +3625,12 @@ export class ChargyApp {
             const sessionOrigins = new Array<{ origin: string, urls: Array<URL> }>();
             let   storeChanged   = false;
 
+            // The label an entry is filed under in the settings: the operator
+            // name the user just saw in the consent dialog. The origins
+            // themselves are stored hashed, so this is all the settings screen
+            // will have to show.
+            const operatorLabel  = sanitizeTrustLabel(chargyLib.asJSONObject(LiveLink["chargingStationOperator"])?.["name"]);
+
             for (const [ origin, urls ] of askByOrigin)
             {
 
@@ -3553,35 +3640,50 @@ export class ChargyApp {
                     case "once":
                         // Session-only: an earlier "always" or "deny" for this
                         // origin is dropped so nothing about it stays remembered.
-                        if (origin in stored)
-                        {
-                            delete stored[origin];  // eslint-disable-line @typescript-eslint/no-dynamic-delete
+                        if (removeTrustedOrigin(stored, origin))
                             storeChanged = true;
-                        }
                         sessionOrigins.push({ origin, urls });
                         break;
 
                     case "always":
                         // Persisted below in one write; the targets are added
                         // afterwards so the row can tell "always" from the
-                        // "this session only" fallback if the write fails. An
-                        // origin already trusted keeps its original date, so
-                        // reconsidering without changing it does not reset when.
+                        // "this session only" fallback if the write fails.
+                        //
+                        // A decision that has not changed is not rewritten at
+                        // all: the entry keeps its salt, its label and its
+                        // date. Rewriting would let any document that names an
+                        // already-trusted origin replace the label the user
+                        // originally consented under, and a fresh salt on every
+                        // confirmation would tell two snapshots of the store
+                        // apart by mere re-confirmation activity.
                         {
-                            const existing = stored[origin];
-                            const since    = existing?.decision === "allow" && existing.since !== ""
-                                                 ? existing.since
-                                                 : now;
-                            stored[origin] = { decision: "allow", since };
-                            storeChanged   = true;
-                            alwaysOrigins.push({ origin, urls, since });
+                            const existing = findTrustedOrigin(stored, origin);
+
+                            if (existing?.decision === "allow")
+                            {
+                                storeChanged = touchTrustedOrigin(stored, origin, new Date()) || storeChanged;
+                                alwaysOrigins.push({ origin, urls, since: existing.since });
+                            }
+
+                            else
+                            {
+                                const entry  = upsertTrustedOrigin(stored, origin, "allow", trustLabelForOrigin(operatorLabel, origin), now);
+                                storeChanged = true;
+                                alwaysOrigins.push({ origin, urls, since: entry.since });
+                            }
                         }
                         break;
 
                     case "deny":
-                        stored[origin] = { decision: "deny", since: now };
-                        storeChanged   = true;
-                        denied         = true;
+                        if (findTrustedOrigin(stored, origin)?.decision !== "deny")
+                        {
+                            upsertTrustedOrigin(stored, origin, "deny", trustLabelForOrigin(operatorLabel, origin), now);
+                            storeChanged = true;
+                        }
+                        else
+                            storeChanged = touchTrustedOrigin(stored, origin, new Date()) || storeChanged;
+                        denied = true;
                         // A session grant made earlier must not keep the origin
                         // pollable after it has just been blocked.
                         this.liveLinkSessionAllowedOrigins.delete(origin);
@@ -3689,17 +3791,35 @@ export class ChargyApp {
 
     private static readonly trustedOriginsStorageKey = "chargyLiveLinkTrustedOrigins";
 
-    private loadTrustedOrigins(): TrustedOrigins
+    private loadTrustedOrigins(): ITrustedOriginsStore
     {
 
         try
         {
-            return parseTrustedOrigins(localStorage.getItem(ChargyApp.trustedOriginsStorageKey));
+
+            const raw     = localStorage.getItem(ChargyApp.trustedOriginsStorageKey);
+            const store   = parseTrustedOriginsStore(raw);
+
+            // Every load is also the moment expired decisions actually go: a
+            // pruned entry is written back right away, so it does not linger
+            // in storage until the next decision happens to be saved.
+            const pruned  = pruneExpiredTrustedOrigins(store, new Date());
+
+            // And whatever is stored that is not exactly the parsed store is
+            // rewritten as the parsed store. This is what actually deletes the
+            // plain text origins an earlier version kept under this very key:
+            // they parse as an empty store, and leaving the old bytes behind
+            // would preserve forever precisely what the hashing is for.
+            if (pruned || (raw !== null && raw !== serializeTrustedOriginsStore(store)))
+                this.saveTrustedOrigins(store);
+
+            return store;
+
         }
         catch
         {
             // A browser that refuses storage simply asks again next time.
-            return {};
+            return emptyTrustedOriginsStore();
         }
 
     }
@@ -3708,12 +3828,12 @@ export class ChargyApp {
     // refuses storage (private mode, quota, blocked cookies) is no worse than
     // a repeated question - but the caller must not then claim the decision was
     // remembered, so the failure is reported rather than swallowed.
-    private saveTrustedOrigins(origins: TrustedOrigins): boolean
+    private saveTrustedOrigins(store: ITrustedOriginsStore): boolean
     {
 
         try
         {
-            localStorage.setItem(ChargyApp.trustedOriginsStorageKey, serializeTrustedOrigins(origins));
+            localStorage.setItem(ChargyApp.trustedOriginsStorageKey, serializeTrustedOriginsStore(store));
             return true;
         }
         catch
@@ -3763,7 +3883,10 @@ export class ChargyApp {
 
             const rowDiv        = chargyLib.CreateDiv(this.liveLinkTrustOriginsDiv, "trustOrigin");
 
-            chargyLib.CreateDiv(rowDiv, "origin", origin);
+            // As text, not as markup: CreateDiv's third parameter is innerHTML,
+            // and what the user consents to must be displayed exactly as it is.
+            const originDiv     = chargyLib.CreateDiv(rowDiv, "origin");
+            originDiv.innerText = origin;
 
             const buttonsDiv    = chargyLib.CreateDiv(rowDiv, "trustOriginButtons");
 
@@ -3930,20 +4053,41 @@ export class ChargyApp {
     private refreshTrustedOriginsList(): void
     {
 
-        const origins = Object.entries(this.loadTrustedOrigins()).
-                            sort(([ origin1 ], [ origin2 ]) => origin1.localeCompare(origin2));
+        const store = this.loadTrustedOrigins();
+
+        //#region The retention controls
+
+        this.trustRetentionEnabledInput.checked = store.retentionMonths !== null;
+        this.trustRetentionMonthsInput.disabled = store.retentionMonths === null;
+
+        if (store.retentionMonths !== null)
+            this.trustRetentionMonthsInput.value = store.retentionMonths.toString();
+
+        //#endregion
+
+        // Sorted by operator, then by age; entries without a label at the end.
+        const entries = [ ...store.origins ].sort(
+                            (entry1, entry2) => (entry1.label === "" ? 1 : 0) - (entry2.label === "" ? 1 : 0) ||
+                                                entry1.label.localeCompare(entry2.label)                      ||
+                                                entry1.since.localeCompare(entry2.since));
 
         this.trustedOriginsListDiv.innerText     = "";
-        this.noTrustedOriginsDiv.style.display   = origins.length > 0 ? "none" : "block";
+        this.noTrustedOriginsDiv.style.display   = entries.length > 0 ? "none" : "block";
 
-        for (const [ origin, entry ] of origins)
+        for (const entry of entries)
         {
 
             const rowDiv          = chargyLib.CreateDiv(this.trustedOriginsListDiv, "trustedOrigin");
 
             const infosDiv        = chargyLib.CreateDiv(rowDiv, "infos");
 
-            chargyLib.CreateDiv(infosDiv, "origin", origin);
+            // The origin itself is stored hashed, so the row is named after the
+            // operator whose document the user consented to. That label is text
+            // from an outside document: assigned as text, never as markup.
+            const labelDiv        = chargyLib.CreateDiv(infosDiv, "origin");
+            labelDiv.innerText    = entry.label !== ""
+                                        ? entry.label
+                                        : this.chargy.GetLocalizedMessage("unknownOperatorLabel");
 
             const detailsDiv      = chargyLib.CreateDiv(infosDiv, "details");
 
@@ -3957,17 +4101,29 @@ export class ChargyApp {
                                     this.chargy.GetLocalizedMessage("sinceLabel") + " " +
                                     new Date(entry.since).toLocaleDateString(this.UILanguage));
 
+            const expiry = trustedOriginExpiry(entry, store.retentionMonths);
+
+            if (expiry !== null)
+                chargyLib.CreateDiv(detailsDiv, "expires",
+                                    this.chargy.GetLocalizedMessage("expiresLabel") + " " +
+                                    expiry.toLocaleDateString(this.UILanguage));
+
             const deleteButton      = rowDiv.appendChild(document.createElement('button'));
             deleteButton.className  = "delete";
             deleteButton.innerHTML  = '<i class="fas fa-trash-alt"></i>';
             deleteButton.title      = this.chargy.GetLocalizedMessage("deleteLabel");
             deleteButton.onclick    = (): void => {
 
-                const stored = this.loadTrustedOrigins();
-                delete stored[origin];  // eslint-disable-line @typescript-eslint/no-dynamic-delete
+                // Salt and hash identify the entry; a plain origin to delete by
+                // does not exist here, which is the point of the hashing. For
+                // the same reason a session grant given under this origin
+                // cannot be cleared from the settings - it ends with the
+                // session either way.
+                const stored   = this.loadTrustedOrigins();
+                stored.origins = stored.origins.filter(candidate => candidate.hash !== entry.hash ||
+                                                                    candidate.salt !== entry.salt);
                 this.saveTrustedOrigins(stored);
 
-                this.liveLinkSessionAllowedOrigins.delete(origin);
                 this.refreshTrustedOriginsList();
 
                 // Revoking a decision has to reach an already-running poll: a

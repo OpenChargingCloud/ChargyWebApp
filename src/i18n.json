@@ -426,8 +426,8 @@
     },
 
     "trustedOriginsLabel": {
-        "de": "Für das Nachladen von Live-Daten gemerkte Server:",
-        "en": "Servers remembered for reloading live data:"
+        "de": "Für das Nachladen von Live-Daten gemerkte Entscheidungen:",
+        "en": "Decisions remembered for reloading live data:"
     },
 
     "settingsLabel": {
@@ -446,8 +446,33 @@
     },
 
     "noTrustedOriginsLabel": {
-        "de": "Bisher wurde kein Server gemerkt.",
-        "en": "No server has been remembered yet."
+        "de": "Bisher wurde keine Entscheidung gemerkt.",
+        "en": "No decision has been remembered yet."
+    },
+
+    "unknownOperatorLabel": {
+        "de": "Unbekannter Betreiber",
+        "en": "Unknown operator"
+    },
+
+    "expiresLabel": {
+        "de": "läuft ab am",
+        "en": "expires on"
+    },
+
+    "trustRetentionTitle": {
+        "de": "Ungenutzte Entscheidungen vergessen nach",
+        "en": "Forget unused decisions after"
+    },
+
+    "trustRetentionMonthsLabel": {
+        "de": "Monaten",
+        "en": "months"
+    },
+
+    "trustRetentionDescription": {
+        "de": "Jede Nutzung verlängert die Frist — nur Entscheidungen, die so lange nicht gebraucht wurden, verfallen und werden beim nächsten Mal erneut erfragt. Das räumt auch Einträge für Server auf, die ein Betreiber längst abgeschaltet hat.",
+        "en": "Every use extends the deadline — only decisions unused for this long expire and are simply asked again next time. This also cleans up entries for servers an operator has long since retired."
     },
 
     "sinceLabel": {

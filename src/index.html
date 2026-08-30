@@ -303,9 +303,18 @@
                             </div>
 
                             <div id="settingsTrustedOrigins">
-                                <div id="text" data-i18n-key="trustedOriginsLabel">F&uuml;r das Nachladen von Live-Daten gemerkte Server:</div>
+                                <div id="text" data-i18n-key="trustedOriginsLabel">F&uuml;r das Nachladen von Live-Daten gemerkte Entscheidungen:</div>
                                 <div id="trustedOriginsList"></div>
-                                <div id="noTrustedOrigins" data-i18n-key="noTrustedOriginsLabel">Bisher wurde kein Server gemerkt.</div>
+                                <div id="noTrustedOrigins" data-i18n-key="noTrustedOriginsLabel">Bisher wurde keine Entscheidung gemerkt.</div>
+                                <div id="trustRetention">
+                                    <label class="toggle">
+                                        <input type="checkbox" id="trustRetentionEnabled">
+                                        <span data-i18n-key="trustRetentionTitle">Ungenutzte Entscheidungen vergessen nach</span>
+                                    </label>
+                                    <input type="number" id="trustRetentionMonths" min="1" max="120" step="1" value="6">
+                                    <span data-i18n-key="trustRetentionMonthsLabel">Monaten</span>
+                                    <div class="description" data-i18n-key="trustRetentionDescription">Jede Nutzung verl&auml;ngert die Frist &mdash; nur Entscheidungen, die so lange nicht gebraucht wurden, verfallen und werden beim n&auml;chsten Mal erneut erfragt. Das r&auml;umt auch Eintr&auml;ge f&uuml;r Server auf, die ein Betreiber l&auml;ngst abgeschaltet hat.</div>
+                                </div>
                             </div>
 
                         </div>
