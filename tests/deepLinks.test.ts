@@ -5,6 +5,7 @@ import {
     decodeUtf8,
     findExternalURLRule,
     getDeepLinkFileName,
+    isWithinURLPrefix,
     parseExternalURLConfig,
     parseExternalURLConfigMode,
     readResponseWithinLimit,
@@ -83,6 +84,26 @@ describe("Deep link helpers", () => {
 
         expect(findExternalURLRule(new URL("https://api.example.org/ctrs/12345.json"), rules)).not.toBeNull();
         expect(findExternalURLRule(new URL("https://api.example.org/other/12345.json"), rules)).toBeNull();
+
+        // A prefix without a trailing slash still ends at a segment boundary:
+        // "/ctrs" may not cover "/ctrsevil".
+        const bare = parseExternalURLConfig("https://api.example.org/ctrs 100");
+
+        expect(findExternalURLRule(new URL("https://api.example.org/ctrs/12345.json"), bare)).not.toBeNull();
+        expect(findExternalURLRule(new URL("https://api.example.org/ctrsevil/12345.json"), bare)).toBeNull();
+
+    });
+
+    test("prefixes end at component boundaries, not mid-segment", () => {
+
+        expect(isWithinURLPrefix("https://example.com/api",         "https://example.com/api")).toBe(true);
+        expect(isWithinURLPrefix("https://example.com/api/live",    "https://example.com/api")).toBe(true);
+        expect(isWithinURLPrefix("https://example.com/api?token=1", "https://example.com/api")).toBe(true);
+        expect(isWithinURLPrefix("https://example.com/api#part",    "https://example.com/api")).toBe(true);
+        expect(isWithinURLPrefix("https://example.com/apievil",     "https://example.com/api")).toBe(false);
+        expect(isWithinURLPrefix("https://example.com/api.evil/x",  "https://example.com/api")).toBe(false);
+        expect(isWithinURLPrefix("https://example.com/api/x",       "https://example.com/api/")).toBe(true);
+        expect(isWithinURLPrefix("https://example.com/apix",        "https://example.com/api/")).toBe(false);
 
     });
 
