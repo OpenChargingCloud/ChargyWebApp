@@ -51,6 +51,23 @@ Supported representations include:
 - **Charge Transparency Live Links**, a JSON-LD document describing a charging session that is still **running**: where its live data can be fetched, the public keys to verify it with, and the signed meter values measured so far. See [Charge Transparency Live Links](#charge-transparency-live-links) below.
 
 
+## Sample transparency records
+
+The `documentation/` folder carries example records for most of the formats above. They are meant to be **tried by hand**: load them from the start screen, drag them onto the window, or paste their content.
+
+| Folder | Contents |
+|--------|----------|
+| [`documentation/Alfen`](documentation/Alfen) | SAFE XML containers, including two that are supposed to **fail** verification, and the same session in the old and the new chargeIT container |
+| [`documentation/ChargePoint`](documentation/ChargePoint) | ChargePoint records with their public keys, as `.chargy`, `.pem` and the raw signed payload |
+| [`documentation/chargeIT`](documentation/chargeIT) | chargeIT containers in both format variants, the BSM/WS36A records — several of them **deliberately forged**, one value at a time — and the same data packed as `zip`, `tar`, `tar.gz` and `tgz` |
+| [`documentation/GraphDefined`](documentation/GraphDefined) | A single session and a collection of sessions |
+| [`documentation/XML`](documentation/XML) | An XML charge transparency container |
+
+The forged and failing records are the interesting ones: a transparency software that accepts them is broken, so they are the quickest way to see that verification actually verifies.
+
+These files are for manual use. The automated test suite has its own fixtures under `tests/fixtures/`.
+
+
 ## Editions, Versions and Milestones
 
 Version 1.2.x of the Chargy Transparency Software (Desktop) was reviewed and certified by [Verband der Elektrotechnik Elektronik Informationstechnik e.V. (VDE)](https://www.vde.com/de). If you are a charge point vendor and want to use this software to verify the compliance with the German Eichrecht you can talk to our partner [ChargePoint](https://www.chargepoint.com/de-de/) and obtain the required legal documents.
