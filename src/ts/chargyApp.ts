@@ -37,6 +37,7 @@ import {
     decodeUtf8      as decodeDeepLinkUtf8,
     findExternalURLRule,
     getDeepLinkFileName,
+    isWithinURLPrefixAfterQueryAppend,
     parseExternalURLConfig,
     parseExternalURLConfigMode,
     readResponseWithinLimit,
@@ -1911,7 +1912,7 @@ export class ChargyApp {
 
         const downloadURL = this.withDeepLinkVerificationToken(verifyURL, token);
 
-        if (!downloadURL.href.startsWith(rule.prefix))
+        if (!isWithinURLPrefixAfterQueryAppend(downloadURL.href, rule.prefix))
             throw new Error("External verification URL token merge moved URL outside the allowed prefix.");
 
         const headers = new Headers();
@@ -1929,7 +1930,12 @@ export class ChargyApp {
         if (!response.ok)
             throw new Error("External verification URL could not be loaded.");
 
-        if (!response.url.startsWith(rule.prefix))
+        // "redirect: follow" above means this may be a URL the server picked,
+        // not the one that was vetted, so the prefix has to hold for it as
+        // well - and it has to hold at a component boundary: a prefix of
+        // "https://host/api" must not let a redirect land on
+        // "https://host/apievil".
+        if (!isWithinURLPrefixAfterQueryAppend(response.url, rule.prefix))
             throw new Error("External verification URL redirected outside the allowed prefix.");
 
         const contentType = response.headers.get("content-type") ?? "application/octet-stream";
@@ -4291,7 +4297,7 @@ export class ChargyApp {
 
             // Adding the timestamp must not move the URL out of the prefix or
             // origin it was allowed under.
-            if (target.prefix !== undefined && !requestURL.href.startsWith(target.prefix))
+            if (target.prefix !== undefined && !isWithinURLPrefixAfterQueryAppend(requestURL.href, target.prefix))
                 continue;
 
             if (requestURL.origin !== target.url.origin)
