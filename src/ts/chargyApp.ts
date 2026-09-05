@@ -1706,6 +1706,16 @@ export class ChargyApp {
             if (this.packageJson.dependencies)
             {
                 (this.openSourceLibsDiv.querySelector("#fontAwesome")            as HTMLSpanElement).textContent = packageVersion("@fortawesome/fontawesome-free");
+                (this.openSourceLibsDiv.querySelector("#totp")                   as HTMLSpanElement).textContent = packageVersion("@open-charging-cloud/totp");
+                (this.openSourceLibsDiv.querySelector("#vanaheimrCOSE")          as HTMLSpanElement).textContent = packageVersion("@vanaheimr/cose");
+                (this.openSourceLibsDiv.querySelector("#vanaheimrMetrologicalCBOR") as HTMLSpanElement).textContent = packageVersion("@vanaheimr/metrological-cbor");
+                (this.openSourceLibsDiv.querySelector("#nobleHashes")            as HTMLSpanElement).textContent = packageVersion("@noble/hashes");
+                (this.openSourceLibsDiv.querySelector("#uuid")                   as HTMLSpanElement).textContent = packageVersion("uuid");
+                (this.openSourceLibsDiv.querySelector("#pathBrowserify")         as HTMLSpanElement).textContent = packageVersion("path-browserify");
+                (this.openSourceLibsDiv.querySelector("#streamBrowserify")       as HTMLSpanElement).textContent = packageVersion("stream-browserify");
+                (this.openSourceLibsDiv.querySelector("#streamHTTP")             as HTMLSpanElement).textContent = packageVersion("stream-http");
+                (this.openSourceLibsDiv.querySelector("#url")                    as HTMLSpanElement).textContent = packageVersion("url");
+                (this.openSourceLibsDiv.querySelector("#vmBrowserify")           as HTMLSpanElement).textContent = packageVersion("vm-browserify");
                 (this.openSourceLibsDiv.querySelector("#elliptic")               as HTMLSpanElement).textContent = packageVersion("elliptic");
                 (this.openSourceLibsDiv.querySelector("#nobleCurves")            as HTMLSpanElement).textContent = packageVersion("@noble/curves");
                 (this.openSourceLibsDiv.querySelector("#noblePostQuantum")       as HTMLSpanElement).textContent = packageVersion("@noble/post-quantum");
