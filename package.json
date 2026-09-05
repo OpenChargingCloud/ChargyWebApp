@@ -19,6 +19,8 @@
     "build": "npm run clean && npm run sbom && npm run bundle",
     "build:production": "npm run clean && npm run sbom && npm run bundle:production",
     "start": "webpack serve --open",
+    "start:testbench": "webpack serve --open --env insecureTransports --env privateNetworkTransports",
+    "bundle:testbench": "webpack --config webpack.config.cjs --env insecureTransports --env privateNetworkTransports",
     "test": "vitest run --config tests/vitest.config.ts",
     "lint": "eslint .",
     "typecheck": "tsc -p tsconfig.json --noEmit",

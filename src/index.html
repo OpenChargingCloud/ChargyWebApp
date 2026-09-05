@@ -30,12 +30,17 @@
 
         <meta http-equiv="Content-Security-Policy" content="
             default-src 'self';
-            connect-src 'self' https: wss:;
+            connect-src <%= htmlWebpackPlugin.options.connectSrc %>;
             img-src 'self' data: blob: https:;
             script-src 'self' 'unsafe-inline' 'unsafe-eval';
             style-src 'self' 'unsafe-inline';
         ">
-<!-- connect-src pins the schemes and leaves the host decision to the
+<!-- connect-src is written by the build: "'self' https: wss:", plus "http:
+     ws:" for a test bench build - "npm run start:testbench", or --env
+     insecureTransports, or CHARGY_ALLOW_INSECURE_TRANSPORTS=1 (see
+     webpack.config.cjs). An ordinary development build is as strict as a
+     production one, and a production build never adds them whatever asks.
+     It pins the schemes and leaves the host decision to the
      application FOR LIVE-LINK TRANSPORTS: one of those URLs is fetched only
      when externalURLs.conf allows it, it is same-origin, or the user has
      approved its origin (trust on first use). This does NOT gate the app's own

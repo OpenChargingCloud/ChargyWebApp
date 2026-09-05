@@ -77,6 +77,47 @@ Your prefered web browser should automagically open http://localhost:1608
 
 For Linux production deployments, build the static web application and serve the generated `build/` directory with a web server such as nginx. See [Chargy WebApp on Linux](documentation/LinuxService.md).
 
+### Compile-time switches for test benches
+
+A charge transparency live link is a document from outside that names the URLs its live data is fetched from. Chargy therefore speaks only encrypted transports (`https://`, `wss://`) and only to hosts on the public internet, and no document, setting or user decision can widen that. A test bench that serves plaintext, or that lives on the local network, needs the rule lifted — which is a decision for whoever builds the application, so it is taken at compile time:
+
+There are three kinds of build, and only one of them is relaxed:
+
+| Build | Command | `http://`, `ws://` | Local-network hosts | `connect-src` of the page |
+|-------|---------|--------------------|---------------------|---------------------------|
+| Development | `npm start`, `npm run bundle` | refused | refused | `'self' https: wss:` |
+| Test bench | `npm run start:testbench`, `npm run bundle:testbench` | allowed | allowed | `'self' https: wss: http: ws:` |
+| Production | `npm run build:production` | refused, always | refused, always | `'self' https: wss:` |
+
+An ordinary development build is therefore **exactly as strict as a production one** — the rules are not tied to the mode, they are tied to the switch. What production adds is that it refuses to take the switch at all.
+
+The two switches are independent, and each can also be asked for on its own:
+
+| Switch | Environment variable | What it allows |
+|--------|----------------------|----------------|
+| `--env insecureTransports` | `CHARGY_ALLOW_INSECURE_TRANSPORTS=1` | `http://` and `ws://` URLs |
+| `--env privateNetworkTransports` | `CHARGY_ALLOW_PRIVATE_NETWORK_TRANSPORTS=1` | hosts on the local network (`192.168.x`, `10.x`, `fd00::`, `169.254.x`, …) |
+
+Both are **off** by default — a plaintext bench on the LAN needs both. The ready-made way to get both is:
+
+```
+npm run start:testbench
+```
+
+which is `webpack serve` with `--env insecureTransports --env privateNetworkTransports`; `npm run bundle:testbench` does the same for a build. One switch alone is `npm run bundle -- --env insecureTransports`. The environment variables work too, but the command line exists because exporting a variable into the right shell is its own source of mistakes.
+
+A test bench build relaxes exactly three things:
+
+- `http://` and `ws://` URLs are used at all,
+- hosts on the local network are reached,
+- and the page's Content-Security-Policy adds `http:` and `ws:` to its `connect-src`. The browser is a second gate in front of every rule the application applies itself, so a switch that did not move it would let the application decide to poll and the browser refuse it — which looks exactly like a bug.
+
+Everything else stays as it is: the consent dialog per origin, `externalURLs.conf`, the clamped `refresh` period, the capped answer size, the refused redirect, and the validation of a transport's custom headers. An application served from `localhost` could always talk to `localhost`, with or without these switches.
+
+**A production build compiles none of it in.** `npm run build:production` ignores both switches whatever asks for them, prints a warning saying so, and keeps its `connect-src` at `'self' https: wss:`. A development build that honours a switch says so at build time and again in the browser console at startup.
+
+So a live link document whose transports name `http://`, `ws://` or a local-network host reloads on a test bench and nowhere else — in a deployed client it is refused with a console line and nothing more. Those transports are a bench shape, never a published one.
+
 
 ## Deep Links
 

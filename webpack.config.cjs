@@ -10,6 +10,70 @@ const modeArgIndex = process.argv.indexOf('--mode');
 const cliMode      = modeArgIndex >= 0 ? process.argv[modeArgIndex + 1] : undefined;
 const mode         = process.env.NODE_ENV === 'production' ? 'production' : cliMode || 'development';
 
+/**
+ * The compile-time switches of a build.
+ *
+ * A live link document comes from outside and may name any URL at all, so the
+ * application refuses plaintext transports (http://, ws://) and hosts on the
+ * local network. A test bench needs those refusals lifted - but that decision
+ * belongs to whoever builds the application, never to the document, and never
+ * to a runtime setting a user could be talked into flipping.
+ *
+ * There are three kinds of build, and only one of them is relaxed: an ordinary
+ * development build is exactly as strict as a production one - the rules follow
+ * the switch, not the mode. What production adds is that it refuses to take the
+ * switch at all: what is shipped can never speak plaintext, whatever asks.
+ *
+ * A development build takes it in any of these forms:
+ *
+ *     npm run start:testbench
+ *     npm run bundle  -- --env insecureTransports --env privateNetworkTransports
+ *     CHARGY_ALLOW_INSECURE_TRANSPORTS=1 npm run bundle
+ */
+// A switch can be asked for by an environment variable or, because exporting
+// one into the right shell is its own source of mistakes, on the command line:
+//
+//     npm run start:testbench
+//     npm run bundle -- --env insecureTransports
+//
+// webpack hands --env values only to a config that is a function; this one is
+// an object, so they are read off the command line the same way --mode already
+// is above.
+const envArguments = process.argv.filter((argument, index) => process.argv[index - 1] === '--env');
+
+const insecureTransportsRequested       = process.env.CHARGY_ALLOW_INSECURE_TRANSPORTS        === '1' ||
+                                          envArguments.includes('insecureTransports');
+const privateNetworkTransportsRequested = process.env.CHARGY_ALLOW_PRIVATE_NETWORK_TRANSPORTS === '1' ||
+                                          envArguments.includes('privateNetworkTransports');
+
+const allowInsecureTransports           = mode !== 'production' && insecureTransportsRequested;
+const allowPrivateNetworkTransports     = mode !== 'production' && privateNetworkTransportsRequested;
+
+for (const [ name, requested, allowed ] of [
+  [ 'insecureTransports',       insecureTransportsRequested,       allowInsecureTransports       ],
+  [ 'privateNetworkTransports', privateNetworkTransportsRequested, allowPrivateNetworkTransports ]
+]) {
+  if (allowed)
+    console.warn(`\n  !!  ${name}: this build weakens a transport rule. Do not deploy it.  !!\n`);
+  else if (requested)
+    console.warn(`\n  !!  ${name} ignored: a production build never allows this.  !!\n`);
+}
+
+/**
+ * The schemes the page may connect to at all, enforced by the BROWSER through
+ * the Content-Security-Policy of index.html - a second gate, in front of every
+ * rule the application applies itself.
+ *
+ * It has to follow the switch: a build that allows plaintext transports but
+ * whose CSP still pins https would let the application decide to poll and the
+ * browser refuse it, which looks exactly like a bug and is diagnosable only in
+ * the console. The host decision stays with the application; only the scheme
+ * list moves with the build.
+ */
+const liveLinkConnectSrc = [ "'self'", 'https:', 'wss:' ].
+                             concat(allowInsecureTransports ? [ 'http:', 'ws:' ] : []).
+                             join(' ');
+
 const chargyCorePackageName  = '@open-charging-cloud/chargy-core';
 const chargyCorePackage      = packageLock.packages?.[`node_modules/${chargyCorePackageName}`];
 const chargyCoreIntegrity    = chargyCorePackage?.integrity ?? '';
@@ -133,13 +197,16 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      __CHARGY_CORE_SHA512__: JSON.stringify(chargyCoreSHA512)
+      __CHARGY_CORE_SHA512__:                      JSON.stringify(chargyCoreSHA512),
+      __CHARGY_ALLOW_INSECURE_TRANSPORTS__:        JSON.stringify(allowInsecureTransports),
+      __CHARGY_ALLOW_PRIVATE_NETWORK_TRANSPORTS__: JSON.stringify(allowPrivateNetworkTransports)
     }),
     new webpack.ProvidePlugin({
       Buffer: ['buffer', 'Buffer'],
     }),
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template:    'src/index.html',
+      connectSrc:  liveLinkConnectSrc
     }),
     new MiniCssExtractPlugin({
       filename: 'css/chargy.css',
