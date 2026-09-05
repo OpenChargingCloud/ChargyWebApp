@@ -4,7 +4,7 @@
     "@context":           "https://open.charging.cloud/contexts/chargeTransparency/live/link/1.0",
     "created":            "2026-08-28T11:59:59Z",
     "lastUpdated":        "2026-08-28T12:00:10Z",
-    "updates":            "F4C86D93B65F77BFDDF003970912FF9C33909CD646638CF0C3CA553B9179D988",
+    "updates":            "86F78682D98BED1C7B59A9D174245C36A4321830AB46618D868B2FC4C97AAF83",
     "description":        {
                               "en": "OCMF-Test-01 Transparency Live-Link",
                               "de": "OCMF-Test-01 Transparenz Live-Link"
@@ -141,12 +141,19 @@
 
     "liveTransports": [
                          {
-                             "type":    "https",
-							 "urls": [
-                             { "url":     "https://api1.example11.com/chargingSessions/OCMF-Test-01/transparency/live?token=abcdef" }, 
-							 { "url":     "https://api1.example22.com/chargingSessions/OCMF-Test-01/transparency/live?token=abcdef" }
-							 ],
-                             "refresh":  10
+                             "type":         "https",
+                             "url":          "https://api1.example.com/chargingSessions/OCMF-Test-01/transparency/live?token=abcdef",
+                             "refresh":       10,
+                             "customHeaders": {
+
+                                 "X-Key1":  "headerValue1",
+
+                                 "X-TOTP":  {
+                                                "valueProvider":  "TOTP",
+                                                "parameters":   { "sharedSecret": "abcdefghijklmnopqrstuvwxyz1234567890" }
+                                            }
+
+                             }
                          },
                          {
                              "type": "websocket",
@@ -184,8 +191,8 @@
     "signedMeterValues": {
         "encodings": [ "OCMF", "plain" ],
         "values": [
-            "OCMF|{\"FV\":\"1.4\",\"GI\":\"GraphDefined Charging Station\",\"GS\":\"CS-OCMF-TEST-01\",\"GV\":\"1.0.0\",\"PG\":\"T1\",\"MV\":\"GraphDefined\",\"MM\":\"GD-OCMF-AC22\",\"MS\":\"GD-METER-OCMF-TEST-01\",\"MF\":\"1.0.0\",\"IS\":true,\"IL\":\"TRUSTED\",\"IF\":[\"RFID_PLAIN\"],\"IT\":\"ISO14443\",\"ID\":\"04A9B7C21E5D80\",\"CT\":\"EVSEID\",\"CI\":\"DE*GEF*E12345678*1\",\"CF\":\"1.0.0\",\"RD\":[{\"TM\":\"2026-08-28T14:00:00,000+0200 S\",\"TX\":\"B\",\"RV\":1234.0000,\"RI\":\"1-0:1.8.0*255\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SM\":\"application/x-der\",\"SD\":\"3046022100F6BE87D8159DD158F435ADC4E5E2F99853913FC9E6D9CE2BC5B9B3FBD12181690221009336CE946516500A1BA25EDC4FC9394510751DE31BFDF66BB130CF40041FF557\"}",
-            "OCMF|{\"FV\":\"1.4\",\"GI\":\"GraphDefined Charging Station\",\"GS\":\"CS-OCMF-TEST-01\",\"GV\":\"1.0.0\",\"PG\":\"T2\",\"MV\":\"GraphDefined\",\"MM\":\"GD-OCMF-AC22\",\"MS\":\"GD-METER-OCMF-TEST-01\",\"MF\":\"1.0.0\",\"IS\":true,\"IL\":\"TRUSTED\",\"IF\":[\"RFID_PLAIN\"],\"IT\":\"ISO14443\",\"ID\":\"04A9B7C21E5D80\",\"CT\":\"EVSEID\",\"CI\":\"DE*GEF*E12345678*1\",\"CF\":\"1.0.0\",\"RD\":[{\"TM\":\"2026-08-28T14:00:10,000+0200 S\",\"TX\":\"C\",\"RV\":1234.0342,\"RI\":\"1-0:1.8.0*255\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SM\":\"application/x-der\",\"SD\":\"3045022100D03D0C4812862E06807D332CAF13FDFBE2220F497811AA6533F7A9B0F70FB992022024F782D41350AAE28381BC741027A934EC0670FAD242ED3CED6C140DC80B3AE6\"}"
+            "OCMF|{\"FV\":\"1.4\",\"GI\":\"GraphDefined Charging Station\",\"GS\":\"CS-OCMF-TEST-01\",\"GV\":\"1.0.0\",\"PG\":\"T1\",\"MV\":\"GraphDefined\",\"MM\":\"GD-OCMF-AC22\",\"MS\":\"GD-METER-OCMF-TEST-01\",\"MF\":\"1.0.0\",\"IS\":true,\"IL\":\"TRUSTED\",\"IF\":[\"RFID_PLAIN\"],\"IT\":\"ISO14443\",\"ID\":\"04A9B7C21E5D80\",\"CT\":\"EVSEID\",\"CI\":\"DE*GEF*E12345678*1\",\"CF\":\"1.0.0\",\"RD\":[{\"TM\":\"2026-08-28T14:00:00,000+0200 S\",\"TX\":\"B\",\"RV\":1234.0000,\"RI\":\"1-0:1.8.0*255\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SM\":\"application/x-der\",\"SD\":\"3046022100B7A28B11F2CAD9B00CC4AE51FECD4A05034C04B7F28819EDB5546B0C90B7DB4E022100BD6FC1F957DF9897FC38DAC099BE970BD4F1828300D3C05C1EA4F3D57A861B08\"}",
+            "OCMF|{\"FV\":\"1.4\",\"GI\":\"GraphDefined Charging Station\",\"GS\":\"CS-OCMF-TEST-01\",\"GV\":\"1.0.0\",\"PG\":\"T2\",\"MV\":\"GraphDefined\",\"MM\":\"GD-OCMF-AC22\",\"MS\":\"GD-METER-OCMF-TEST-01\",\"MF\":\"1.0.0\",\"IS\":true,\"IL\":\"TRUSTED\",\"IF\":[\"RFID_PLAIN\"],\"IT\":\"ISO14443\",\"ID\":\"04A9B7C21E5D80\",\"CT\":\"EVSEID\",\"CI\":\"DE*GEF*E12345678*1\",\"CF\":\"1.0.0\",\"RD\":[{\"TM\":\"2026-08-28T14:00:10,000+0200 S\",\"TX\":\"C\",\"RV\":1234.0342,\"RI\":\"1-0:1.8.0*255\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SM\":\"application/x-der\",\"SD\":\"3046022100F3EC22CF4B460D0C4C5A437534CF0D327DFD7F0BFD4990124D2E7DA6B90211FC0221009765A172FCF54ADB4AB1EA28545559F712929C9956F2F6A58B0FFF8F4DF19C74\"}"
         ]
     },
 
@@ -198,7 +205,7 @@
                 "encodings": [ "JSON", "JCS", "UTF-8" ]
             },
             "encodings": [ "Ecdsa-Sig-Value", "DER", "hex" ],
-            "value": "3045022100D18A11C5BB12DD7772F67D75233AD664491560ED9AF90384091F9CA63552D93502202213F3E2B8C52FE332B4472846DFB91319DF8C805E234DBA6F83812059705287"
+            "value": "3045022100B9E3B28AED805BA8F4D9636C2081A3ECF7C2AF57160BDF568EAC6F1C9FCE11EB02202371BD6653C831B44BD6F67FEE2FBAA0762E6B192C9DA5786D710D2B4FC4C0EC"
         },
         {
             "keyId": "A2F94A58FB75E25BC2CECDF582819B6D44F3705D0C3BADD6391E9D536D5671E8",
@@ -208,7 +215,7 @@
                 "encodings": [ "JSON", "JCS", "UTF-8" ]
             },
             "encodings": [ "raw", "hex" ],
-            "value": "5DC3784C800C9ED225A50CD529761AC885EC43F1E435E62A9AE66F2148EFF45C42048CADF3B57BA3F1633E5CBD77BC900AE0C4A4489E771D00153167680D290F"
+            "value": "EADFCB95693E5721E28A2F62E2794F297DDCB69EA1709F5814F39799C19304E9C1F7A0EF6C6C1A07CC30C48235BE04A7FEA6CB0B807846C1D80A77EBB18D960C"
         }
     ]
 

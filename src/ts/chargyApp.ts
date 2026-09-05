@@ -66,6 +66,11 @@ import {
     type ITrustedOriginsStore
 }                                      from './liveLinkTrust';
 import {
+    customRequestHeaders,
+    resolveRequestHeaders,
+    type ICustomHeader
+}                                      from './liveLinkHeaders';
+import {
     documentSignatureState,
     measurementValueState,
     meterValueSessionState,
@@ -3418,15 +3423,27 @@ export class ChargyApp {
 
         const transport = this.liveLinkTransports(LiveLink).find(
                               (candidate): candidate is chargeTransparencyLiveLink.TransportHTTPS =>
-                                  candidate.type === "https"              &&
-                                  typeof candidate.refresh === "number"   &&
-                                  candidate.refresh > 0
+                                  candidate.type === "https"
                           );
 
-        const refresh   = transport?.refresh;
-
-        if (transport === undefined || refresh === undefined)
+        if (transport === undefined)
             return;
+
+        // An https transport is there to be asked, so a document that names one
+        // without saying how often is still polled - at the default period.
+        // Only a value that is no period at all falls back to it; a value that
+        // is one is clamped just below.
+        const refresh       = typeof transport.refresh === "number" &&
+                              Number.isFinite(transport.refresh)    &&
+                              transport.refresh > 0
+                                  ? transport.refresh
+                                  : chargeTransparencyLiveLink.defaultRefreshSeconds;
+
+        // What the document wants sent along with every poll of this transport,
+        // and only of this transport: the headers belong to the endpoints it
+        // names, not to any other transport's. Read once here - what a value
+        // provider computes is read again before every single request.
+        const customHeaders = customRequestHeaders(transport.customHeaders);
 
         // Whatever the document says, a reloading client hammers no one: a
         // viral QR code must not turn every phone that scans it into a flood,
@@ -3769,7 +3786,7 @@ export class ChargyApp {
 
             try
             {
-                await this.reloadLiveLink(LiveLink, targets);
+                await this.reloadLiveLink(LiveLink, targets, customHeaders);
             }
             catch
             {
@@ -4210,8 +4227,9 @@ export class ChargyApp {
     // Asks each URL in turn until one answers with a live link. A document that
     // describes a different session is ignored, and so is one that is not newer
     // than what is on screen.
-    private async reloadLiveLink(LiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
-                                 targets:   Array<LiveLinkPollTarget>): Promise<void>
+    private async reloadLiveLink(LiveLink:       chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
+                                 targets:        Array<LiveLinkPollTarget>,
+                                 customHeaders:  Array<ICustomHeader> = []): Promise<void>
     {
 
         for (const target of targets)
@@ -4232,12 +4250,44 @@ export class ChargyApp {
             // request to a host that was never vetted - an internal address, a
             // different origin. A live link endpoint that wants to relocate has
             // to answer directly, not bounce the browser somewhere unchecked.
+            // It also keeps the custom headers where they were meant to go.
+            //
+            // Those headers make a cross-origin request non-simple, so the
+            // endpoint has to allow them in its CORS preflight answer; one
+            // that does not is simply not reached, exactly as before.
             const response = await fetch(requestURL.href,
-                                         { cache: "no-store", credentials: "omit", redirect: "error" }).
-                                   catch(() => null);
+                                         {
+                                             cache:        "no-store",
+                                             credentials:  "omit",
+                                             redirect:     "error",
+                                             // Resolved here, not once for the
+                                             // series: a one-time password is
+                                             // only ever valid for the request
+                                             // it was computed for.
+                                             headers:      resolveRequestHeaders(customHeaders)
+                                         }).
+                                   catch(error => {
+                                       // A poll that cannot even be sent - a
+                                       // Content-Security-Policy that does not
+                                       // allow the scheme, a CORS answer that
+                                       // does not allow the custom headers, a
+                                       // server that is simply down - is not
+                                       // fatal: what is on screen stays. But it
+                                       // is silent, and a silent nothing is the
+                                       // hardest thing to diagnose, so it says
+                                       // so in the console.
+                                       console.log("Could not reload this charge transparency live link from '" + requestURL.origin + "': " + (error instanceof Error ? error.message : String(error)));
+                                       return null;
+                                   });
 
-            if (response?.ok !== true)
+            if (response === null)
                 continue;
+
+            if (!response.ok)
+            {
+                console.log("Could not reload this charge transparency live link from '" + requestURL.origin + "': HTTP " + response.status.toString() + ".");
+                continue;
+            }
 
             const text     = new TextDecoder().decode(
                                  await this.readResponseWithinLimit(response, target.maxPayloadBytes)

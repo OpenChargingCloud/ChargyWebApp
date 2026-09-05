@@ -91,6 +91,13 @@ export interface ITrustedOriginsStore {
 }
 
 /**
+ * The two bounds below are this application's policy, not the format's: how
+ * often an https transport is asked when a document does not say is the
+ * format's own default, and ChargyCore states it as defaultRefreshSeconds.
+ * Duplicating the number here would give it two sources of truth.
+ */
+
+/**
  * A reloading client can hammer a server no faster than this, whatever the
  * document says: a viral QR code must not turn every phone that scans it
  * into a flood.
