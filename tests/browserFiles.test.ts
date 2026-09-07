@@ -56,6 +56,10 @@ describe("browser file helpers", () => {
         expect(normalizedSVG).toContain("width=\"101\"");
         expect(normalizedSVG).toContain("height=\"101\"");
 
+        // This one draws its QR code as paths, and every path that does not
+        // already say so is told to render crisply.
+        expect(normalizedSVG).toContain("<path shape-rendering=\"crispEdges\"");
+
     });
 
     test("adds crisp SVG shape rendering for browser QR decoding", () => {
@@ -72,8 +76,10 @@ describe("browser file helpers", () => {
 
         const normalizedSVG = new TextDecoder().decode(normalizedData);
 
+        // This one draws its QR code as rects and already says "crispEdges" on
+        // each of them; what it leaves to the reader is the <svg> tag itself
+        // and the background rect.
         expect(normalizedSVG).toContain("shape-rendering=\"crispEdges\"");
-        expect(normalizedSVG).toContain("<path shape-rendering=\"crispEdges\"");
         expect(normalizedSVG).toContain("<rect shape-rendering=\"crispEdges\"");
         expect(normalizedSVG).toContain("image-rendering: pixelated");
 
