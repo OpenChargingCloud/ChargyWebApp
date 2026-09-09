@@ -107,9 +107,17 @@ describe("Charge Transparency LiveLink", () => {
 
         expect(IsAChargeTransparencyLiveLink(withoutMeterValues)).toBe(true);
 
+        // "created" is the moment the fixture was generated, so the test
+        // cannot know it in advance: it is the document's own timestamp, to
+        // the second, and the same one in every document of the series.
+        const created = readLiveLink("ChargeTransparencyLive/OCMF-Test-01/OCMF-Test-01__0000.json").created;
+
+        expect(created).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
+        expect(readLiveLink("ChargeTransparencyLive/ChargeTransparencyLiveLink_1.json").created).toBe(created);
+
         if (IsAChargeTransparencyLiveLink(withoutMeterValues))
         {
-            expect(withoutMeterValues.created).toBe("2026-08-28T11:59:59Z");
+            expect(withoutMeterValues.created).toBe(created);
             expect(withoutMeterValues.liveTransports).toHaveLength(3);
         }
 
@@ -132,14 +140,49 @@ describe("Charge Transparency LiveLink", () => {
 
         const measurement = chargingSession?.measurements?.[0];
 
-        // 19 OCMF documents, but the end document repeats the start value.
+        // 33 OCMF documents, but the end document repeats the start value.
         expect(measurement?.name).toBe("ENERGY_TOTAL");
-        expect(measurement?.values).toHaveLength(20);
+        expect(measurement?.values).toHaveLength(34);
 
         // The live link carries the public keys, so unlike a bare OCMF file
         // every meter value can actually be verified here.
         for (const measurementValue of measurement?.values ?? [])
             expect(measurementValue.result?.status).toBe("ValidSignature");
+
+    });
+
+    test("carries the grid operator's power constraint, and the charging periods it cuts", () => {
+
+        // The announcement enters the series with a document of its own, at
+        // +00:24: no new meter value, but the first legally relevant log
+        // message - and every later document carries it unchanged.
+        const before       = parseJSONRecord(readFixture("ChargeTransparencyLive/OCMF-Test-01/OCMF-Test-01__0003.json"));
+        const announcement = parseJSONRecord(readFixture("ChargeTransparencyLive/OCMF-Test-01/OCMF-Test-01__0004.json"));
+        const final        = parseJSONRecord(readFixture("ChargeTransparencyLive/ChargeTransparencyLiveLink_1.json"));
+
+        expect(before["legallyRelevantLogMessages"]).toBeUndefined();
+        expect(announcement["legallyRelevantLogMessages"]).toHaveLength(1);
+        expect(announcement["signedMeterValues"]).toEqual(before["signedMeterValues"]);
+        expect(final["legallyRelevantLogMessages"]).toEqual(announcement["legallyRelevantLogMessages"]);
+
+        // The relative times of the source file became real timestamps, and
+        // the grid operator signed the message with both of its keys.
+        const message = (announcement["legallyRelevantLogMessages"] as Array<Record<string, unknown>>)[0];
+        const data    = message?.["data"] as Record<string, unknown>;
+
+        expect(message?.["code"]).toBe("LimitationOfPowerConsumption");
+        expect(message?.["timestamp"]).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
+        expect(data["start"]).toMatch(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/);
+        expect(message?.["signatures"]).toHaveLength(2);
+
+        // Three charging periods - before, during and after the limit - that
+        // meet exactly, and are all closed once the session has ended.
+        const periods = final["chargingPeriods"] as Array<Record<string, unknown>>;
+
+        expect(periods).toHaveLength(3);
+        expect(periods[0]?.["stopTimestamp"]).toBe(periods[1]?.["startTimestamp"]);
+        expect(periods[1]?.["stopTimestamp"]).toBe(periods[2]?.["startTimestamp"]);
+        expect(typeof periods[2]?.["stopTimestamp"]).toBe("string");
 
     });
 

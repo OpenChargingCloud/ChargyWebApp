@@ -3,15 +3,15 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:3395644c-9bc6-4831-b1c4-f1c87ae36189",
+  "serialNumber": "urn:uuid:5403149c-f615-4587-a8d9-51153a6c45c4",
   "metadata": {
-    "timestamp": "2026-09-07T10:19:34.164Z",
+    "timestamp": "2026-09-08T23:56:32.667Z",
     "tools": {
       "components": [
         {
           "type": "application",
           "name": "npm",
-          "version": "12.0.2"
+          "version": "11.17.0"
         },
         {
           "type": "application",
@@ -438,8 +438,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.15.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.15.1",
+      "version": "0.16.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.16.0",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -450,7 +450,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.15.1",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.16.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -468,12 +468,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.15.1.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.16.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "e65b80568825ab0e93122ea8d72156663f586169bf1b58143f50118b7ef16a73c31b72149a366e38e124e036dfa2838b29f7f3f1dd816c4ad1348cc686320df7"
+              "content": "d40f2d261a4a43da80da7ecb922596da98eceb279dd797f6ed35456c50c3c4a7eaca967caa9241bad45f8bd0e0cf84029a4f9950b505c22e40058f786895bb89"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -14907,10 +14907,10 @@
     },
     {
       "type": "library",
-      "name": "canvas-win32-x64-msvc",
+      "name": "canvas-darwin-arm64",
       "group": "@napi-rs",
       "version": "1.0.8",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.8",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-darwin-arm64@1.0.8",
       "description": "Canvas for Node.js with skia backend",
       "scope": "optional",
       "licenses": [
@@ -14921,7 +14921,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40napi-rs/canvas-win32-x64-msvc@1.0.8",
+      "purl": "pkg:npm/%40napi-rs/canvas-darwin-arm64@1.0.8",
       "externalReferences": [
         {
           "url": "git+https://github.com/Brooooooklyn/canvas.git",
@@ -14939,12 +14939,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@napi-rs/canvas-win32-x64-msvc/-/canvas-win32-x64-msvc-1.0.8.tgz",
+          "url": "https://registry.npmjs.org/@napi-rs/canvas-darwin-arm64/-/canvas-darwin-arm64-1.0.8.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "5e4ad5a8a6fea71c9b6bb923cb62c9bc00455414c4d03369125eccac6e0e61499a59aaeb5c7fade78cff0b38f663108ab62cd84d5e2683aa61366df1db8aa385"
+              "content": "ee3438ee08be7d9eca2667dcff9acdcb2d42630fdcbb8919d0a3c861ba3d514812756d1b290269b7e5a2844a2beace0bca9efec5cddafb71dec9798011b6e73e"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -14957,7 +14957,7 @@
         },
         {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/@napi-rs/canvas-win32-x64-msvc"
+          "value": "node_modules/@napi-rs/canvas-darwin-arm64"
         }
       ]
     },
@@ -17713,10 +17713,10 @@
     },
     {
       "type": "library",
-      "name": "watcher-win32-x64",
+      "name": "watcher-darwin-arm64",
       "group": "@parcel",
       "version": "2.6.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@parcel/watcher-win32-x64@2.6.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@parcel/watcher-darwin-arm64@2.6.0",
       "description": "A native C++ Node module for querying and subscribing to filesystem events. Used by Parcel 2.",
       "scope": "optional",
       "licenses": [
@@ -17727,7 +17727,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40parcel/watcher-win32-x64@2.6.0",
+      "purl": "pkg:npm/%40parcel/watcher-darwin-arm64@2.6.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/parcel-bundler/watcher.git",
@@ -17745,12 +17745,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@parcel/watcher-win32-x64/-/watcher-win32-x64-2.6.0.tgz",
+          "url": "https://registry.npmjs.org/@parcel/watcher-darwin-arm64/-/watcher-darwin-arm64-2.6.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "700fbfa575766247f1948717390e5f496a80cf33f20fbf3fc79a9b2bf234bd492b9581c0f13233f8c5e301b1a8ba0b8a5522386ce9a44d2275fe9a154ac82df8"
+              "content": "637415d2097b435cdb7ee7ae9e45881112026c4a234050a0a721bb62a3863452ec7245f2235c6ef66008529298f50058cc1b5290df1d04fc1ddf28803bda2f33"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -17767,7 +17767,7 @@
         },
         {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/@parcel/watcher-win32-x64"
+          "value": "node_modules/@parcel/watcher-darwin-arm64"
         }
       ]
     },
@@ -18907,6 +18907,65 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/estree-walker"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "fsevents",
+      "version": "2.3.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|fsevents@2.3.3",
+      "description": "Native Access to MacOS FSEvents",
+      "scope": "optional",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/fsevents@2.3.3",
+      "externalReferences": [
+        {
+          "url": "git+https://github.com/fsevents/fsevents.git",
+          "type": "vcs",
+          "comment": "as detected from PackageJson property \"repository.url\""
+        },
+        {
+          "url": "https://github.com/fsevents/fsevents",
+          "type": "website",
+          "comment": "as detected from PackageJson property \"homepage\""
+        },
+        {
+          "url": "https://github.com/fsevents/fsevents/issues",
+          "type": "issue-tracker",
+          "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz",
+          "type": "distribution",
+          "hashes": [
+            {
+              "alg": "SHA-512",
+              "content": "e71a037d7f9f2fb7da0139da82658fa5b16dc21fd1efb5a630caaa1c64bae42defbc1d181eb805f81d58999df8e35b4c8f99fade4d36d765cda09c339617df43"
+            }
+          ],
+          "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:constraint:engine:node",
+          "value": "^8.16.0 || ^10.6.0 || >=11.0.0"
+        },
+        {
+          "name": "cdx:npm:package:development",
+          "value": "true"
+        },
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/fsevents"
         }
       ]
     },
@@ -26872,9 +26931,9 @@
     },
     {
       "type": "library",
-      "name": "lightningcss-win32-x64-msvc",
+      "name": "lightningcss-darwin-arm64",
       "version": "1.33.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|lightningcss-win32-x64-msvc@1.33.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|lightningcss-darwin-arm64@1.33.0",
       "description": "A CSS parser, transformer, and minifier written in Rust",
       "scope": "optional",
       "licenses": [
@@ -26885,7 +26944,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/lightningcss-win32-x64-msvc@1.33.0",
+      "purl": "pkg:npm/lightningcss-darwin-arm64@1.33.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/parcel-bundler/lightningcss.git",
@@ -26903,12 +26962,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.33.0.tgz",
+          "url": "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.33.0.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "3a5108083c7f5e5d05a92a786ebcbccc59c2bc6a628371a5e200aabaf6301eea892840b5fa7f4d8039e216fa871a632fd5992a0c9ac3a8a292ca44c35fe7a1b8"
+              "content": "49c89acfc79e9cd4ca9fd6f7b7bfb1af48a94e9f58c4a418e27a704379ab46e2f404054704bc99c687e168a04056dce6b5167fcd3ca8d3fb68e01d6e586fc38e"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -26925,7 +26984,7 @@
         },
         {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/lightningcss-win32-x64-msvc"
+          "value": "node_modules/lightningcss-darwin-arm64"
         }
       ]
     },
@@ -26987,10 +27046,10 @@
     },
     {
       "type": "library",
-      "name": "binding-win32-x64-msvc",
+      "name": "binding-darwin-arm64",
       "group": "@rolldown",
       "version": "1.2.7",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@rolldown/binding-win32-x64-msvc@1.2.7",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@rolldown/binding-darwin-arm64@1.2.7",
       "description": "Fast JavaScript/TypeScript bundler in Rust with Rollup-compatible API.",
       "scope": "optional",
       "licenses": [
@@ -27001,7 +27060,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40rolldown/binding-win32-x64-msvc@1.2.7",
+      "purl": "pkg:npm/%40rolldown/binding-darwin-arm64@1.2.7",
       "externalReferences": [
         {
           "url": "git+https://github.com/rolldown/rolldown.git#packages/rolldown",
@@ -27019,12 +27078,12 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@rolldown/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.2.7.tgz",
+          "url": "https://registry.npmjs.org/@rolldown/binding-darwin-arm64/-/binding-darwin-arm64-1.2.7.tgz",
           "type": "distribution",
           "hashes": [
             {
               "alg": "SHA-512",
-              "content": "5bf8e0e6aa114aa8ec12fd3e7598b87baf3b99c1ea995b94d0fe1f2baa92ff18deb56d8699cd56f23fffcf99c078d702f13b66d21578e888dc61eb95c1886e8b"
+              "content": "f040fc10b16f1d773a382113227e205ce6cf89a47a6dc90cfe2a57b5bce53d50d13017c41a308a80ef7417d62d7dda436ad571fd9430eda675bd431fffe4f733"
             }
           ],
           "comment": "as detected from npm-ls property \"resolved\" and property \"integrity\""
@@ -27041,7 +27100,7 @@
         },
         {
           "name": "cdx:npm:package:path",
-          "value": "node_modules/@rolldown/binding-win32-x64-msvc"
+          "value": "node_modules/@rolldown/binding-darwin-arm64"
         }
       ]
     },
@@ -38212,7 +38271,7 @@
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.1",
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.15.1",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.16.0",
         "chargytransparenzsoftware@1.4.7|@open-charging-cloud/totp@0.3.1",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.22",
@@ -38293,7 +38352,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.15.1",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.16.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.4.0",
@@ -38882,7 +38941,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.0.8",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.8"
+        "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-darwin-arm64@1.0.8"
       ]
     },
     {
@@ -39301,7 +39360,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@parcel/watcher@2.6.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@parcel/watcher-win32-x64@2.6.0",
+        "chargytransparenzsoftware@1.4.7|@parcel/watcher-darwin-arm64@2.6.0",
         "chargytransparenzsoftware@1.4.7|detect-libc@2.1.2",
         "chargytransparenzsoftware@1.4.7|is-glob@4.0.3",
         "chargytransparenzsoftware@1.4.7|node-addon-api@7.1.1",
@@ -39462,6 +39521,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|vite@8.2.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/node@26.4.1",
+        "chargytransparenzsoftware@1.4.7|fsevents@2.3.3",
         "chargytransparenzsoftware@1.4.7|lightningcss@1.33.0",
         "chargytransparenzsoftware@1.4.7|picomatch@4.0.7",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.26",
@@ -39940,7 +40000,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|spdx-license-ids@3.0.23"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-win32-x64-msvc@1.0.8"
+      "ref": "chargytransparenzsoftware@1.4.7|@napi-rs/canvas-darwin-arm64@1.0.8"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.4.1",
@@ -40171,7 +40231,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@parcel/watcher-win32-x64@2.6.0"
+      "ref": "chargytransparenzsoftware@1.4.7|@parcel/watcher-darwin-arm64@2.6.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|detect-libc@2.1.2"
@@ -40282,17 +40342,20 @@
       ]
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|fsevents@2.3.3"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|lightningcss@1.33.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|detect-libc@2.1.2",
-        "chargytransparenzsoftware@1.4.7|lightningcss-win32-x64-msvc@1.33.0"
+        "chargytransparenzsoftware@1.4.7|lightningcss-darwin-arm64@1.33.0"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|rolldown@1.2.7",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@oxc-project/types@0.148.0",
-        "chargytransparenzsoftware@1.4.7|@rolldown/binding-win32-x64-msvc@1.2.7",
+        "chargytransparenzsoftware@1.4.7|@rolldown/binding-darwin-arm64@1.2.7",
         "chargytransparenzsoftware@1.4.7|@rolldown/pluginutils@1.0.1"
       ]
     },
@@ -41044,13 +41107,13 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|lightningcss-win32-x64-msvc@1.33.0"
+      "ref": "chargytransparenzsoftware@1.4.7|lightningcss-darwin-arm64@1.33.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@oxc-project/types@0.148.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@rolldown/binding-win32-x64-msvc@1.2.7"
+      "ref": "chargytransparenzsoftware@1.4.7|@rolldown/binding-darwin-arm64@1.2.7"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@rolldown/pluginutils@1.0.1"
