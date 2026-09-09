@@ -6,6 +6,7 @@ import type {
     LanguageStrings,
     ShowPKIDetailsFunction,
     IValidationRules,
+    URLResolver,
     SignedJSONMessage
 } from "@open-charging-cloud/chargy-core";
 
@@ -28,6 +29,8 @@ type CreateTestChargyOptions = {
     uiLanguages?:     LanguageStrings;
     showPKIDetails?:  ShowPKIDetailsFunction;
     validationRules?: IValidationRules;
+    resolveURLs?:     boolean;
+    urlResolver?:     URLResolver;
 };
 
 const requireModule = createRequire(import.meta.url);
@@ -56,7 +59,9 @@ export function createTestChargy(ChargyClass: ChargyConstructor,
         chargyDependencies.asn1,
         chargyDependencies.base32Decode,
         options.showPKIDetails  ?? ((): string => ""),
-        options.validationRules
+        options.validationRules,
+        options.resolveURLs,
+        options.urlResolver
     );
 
 }

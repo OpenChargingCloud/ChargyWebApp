@@ -81,6 +81,9 @@ function archiveMimeType(fileName: string): string {
     if (fileName.endsWith(".chargy"))
         return "application/chargy";
 
+    if (fileName.endsWith(".ocmf"))
+        return "application/ocmf";
+
     if (fileName.endsWith(".json"))
         return "application/json";
 
