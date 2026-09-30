@@ -22,6 +22,7 @@ import {
     ChargeTransparencyRecord   as chargeTransparencyRecord,
     PublicKeyInfo              as publicKeyInfo,
     SimpleURL                  as simpleURL,
+    OCMF,
     readQRCodeTextFromImageData
 }                                       from '@open-charging-cloud/chargy-core'
 import * as chargyLib                   from '@open-charging-cloud/chargy-core'
@@ -84,6 +85,7 @@ import {
     worstLiveLinkState
 }                                      from './liveLinkStatus';
 import type { LiveLinkOverallState }   from './liveLinkStatus';
+import { requestLiveLink, type LiveLinkPollFailure } from './liveLinkPolling';
 import {
     browserFileNameFromNameAndType,
     browserFileTypeFromNameOrData,
@@ -103,7 +105,13 @@ type DetectionResult = Awaited<ReturnType<Chargy["DetectAndConvertContentFormat"
 type DetectionOptions = {
     prepareUI?: boolean;
     onError?:   (result: chargyInterfaces.ISessionCryptoResult) => void;
+    liveReload?: boolean;
+    isCurrent?:  () => boolean;
 };
+
+type LiveLinkPollResult =
+    | { kind: "unchanged" | "updated", origin: string }
+    | { kind: "failed", failures: LiveLinkPollFailure[] };
 
 // What the user told the live link trust dialog. "dismiss" is the back arrow:
 // no decision, nothing remembered, ask again next time.
@@ -662,6 +670,14 @@ export class ChargyApp {
     private          liveLinkTrustDecisions:             Map<string, LiveLinkOriginChoice>                      | null   = null;
     private          liveLinkTrustRowDiv:                HTMLDivElement                                         | null   = null;
     private          liveLinkTrustContentDiv:            HTMLDivElement                                         | null   = null;
+    private          liveLinkPollContentDiv:             HTMLDivElement                                         | null   = null;
+    private          liveLinkPollResult:                 LiveLinkPollResult                                     | null   = null;
+    private          liveLinkPolling:                    boolean                                                         = false;
+    private          liveLinkRetry:                      (() => Promise<void>)                                  | null   = null;
+    private          liveLinkRequestController:          AbortController                                        | null   = null;
+    private          liveLinkNextAttemptAt:              Date                                                   | null   = null;
+    private          liveLinkLastSuccessfulFetch:        Date                                                   | null   = null;
+    private          liveLinkLastAppliedUpdate:          Date                                                   | null   = null;
 
     //#endregion
 
@@ -2112,6 +2128,7 @@ export class ChargyApp {
         this.closeLiveLinkTrustDialog();
         this.liveLinkTrustRowDiv     = null;
         this.liveLinkTrustContentDiv = null;
+        this.liveLinkPollContentDiv  = null;
 
         this.clearChargingSessionCharts();
         this.detailedInfosDiv.innerHTML = "";
@@ -2909,6 +2926,8 @@ export class ChargyApp {
             };
         }
 
+        if (options?.isCurrent !== undefined && !options.isCurrent())
+            return false;
 
         if (chargeTransparencyRecord.IsAChargeTransparencyRecord(result))
         {
@@ -2928,6 +2947,35 @@ export class ChargyApp {
         if (chargeTransparencyLiveLink.IsAChargeTransparencyLiveLink(result))
         {
 
+            const meterValues = await this.chargy.TryToParseLiveLinkMeterValues(result) ?? null;
+
+            if (options?.isCurrent !== undefined && !options.isCurrent())
+                return false;
+
+            const signedValues = chargyLib.asJSONObject(result["signedMeterValues"]);
+            const values = signedValues?.["values"];
+            if (options?.liveReload === true && Array.isArray(values) && values.length > 0 && meterValues === null)
+            {
+                let error: chargyInterfaces.ISessionCryptoResult = {
+                    status: chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
+                    message: this.chargy.GetMultilanguageText("livePollConversionError"),
+                    certainty: 0
+                };
+                const encodings = signedValues?.["encodings"];
+                // Core's live-link adapter returns undefined for unparseable
+                // readings. Ask the OCMF parser for its diagnostic in that case.
+                if (Array.isArray(encodings) && encodings[0] === "OCMF" &&
+                    values.every((value: unknown): value is string => typeof value === "string"))
+                {
+                    const parsed = await new OCMF(this.chargy).TryToParseOCMFDocuments(values);
+                    if (!chargeTransparencyRecord.IsAChargeTransparencyRecord(parsed))
+                        error = parsed;
+                }
+                if (options.isCurrent === undefined || options.isCurrent())
+                    options.onError?.(error);
+                return false;
+            }
+
             if (options?.prepareUI === false)
             {
                 this.inputInfosDiv.style.display = 'none';
@@ -2936,7 +2984,8 @@ export class ChargyApp {
 
             this.showChargeTransparencyLiveLink(
                 result,
-                await this.chargy.TryToParseLiveLinkMeterValues(result) ?? null
+                meterValues,
+                options?.liveReload === true
             );
 
             return true;
@@ -3197,8 +3246,16 @@ export class ChargyApp {
     //#region showChargeTransparencyLiveLink(LiveLink, MeterValues)
 
     private showChargeTransparencyLiveLink(LiveLink:     chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
-                                           MeterValues:  chargeTransparencyRecord.IChargeTransparencyRecord|null = null) : void
+                                           MeterValues:  chargeTransparencyRecord.IChargeTransparencyRecord|null = null,
+                                           preservePollState: boolean = false) : void
     {
+
+        if (!preservePollState && this.currentChargeTransparencyLiveLink !== LiveLink)
+        {
+            this.liveLinkPollResult          = null;
+            this.liveLinkLastSuccessfulFetch = null;
+            this.liveLinkLastAppliedUpdate   = null;
+        }
 
         if (this.currentChargeTransparencyLiveLink !== LiveLink)
             this.measurementValuesViewMode           = "measurements";
@@ -3383,6 +3440,10 @@ export class ChargyApp {
 
             this.liveLinkTrustRowDiv.style.display = "none";
 
+            this.liveLinkPollContentDiv = document.createElement('div');
+            this.appendLiveLinkInfoRow(tableDiv, "pollInfos", '<i class="fas fa-arrows-rotate"></i>', this.liveLinkPollContentDiv);
+            this.renderLiveLinkPollStatus();
+
         }
 
         //#endregion
@@ -3458,6 +3519,8 @@ export class ChargyApp {
         // resumes: no second timer chain, and no re-arm after the view has
         // moved on or a decision was revoked.
         this.stopLiveLinkRefresh();
+
+        this.renderLiveLinkPollStatus();
 
         void this.prepareLiveLinkRefresh(LiveLink, this.liveLinkRefreshGeneration, reconsider);
 
@@ -3856,30 +3919,149 @@ export class ChargyApp {
         // successor.
         const poll      = async (): Promise<void> => {
 
-            if (!this.isLiveLinkRefreshCurrent(LiveLink, generation))
+            if (!this.isLiveLinkRefreshCurrent(LiveLink, generation) || this.liveLinkPolling)
                 return;
+
+            if (this.liveLinkRefreshTimer !== null)
+                clearTimeout(this.liveLinkRefreshTimer);
+            this.liveLinkRefreshTimer = null;
+            this.liveLinkNextAttemptAt = null;
+            this.liveLinkPolling = true;
+            const controller = new AbortController();
+            this.liveLinkRequestController = controller;
+            this.renderLiveLinkPollStatus();
 
             try
             {
-                await this.reloadLiveLink(LiveLink, targets, customHeaders);
+                const result = await this.reloadLiveLink(LiveLink, targets, customHeaders, generation, controller.signal);
+                if (this.isLiveLinkRefreshCurrent(LiveLink, generation))
+                    this.liveLinkPollResult = result;
             }
             catch
             {
-                // Whatever went wrong out there, what is on screen was loaded
-                // successfully once and stays.
+                if (this.isLiveLinkRefreshCurrent(LiveLink, generation))
+                    this.liveLinkPollResult = { kind: "failed", failures: [{ kind: "conversion", origin: targets[0]?.url.origin ?? "" }] };
             }
 
             if (this.isLiveLinkRefreshCurrent(LiveLink, generation))
+            {
+                this.liveLinkPolling = false;
+                this.liveLinkRequestController = null;
+                this.liveLinkNextAttemptAt = new Date(Date.now() + refreshSeconds * 1000);
                 this.liveLinkRefreshTimer = setTimeout(() => void poll(), refreshSeconds * 1000);
+                this.renderLiveLinkPollStatus();
+            }
 
         };
 
         if (this.isLiveLinkRefreshCurrent(LiveLink, generation))
+        {
+            this.liveLinkRetry = poll;
+            this.liveLinkNextAttemptAt = new Date(Date.now() + refreshSeconds * 1000);
             this.liveLinkRefreshTimer = setTimeout(() => void poll(), refreshSeconds * 1000);
+            this.renderLiveLinkPollStatus();
+        }
 
     }
 
     //#region The remembered decisions
+
+    private liveLinkFailureText(failure: LiveLinkPollFailure): string
+    {
+        switch (failure.kind)
+        {
+            case "network":    return this.chargy.GetLocalizedMessage("livePollNetworkError");
+            case "timeout":    return this.chargy.GetLocalizedMessage("livePollTimeout");
+            case "http":       return this.chargy.GetLocalizedMessageWithParameter("livePollHTTPError", failure.httpStatus ?? "?") +
+                                      (failure.httpStatus === 401 ? " – " + this.chargy.GetLocalizedMessage("livePollUnauthorized")
+                                       : failure.httpStatus === 403 ? " – " + this.chargy.GetLocalizedMessage("livePollForbidden") : "");
+            case "read":       return this.chargy.GetLocalizedMessage("livePollReadError");
+            case "size":       return this.chargy.GetLocalizedMessage("livePollSizeError");
+            case "json":       return this.chargy.GetLocalizedMessage("livePollJSONError");
+            case "document":   return this.chargy.GetLocalizedMessage("livePollDocumentError");
+            case "conversion": return this.chargy.GetLocalizedMessage("livePollConversionError");
+        }
+    }
+
+    private renderLiveLinkPollStatus(): void
+    {
+        const content = this.liveLinkPollContentDiv;
+        if (content === null)
+            return;
+
+        const row = content.closest<HTMLElement>(".pollInfos");
+        if (row !== null)
+            row.style.display = this.liveLinkRetry !== null || this.liveLinkPolling ? "" : "none";
+
+        const detailsOpen = content.querySelector("details")?.open ?? false;
+        const result = this.liveLinkPollResult;
+        const failure = result?.kind === "failed" ? result.failures[0] : undefined;
+        content.className = "liveLinkPollStatus" + (failure !== undefined && !this.liveLinkPolling ? " warning" : "");
+        const status = content.querySelector<HTMLDivElement>(".pollStatus") ?? chargyLib.CreateDiv(content, "pollStatus");
+        status.setAttribute("role", "status");
+        status.setAttribute("aria-live", this.liveLinkPolling ? "off" : "polite");
+        const statusText = this.liveLinkPolling
+                                 ? this.chargy.GetLocalizedMessage("livePollLoading")
+                                 : failure !== undefined
+                                       ? this.liveLinkFailureText(failure)
+                                       : this.chargy.GetLocalizedMessage(result?.kind === "updated" ? "livePollUpdated"
+                                                                         : result?.kind === "unchanged" ? "livePollUnchanged"
+                                                                         : "livePollWaiting");
+        if (status.textContent !== statusText)
+            status.textContent = statusText;
+
+        const metadata = content.querySelector<HTMLDivElement>(".pollMetadata") ?? chargyLib.CreateDiv(content, "pollMetadata");
+        const time = (date: Date): string => date.toLocaleString(this.UILanguage);
+        const entries = [this.chargy.GetLocalizedMessage("livePollLastFetch") + ": " +
+                            (this.liveLinkLastSuccessfulFetch !== null ? time(this.liveLinkLastSuccessfulFetch)
+                                                                      : this.chargy.GetLocalizedMessage("livePollNever"))];
+        if (this.liveLinkLastAppliedUpdate !== null)
+            entries.push(this.chargy.GetLocalizedMessage("livePollLastUpdate") + ": " + time(this.liveLinkLastAppliedUpdate));
+        if (this.liveLinkNextAttemptAt !== null)
+            entries.push(this.chargy.GetLocalizedMessage("livePollNextAttempt") + ": " + this.liveLinkNextAttemptAt.toLocaleTimeString(this.UILanguage));
+        metadata.textContent = entries.join(" · ");
+
+        const actions = content.querySelector<HTMLDivElement>(".pollActions") ?? chargyLib.CreateDiv(content, "pollActions");
+        const retry = actions.querySelector<HTMLButtonElement>(".liveLinkRetry") ?? actions.appendChild(document.createElement("button"));
+        retry.type = "button";
+        retry.className = "liveLinkRetry";
+        retry.textContent = this.chargy.GetLocalizedMessage("livePollRetry");
+        retry.disabled = this.liveLinkPolling || this.liveLinkRetry === null;
+        retry.onclick = (): void => { if (this.liveLinkRetry !== null) void this.liveLinkRetry(); };
+
+        actions.querySelector("details")?.remove();
+        if (result !== null)
+        {
+            const details = actions.appendChild(document.createElement("details"));
+            details.open = detailsOpen;
+            const summary = details.appendChild(document.createElement("summary"));
+            summary.textContent = this.chargy.GetLocalizedMessage("livePollDetails");
+            if (result.kind === "failed")
+            {
+                for (const item of result.failures)
+                {
+                    const entry = details.appendChild(document.createElement("div"));
+                    entry.textContent = item.origin + " — " + this.liveLinkFailureText(item) +
+                                        (item.detail !== undefined ? " " + item.detail : "");
+                }
+                if (result.failures.some(item => item.kind === "network"))
+                {
+                    const hint = details.appendChild(document.createElement("p"));
+                    hint.textContent = this.chargy.GetLocalizedMessage("livePollNetworkHint");
+                }
+            }
+            else
+            {
+                const entry = details.appendChild(document.createElement("div"));
+                entry.textContent = result.origin + " — " + this.chargy.GetLocalizedMessage("livePollReceived");
+                if (result.kind === "unchanged")
+                {
+                    const hint = details.appendChild(document.createElement("p"));
+                    hint.textContent = this.chargy.GetLocalizedMessage("livePollUnchangedHint");
+                }
+            }
+        }
+    }
 
     private static readonly trustedOriginsStorageKey = "chargyLiveLinkTrustedOrigins";
 
@@ -4239,11 +4421,14 @@ export class ChargyApp {
     private stopLiveLinkRefresh(): void
     {
 
-        // Bumping the generation is the actual stop: it cannot cancel a poll
-        // already suspended mid-await, but that poll checks the generation
-        // before it re-arms, so it will not schedule a successor. Clearing the
-        // timer handles the common case where nothing is in flight.
+        // Invalidate UI updates and cancel the transfer when the document or
+        // trust decision changes. An older completion never re-arms a timer.
         this.liveLinkRefreshGeneration++;
+        this.liveLinkRequestController?.abort();
+        this.liveLinkRequestController = null;
+        this.liveLinkRetry = null;
+        this.liveLinkPolling = false;
+        this.liveLinkNextAttemptAt = null;
 
         if (this.liveLinkRefreshTimer !== null)
         {
@@ -4304,11 +4489,17 @@ export class ChargyApp {
     // than what is on screen.
     private async reloadLiveLink(LiveLink:       chargeTransparencyLiveLink.IChargeTransparencyLiveLink,
                                  targets:        Array<LiveLinkPollTarget>,
-                                 customHeaders:  Array<ICustomHeader> = []): Promise<void>
+                                 customHeaders:  Array<ICustomHeader>,
+                                 generation:     number,
+                                 signal:         AbortSignal): Promise<LiveLinkPollResult>
     {
 
+        const failures: LiveLinkPollFailure[] = [];
         for (const target of targets)
         {
+
+            if (!this.isLiveLinkRefreshCurrent(LiveLink, generation))
+                break;
 
             const requestURL = this.liveLinkRefreshURL(target.url, LiveLink);
 
@@ -4320,83 +4511,58 @@ export class ChargyApp {
             if (requestURL.origin !== target.url.origin)
                 continue;
 
-            // "redirect: error" rather than the default "follow": the checks
-            // above vetted this exact URL, and a redirect could send the
-            // request to a host that was never vetted - an internal address, a
-            // different origin. A live link endpoint that wants to relocate has
-            // to answer directly, not bounce the browser somewhere unchecked.
-            // It also keeps the custom headers where they were meant to go.
-            //
-            // Those headers make a cross-origin request non-simple, so the
-            // endpoint has to allow them in its CORS preflight answer; one
-            // that does not is simply not reached, exactly as before.
-            const response = await fetch(requestURL.href,
-                                         {
-                                             cache:        "no-store",
-                                             credentials:  "omit",
-                                             redirect:     "error",
-                                             // Resolved here, not once for the
-                                             // series: a one-time password is
-                                             // only ever valid for the request
-                                             // it was computed for.
-                                             headers:      resolveRequestHeaders(customHeaders)
-                                         }).
-                                   catch(error => {
-                                       // A poll that cannot even be sent - a
-                                       // Content-Security-Policy that does not
-                                       // allow the scheme, a CORS answer that
-                                       // does not allow the custom headers, a
-                                       // server that is simply down - is not
-                                       // fatal: what is on screen stays. But it
-                                       // is silent, and a silent nothing is the
-                                       // hardest thing to diagnose, so it says
-                                       // so in the console.
-                                       console.log("Could not reload this charge transparency live link from '" + requestURL.origin + "': " + (error instanceof Error ? error.message : String(error)));
-                                       return null;
-                                   });
+            const response = await requestLiveLink(requestURL, resolveRequestHeaders(customHeaders), target.maxPayloadBytes, signal);
+            if (!this.isLiveLinkRefreshCurrent(LiveLink, generation))
+                break;
 
-            if (response === null)
-                continue;
-
-            if (!response.ok)
+            if (response.kind !== "received")
             {
-                console.log("Could not reload this charge transparency live link from '" + requestURL.origin + "': HTTP " + response.status.toString() + ".");
+                failures.push(response);
                 continue;
             }
 
-            const text     = new TextDecoder().decode(
-                                 await this.readResponseWithinLimit(response, target.maxPayloadBytes)
-                             );
-
-            let   reloaded: unknown;
-
-            try
-            {
-                reloaded = JSON.parse(text);
-            }
-            catch
-            {
-                continue;
-            }
-
+            this.liveLinkLastSuccessfulFetch = response.receivedAt;
+            const reloaded = response.document;
             if (!chargeTransparencyLiveLink.IsAChargeTransparencyLiveLink(reloaded) ||
                 reloaded["@id"] !== LiveLink["@id"])
             {
+                failures.push({ kind: "document", origin: response.origin });
                 continue;
             }
 
-            if (this.isNewerLiveLink(reloaded, LiveLink))
-                await this.detectAndConvertContentFormat(text, {
-                                prepareUI:  false,
-                                onError:    () => { /* keep what is on screen */ }
-                            });
+            if (!this.isNewerLiveLink(reloaded, LiveLink))
+                return { kind: "unchanged", origin: response.origin };
 
-            // The endpoint answered. Whether it had something new or not, there
-            // is no reason to ask the next one.
-            return;
-
+            let detail: string | undefined;
+            const previousResult = this.liveLinkPollResult;
+            const previousUpdate = this.liveLinkLastAppliedUpdate;
+            // The render starts a new generation. Carry these values through
+            // it instead of allowing this older poll to update the new view.
+            this.liveLinkPollResult = { kind: "updated", origin: response.origin };
+            this.liveLinkLastAppliedUpdate = response.receivedAt;
+            try
+            {
+                const accepted = await this.detectAndConvertContentFormat(response.text, {
+                    prepareUI: false,
+                    liveReload: true,
+                    isCurrent: () => this.isLiveLinkRefreshCurrent(LiveLink, generation),
+                    onError: error => { detail = this.getSessionCryptoResultText(error); }
+                });
+                if (accepted)
+                    return { kind: "updated", origin: response.origin };
+            }
+            catch
+            {
+                // Conversion failures are distinct from successful transfers.
+            }
+            if (!this.isLiveLinkRefreshCurrent(LiveLink, generation))
+                break;
+            this.liveLinkPollResult = previousResult;
+            this.liveLinkLastAppliedUpdate = previousUpdate;
+            failures.push({ kind: "conversion", origin: response.origin, ...(detail !== undefined ? { detail } : {}) });
         }
 
+        return { kind: "failed", failures };
     }
 
     // The request says which version the client already has, as
