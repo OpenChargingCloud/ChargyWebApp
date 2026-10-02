@@ -1,5 +1,6 @@
 declare module "*.css";
 declare module "*.scss";
+declare module "leaflet.awesome-markers";
 
 declare const __CHARGY_CORE_SHA512__: string;
 declare const __CHARGY_ALLOW_INSECURE_TRANSPORTS__: boolean;
@@ -13,13 +14,12 @@ declare module "asn1.js" {
         obj(...items: unknown[]): Asn1Builder;
         objid(): Asn1Builder;
         seq(): Asn1Builder;
-        seqof(schema: Asn1Schema): Asn1Builder;
+        seqof(schema: unknown): Asn1Builder;
     }
 
     interface Asn1Schema {
         // asn1.js schemas return caller-defined object shapes.
-        // Keep the default dynamic so legacy decode callsites keep their previous behaviour.
-        decode<T = any>(data: Uint8Array | ArrayBuffer, encoding: string): T;
+        decode<T = unknown>(data: Uint8Array | ArrayBuffer, encoding: string): T;
     }
 
     const asn1: {
