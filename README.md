@@ -81,7 +81,7 @@ This software is also available as [DesktopApp](https://github.com/OpenChargingC
 
 ## Installation
 
-Assuming you have Node.js 22.13 or newer installed, you can clone this repository, install all JavaScript dependencies, compile it and run the webpack development server...
+Assuming you have Node.js 22.18 or newer installed, you can clone this repository, install all JavaScript dependencies, compile it and run the webpack development server...
 
 ```
 git clone https://github.com/OpenChargingCloud/ChargyWebApp.git
