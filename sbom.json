@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:866dc2ce-3972-4ed6-8d93-7b5c427837f1",
+  "serialNumber": "urn:uuid:b2ce374b-c1da-4e5d-93e2-0142bdf9fea9",
   "metadata": {
-    "timestamp": "2026-10-31T03:25:50.972Z",
+    "timestamp": "2026-10-31T12:48:21.503Z",
     "tools": {
       "components": [
         {
@@ -600,10 +600,10 @@
       "type": "library",
       "name": "wwcp-poi",
       "group": "@open-charging-cloud",
-      "version": "0.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.0",
+      "version": "0.1.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.1",
       "author": "GraphDefined GmbH",
-      "description": "Verifies WWCP POI 3 data in TypeScript: trust anchors, key statements, roaming networks and their ETags, commits, checkpoints, charging station proofs and price statements - so that an EV driver's app knows the charging station and its tariffs it shows are the ones the roaming network signed and published.",
+      "description": "Verifies WWCP/POI data in TypeScript: trust anchors, key statements, roaming networks and their ETags, commits, checkpoints, charging station proofs and price statements - so that an EV driver's app knows the charging station and its tariffs it shows are the ones the roaming network signed and published.",
       "licenses": [
         {
           "license": {
@@ -612,7 +612,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/wwcp-poi@0.1.0",
+      "purl": "pkg:npm/%40open-charging-cloud/wwcp-poi@0.1.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/WWCP_POI.TS.git",
@@ -630,7 +630,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/wwcp-poi/-/wwcp-poi-0.1.0.tgz",
+          "url": "https://registry.npmjs.org/@open-charging-cloud/wwcp-poi/-/wwcp-poi-0.1.1.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -31685,7 +31685,7 @@
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
         "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0",
         "chargytransparenzsoftware@1.4.7|@open-charging-cloud/totp@0.3.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.1",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.22",
         "chargytransparenzsoftware@1.4.7|@types/node@26.6.6",
@@ -31813,7 +31813,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.10.0",

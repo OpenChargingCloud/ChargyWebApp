@@ -158,6 +158,43 @@ export class TrustStore {
         return value === undefined ? undefined : readAnchor(value);
     }
 
+    /** An authorization snapshot must not mix an anchor and exclusions read from different transactions. */
+    public async trustSnapshot(anchorPolicyId: string): Promise<{
+        readonly record: StoredTrustAnchor | undefined; readonly deleted: ReadonlySet<string>;
+    }> {
+        const { records, deleted } = await this.readTrustSnapshot(anchorPolicyId);
+        return { record: records[0], deleted };
+    }
+
+    public async listTrustSnapshot(): Promise<{
+        readonly records: readonly StoredTrustAnchor[]; readonly deleted: ReadonlySet<string>;
+    }> {
+        return this.readTrustSnapshot();
+    }
+
+    private async readTrustSnapshot(anchorPolicyId?: string): Promise<{
+        readonly records: readonly StoredTrustAnchor[]; readonly deleted: ReadonlySet<string>;
+    }> {
+        const database = await this.open();
+        return new Promise((resolve, reject) => {
+            const transaction = database.transaction([anchorsStore, deletedKeysStore], 'readonly');
+            const anchors = transaction.objectStore(anchorsStore);
+            const request = anchorPolicyId === undefined ? anchors.getAll() : anchors.get(anchorPolicyId);
+            const exclusions = transaction.objectStore(deletedKeysStore).getAll();
+            transaction.onabort = (): void => { reject(transaction.error ?? new Error('Could not read POI trust decisions')); };
+            transaction.onerror = (): void => { reject(transaction.error ?? new Error('Could not read POI trust decisions')); };
+            transaction.oncomplete = (): void => {
+                try {
+                    const values = anchorPolicyId === undefined ? request.result as unknown[]
+                        : request.result === undefined ? [] : [request.result as unknown];
+                    const records = values.map(readAnchor).sort((a, b) => b.importedAt.localeCompare(a.importedAt));
+                    resolve({ records, deleted: readDeletedKeys(exclusions.result as unknown[]) });
+                }
+                catch (error) { reject(error instanceof Error ? error : new Error('Invalid POI trust snapshot')); }
+            };
+        });
+    }
+
     /** A separate user action; import never calls this. Updating one key preserves concurrent decisions. */
     public async setKeyTrust(anchorId: string, keyId: string, trusted: boolean): Promise<void> {
         return this.transaction(anchorsStore, "readwrite", (store, result) => {
@@ -209,14 +246,15 @@ export class TrustStore {
         return this.transaction(anchorsStore, "readwrite", (store, result) => { store.delete(id); result(undefined); });
     }
 
-    /** Remove every local trust configuration of this network in one transaction. */
-    public async deleteRoamingNetwork(networkId: string): Promise<number> {
+    /** Delete only the selected identity's policies, never every operator claiming the same network ID. */
+    public async deleteRoamingNetwork(anchorPolicyIds: readonly string[]): Promise<number> {
+        const selected = new Set(anchorPolicyIds);
         return this.transaction(anchorsStore, "readwrite", (store, result) => {
             const request = store.getAll();
             request.onsuccess = (): void => {
                 try {
                     const records = (request.result as unknown[]).map(readAnchor)
-                        .filter(record => TrustAnchor.parse(record.qrCode).id === networkId);
+                        .filter(record => selected.has(record.id));
                     for (const record of records)
                         store.delete(record.id);
                     result(records.length);
@@ -233,12 +271,7 @@ export class TrustStore {
             const request = store.getAll();
             request.onsuccess = (): void => { result(request.result as unknown[]); };
         });
-        return new Set(values.map(value => {
-            const id = object(value)["id"];
-            if (typeof id !== "string" || !/^[0-9a-f]{64}$/.test(id))
-                throw new Error("Invalid deleted public key record");
-            return id;
-        }));
+        return readDeletedKeys(values);
     }
 
     public async deleteBundledKey(id: string): Promise<void> {
@@ -250,6 +283,15 @@ export class TrustStore {
     public async restoreBundledKey(id: string): Promise<void> {
         return this.transaction(deletedKeysStore, "readwrite", (store, result) => { store.delete(id); result(undefined); });
     }
+}
+
+function readDeletedKeys(values: readonly unknown[]): ReadonlySet<string> {
+    return new Set(values.map(value => {
+        const id = object(value)["id"];
+        if (typeof id !== "string" || !/^[0-9a-f]{64}$/.test(id))
+            throw new Error("Invalid deleted public key record");
+        return id;
+    }));
 }
 
 export function activeBundledPublicKeys(keys: readonly POIPublicKey[], deleted: ReadonlySet<string>): readonly POIPublicKey[] {

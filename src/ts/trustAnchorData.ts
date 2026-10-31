@@ -1,4 +1,4 @@
-import { KeyStatement, KEY_STATEMENT_CONTEXT, POIPublicKey, isObject, parseJSON } from '@open-charging-cloud/wwcp-poi';
+import { TrustContext, KeyStatement, KEY_STATEMENT_CONTEXT, POIPublicKey, isObject, parseJSON } from '@open-charging-cloud/wwcp-poi';
 import type { JSONValue, TrustAnchor } from '@open-charging-cloud/wwcp-poi';
 import { trustedAnchorHolders } from './anchorKeyTrust';
 import type { StoredTrustAnchor } from './trustStore';
@@ -64,47 +64,10 @@ export function parseTrustAnchorData(anchor: TrustAnchor, document: StoredTrustA
 export function validateTrustAnchorData(anchor: TrustAnchor, data: LoadedTrustAnchorData,
                                         record: StoredTrustAnchor | undefined, bundled: readonly POIPublicKey[],
                                         deleted: ReadonlySet<string>, at: number = Date.now()): TrustAnchorDataValidation {
-    const statement = data.statement;
-    const requiredConsensus = Math.max(anchor.minConsensus, statement.minConsensus);
-    const holders = trustedAnchorHolders(anchor, record, bundled, deleted, at);
-    const trusted = new Set(holders.flat());
-    const signedBy = new Set(statement.signatures.filter(signature => trusted.has(signature.keyId)).map(signature => signature.keyId));
-    const trustedHolderCount = holders.filter(holder => holder.some(id => signedBy.has(id))).length;
-    let signaturesValid = true;
-    let keysValid = true;
-    let verificationError: string | undefined;
-    try {
-        for (const signature of statement.signatures) {
-            const key = data.identityKeys.find(key => key.id === signature.keyId);
-            if (key === undefined)
-                throw new Error("The public key of a signer was not provided");
-            statement.verifySignature(signature, key);
-            if (!key.isValidAt(statement.signedAt))
-                keysValid = false;
-        }
-    }
-    catch (error) {
-        signaturesValid = false;
-        verificationError = error instanceof Error ? error.message : String(error);
-    }
-    let quorumValid = false;
-    try {
-        statement.verifyHolders(holders, data.identityKeys, { minConsensus: anchor.minConsensus, at });
-        quorumValid = true;
-    }
-    catch (error) {
-        verificationError ??= error instanceof Error ? error.message : String(error);
-    }
-    const validityValid = keysValid && statement.isValidAt(at);
-    return {
-        signatures: signaturesValid ? "valid" : "invalid",
-        signers: trustedHolderCount > 0 ? "valid" : "invalid",
-        quorum: quorumValid ? "valid" : "invalid",
-        validity: validityValid ? "valid" : "invalid",
-        trustedHolderCount, requiredConsensus, signatureCount: statement.signatures.length,
-        canTrustKeys: signaturesValid && validityValid,
-        ...(verificationError === undefined ? {} : { verificationError })
-    };
+    return TrustContext.evaluate(anchor, data.statement, {
+        trustedIdentityKeyIds: trustedAnchorHolders(anchor, record, bundled, deleted, at).flat(),
+        otherIdentityKeys: data.identityKeys, at
+    });
 }
 
 /** Called only after Import. Downloads only /keyStatement, not the complete roaming network. */

@@ -2,7 +2,8 @@
 
 Status: 31 October 2026. This document describes the intended trust chain,
 the current integration gaps and the logical risks identified while integrating
-`@open-charging-cloud/wwcp-poi@0.1.0` into Chargy.
+`@open-charging-cloud/wwcp-poi` into Chargy. Shared authorization now uses the
+locally tested **0.1.1 release candidate**, pending npm publication.
 
 A TrustAnchor and an authenticated RoamingNetworkOperator provide the trust
 foundation. Validating a particular charging station and its tariff additionally
@@ -364,8 +365,11 @@ the imported documents and local decisions.
 
 ## 3. Missing integration steps
 
-1. **Bootstrap authorization.** Check the scanned configuration against the active
-   app keys and trust policy before using its pins as a trusted starting point.
+1. **Bootstrap authorization — implemented in the shared library.** The app
+   supplies current locally authorized IDs to `TrustContext.evaluate/create`.
+   Only valid signatures, validity, holder consistency and a trusted quorum
+   produce a context. The app service reconstructs it from a consistent storage
+   snapshot for each verification. Deployment awaits the new npm package.
 2. **Complete RNO verification.** KeyStatement download, identity-key parsing,
    signatures, local signer trust, holder quorum, network binding and validity are
    now integrated. SigningKeyCertificates and the binding of operational RNO
@@ -401,10 +405,14 @@ of arbitrary EMP offers or contracts.
 
 ### Import must not grant trust
 
-The library treats the TrustAnchor supplied to a verifier as an already pinned
-trust basis. It does not consult Chargy's bundled JSONL file or locally removed
-keys. Passing every imported anchor directly to the verifier would bypass the
-app's trust management.
+The library's legacy raw-TrustAnchor APIs treat supplied pins as already trusted.
+Passing every imported anchor directly would bypass the app's trust management.
+The shared `TrustContext` API instead receives locally authorized IDs, preserves
+the original holder groups and quorum, verifies the statement, and binds follow-up
+checks to its signed content, RN, RNO and evaluation time. The app service reads
+current local decisions from one storage transaction for each operation and
+passes this context to the library. This shared logic belongs in WWCP_POI.TS,
+not in separate web, desktop or mobile verifiers. Storage and UX remain in apps.
 
 Importing and displaying an anchor must remain possible with incomplete trust.
 Storage, bootstrap authorization and cryptographic verification are separate
@@ -430,14 +438,15 @@ and threshold rather than requiring every optional signer to be trusted.
 
 ### A network ID alone does not authenticate network identity
 
-The current [network grouping](../src/ts/roamingNetworks.ts) uses only the
-RoamingNetworkId. Before authentication, equal IDs do not establish that two
-anchors refer to the same network. Such entries currently share a view, and
-[network deletion](../src/ts/trustStore.ts) removes all anchors with that ID.
+The [network grouping](../src/ts/roamingNetworks.ts) now binds authenticated
+entries to RN, RNO and the exact anchor policy. Unverified imports remain
+isolated by policy. Equal IDs alone never merge trust, keys or quorums, and
+[network deletion](../src/ts/trustStore.ts) removes only the displayed policy IDs.
+The displayed name still comes from the unauthenticated anchor text.
 
-Before extending verification, define a local network identity tied to the
-authenticated RNO and its trust lineage. It must support legitimate key rotation;
-using only the current key as the permanent identity would prevent that.
+The anchor policy is a conservative bootstrap lineage. Verified succession must
+later link legitimate rotations; a matching RNO ID or a newly imported key is
+insufficient. A context does not follow a changed statement automatically.
 
 ### Signed, published and currently applicable are different claims
 

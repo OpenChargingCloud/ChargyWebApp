@@ -104,7 +104,7 @@ import {
     renderTrustAnchorPreview,
     type TrustAnchorPreview
 }                                      from './trustAnchorPreview';
-import { TrustStore }                  from './trustStore';
+import { TrustStore, trustAnchorStorageId } from './trustStore';
 import { TrustManagement }             from './trustManagement';
 import { bundledTrustedPublicKeys }    from './bundledTrustedPublicKeys';
 import type { StoredTrustAnchor }      from './trustStore';
@@ -2773,15 +2773,14 @@ export class ChargyApp {
                 return;
             this.qrCodeScannerTrustAnchorData = data;
             phase = "storage";
-            let record = await this.trustStore.getAnchor(preview.anchor);
-            const deleted = await this.trustStore.deletedBundledKeyIds();
+            let { record, deleted } = await this.trustStore.trustSnapshot(trustAnchorStorageId(preview.anchor));
             controller.signal.throwIfAborted();
             if (generation !== this.qrCodeScannerPreviewGeneration)
                 return;
             const validation = validateTrustAnchorData(preview.anchor, data, record, bundledTrustedPublicKeys, deleted);
             if (validation.canTrustKeys) {
                 await this.trustStore.importAnchor(preview.anchor, preview.text, data.document, controller.signal);
-                record = await this.trustStore.getAnchor(preview.anchor);
+                ({ record, deleted } = await this.trustStore.trustSnapshot(trustAnchorStorageId(preview.anchor)));
             }
             if (generation === this.qrCodeScannerPreviewGeneration) {
                 this.renderQRCodeScannerTrustAnchorData(preview, data, record, deleted);
@@ -2851,7 +2850,7 @@ export class ChargyApp {
         const generation = this.qrCodeScannerPreviewGeneration;
         if (preview === null || data === null)
             return;
-        const [record, deleted] = await Promise.all([this.trustStore.getAnchor(preview.anchor), this.trustStore.deletedBundledKeyIds()]);
+        const { record, deleted } = await this.trustStore.trustSnapshot(trustAnchorStorageId(preview.anchor));
         if (generation === this.qrCodeScannerPreviewGeneration)
             this.renderQRCodeScannerTrustAnchorData(preview, data, record, deleted);
     }

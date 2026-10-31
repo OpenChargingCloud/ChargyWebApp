@@ -1,23 +1,35 @@
 import { TrustAnchor } from '@open-charging-cloud/wwcp-poi';
+import type { POIPublicKey } from '@open-charging-cloud/wwcp-poi';
 import type { StoredTrustAnchor } from './trustStore';
+import { createPOITrustContext } from './poiTrustContext';
+import type { POITrustContext } from './poiTrustContext';
 
 export interface StoredRoamingNetwork {
     readonly id: string;
+    readonly identity: string;
+    readonly context?: POITrustContext;
     readonly anchors: readonly StoredTrustAnchor[];
 }
 
-/** A local index, never a merger of the different anchors' keys or quorum policies. */
-export function groupRoamingNetworks(records: readonly StoredTrustAnchor[]): readonly StoredRoamingNetwork[] {
-    const groups = new Map<string, StoredTrustAnchor[]>();
+/** Authenticated RN/RNO/policy identities; unverified policies stay isolated, even if they claim the same ID. */
+export function groupRoamingNetworks(records: readonly StoredTrustAnchor[], bundled: readonly POIPublicKey[] = [],
+                                       deleted: ReadonlySet<string> = new Set(), at: number = Date.now()): readonly StoredRoamingNetwork[] {
+    const groups = new Map<string, StoredRoamingNetwork>();
     for (const record of records) {
-        const id = TrustAnchor.parse(record.qrCode).id;
-        const group = groups.get(id) ?? [];
-        group.push(record);
-        groups.set(id, group);
+        const anchor = TrustAnchor.parse(record.qrCode);
+        let context: POITrustContext | undefined;
+        try {
+            if (record.downloadedData !== undefined)
+                context = createPOITrustContext(anchor, record.downloadedData, record, bundled, deleted, at);
+        }
+        catch { /* Keep invalid, expired or insufficiently trusted imports visible as isolated policies. */ }
+        const identity = context === undefined ? `unverified:${record.id}` : `authenticated:${context.networkIdentity}`;
+        const previous = groups.get(identity);
+        groups.set(identity, { id: anchor.id, identity,
+            anchors: [...(previous?.anchors ?? []), record].sort((a, b) => b.importedAt.localeCompare(a.importedAt)),
+            ...(context === undefined ? {} : { context }) });
     }
-    return [...groups].map(([id, anchors]) => ({
-        id, anchors: anchors.sort((a, b) => b.importedAt.localeCompare(a.importedAt))
-    })).sort((a, b) => a.id.localeCompare(b.id));
+    return [...groups.values()].sort((a, b) => a.id.localeCompare(b.id) || a.identity.localeCompare(b.identity));
 }
 
 /** These display names come from imported anchors and are not authenticated network names. */

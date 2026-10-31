@@ -124,6 +124,9 @@ export class TrustManagement {
         title.textContent = roamingNetworkDisplayName(network, this.language());
         this.text(parent, `${this.localize("trustAnchorNetworkLabel")}: ${network.id}`, "trustManagementIdentifier");
         this.text(parent, this.localize("trustNetworkNameSource"));
+        this.text(parent, this.localize(network.context === undefined ? "trustNetworkIdentityUnverified" : "trustNetworkIdentityVerified"));
+        if (network.context !== undefined)
+            this.text(parent, `${this.localize("trustDataOperatorLabel")}: ${network.context.roamingNetworkOperatorId}`, "trustManagementIdentifier");
         this.text(parent, `${this.localize("trustNetworkAnchorCount")}: ${network.anchors.length}`);
         if (network.anchors.every(record => record.downloadedData === undefined)) {
             const statement = parent.appendChild(document.createElement("section"));
@@ -143,7 +146,7 @@ export class TrustManagement {
         this.text(removal, this.localize("trustNetworkDeleteDescription"));
         const button = this.button(removal, "trustNetworkDeleteLabel", () => {
             void this.mutate(button, async () => {
-                await this.store.deleteRoamingNetwork(network.id);
+                await this.store.deleteRoamingNetwork(network.anchors.map(record => record.id));
                 if (this.generation === generation) {
                     this.page = "networks";
                     this.selectedNetworkId = null;
@@ -178,12 +181,12 @@ export class TrustManagement {
         list.setAttribute("aria-busy", "true");
         try {
             if (this.page === "networks" || this.page === "networkDetails") {
-                const [anchors, deletedKeys] = await Promise.all([this.store.listAnchors(), this.store.deletedBundledKeyIds()]);
+                const { records: anchors, deleted: deletedKeys } = await this.store.listTrustSnapshot();
                 if (this.generation !== generation)
                     return;
-                const networks = groupRoamingNetworks(anchors);
+                const networks = groupRoamingNetworks(anchors, this.bundledKeys, deletedKeys);
                 if (this.page === "networkDetails") {
-                    const network = networks.find(entry => entry.id === this.selectedNetworkId);
+                    const network = networks.find(entry => entry.identity === this.selectedNetworkId);
                     if (network === undefined) {
                         this.page = "networks";
                         this.selectedNetworkId = null;
@@ -197,22 +200,26 @@ export class TrustManagement {
                         this.text(list, this.localize("trustRoamingNetworksEmpty"));
                     for (const network of networks) {
                         const button = this.button(list, "trustNetworkOpenLabel", () => {
-                            this.selectedNetworkId = network.id;
+                            this.selectedNetworkId = network.identity;
                             this.page = "networkDetails";
                             void this.render();
                         }, "settingsEntry trustNetworkEntry");
                         button.dataset["networkId"] = network.id;
+                        button.dataset["networkIdentity"] = network.identity;
                         button.replaceChildren();
                         const text = button.appendChild(document.createElement("div"));
                         const name = text.appendChild(document.createElement("strong"));
                         name.textContent = roamingNetworkDisplayName(network, this.language());
                         this.text(text, `${network.id} · ${this.localize("trustNetworkAnchorCount")}: ${network.anchors.length}`);
+                        this.text(text, this.localize(network.context === undefined ? "trustNetworkIdentityUnverified" : "trustNetworkIdentityVerified"));
+                        if (network.context !== undefined)
+                            this.text(text, `${this.localize("trustDataOperatorLabel")}: ${network.context.roamingNetworkOperatorId}`);
                         this.text(text, this.localize("trustNetworkOpenLabel"));
                     }
                 }
             }
             else if (this.page === "anchors") {
-                const [anchors, deletedKeys] = await Promise.all([this.store.listAnchors(), this.store.deletedBundledKeyIds()]);
+                const { records: anchors, deleted: deletedKeys } = await this.store.listTrustSnapshot();
                 if (this.generation !== generation)
                     return;
                 if (anchors.length === 0)

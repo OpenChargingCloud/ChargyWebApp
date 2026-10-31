@@ -22,7 +22,7 @@ export function anchorKeyTrustState(anchor: TrustAnchor, keyId: string, record: 
     return deleted.has(keyId) ? "deleted" : "unknown";
 }
 
-/** Selection for a future verifier, not a signature or quorum verdict. Empty holders retain their position. */
+/** App-owned authorization input for the library's TrustContext; no signature or quorum verdict. */
 export function trustedAnchorHolders(anchor: TrustAnchor, record: StoredTrustAnchor | undefined,
                                       bundled: readonly POIPublicKey[], deleted: ReadonlySet<string>,
                                       at: number = Date.now()): readonly (readonly string[])[] {

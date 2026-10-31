@@ -1,8 +1,12 @@
 # WWCP POI Integration: Current Implementation and Remaining Plan
 
 Status: 31 October 2026. Based on the installed
-`@open-charging-cloud/wwcp-poi@0.1.0`, ChargyCore `0.17.0` and the current WebApp.
+`@open-charging-cloud/wwcp-poi@0.1.1`, ChargyCore `0.17.0` and the current WebApp.
 The POI package is pinned in the lockfile and included in the SBOM.
+
+**Release preparation:** 0.1.1 is currently a locally tested release candidate.
+It must be published before a fresh registry-based install can use this change.
+The app was tested against the actual local npm tarball, not a copied verifier.
 
 This document distinguishes the implemented TrustAnchor workflow from the
 remaining station, tariff, publication and meter-key integration. For the complete
@@ -16,6 +20,7 @@ management notes are in [Trust Management](TrustManagement.md) (German).
 | Shared camera, clipboard, file and deep-link routing | ✅ Implemented |
 | Content-only anchor preview, followed by explicit download | ✅ Implemented |
 | KeyStatement signatures, signer trust, holder quorum and validity | ✅ Implemented |
+| Shared library `TrustContext` and fresh storage-backed authorization | ✅ Implemented against the 0.1.1 release candidate |
 | Bundled JSONL keys and local key exclusions | ✅ Implemented; the production key list is currently empty |
 | Optional manual trust scoped to an individual anchor policy | ✅ Implemented |
 | IndexedDB storage and Trust Management, including roaming networks | ✅ Implemented |
@@ -31,7 +36,7 @@ The library already provides the cryptographic building blocks:
 | Task | Available API | Current app use |
 | --- | --- | --- |
 | Read a TrustAnchor from compact text, URL or JSON | `TrustAnchor.parse`, `TrustAnchor.fromJSON` | ✅ Integrated |
-| Parse a statement and verify it against pinned holders and a quorum | `KeyStatement.parse`, `KeyStatement.verifyHolders` | ✅ Integrated |
+| Evaluate a statement against locally authorized pins and create its trust context | `KeyStatement.parse`, `TrustContext.evaluate/create` | ✅ Integrated |
 | Read public COSE keys and validate their thumbprints | `POIPublicKey.parse` | ✅ Integrated through the key and statement parsers |
 | Verify a small station proof, including meters and tariffs | `verifyChargingStation` | Planned |
 | Verify signed runtime prices against the verified station | `verifyPriceStatements` | Planned |
@@ -153,9 +158,11 @@ SigningKeyCertificates, prices or checkpoints at this stage.
 5. Select locally authorized pins through `trustedAnchorHolders`, preserving the
    anchor's holder groups and applying bundled-key exclusions and scoped manual
    decisions.
-6. Call `KeyStatement.verifyHolders` with this filtered selection, available key
-   material, the anchor's `minConsensus` and the evaluation time. The required
-   quorum is the larger value from the anchor and statement.
+6. Call the library's `TrustContext.evaluate` with the authorized IDs, available
+   key material and evaluation time. The library preserves the original holder
+   groups, checks signatures and validity, and requires the larger quorum from
+   the anchor and statement. Only a completely successful evaluation creates a
+   context; the separate diagnostic fields remain available for unknown imports.
 
 Do not substitute `verifyHolders(anchor.holders, ...)` without the app's trust
 selection: the library assumes supplied trust pins have already been authorized.
@@ -257,14 +264,16 @@ Anchors** and **Bundled public keys**. Users can inspect and delete anchors,
 withdraw manual decisions and locally exclude or restore bundled keys. Opening
 management reevaluates cached statements without downloading POI data.
 
-The roaming-network list currently groups by network ID, preserving separate
-anchor policies rather than merging their keys or quorums. Deleting a network
-removes all anchors grouped under that ID, including their cached documents and
-manual decisions. Bundled keys and their exclusions are retained.
+The roaming-network list uses the authenticated network ID, RNO and exact anchor
+policy as its local identity. Unverified imports remain isolated by policy,
+including when they claim the same network ID. Keys and quorums are never merged.
+Deleting an entry removes only the policy IDs displayed there, including their
+cached documents and manual decisions. Other operators or policies claiming the
+same network ID, bundled keys and exclusions are retained.
 
-**Still needed:** authenticated network identity that accounts for the RNO and
-trust lineage, rather than relying on an unverified network ID alone; verified
-key succession and revocation; explicit historical trust handling; standalone
+The exact anchor policy is a conservative bootstrap lineage, not a permanent
+identity derived from one current key. **Still needed:** explicit lineage links
+through verified key succession and revocation; historical trust handling; standalone
 certificate management; and evidence export/import. Merely importing a new
 server-supplied anchor is not proof of key rotation. `OperatorTrust.followedBy`
 requires a correctly followed version history.
@@ -280,6 +289,39 @@ Future storage responsibilities, not existing object stores, include:
 Deleting current trust must not silently destroy historical evidence once session
 evidence storage exists. Historical results need the trust context and evidence
 applicable at the time, alongside any later revocation information.
+
+### 2.8 Shared authorization belongs in the POI library
+
+`TrustContext` and `TrustEvaluation` live in **WWCP_POI.TS**, so web, desktop and
+mobile consumers share the same signature, holder, quorum and statement-binding
+rules. The library has no app storage, UI, fetch, DOM or Node dependency.
+
+The app's `poiTrustContext.ts` only selects local authorization inputs, reparses
+original cached evidence, associates the result with its local policy identity
+and calls the library. `POITrustService` reads the selected anchor and deleted
+bundled-key IDs in one IndexedDB transaction for every operation. It then creates
+a fresh library context. Missing or corrupt records, storage errors, expiry and
+insufficient trust fail closed. There is no fallback to all bundled keys and no
+cached authorization token.
+
+The library context is bound to RN, RNO, canonical signed KeyStatement content
+and one evaluation time. A proof cannot silently substitute another statement,
+even genuinely signed. Embedded JSON-LD context omission and signature ordering
+do not change content identity; all supplied signatures and the quorum are still
+checked. A changed statement must first be downloaded and reevaluated, and this
+does not implement historical succession.
+
+Operator, version, station and station-checkpoint verification accept this
+context directly. The app service exposes operator verification and a station
+verification seam, tested with a genuine proof. There is no station-download,
+station-selection or session/meter-key UI yet. Existing library APIs accepting a
+raw `TrustAnchor` still mean that its pins are already trusted; `POIClient` and
+`verifyEvidence` must not bypass the app's authorization policy.
+
+Never persist a green context as authority or reuse one after a local policy
+change. Its evidence and evaluation time describe a snapshot. Removing a bundled
+bootstrap key removes its initial vote; it is not a global revocation of every
+key delegated by an otherwise authorized KeyStatement.
 
 ## 3. Planned data contract with CPOs, EMPs and roaming networks
 
@@ -309,9 +351,10 @@ checks its attestations. Only the station and its dependencies are transferred;
 omitted regions remain hashes. Transfer size also depends on the station, tariffs
 and key material, not only the logarithmic audit-path length.
 
-Before calling this high-level API, integrate the app's authorized pin selection
-and local exclusions into its trust basis. Passing an arbitrary imported anchor
-would bypass the trust policy already enforced for KeyStatements.
+Use `POITrustService.verifyStation(policyId, proof, { evseId })` for the app path.
+It rereads local decisions and passes a library `TrustContext`, never an arbitrary
+imported anchor, to the verifier. The seam is implemented; station retrieval and
+session integration remain planned.
 
 This verifier establishes the RNO-attested station version. It does not replay
 the entire history of CPO-signed changes. Claim independent verification of a CPO
@@ -380,7 +423,7 @@ use independent witnesses and compare sources to detect conflicting views.
 
 ### 3.4 EMP and contractual tariffs
 
-The `0.1.0` verifier checks price statements in the `chargingStationOperator`
+The price verifier checks price statements in the `chargingStationOperator`
 role. It is not a generic EMP-offer verifier. Do not relabel an EMP signature as
 a CPO statement.
 
@@ -512,7 +555,7 @@ fixed test setup and automatic CI artifact are documented in the
 | --- | --- | --- |
 | 0 | ✅ Package, lockfile and SBOM | Existing project checks pass with the dependency |
 | 1 | ✅ Core anchor workflow: shared routing, content-only preview, bounded KeyStatement download, real checks, scoped manual trust, IndexedDB, management and fingerprint images | Equivalent inputs use the same policy; no download before Import; errors, cancellation, refresh, persistence and offline management work |
-| 1a | Planned lifecycle hardening | Authenticated network identity, succession/revocation, historical policy and evidence export/import are defined and implemented |
+| 1a | ✅ Shared authorization and authenticated RN/RNO/policy grouping; remaining lifecycle work planned | Fresh local decisions gate all app service checks. Verified succession/revocation, historical policy and evidence export/import remain outstanding |
 | 2 | Planned station proof per EVSE, station status and meter-key adapter; OCMF pilot and additive Core API | Correct EVSE/meter binding; a foreign key or modified proof cannot establish trusted association |
 | 3 | Planned tariff applicability, PriceStatements and tariff detail UI | Missing, expired, foreign and conflicting prices are distinguished; selection/override policy is tested |
 | 4 | Planned checkpoints, witness policy, evidence storage and exchange | Historical offline verification has complete inclusion evidence; missing evidence stays visible |
@@ -556,9 +599,15 @@ capture runs produced identical PNGs. CI is configured to regenerate captures
 on its Ubuntu/Node 26 leg and upload the images as an artifact.
 
 Latest recorded project checks: `npm run verify` passed app/test typechecking,
-ESLint, **450 tests with 3 skipped**, and the production build with updated SBOM.
+ESLint, **456 tests with 3 skipped**, and the production build with updated SBOM.
 The build reports three size/performance warnings. This is a dated verification
 record, not a claim that future test counts remain unchanged.
+
+Additional browser QA exercises real IndexedDB snapshots, scoped manual trust,
+withdrawal, bundled-key exclusions, two policies claiming one network ID and
+deletion of only the selected identity, at 1280×900 and 390×844. The shared
+library also passes its Node, npm-bundle and Chromium suites; this includes
+genuine signatures and real station proofs using the new context API.
 
 The initial package evaluation also checked the installed library against public
 `csharp-33447ac` vectors from the neighboring library checkout: an ML-DSA anchor,
@@ -588,6 +637,7 @@ station/tariff/session-evidence UX are not covered by the current browser QA.
   [`trustAnchorData.ts`](../src/ts/trustAnchorData.ts),
   [`trustAnchorDataView.ts`](../src/ts/trustAnchorDataView.ts).
 - Trust and storage: [`trustStore.ts`](../src/ts/trustStore.ts),
+  [`poiTrustContext.ts`](../src/ts/poiTrustContext.ts),
   [`anchorKeyTrust.ts`](../src/ts/anchorKeyTrust.ts),
   [`anchorKeyTrustView.ts`](../src/ts/anchorKeyTrustView.ts),
   [`trustManagement.ts`](../src/ts/trustManagement.ts),
@@ -601,7 +651,7 @@ station/tariff/session-evidence UX are not covered by the current browser QA.
   [`src/i18n.json`](../src/i18n.json); styles:
   [`src/scss/defaults.scss`](../src/scss/defaults.scss).
 - Installed POI types under `node_modules/@open-charging-cloud/wwcp-poi/dist/`:
-  `client.d.ts`, `keys.d.ts`, `proofs/trustAnchor.d.ts`,
+  `client.d.ts`, `keys.d.ts`, `proofs/trustAnchor.d.ts`, `proofs/trustContext.d.ts`,
   `verifier/chargingStation.d.ts` and `verifier/evidence.d.ts`.
 - Installed Core types under `node_modules/@open-charging-cloud/chargy-core/dist/`:
   `chargy.d.ts`, `OCMF.d.ts` and `interfaces/IPublicKeyInfo.d.ts`.

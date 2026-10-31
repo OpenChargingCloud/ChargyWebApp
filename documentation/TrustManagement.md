@@ -129,13 +129,24 @@ wenn nur eine zusätzliche manuelle Entscheidung zurückgenommen wird.
 `trustedAnchorHolders` in `src/ts/anchorKeyTrust.ts` liefert die aktuell
 verfügbaren Pins mit unveränderter Holder-Gruppierung für die
 KeyStatement-Prüfung. Diese Auswahl ist selbst noch kein Signatur- oder
-Quorumnachweis; ein Verifier darf nicht ungefiltert jeden importierten Anchor
-als bereits vertrauenswürdig behandeln.
+Quorumnachweis. Die gemeinsame Library erzeugt über `TrustContext.evaluate/create`
+erst nach vollständiger Prüfung einen Kontext. Signaturen, Inhaberzuordnung,
+Quorum und Bindung an Netz, Betreiber und signierten Statement-Inhalt liegen in
+WWCP_POI.TS; diese Regeln werden nicht in jeder Chargy-App erneut implementiert.
+Die neue API ist für den npm-Release 0.1.1 vorbereitet; die App-Anbindung wurde
+gegen dessen lokalen npm-Tarball getestet. Eine Veröffentlichung steht noch aus.
+
+`POITrustService` liest für jede Folgeprüfung Anchor und Key-Ausschlüsse in
+einer gemeinsamen IndexedDB-Transaktion. Es gibt keinen gespeicherten grünen
+Vertrauensstatus und keinen Rückfall auf ungefilterte mitgelieferte Keys bei
+Speicherfehlern. Ein bereits ausgewerteter Kontext ist nur ein Bericht für seinen
+Prüfzeitpunkt; nach geänderten Entscheidungen wird er neu erzeugt.
 
 ## Verwaltung und Löschen
 
-**Roamingnetze** fasst gespeicherte Trust Anchors nach ihrer Netzwerk-ID
-zusammen. Ein Klick öffnet **Details und Vertrauen**. Dort stehen die
+**Roamingnetze** führt bestätigte Netz-, Betreiber- und Anchor-Konfigurationen
+als eigenständige Identitäten. Nicht bestätigte Imports bleiben pro Konfiguration
+isoliert, auch bei gleicher Netzwerk-ID. Ein Klick öffnet **Details und Vertrauen**. Dort stehen die
 Netzwerk-ID, der Anzeigename aus dem Anchor, die zugehörigen Datenquellen
 und die einzelnen Vertrauenskonfigurationen mit Schlüsselinhabern und Quorum.
 Unterschiedliche Anchors desselben Netzes werden nicht zu einer gemeinsamen
@@ -157,8 +168,8 @@ Key-Konfiguration berechnet; sie beweist noch keine Signatur eines
 KeyStatements und kein erfülltes Quorum.
 
 **Roamingnetz löschen** entfernt alle lokal gespeicherten Trust Anchors der
-gewählten Netzwerk-ID in einer gemeinsamen IndexedDB-Transaktion. Andere
-Roamingnetze sowie mitgelieferte Public Keys und deren lokale Ausschlüsse
+angezeigten Konfiguration in einer gemeinsamen IndexedDB-Transaktion. Andere
+Konfigurationen mit gleicher Netz-ID, mitgelieferte Public Keys und lokale Ausschlüsse
 bleiben erhalten. Die Netzliste wird direkt aus den gespeicherten Anchors
 gebildet; deshalb ist keine zusätzliche Datenbankmigration nötig. Nach dem
 Löschen des letzten Anchors eines Netzes verschwindet es auch aus der Liste.
@@ -197,6 +208,10 @@ gegen die Signaturen der Fixture. Die bestehenden Parser-, Identitäts- und
 Gruppierungstests bleiben erhalten.
 `tests/trustAnchorData.test.ts` prüft Downloadgrenzen, Quellenauswahl,
 Netzbindung, Signaturen, Quorum, Gültigkeit und Abbruch.
+`tests/poiTrustContext.test.ts` prüft die gemeinsame Autorisierung mit aktuellen
+Speicherentscheidungen, Widerruf, Speicherfehlern, Ablauf, getrennten Identitäten
+und einem echten Stationsproof. Die Station-Prüfmethode ist ein Integrationspunkt;
+ein Stationsdownload oder eine Zuordnung zum Ladevorgang ist noch nicht umgesetzt.
 
 Browser-QA am 31. Oktober 2026 gegen den Produktionsbuild: Chromium via
 Playwright, Desktop 1280×900 und Mobilansicht 390×844. Geprüft wurden echte

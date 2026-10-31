@@ -18,6 +18,7 @@ file remains independent and empty.
 | `invalid-compact.txt` | Malformed compact representation |
 | `invalid-quorum.json` | Quorum larger than the number of holders |
 | `duplicate-field.json` | Duplicate JSON quorum field, which must be rejected |
+| `station-trust-gateway.json` | Genuine `trust-valid` station proof from WWCP_POI.TS conformance vectors; public test roots, source digest and evaluation time included |
 
 All valid anchor representations have network ID `CHARGY-TA-TEST`, two sources
 under reserved `.example` domains and a two-holder quorum. The KeyStatement is
