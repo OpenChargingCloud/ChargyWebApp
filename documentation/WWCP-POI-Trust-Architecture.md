@@ -25,7 +25,7 @@ This is a local trust decision, not a cryptographic verification result.
 
 Related documents:
 
-- [WWCP POI integration plan](WWCP-POI-Integration.md) (German)
+- [WWCP POI integration: current implementation and remaining plan](WWCP-POI-Integration.md)
 - [Current Trust Management implementation](TrustManagement.md) (German)
 - [Bundled public-key configuration](../src/trust/README.md)
 
