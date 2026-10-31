@@ -3,8 +3,13 @@
 Stand: 30. Oktober 2026. Untersucht: veröffentlichtes npm-Paket
 `@open-charging-cloud/wwcp-poi@0.1.0`, ChargyCore `0.17.0` und die aktuelle WebApp.
 Das npm-Paket ist hinzugefügt und im Lockfile festgeschrieben. Die folgenden
-Abschnitte planen die Integration; Scanner, Speicherung und Verifikation sind
-damit noch nicht implementiert.
+Abschnitte beschreiben den Integrationsplan. QR-Vorschau, Import/Verwerfen,
+lokale IndexedDB-Speicherung und **Trust Management** einschließlich Löschen
+von Anchors und lokalen Ausschlüssen mitgelieferter Keys sind inzwischen
+implementiert. Eine nach Netzwerk-ID gruppierte Roamingnetzliste bietet
+Detailansichten zur lokalen Vertrauensbasis und das Löschen aller Anchors
+eines Netzes; siehe [Trust Management](TrustManagement.md).
+Die kryptografische Stations-/Tarifprüfung bleibt geplant.
 
 ## 1. Ausgangspunkt und Leitentscheidungen
 
@@ -30,12 +35,34 @@ zugeordnet und signiert; Veröffentlichung durch Checkpoint und gegebenenfalls
 unabhängige Zeugen belegt. Ein grüner Messwerthaken beweist die anderen drei
 Aussagen nicht.
 
-**Vertrauenswurzel:** Ein neu gescannter Anchor kann sich nicht selbst als
-vertrauenswürdig beweisen. Er legt das Vertrauen fest. Seine Schlüssel-IDs,
-deren Gruppierung nach Inhabern und das Quorum müssen aus einer vom Nutzer
-akzeptierten Quelle stammen. Ein Aufkleber an einer Station genügt nicht als
-Beweis für die Identität des Herausgebers. Ein bestätigter Netzwerkzugriff
-aus der bisherigen Live-Link-Verwaltung ist ebenfalls kein Schlüsselvertrauen.
+**Vertrauenswurzel:** Die Chargy-Apps werden zunächst mit einer Liste
+vertrauenswürdiger Public Keys ausgeliefert. Diesen einzelnen Schlüsseln
+vertraut die App automatisch; dafür ist keine Bestätigung des Nutzers nötig.
+Die Liste liegt in `src/trust/trusted-public-keys.jsonl`, wird beim Build
+validiert und in das App-Bundle eingebettet. Format und Pflege sind in
+`src/trust/README.md` dokumentiert. Sie bleibt zunächst leer; konkrete
+Produktionsschlüssel können später ergänzt werden. Schlüssel aus
+einem gescannten Anchor werden nicht automatisch in diese Liste aufgenommen.
+Ein bestätigter Netzwerkzugriff aus der bisherigen Live-Link-Verwaltung ist
+ebenfalls kein Schlüsselvertrauen.
+
+Die Oberfläche zeigt drei unabhängige Prüfungen: **Signaturen gültig**
+(mathematisch korrekt über das zu prüfende Dokument), **Unterzeichner vertraut**
+(Schlüssel durch die mitgelieferte Liste autorisiert) und **Quorum erfüllt**
+(genügend gültige Signaturen autorisierter unterschiedlicher Inhaber).
+Ein Import speichert den Anchor; er verändert die Liste vertrauter Public Keys
+nicht. Unbekannte Unterzeichner werden durch einen Import nicht vertraut.
+Wenn alle drei Prüfungen erfolgreich sind, erhält der Prüfbereich einen grünen
+Hintergrund und links den in Chargy verwendeten grünen `fa-check-circle`-Haken.
+Die einzelnen Ergebnisse bleiben sichtbar. Die Darstellung erhält ihre
+Ergebnisse getrennt vom QR-Inhalt; ein QR-Code kann keinen Prüfstatus setzen.
+
+Der aktuelle `WWCP/TA-2`-Anchor enthält keine eigenen Signaturen. Die
+Vorschau zeigt deshalb „Keine Signaturen vorhanden“ und zweimal „Nicht
+prüfbar“. Für eine echte Prüfung signierter Anchors ist zuerst ein
+spezifiziertes signiertes Format samt Bibliotheksunterstützung nötig.
+Die Mehrfachsignaturen des vorhandenen KeyStatements bestätigen dessen
+Inhalt; sie sind keine Signaturen über die URLs und Texte des Anchors.
 
 ## 2. Trust Anchor scannen, laden und speichern
 
@@ -57,8 +84,8 @@ Erkennungsreihenfolge:
    `TrustAnchor.fromJSON` lesen; auch die spezifizierte `/trustAnchor`-
    Antwort mit eingebettetem `trustAnchor` gezielt unterstützen.
 4. Expliziter Link auf ein Anchor-Dokument: begrenzt herunterladen und danach
-   klassifizieren. Ohne unabhängig übermittelte Pins bleibt dies ein Vorschlag
-   aus dieser Quelle, der eine bewusste Vertrauensentscheidung erfordert.
+   klassifizieren. Ohne prüfbare Autorisierung durch mitgelieferte Public Keys
+   bleibt dies ein ungeprüfter Vorschlag aus dieser Quelle.
 5. Sonstige Eingaben durchlaufen den bestehenden Transparenzdatenimport.
    Fehlerhaft erkannte Anchor-Eingaben bleiben im Anchor-Fehlerdialog und
    werden nicht stillschweigend zu normalen Browserlinks.
@@ -69,14 +96,18 @@ durch die vom Server gelieferten ersetzen.
 
 ### 2.2 Importdialog und erste Onlineprüfung
 
-Vorgeschlagener Ablauf: **Erkannt → Daten laden → Schlüssel prüfen → Vertrauen
-bestätigen → lokal speichern**. Abbrechen beendet Kamera und Requests;
+Vorgeschlagener Ablauf: **Erkannt → Daten laden → Signaturen, Unterzeichner
+und Quorum prüfen → Import anbieten → lokal speichern**.
+Die Prüfergebnisse sind vor dem Import einzeln sichtbar. Abbrechen beendet Kamera und Requests;
 späte Antworten dürfen keinen inzwischen gewechselten Bildschirm ersetzen.
 
 Die Vorschau zeigt Netzwerk-ID, Herkunft/Domain, Schlüsselinhaber und Quorum,
 einen vergleichbaren Fingerprint sowie abrufbare Quellen. Ein Name aus dem
 QR-Code wird zunächst als übernommene Bezeichnung markiert.
 
+Der Anchor darf erst nach Autorisierung durch die mitgelieferten Public Keys
+die vertrauenswürdige Gruppierung und das Quorum für Folgeprüfungen vorgeben.
+Ein lediglich strukturell gültiger QR-Code genügt dafür nicht.
 Für die erste Onlineprüfung `GET {networkBase}/keyStatement` laden,
 `KeyStatement.parse` und `verifyHolders(anchor.holders, …,
 { minConsensus: anchor.minConsensus, at })` verwenden und die Netzwerk-ID
@@ -92,10 +123,11 @@ eine Station. Netzwerkname und Beschreibung werden erst nach einem
 validierten Stationsproof als verifiziert bezeichnet; Abweichungen zum
 QR-Namen sichtbar machen.
 
-Aktionen: **„Diesem Trust Anchor vertrauen und speichern“**, **„Abbrechen“**
-und Fingerprint-Details. Das ist eine Produktentscheidung über dauerhaftes
-Vertrauen. Ein Offlineimport kann als „ungeprüfter Entwurf“ gespeichert
-werden, wird aber noch nicht für automatische Schlüsselzuordnung aktiviert.
+Aktionen: **„Import“**, **„Verwerfen“** und Fingerprint-Details. Der Nutzer
+entscheidet über die Speicherung; Schlüsselvertrauen folgt der mitgelieferten
+Liste. Ein Import ist auch ohne vollständiges Vertrauen oder ohne vorhandene
+Signaturen möglich. Er wird nicht automatisch für die Schlüsselzuordnung
+als geprüft eingestuft.
 Fehlgeschlagene Signaturen erlauben keine Aktivierung als geprüft.
 
 ### 2.3 Downloads
@@ -125,7 +157,7 @@ UI-Einstellungen. Geplante Stores:
 
 | Store | Inhalt |
 | --- | --- |
-| `trustAnchors` | Originaldarstellung, Pins je Inhaber, Quorum, Netzwerk-ID, Quellen, Importherkunft, Bestätigung und Aktivierungsstatus |
+| `trustAnchors` | Originaldarstellung, Pins je Inhaber, Quorum, Netzwerk-ID, Quellen, Importherkunft, autorisierende Signaturen, Prüf- und Aktivierungsstatus |
 | `poiDocuments` | Originalbytes von Statements/Proofs, Abrufzeit, Quelle, Dokument-ID, Gültigkeit und Bezug auf den Anchor |
 | `sessionEvidence` | Sitzungsbezug, EVSE, Zähler, Prüfzeit/Ladebeginn, Anchor-Version, ausgewählte Dokumente und spätere Checkpointnachweise |
 | `knownHeads` | Bereits gesehene Preis-Sequenzen/Digests sowie Checkpoint-/Epochenstände zur Erkennung von Rückschritten und Widersprüchen |
@@ -133,7 +165,8 @@ UI-Einstellungen. Geplante Stores:
 Gleiche Netzwerk-ID mit anderen Pins nicht überschreiben. Anker-Versionen
 nach kryptografischem Inhalt unterscheiden; erlaubte Endpunktänderungen
 gesondert behandeln. Änderungen an Schlüsseln, Inhabergruppen oder Quorum
-verlangen nachgewiesene Nachfolge oder einen erneuten bewussten Import.
+verlangen nachgewiesene Nachfolge oder eine gültige Autorisierung durch die
+mitgelieferten Public Keys; ein erneuter Import allein genügt nicht.
 `OperatorTrust.followedBy` ist an eine korrekt verfolgte Versionsgeschichte
 gebunden; ein beliebiger neuer Anchor vom Server ist keine Rotation.
 
@@ -331,7 +364,8 @@ ohne frühere zeitlich belegte Ergebnisse stillschweigend umzudeuten.
   übereinstimmt. Fehlende oder unklare Konditionen ausdrücklich benennen.
 - **Veröffentlichung:** Datum, Checkpoint, bezeugende Stellen und noch fehlende
   Belege. Aktionen „Erneut prüfen“ und „Beleg exportieren“.
-- **Vertrauen:** verwendeter Anchor, Importquelle, Bestätigung und Quorum;
+- **Vertrauen:** verwendeter Anchor, Importquelle, Signaturprüfung, vertraute
+  Unterzeichner und Quorum;
   Link zur Verwaltung, ohne den Ladevorgang aus dem Blick zu verlieren.
 
 ### Ebene 3: Kryptografischer Prüferpfad

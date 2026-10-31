@@ -137,6 +137,22 @@ Everything else stays as it is: the consent dialog per origin, `externalURLs.con
 So a live link document whose transports name `http://`, `ws://` or a local-network host reloads on a test bench and nowhere else — in a deployed client it is refused with a console line and nothing more. Those transports are a bench shape, never a published one.
 
 
+## Bundled trusted public keys
+
+The build embeds the JSONL trust list at
+[`src/trust/trusted-public-keys.jsonl`](src/trust/trusted-public-keys.jsonl)
+directly in the app. It starts empty. See
+[`src/trust/README.md`](src/trust/README.md) for the entry format, validation,
+build integration and the path towards certificates and user-managed trust.
+Local anchor imports and per-installation key removal are available under
+**Settings → Trust Management**; see
+[`documentation/TrustManagement.md`](documentation/TrustManagement.md).
+Its **Roaming networks** section groups imported anchors by network and shows
+their details, current local key trust and deletion controls.
+See the English [WWCP POI Trust Architecture](documentation/WWCP-POI-Trust-Architecture.md)
+for the data relationships, verification chain, remaining integration work and
+logical risks.
+
 ## Deep Links
 
 The hosted WebApp supports deep links for CPOs and backend systems that want to send customers directly to a verification result.

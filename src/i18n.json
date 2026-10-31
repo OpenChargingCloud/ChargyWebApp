@@ -1,5 +1,135 @@
 {
 
+    "trustManagementTitle": { "de": "Trust Management", "en": "Trust Management" },
+    "trustManagementDescription": { "de": "Roamingnetze, Trust Anchors und mitgelieferte Public Keys verwalten.", "en": "Manage roaming networks, trust anchors and bundled public keys." },
+    "trustRoamingNetworksTitle": { "de": "Roamingnetze", "en": "Roaming networks" },
+    "trustRoamingNetworkDetailsTitle": { "de": "Roamingnetz: Details und Vertrauen", "en": "Roaming network: details and trust" },
+    "trustRoamingNetworksDescription": { "de": "Roamingnetze aus Ihren gespeicherten Trust Anchors. Wählen Sie ein Netz für Details und Vertrauensinformationen.", "en": "Roaming networks from your saved trust anchors. Select a network to view details and trust information." },
+    "trustRoamingNetworkDetailsDescription": { "de": "Lokale Vertrauenskonfigurationen dieses Roamingnetzes. Speichern allein bestätigt keine Signaturen.", "en": "Local trust configurations for this roaming network. Saving alone does not verify signatures." },
+    "trustRoamingNetworksEmpty": { "de": "Noch keine Roamingnetze gespeichert. Importieren Sie einen Trust Anchor, um sein Netz hier anzuzeigen.", "en": "No roaming networks saved yet. Import a trust anchor to see its network here." },
+    "trustNetworkOpenLabel": { "de": "Details und Vertrauen anzeigen", "en": "View details and trust" },
+    "trustNetworkNameSource": { "de": "Der Name stammt aus einem importierten Trust Anchor. Authentifizierte Betreiberangaben sind noch nicht geladen.", "en": "The name comes from an imported trust anchor. Authenticated operator details have not been loaded yet." },
+    "trustNetworkAnchorCount": { "de": "Gespeicherte Trust Anchors", "en": "Saved trust anchors" },
+    "trustNetworkKeyStatementTitle": { "de": "KeyStatement des Roamingnetzbetreibers", "en": "Roaming network operator's KeyStatement" },
+    "trustNetworkKeyStatementMissing": { "de": "Nicht prüfbar: Das KeyStatement dieses Roamingnetzes ist noch nicht geladen.", "en": "Cannot be checked: this roaming network's KeyStatement has not been loaded yet." },
+    "trustNetworkPoliciesSeparate": { "de": "Die folgenden Trust Anchors bleiben getrennte Vertrauenskonfigurationen mit eigenem Quorum. Bekannte Schlüssel allein belegen noch keine gültigen Signaturen.", "en": "The following trust anchors remain separate trust configurations with their own quorums. Known keys alone do not establish valid signatures." },
+    "trustNetworkKeyTrusted": { "de": "Als vertrauenswürdiger Public Key in der App hinterlegt", "en": "Configured as a trusted public key in the app" },
+    "trustNetworkKeyDeleted": { "de": "Lokal gelöscht · nicht als vertrauenswürdig verfügbar", "en": "Locally deleted · not available as trusted" },
+    "trustNetworkKeyUnknown": { "de": "Nicht in der mitgelieferten Vertrauensliste hinterlegt", "en": "Not configured in the bundled trust list" },
+    "trustNetworkKeyExpired": { "de": "Mitgeliefert · derzeit außerhalb seiner zeitlichen Gültigkeit", "en": "Bundled · currently outside its validity period" },
+    "trustNetworkDeleteLabel": { "de": "Roamingnetz löschen", "en": "Delete roaming network" },
+    "trustNetworkDeleteDescription": { "de": "Entfernt alle lokal gespeicherten Trust Anchors dieses Roamingnetzes. Mitgelieferte Public Keys und andere Roamingnetze bleiben erhalten.", "en": "Removes all locally saved trust anchors for this roaming network. Bundled public keys and other roaming networks are retained." },
+    "trustAnchorsTitle": { "de": "Trust Anchors", "en": "Trust Anchors" },
+    "trustBundledKeysTitle": { "de": "Mitgelieferte Public Keys", "en": "Bundled public keys" },
+    "trustAnchorsStorageDescription": { "de": "Diese Trust Anchors sind lokal in diesem Browser gespeichert. Der Import ändert die Prüfstatus nicht und ist auch bei unvollständigem Vertrauen möglich.", "en": "These trust anchors are stored locally in this browser. Import does not change their validation status and is allowed even when trust is incomplete." },
+    "trustBundledKeysDescription": { "de": "Löschen entfernt das Vertrauen in diesen Key für diese App-Installation. Die Entscheidung bleibt nach einem Neustart erhalten. Gelöschte Keys können wiederhergestellt werden.", "en": "Deleting removes trust in this key for this app installation. The decision persists across restarts. Deleted keys can be restored." },
+    "trustAnchorsEmpty": { "de": "Noch keine Trust Anchors gespeichert.", "en": "No trust anchors saved yet." },
+    "trustBundledKeysEmpty": { "de": "Diese App enthält noch keine mitgelieferten Public Keys.", "en": "This app does not contain any bundled public keys yet." },
+    "trustAnchorImportedAtLabel": { "de": "Importiert am", "en": "Imported at" },
+    "trustAnchorSavedStatus": { "de": "Gespeichert. Die Vertrauensprüfung bleibt davon unabhängig.", "en": "Saved. Trust validation remains independent." },
+    "trustAnchorDetailsLabel": { "de": "Daten und Schlüssel anzeigen", "en": "Show data and keys" },
+    "trustAnchorDeleteLabel": { "de": "Trust Anchor löschen", "en": "Delete trust anchor" },
+    "trustBundledKeyDeleted": { "de": "Gelöscht · wird nicht mehr als vertrauenswürdig verwendet", "en": "Deleted · no longer used as trusted" },
+    "trustBundledKeyActive": { "de": "Mitgeliefert · für Vertrauensprüfungen verfügbar", "en": "Bundled · available for trust validation" },
+    "trustBundledKeyDelete": { "de": "Key löschen", "en": "Delete key" },
+    "trustBundledKeyRestore": { "de": "Key wiederherstellen", "en": "Restore key" },
+    "trustStorageError": { "de": "Der lokale Vertrauensspeicher ist nicht verfügbar. Die Änderung wurde nicht bestätigt. Bitte erneut versuchen.", "en": "Local trust storage is unavailable. The change could not be confirmed. Please try again." },
+    "trustRetryLabel": { "de": "Erneut versuchen", "en": "Retry" },
+    "trustAnchorImportLabel": { "de": "Import", "en": "Import" },
+    "trustAnchorDiscardLabel": { "de": "Verwerfen", "en": "Discard" },
+    "trustAnchorImportedLabel": { "de": "Bereits importiert", "en": "Already imported" },
+    "trustAnchorAlreadyImported": { "de": "Dieser Trust Anchor ist bereits gespeichert. Seine Prüfstatus bleiben davon unabhängig.", "en": "This trust anchor is already saved. Its validation status remains independent." },
+    "trustCloseLabel": { "de": "Schließen", "en": "Close" },
+
+    "trustAnchorPreviewTitle": {
+        "de": "Trust Anchor",
+        "en": "Trust anchor"
+    },
+    "trustAnchorPreviewNotice": {
+        "de": "Vorschau der QR-Code-Daten. Dieser Trust Anchor wurde noch nicht importiert.",
+        "en": "Preview of the QR code data. This trust anchor has not been imported."
+    },
+    "trustAnchorValidationTitle": {
+        "de": "Vertrauensprüfung",
+        "en": "Trust validation"
+    },
+    "trustAnchorSignaturesValid": {
+        "de": "Signaturen gültig",
+        "en": "Signatures valid"
+    },
+    "trustAnchorSignersTrusted": {
+        "de": "Unterzeichner vertraut",
+        "en": "Signers trusted"
+    },
+    "trustAnchorQuorumMet": {
+        "de": "Quorum erfüllt",
+        "en": "Quorum met"
+    },
+    "trustAnchorCheckPassed": {
+        "de": "Erfolgreich geprüft.",
+        "en": "Verified successfully."
+    },
+    "trustAnchorCheckFailed": {
+        "de": "Prüfung fehlgeschlagen.",
+        "en": "Verification failed."
+    },
+    "trustAnchorNoSignatures": {
+        "de": "Keine Signaturen vorhanden. Dieses QR-Format enthält keine Anchor-Signaturen.",
+        "en": "No signatures present. This QR format contains no anchor signatures."
+    },
+    "trustAnchorSignersNotCheckable": {
+        "de": "Nicht prüfbar: Es liegen keine Signaturen von Unterzeichnern vor.",
+        "en": "Cannot be checked: no signer signatures are available."
+    },
+    "trustAnchorQuorumNotCheckable": {
+        "de": "Nicht prüfbar: Es liegen keine gültigen Signaturen vertrauter Unterzeichner vor.",
+        "en": "Cannot be checked: no valid signatures from trusted signers are available."
+    },
+    "trustAnchorTrustPolicy": {
+        "de": "Vertrauensbasis sind die mit Chargy ausgelieferten Public Keys. Die Schlüsselangaben im QR-Code begründen kein zusätzliches Vertrauen.",
+        "en": "Trust is based on the public keys shipped with Chargy. Keys listed in the QR code do not establish additional trust."
+    },
+    "trustAnchorBundledKeysLabel": {
+        "de": "Mitgelieferte vertrauenswürdige Public Keys",
+        "en": "Bundled trusted public keys"
+    },
+    "trustAnchorDetected": {
+        "de": "Trust Anchor erkannt",
+        "en": "Trust anchor detected"
+    },
+    "trustAnchorInvalid": {
+        "de": "Der QR-Code enthält einen ungültigen Trust Anchor.",
+        "en": "The QR code contains an invalid trust anchor."
+    },
+    "trustAnchorNameLabel": {
+        "de": "Name aus dem QR-Code",
+        "en": "Name from the QR code"
+    },
+    "trustAnchorDescriptionLabel": {
+        "de": "Beschreibung aus dem QR-Code",
+        "en": "Description from the QR code"
+    },
+    "trustAnchorNetworkLabel": {
+        "de": "Roamingnetz-ID",
+        "en": "Roaming network ID"
+    },
+    "trustAnchorURLsLabel": {
+        "de": "Datenquellen",
+        "en": "Data sources"
+    },
+    "trustAnchorQuorumLabel": {
+        "de": "Erforderliche Schlüsselinhaber (Quorum)",
+        "en": "Required key holders (quorum)"
+    },
+    "trustAnchorIdentityKeysLabel": {
+        "de": "Identitätsschlüssel · Fingerprints",
+        "en": "Identity keys · fingerprints"
+    },
+    "trustAnchorHolderLabel": {
+        "de": "Schlüsselinhaber",
+        "en": "Key holder"
+    },
+
     "urlDetailsTitle": {
         "de": "URL-Informationen",
         "en": "URL information"

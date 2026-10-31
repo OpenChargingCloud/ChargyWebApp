@@ -15,6 +15,23 @@
  * limitations under the License.
  */
 
+@mixin trust-validation {
+    padding: 12px;
+    border: 1px solid #d7e3eb;
+    border-radius: 4px;
+    background: #f8fafb;
+    h3 { margin: 0 0 6px; font-size: 100%; }
+    &[data-state="valid"] { background: #edf7e8; border-color: #a6ce94; }
+    .trustAnchorValidationSuccessIcon { margin-right: 6px; font-size: 140%; vertical-align: middle; }
+    ul { margin: 12px 0; padding: 0; list-style: none; }
+    li { display: flex; gap: 10px; margin-top: 12px; line-height: 145%; }
+    .trustAnchorCheckIcon { flex: 0 0 18px; color: #626b73; font-size: 125%; }
+    li[data-state="valid"] .trustAnchorCheckIcon { color: #5ab337; }
+    li[data-state="invalid"] .trustAnchorCheckIcon { color: #cc0000; }
+    li p { margin: 3px 0 0; color: #535d65; }
+    .trustAnchorTrustPolicy { margin: 14px 0 0; line-height: 145%; color: #535d65; }
+}
+
 body {
 
     margin:             0;
@@ -456,6 +473,56 @@ body {
                     }
 
                     #settingsScreen {
+
+                        box-sizing: border-box;
+                        padding-bottom: 70px;
+                        scroll-padding-bottom: 70px;
+                        overflow-anchor: none;
+
+                        #settingsMenu .settingsEntry, .trustManagement .settingsEntry { margin-bottom: 10px; }
+                        .trustManagement {
+                            h2 { margin: 12px 0 16px; }
+                            h3 { font-size: 110%; }
+                            p { line-height: 150%; }
+                            .trustManagementCard {
+                                box-sizing: border-box;
+                                margin: 12px 0;
+                                padding: 14px;
+                                border: 1px solid #d4dde4;
+                                border-radius: 6px;
+                                background: #ffffff;
+                                overflow-wrap: anywhere;
+                                h4 { margin: 0 0 8px; }
+                                p { margin: 6px 0; }
+                                details { margin: 12px 0; }
+                                summary { cursor: pointer; }
+                                &[data-state="deleted"] { background: #f2f2f2; }
+                            }
+                            .trustManagementIdentifier { font-family: monospace; overflow-wrap: anywhere; }
+                            button:not(.settingsEntry) {
+                                padding: 8px 12px;
+                                margin: 8px 6px 0 0;
+                                border: 1px solid #c6d5df;
+                                border-radius: 4px;
+                                background: #eaf1f6;
+                                cursor: pointer;
+                            }
+                            button.trustManagementDelete { background: #fbeaea; border-color: #e1b5b5; color: #8a1717; }
+                            button:disabled { opacity: .55; cursor: default; }
+                            .trustManagementError { color: #ab1e1e; }
+                            .trustAnchorValidation { @include trust-validation; }
+                            .trustNetworkEntry { box-sizing: border-box; width: 100%; }
+                            .trustNetworkEntry p { margin: 5px 0 0; }
+                            .trustNetworkKeyStatement { margin: 18px 0; }
+                            .trustNetworkKeyStatus {
+                                margin-top: 0;
+                                font-size: 90%;
+                                color: #626b73;
+                                &[data-key-trust="trusted"] { color: #367327; }
+                                &[data-key-trust="deleted"], &[data-key-trust="expired"] { color: #ab1e1e; }
+                            }
+                            .trustNetworkRemoval { margin-top: 20px; padding-top: 10px; border-top: 1px solid #d4dde4; }
+                        }
 
                         h1 {
                             font-size:          130%;
@@ -2335,18 +2402,29 @@ body {
 
             display:                none;
 
+            &.showingTrustAnchor #scannerViewport {
+                display: none;
+            }
+
             .overlayText {
 
                 max-width:              650px;
                 height:                 auto;
                 min-height:             0;
                 overflow-y:             auto;
+                max-height:             calc(90vh - 50px);
+
+                .headline, .footer {
+                    flex-shrink: 0;
+                }
 
                 .data {
 
                     display:                flex;
                     flex-direction:         column;
                     gap:                    14px;
+                    min-height:             0;
+                    overflow-y:             auto;
 
                     #scannerViewport {
 
@@ -2356,6 +2434,7 @@ body {
                         background-color:       #111111;
                         border-radius:          6px;
                         overflow:               hidden;
+                        flex-shrink:            0;
 
                         #qrCodeScannerVideo {
                             width:                  100%;
@@ -2393,9 +2472,56 @@ body {
                         display:                none;
                         flex-direction:         column;
                         gap:                    10px;
+                        flex-shrink:            0;
 
                         #qrCodeScannerResultLabel {
                             font-weight:            bold;
+                            margin-bottom:          8px;
+                        }
+
+                        .trustAnchorPreview {
+                            padding: 16px;
+                            border: 1px solid #d7e3eb;
+                            border-radius: 6px;
+                            background: #ffffff;
+                            color: #333333;
+
+                            h2 { margin: 0 0 12px; font-size: 130%; }
+                            .trustAnchorPreviewNotice {
+                                margin: 0 0 18px;
+                                padding: 10px 12px;
+                                border-left: 3px solid #519ad0;
+                                background: #f0f6fa;
+                                line-height: 150%;
+                            }
+                            .trustAnchorValidation {
+                                @include trust-validation;
+                            }
+                            dl { margin: 0; }
+                            dt { margin-top: 14px; font-weight: bold; }
+                            dd { margin: 5px 0 0; line-height: 150%; overflow-wrap: anywhere; }
+                            dd > div + div { margin-top: 6px; }
+                            .trustAnchorMonospace { font-family: monospace; overflow-wrap: anywhere; }
+                            details { margin-top: 18px; }
+                            summary { cursor: pointer; line-height: 150%; }
+                            .trustAnchorHolder { margin-top: 12px; }
+                            h3 { margin: 0 0 6px; font-size: 100%; }
+                            pre {
+                                max-height: 150px;
+                                overflow: auto;
+                                white-space: pre-wrap;
+                                overflow-wrap: anywhere;
+                                font-size: 85%;
+                            }
+                            .trustAnchorPreviewActions:empty { display: none; }
+                            .trustAnchorPreviewActions {
+                                display: flex;
+                                flex-wrap: wrap;
+                                gap: 8px;
+                                margin-top: 18px;
+                                .trustAnchorImport { background: #c6e0f5; }
+                                button:disabled { opacity: .55; cursor: default; }
+                            }
                         }
 
                         #qrCodeScannerResultText {
@@ -3179,4 +3305,46 @@ body {
 
 .fa-question-circle-orange {
     color:          #c38029;
+}
+
+// Keep configuration readable on phones while its screen is open.
+@media (max-width: 700px) {
+    body #app:has(#settingsScreen[style*="display: block"]) {
+        #headline {
+            flex-shrink: 0;
+            #logo {
+                display: flex;
+                align-items: center;
+                min-height: 60px;
+                background-size: 38px auto;
+                font-size: 80%;
+                line-height: 130%;
+                span { padding-left: 44px; }
+            }
+            #windowButtons { flex-shrink: 0; }
+        }
+        #verifyframe {
+            min-height: 0;
+            max-height: none !important; // The compact header supersedes the startup inline height limit.
+            #rightbar { display: none; }
+            #leftbar {
+                width: 100%;
+                min-width: 0;
+                overflow: hidden;
+                #input {
+                    flex-direction: column;
+                    min-height: 0;
+                    padding-bottom: 66px;
+                    #settingsScreen {
+                        flex: 1;
+                        min-height: 0;
+                        margin: 0;
+                        width: 100%;
+                        padding-bottom: 12px;
+                        scroll-padding-bottom: 12px;
+                    }
+                }
+            }
+        }
+    }
 }

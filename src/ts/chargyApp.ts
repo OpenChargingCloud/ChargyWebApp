@@ -99,6 +99,14 @@ import {
     normalizeDroppedSVGImageData
 }                                      from './browserFiles';
 import { calculateBETTariffTotal }     from './betTariffCosts';
+import {
+    parseScannedTrustAnchor,
+    renderTrustAnchorPreview,
+    type TrustAnchorPreview
+}                                      from './trustAnchorPreview';
+import { TrustStore }                  from './trustStore';
+import { TrustManagement }             from './trustManagement';
+import { bundledTrustedPublicKeys, getActiveBundledTrustedPublicKeys } from './bundledTrustedPublicKeys';
 // import {
 //     normalizePublicKeys,
 //     tryParseStandalonePublicKeys
@@ -621,6 +629,9 @@ export class ChargyApp {
     private readonly aboutScreenDiv:                     HTMLDivElement;
     private readonly settingsScreenDiv:                  HTMLDivElement;
     private readonly settingsMenuDiv:                    HTMLDivElement;
+    private readonly settingsTrustManagementDiv:         HTMLDivElement;
+    private readonly trustManagement:                    TrustManagement;
+    private readonly trustStore = new TrustStore();
     private readonly settingsTrustedOriginsDiv:          HTMLDivElement;
     private readonly settingsTrustedOriginsEntry:        HTMLButtonElement;
     private readonly noTrustedOriginsDiv:                HTMLDivElement;
@@ -688,6 +699,8 @@ export class ChargyApp {
     private readonly qrCodeScannerErrorDiv:              HTMLDivElement;
     private readonly qrCodeScannerResultDiv:             HTMLDivElement;
     private readonly qrCodeScannerResultText:            HTMLPreElement;
+    private readonly qrCodeScannerRawContentDiv:         HTMLDivElement;
+    private readonly qrCodeScannerTrustAnchorDiv:        HTMLDivElement;
     private readonly qrCodeScannerURLActionsDiv:         HTMLDivElement;
     private readonly qrCodeScannerOpenURLButton:         HTMLButtonElement;
     private readonly qrCodeScannerRescanButton:          HTMLButtonElement;
@@ -697,6 +710,8 @@ export class ChargyApp {
     private          qrCodeScannerIsProcessing:          boolean              = false;
     private          qrCodeScannerLastText:              string      | null   = null;
     private          qrCodeScannerLastURL:               URL         | null   = null;
+    private          qrCodeScannerTrustAnchor:           TrustAnchorPreview | null = null;
+    private          qrCodeScannerPreviewGeneration = 0;
 
     private          currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
     private          currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink | null   = null;
@@ -810,6 +825,9 @@ export class ChargyApp {
         this.aboutScreenDiv                           = document.getElementById('aboutScreen')                              as HTMLDivElement;
         this.settingsScreenDiv                        = document.getElementById('settingsScreen')                           as HTMLDivElement;
         this.settingsMenuDiv                          = this.settingsScreenDiv. querySelector("#settingsMenu")              as HTMLDivElement;
+        this.settingsTrustManagementDiv               = this.settingsScreenDiv.querySelector("#settingsTrustManagement")     as HTMLDivElement;
+        this.trustManagement = new TrustManagement(this.settingsTrustManagementDiv, this.trustStore, bundledTrustedPublicKeys,
+                                                  key => this.chargy.GetLocalizedMessage(key), () => this.UILanguage);
         this.settingsTrustedOriginsDiv                = this.settingsScreenDiv. querySelector("#settingsTrustedOrigins")    as HTMLDivElement;
         this.settingsTrustedOriginsEntry              = this.settingsScreenDiv. querySelector("#settingsTrustedOriginsEntry") as HTMLButtonElement;
         this.trustedOriginsListDiv                    = this.settingsScreenDiv. querySelector("#trustedOriginsList")        as HTMLDivElement;
@@ -891,6 +909,8 @@ export class ChargyApp {
         this.qrCodeScannerErrorDiv                    = this.qrCodeScannerDiv.querySelector(".headline .error")             as HTMLDivElement;
         this.qrCodeScannerResultDiv                   = this.qrCodeScannerDiv.querySelector("#qrCodeScannerResult")         as HTMLDivElement;
         this.qrCodeScannerResultText                  = this.qrCodeScannerDiv.querySelector("#qrCodeScannerResultText")     as HTMLPreElement;
+        this.qrCodeScannerRawContentDiv               = this.qrCodeScannerDiv.querySelector("#qrCodeScannerRawContent")     as HTMLDivElement;
+        this.qrCodeScannerTrustAnchorDiv              = this.qrCodeScannerDiv.querySelector("#qrCodeScannerTrustAnchorPreview") as HTMLDivElement;
         this.qrCodeScannerURLActionsDiv               = this.qrCodeScannerDiv.querySelector("#qrCodeScannerURLActions")     as HTMLDivElement;
         this.qrCodeScannerOpenURLButton               = this.qrCodeScannerDiv.querySelector("#qrCodeScannerOpenURLButton")  as HTMLButtonElement;
         this.qrCodeScannerRescanButton                = this.qrCodeScannerDiv.querySelector("#qrCodeScannerRescanButton")   as HTMLButtonElement;
@@ -1126,6 +1146,12 @@ export class ChargyApp {
             this.settingsTrustedOriginsDiv.style.display = "block";
         }
 
+        (document.getElementById("settingsTrustManagementEntry") as HTMLButtonElement).onclick = (): void => {
+            this.settingsMenuDiv.style.display = "none";
+            this.settingsTrustedOriginsDiv.style.display = "none";
+            this.trustManagement.open();
+        };
+
         // How long decisions are kept. Turning retention on prunes on the very
         // next load, so entries older than the chosen span disappear right
         // away - which is the point, not an accident: the setting says what
@@ -1260,6 +1286,13 @@ export class ChargyApp {
         //#region Handle the 'back'-button
 
         this.backButton.onclick = (): void => {
+
+            if (this.settingsScreenDiv.style.display !== "none" && this.settingsTrustManagementDiv.hidden === false)
+            {
+                if (!this.trustManagement.back())
+                    this.showSettingsMenu();
+                return;
+            }
 
             // One level back within the settings screen, not out of it: from
             // the trusted origins sub-page to the settings menu.
@@ -1445,9 +1478,12 @@ export class ChargyApp {
             this.closeQRCodeScanner();
         }
 
-        this.qrCodeScannerRescanButton.onclick = (ev: MouseEvent): void => {
+        this.qrCodeScannerRescanButton.onclick = async (ev: MouseEvent): Promise<void> => {
             ev.preventDefault();
-            this.resumeQRCodeScanner();
+            if (this.qrCodeScannerStream == null)
+                await this.openQRCodeScanner();
+            else
+                this.resumeQRCodeScanner();
         }
 
         this.qrCodeScannerOpenURLButton.onclick = (ev: MouseEvent): void => {
@@ -1673,6 +1709,11 @@ export class ChargyApp {
     }
 
     private rerenderCurrentView(): void {
+
+        if (this.qrCodeScannerTrustAnchor != null)
+            void this.showQRCodeScannerTrustAnchor(this.qrCodeScannerTrustAnchor);
+
+        this.trustManagement.refresh();
 
         if (this.currentChargeTransparencyRecord != null &&
             this.chargingSessionScreenDiv.style.display !== "none")
@@ -2495,6 +2536,16 @@ export class ChargyApp {
 
     private closeQRCodeScanner(): void
     {
+        this.stopQRCodeScannerCamera();
+        this.qrCodeScannerDiv.style.display = "none";
+        this.qrCodeScannerIsProcessing      = false;
+        this.qrCodeScannerLastText          = null;
+        this.qrCodeScannerLastURL           = null;
+        this.resetQRCodeScannerDialog("");
+    }
+
+    private stopQRCodeScannerCamera(): void
+    {
 
         if (this.qrCodeScannerAnimationFrame != null)
         {
@@ -2512,11 +2563,6 @@ export class ChargyApp {
 
             this.qrCodeScannerStream = null;
         }
-
-        this.qrCodeScannerDiv.style.display = "none";
-        this.qrCodeScannerIsProcessing      = false;
-        this.qrCodeScannerLastText          = null;
-        this.qrCodeScannerLastURL           = null;
 
     }
 
@@ -2541,6 +2587,12 @@ export class ChargyApp {
         this.qrCodeScannerResultDiv.style.display          = "none";
         this.qrCodeScannerURLActionsDiv.style.display      = "none";
         this.qrCodeScannerResultText.textContent           = "";
+        this.qrCodeScannerTrustAnchor                      = null;
+        this.qrCodeScannerPreviewGeneration++;
+        this.qrCodeScannerTrustAnchorDiv.replaceChildren();
+        this.qrCodeScannerTrustAnchorDiv.hidden            = true;
+        this.qrCodeScannerRawContentDiv.hidden             = false;
+        this.qrCodeScannerDiv.classList.remove("showingTrustAnchor");
 
     }
 
@@ -2589,7 +2641,10 @@ export class ChargyApp {
             }
         }
 
-        this.qrCodeScannerAnimationFrame = requestAnimationFrame(() => { this.scanQRCodeFrame(); });
+        if (this.qrCodeScannerStream != null)
+            this.qrCodeScannerAnimationFrame = requestAnimationFrame(() => { this.scanQRCodeFrame(); });
+        else
+            this.qrCodeScannerAnimationFrame = null;
 
     }
 
@@ -2598,6 +2653,25 @@ export class ChargyApp {
 
         this.qrCodeScannerIsProcessing = true;
         this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("qrCodeDetected"));
+
+        const trustAnchor = parseScannedTrustAnchor(qrText);
+        if (trustAnchor.kind === "anchor")
+        {
+            await this.showQRCodeScannerTrustAnchor(trustAnchor.preview);
+            return;
+        }
+        if (trustAnchor.kind === "invalid")
+        {
+            this.showQRCodeScannerRejectedText(qrText, {
+                status: chargyInterfaces.SessionVerificationResult.UnknownSessionFormat,
+                certainty: 0
+            });
+            this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage("trustAnchorInvalid") + " " + trustAnchor.message;
+            this.qrCodeScannerURLActionsDiv.style.display = "none";
+            this.qrCodeScannerLastURL = null;
+            this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("trustAnchorInvalid"));
+            return;
+        }
 
         const detected = await this.detectAndConvertContentFormat(
             {
@@ -2614,6 +2688,67 @@ export class ChargyApp {
         if (detected)
             this.closeQRCodeScanner();
 
+    }
+
+    private async showQRCodeScannerTrustAnchor(preview: TrustAnchorPreview): Promise<void>
+    {
+        const generation = ++this.qrCodeScannerPreviewGeneration;
+        this.qrCodeScannerTrustAnchor = preview;
+        this.stopQRCodeScannerCamera();
+        this.qrCodeScannerDiv.classList.add("showingTrustAnchor");
+        this.qrCodeScannerErrorDiv.textContent = "";
+        this.qrCodeScannerResultDiv.style.display = "flex";
+        this.qrCodeScannerRawContentDiv.hidden = true;
+        this.qrCodeScannerURLActionsDiv.style.display = "none";
+        this.qrCodeScannerLastURL = null;
+        this.qrCodeScannerTrustAnchorDiv.hidden = false;
+        const render = (isImported: boolean, busy: boolean, activeTrustedKeyCount: number): void => {
+            this.qrCodeScannerTrustAnchorDiv.replaceChildren(renderTrustAnchorPreview(
+                preview, this.UILanguage, key => this.chargy.GetLocalizedMessage(key), undefined,
+                { isImported, busy, activeTrustedKeyCount,
+                  onImport: () => { void this.importQRCodeScannerTrustAnchor(preview, generation); },
+                  onDiscard: () => { this.closeQRCodeScanner(); } }
+            ));
+        };
+        render(false, true, 0);
+        this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("trustAnchorDetected"));
+        try {
+            const [isImported, keys] = await Promise.all([
+                this.trustStore.hasAnchor(preview.anchor), getActiveBundledTrustedPublicKeys(this.trustStore)
+            ]);
+            if (generation !== this.qrCodeScannerPreviewGeneration)
+                return;
+            render(isImported, false, keys.length);
+            if (isImported)
+                this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("trustAnchorAlreadyImported"));
+        }
+        catch {
+            if (generation === this.qrCodeScannerPreviewGeneration) {
+                render(false, false, 0);
+                this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage("trustStorageError");
+            }
+        }
+    }
+
+    private async importQRCodeScannerTrustAnchor(preview: TrustAnchorPreview, generation: number): Promise<void>
+    {
+        if (generation !== this.qrCodeScannerPreviewGeneration)
+            return;
+        for (const button of this.qrCodeScannerTrustAnchorDiv.querySelectorAll<HTMLButtonElement>("button"))
+            button.disabled = true;
+        this.qrCodeScannerErrorDiv.textContent = "";
+        try {
+            await this.trustStore.importAnchor(preview.anchor, preview.text);
+            if (generation === this.qrCodeScannerPreviewGeneration)
+                await this.showQRCodeScannerTrustAnchor(preview);
+        }
+        catch {
+            if (generation === this.qrCodeScannerPreviewGeneration) {
+                this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage("trustStorageError");
+                for (const button of this.qrCodeScannerTrustAnchorDiv.querySelectorAll<HTMLButtonElement>("button"))
+                    button.disabled = false;
+            }
+        }
     }
 
     private showQRCodeScannerRejectedText(qrText: string,
@@ -4387,6 +4522,8 @@ export class ChargyApp {
 
     private showSettingsMenu(): void
     {
+        this.trustManagement.hide();
+        this.settingsScreenDiv.scrollTop = 0;
         this.settingsMenuDiv.style.display           = "block";
         this.settingsTrustedOriginsDiv.style.display = "none";
     }

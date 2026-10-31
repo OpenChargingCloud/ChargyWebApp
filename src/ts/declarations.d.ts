@@ -1,5 +1,10 @@
 declare module "*.css";
 declare module "*.scss";
+
+declare module "*.jsonl?raw" {
+    const source: string;
+    export default source;
+}
 declare module "leaflet.awesome-markers";
 
 declare const __CHARGY_CORE_SHA512__: string;
