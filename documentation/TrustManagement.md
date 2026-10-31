@@ -133,8 +133,9 @@ Quorumnachweis. Die gemeinsame Library erzeugt über `TrustContext.evaluate/crea
 erst nach vollständiger Prüfung einen Kontext. Signaturen, Inhaberzuordnung,
 Quorum und Bindung an Netz, Betreiber und signierten Statement-Inhalt liegen in
 WWCP_POI.TS; diese Regeln werden nicht in jeder Chargy-App erneut implementiert.
-Die neue API ist für den npm-Release 0.1.1 vorbereitet; die App-Anbindung wurde
-gegen dessen lokalen npm-Tarball getestet. Eine Veröffentlichung steht noch aus.
+Die neue API ist mit npm-Version 0.1.1 veröffentlicht. Das App-Lockfile verwendet
+den Integritätswert des veröffentlichten Tarballs; die App wird nach einer
+frischen Installation aus der Registry geprüft.
 
 `POITrustService` liest für jede Folgeprüfung Anchor und Key-Ausschlüsse in
 einer gemeinsamen IndexedDB-Transaktion. Es gibt keinen gespeicherten grünen

@@ -3,7 +3,7 @@
 Status: 31 October 2026. This document describes the intended trust chain,
 the current integration gaps and the logical risks identified while integrating
 `@open-charging-cloud/wwcp-poi` into Chargy. Shared authorization now uses the
-locally tested **0.1.1 release candidate**, pending npm publication.
+published npm version **0.1.1**.
 
 A TrustAnchor and an authenticated RoamingNetworkOperator provide the trust
 foundation. Validating a particular charging station and its tariff additionally
@@ -369,7 +369,7 @@ the imported documents and local decisions.
    supplies current locally authorized IDs to `TrustContext.evaluate/create`.
    Only valid signatures, validity, holder consistency and a trusted quorum
    produce a context. The app service reconstructs it from a consistent storage
-   snapshot for each verification. Deployment awaits the new npm package.
+   snapshot for each verification. The shared API is available in npm version 0.1.1.
 2. **Complete RNO verification.** KeyStatement download, identity-key parsing,
    signatures, local signer trust, holder quorum, network binding and validity are
    now integrated. SigningKeyCertificates and the binding of operational RNO

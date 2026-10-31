@@ -4,9 +4,8 @@ Status: 31 October 2026. Based on the installed
 `@open-charging-cloud/wwcp-poi@0.1.1`, ChargyCore `0.17.0` and the current WebApp.
 The POI package is pinned in the lockfile and included in the SBOM.
 
-**Release preparation:** 0.1.1 is currently a locally tested release candidate.
-It must be published before a fresh registry-based install can use this change.
-The app was tested against the actual local npm tarball, not a copied verifier.
+Version 0.1.1 is published on npm. The lockfile uses the published tarball's
+registry integrity, and the app is checked after a fresh registry-based install.
 
 This document distinguishes the implemented TrustAnchor workflow from the
 remaining station, tariff, publication and meter-key integration. For the complete
@@ -20,7 +19,7 @@ management notes are in [Trust Management](TrustManagement.md) (German).
 | Shared camera, clipboard, file and deep-link routing | ✅ Implemented |
 | Content-only anchor preview, followed by explicit download | ✅ Implemented |
 | KeyStatement signatures, signer trust, holder quorum and validity | ✅ Implemented |
-| Shared library `TrustContext` and fresh storage-backed authorization | ✅ Implemented against the 0.1.1 release candidate |
+| Shared library `TrustContext` and fresh storage-backed authorization | ✅ Implemented with published version 0.1.1 |
 | Bundled JSONL keys and local key exclusions | ✅ Implemented; the production key list is currently empty |
 | Optional manual trust scoped to an individual anchor policy | ✅ Implemented |
 | IndexedDB storage and Trust Management, including roaming networks | ✅ Implemented |
