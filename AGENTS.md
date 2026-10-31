@@ -20,3 +20,12 @@ inspect all images in `documentation/screenshots/poi-live-use-case/`. Keep its
 `npm run docs:validate:poi-live` when changing the accompanying POI examples.
 Those screenshots show actual current behavior; proposed POI/witness integration
 must stay clearly labeled and must not be represented by injected success states.
+
+For station-proof retrieval, results, cache/storage, trust gating or station-detail
+changes, run `npm run docs:screenshots:station-proof` and inspect every image in
+`documentation/screenshots/station-proof/`. This also exercises migration,
+persistence, cancellation and failure paths against genuine signed fixtures.
+Keep capture metadata and `documentation/WWCP-POI-Station-Proof.md` current.
+Preserve the fixed fixture clock; never edit signatures or production roots to
+make an expired fixture pass. The green station verdict must not imply verified
+meter readings, dynamic prices, publication or globally latest data.

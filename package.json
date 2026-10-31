@@ -30,7 +30,9 @@
     "docs:screenshots:capture": "node build-tools/captureTrustScreenshots.mjs",
     "docs:validate:poi-live": "node build-tools/validatePoiLiveUseCaseExamples.mjs",
     "docs:screenshots:poi-live": "npm run bundle:production && npm run docs:screenshots:poi-live:capture",
-    "docs:screenshots:poi-live:capture": "node build-tools/capturePoiLiveUseCaseScreenshots.mjs"
+    "docs:screenshots:poi-live:capture": "node build-tools/capturePoiLiveUseCaseScreenshots.mjs",
+    "docs:screenshots:station-proof": "npm run bundle:production && npm run docs:screenshots:station-proof:capture",
+    "docs:screenshots:station-proof:capture": "node build-tools/captureStationProofScreenshots.mjs"
   },
   "keywords": [
     "Chargy",

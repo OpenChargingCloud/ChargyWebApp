@@ -11,8 +11,11 @@ requires signed data versions and the corresponding inclusion proofs.
 
 The current app imports and manages TrustAnchors and derives a roaming-network
 list from them. It now downloads and verifies the RNO's **KeyStatement** after an
-explicit import action. It does not yet verify station proofs, runtime prices or
-publication evidence. The bundled public-key JSONL file and its build integration
+explicit import action. A manual EVSE check now retrieves and verifies station
+proofs through the saved policy and displays/cache-rechecks their dependencies;
+see [the station-proof guide and screenshots](WWCP-POI-Station-Proof.md).
+Runtime prices, session meter-key handoff and publication evidence remain future
+work. The bundled public-key JSONL file and its build integration
 exist, but the file currently contains no keys.
 Camera scans, clipboard text and file imports now share TrustAnchor detection,
 including JSON documents and QR images. The first preview shows only anchor
@@ -419,9 +422,10 @@ not in separate web, desktop or mobile verifiers. Storage and UX remain in apps.
 
 Importing and displaying an anchor must remain possible with incomplete trust.
 Storage, bootstrap authorization and cryptographic verification are separate
-operations. The current preview and management UI do not yet perform
-verification of station or tariff documents. They now verify downloaded
-KeyStatements and offer explicit, separate manual acceptance of individual pins
+operations. The import preview verifies downloaded KeyStatements; the separate
+manual station-check page verifies station inclusion and displays included static
+tariff definitions. Dynamic prices and publication evidence remain separate work.
+The preview and management offer explicit manual acceptance of individual pins
 after loading. The confirmation displays sources, holder
 assignment and quorum; decisions do not transfer to another anchor policy.
 

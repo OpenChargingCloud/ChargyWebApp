@@ -1,10 +1,39 @@
 import { TrustAnchor, hash, toHex } from '@open-charging-cloud/wwcp-poi';
 import type { POIPublicKey } from '@open-charging-cloud/wwcp-poi';
 import type { StoredTrustAnchorData } from './trustAnchorData';
+import type { LoadedStationProof } from './stationProofData';
+import { stationEVSEId, stationProofURL } from './poiURLs';
 
 export const trustDatabaseName = "ChargyTrustManagement";
 const anchorsStore = "trustAnchors";
 const deletedKeysStore = "deletedBundledKeys";
+const stationProofsStore = "poiStationProofs";
+
+/** Original cached evidence and provenance; no persisted authorization verdict. */
+export interface StoredStationProof {
+    readonly id: string;
+    readonly anchorPolicyId: string;
+    readonly anchorQRCode: string;
+    readonly evseId: string;
+    readonly sourceURL: string;
+    readonly downloadedAt: string;
+    readonly checkedAt: string;
+    readonly text: string;
+}
+
+export function stationProofStorageId(policyId: string, evseId: string, text: string): string {
+    const documentHash = toHex(hash('sha256', new TextEncoder().encode(text)));
+    return toHex(hash('sha256', new TextEncoder().encode(JSON.stringify({ policyId, evseId, documentHash }))));
+}
+
+function proofPolicyRange(policyId: string): IDBKeyRange {
+    return IDBKeyRange.bound([policyId, ''], [policyId, '\uffff', '\uffff']);
+}
+
+function deletePolicyProofs(transaction: IDBTransaction, policyId: string): void {
+    const request = transaction.objectStore(stationProofsStore).index('byPolicyTime').openCursor(proofPolicyRange(policyId));
+    request.onsuccess = (): void => { const cursor = request.result; if (cursor !== null) { cursor.delete(); cursor.continue(); } };
+}
 
 export interface StoredTrustAnchor {
     readonly id: string;
@@ -72,7 +101,23 @@ function readAnchor(value: unknown): StoredTrustAnchor {
              ...(downloadedData === undefined ? {} : { downloadedData }) };
 }
 
-/** Version 1 keeps imports and local exclusions separate from immutable build-time keys. */
+function readStationProof(value: unknown): StoredStationProof {
+    const raw = object(value);
+    const fields = ['id', 'anchorPolicyId', 'anchorQRCode', 'evseId', 'sourceURL', 'downloadedAt', 'checkedAt', 'text'] as const;
+    for (const field of fields)
+        if (typeof raw[field] !== 'string')
+            throw new Error('Invalid saved station proof');
+    const record = raw as unknown as StoredStationProof;
+    const anchor = TrustAnchor.parse(record.anchorQRCode);
+    if (trustAnchorStorageId(anchor) !== record.anchorPolicyId || stationEVSEId(record.evseId) !== record.evseId ||
+        !anchor.urls.some(base => stationProofURL(base, record.evseId) === record.sourceURL) ||
+        !Number.isFinite(Date.parse(record.downloadedAt)) || !Number.isFinite(Date.parse(record.checkedAt)) ||
+        stationProofStorageId(record.anchorPolicyId, record.evseId, record.text) !== record.id)
+        throw new Error('Saved station proof provenance does not match its content');
+    return record;
+}
+
+/** Version 2 adds a proof cache, retaining the version-1 anchors and local decisions. */
 export class TrustStore {
     private connection: Promise<IDBDatabase> | null = null;
 
@@ -81,13 +126,17 @@ export class TrustStore {
             return this.connection;
         const opening = new Promise<IDBDatabase>((resolve, reject) => {
             let blocked = false;
-            const request = indexedDB.open(trustDatabaseName, 1);
+            const request = indexedDB.open(trustDatabaseName, 2);
             request.onupgradeneeded = (): void => {
                 const database = request.result;
                 if (!database.objectStoreNames.contains(anchorsStore))
                     database.createObjectStore(anchorsStore, { keyPath: "id" });
                 if (!database.objectStoreNames.contains(deletedKeysStore))
                     database.createObjectStore(deletedKeysStore, { keyPath: "id" });
+                if (!database.objectStoreNames.contains(stationProofsStore)) {
+                    const proofs = database.createObjectStore(stationProofsStore, { keyPath: 'id' });
+                    proofs.createIndex('byPolicyTime', ['anchorPolicyId', 'downloadedAt', 'id']);
+                }
             };
             request.onerror = (): void => { reject(request.error ?? new Error("Could not open trust management storage")); };
             request.onblocked = (): void => { blocked = true; reject(new Error("Trust management storage is blocked by another tab")); };
@@ -103,13 +152,14 @@ export class TrustStore {
         return this.connection;
     }
 
-    private async transaction<T>(name: string, mode: IDBTransactionMode,
+    private async transaction<T>(name: string | readonly string[], mode: IDBTransactionMode,
                                   run: (store: IDBObjectStore, result: (value: T) => void) => void,
                                   signal?: AbortSignal): Promise<T> {
         const database = await this.open();
         signal?.throwIfAborted();
         return new Promise<T>((resolve, reject) => {
-            const transaction = database.transaction(name, mode);
+            const names = typeof name === 'string' ? [name] : [...name];
+            const transaction = database.transaction(names, mode);
             const abort = (): void => { try { transaction.abort(); } catch { /* Already committed. */ } };
             signal?.addEventListener("abort", abort, { once: true });
             let result: { value: T } | null = null;
@@ -126,7 +176,7 @@ export class TrustStore {
             };
             transaction.onerror = (): void => { reject(transaction.error ?? new Error("Trust management operation failed")); };
             try {
-                run(transaction.objectStore(name), value => { result = { value }; });
+                run(transaction.objectStore(names[0] ?? anchorsStore), value => { result = { value }; });
             }
             catch (error) {
                 transaction.abort();
@@ -243,20 +293,24 @@ export class TrustStore {
     }
 
     public async deleteAnchor(id: string): Promise<void> {
-        return this.transaction(anchorsStore, "readwrite", (store, result) => { store.delete(id); result(undefined); });
+        return this.transaction([anchorsStore, stationProofsStore], "readwrite", (store, result) => {
+            store.delete(id); deletePolicyProofs(store.transaction, id); result(undefined);
+        });
     }
 
     /** Delete only the selected identity's policies, never every operator claiming the same network ID. */
     public async deleteRoamingNetwork(anchorPolicyIds: readonly string[]): Promise<number> {
         const selected = new Set(anchorPolicyIds);
-        return this.transaction(anchorsStore, "readwrite", (store, result) => {
+        return this.transaction([anchorsStore, stationProofsStore], "readwrite", (store, result) => {
             const request = store.getAll();
             request.onsuccess = (): void => {
                 try {
                     const records = (request.result as unknown[]).map(readAnchor)
                         .filter(record => selected.has(record.id));
-                    for (const record of records)
+                    for (const record of records) {
                         store.delete(record.id);
+                        deletePolicyProofs(store.transaction, record.id);
+                    }
                     result(records.length);
                 }
                 catch {
@@ -282,6 +336,55 @@ export class TrustStore {
 
     public async restoreBundledKey(id: string): Promise<void> {
         return this.transaction(deletedKeysStore, "readwrite", (store, result) => { store.delete(id); result(undefined); });
+    }
+
+    public async saveStationProof(proof: LoadedStationProof, signal?: AbortSignal): Promise<'saved' | 'exists'> {
+        const record = readStationProof({
+            id: stationProofStorageId(proof.context.anchorPolicyId, proof.evseId, proof.document.text),
+            anchorPolicyId: proof.context.anchorPolicyId, anchorQRCode: proof.context.evidence.anchorQRCode,
+            evseId: proof.evseId, ...proof.document, checkedAt: new Date(proof.context.evaluatedAt).toISOString()
+        });
+        return this.transaction([anchorsStore, stationProofsStore], 'readwrite', (anchors, result) => {
+            const parent = anchors.get(record.anchorPolicyId);
+            parent.onsuccess = (): void => {
+                try {
+                    if (readAnchor(parent.result).id !== record.anchorPolicyId)
+                        throw new Error('The anchor was removed');
+                    const proofs = anchors.transaction.objectStore(stationProofsStore);
+                    const existing = proofs.get(record.id);
+                    existing.onsuccess = (): void => {
+                        try {
+                            if (existing.result !== undefined) { readStationProof(existing.result); result('exists'); }
+                            else { proofs.add(record); result('saved'); }
+                        }
+                        catch { anchors.transaction.abort(); }
+                    };
+                }
+                catch { anchors.transaction.abort(); }
+            };
+        }, signal);
+    }
+
+    public async listStationProofs(policyId: string, limit: number = 10): Promise<readonly StoredStationProof[]> {
+        if (!Number.isInteger(limit) || limit < 1 || limit > 100)
+            throw new Error('Invalid saved proof limit');
+        return this.transaction(stationProofsStore, 'readonly', (store, result) => {
+            const records: StoredStationProof[] = [];
+            const request = store.index('byPolicyTime').openCursor(proofPolicyRange(policyId), 'prev');
+            request.onsuccess = (): void => {
+                try {
+                    const cursor = request.result;
+                    if (cursor === null || records.length === limit) { result(records); return; }
+                    records.push(readStationProof(cursor.value));
+                    cursor.continue();
+                }
+                catch { store.transaction.abort(); }
+            };
+        });
+    }
+
+    public async deleteStationProof(id: string): Promise<void> {
+        return this.transaction(stationProofsStore, 'readwrite', (store, result) => { store.delete(id); result(undefined); });
     }
 }
 

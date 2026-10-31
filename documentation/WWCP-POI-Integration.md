@@ -7,8 +7,9 @@ The POI package is pinned in the lockfile and included in the SBOM.
 Version 0.1.1 is published on npm. The lockfile uses the published tarball's
 registry integrity, and the app is checked after a fresh registry-based install.
 
-This document distinguishes the implemented TrustAnchor workflow from the
-remaining station, tariff, publication and meter-key integration. For the complete
+This document distinguishes the implemented TrustAnchor workflow and manual
+station checking from the remaining session, price, publication and meter-key
+integration. For the complete
 trust chain, matching JSON examples and screenshots, see
 [WWCP POI Trust Architecture](WWCP-POI-Trust-Architecture.md). Detailed storage and
 management notes are in [Trust Management](TrustManagement.md) (German).
@@ -27,7 +28,7 @@ verification of the first incoming reading, with diagrams, JSON and screenshots.
 | Optional manual trust scoped to an individual anchor policy | ✅ Implemented |
 | IndexedDB storage and Trust Management, including roaming networks | ✅ Implemented |
 | Drunken Bishop fingerprints and reproducible documentation screenshots | ✅ Implemented |
-| Station proofs and operational RNO signing-key certificates in the app | Planned |
+| Manual EVSE station proof, operational RNO certificates, qualified result and local proof cache | ✅ Implemented |
 | Runtime prices, publication evidence, witnesses and session evidence | Planned |
 | Proven meter-key handoff to ChargyCore and EMP contract offers | Planned |
 
@@ -40,7 +41,7 @@ The library already provides the cryptographic building blocks:
 | Read a TrustAnchor from compact text, URL or JSON | `TrustAnchor.parse`, `TrustAnchor.fromJSON` | ✅ Integrated |
 | Evaluate a statement against locally authorized pins and create its trust context | `KeyStatement.parse`, `TrustContext.evaluate/create` | ✅ Integrated |
 | Read public COSE keys and validate their thumbprints | `POIPublicKey.parse` | ✅ Integrated through the key and statement parsers |
-| Verify a small station proof, including meters and tariffs | `verifyChargingStation` | Planned |
+| Verify a small station proof, including meters and tariffs | `verifyChargingStation` | ✅ Manual network/EVSE check |
 | Verify signed runtime prices against the verified station | `verifyPriceStatements` | Planned |
 | Download and verify a station and its prices | `POIClient.chargingStation` | Available for a future bounded app adapter |
 | Prove inclusion of a station version or price in checkpoints | `CheckpointProof`, `PriceStatementProof` | Planned |
@@ -227,21 +228,23 @@ The original JSON text, source URL and download time are retained. Signed POI
 documents must use `parseJSON` or `parseJSONBytes`, rather than `response.json()`
 or a JSON round trip: decimal representations and duplicate properties matter.
 
-Future station and price downloads need the same bounded transport adapter.
-`POIClient` accepts an injected `fetch` but does not itself supply all these app
-limits. Separate station and price requests may be preferable so that a missing
-price does not hide a correctly verified station. Per-source diagnostics that
-distinguish network failure from invalid proofs should be added with that work.
+✅ The manual station download uses the same transport policy with a 2 MiB
+response limit, 15 seconds per source and 30 seconds overall. It tries the next
+saved source after download or verification failure and records per-source
+diagnostics. Runtime-price retrieval remains separate future work; a missing
+price must not hide a correctly verified station. `POIClient` itself does not
+supply all these app transport limits.
 
 ### 2.6 Current local storage
 
-✅ IndexedDB **`ChargyTrustManagement`**, schema version **1**, currently has
-two object stores:
+✅ IndexedDB **`ChargyTrustManagement`**, schema version **2**, currently has
+three object stores; migration preserves version-1 records:
 
 | Store | Persisted data |
 | --- | --- |
 | `trustAnchors` | `id` derived from the normalized policy; canonical anchor in `qrCode`; original `sourceText`; UTC `importedAt`; optional `downloadedData` containing `sourceURL`, `downloadedAt` and original JSON `text`; optional `trustedKeys` containing key `id` and UTC `acceptedAt` |
 | `deletedBundledKeys` | IDs of bundled keys excluded for this installation |
+| `poiStationProofs` | Original verified proof text, exact anchor policy/QR, EVSE, source, retrieval/evaluation time; content-derived ID, no stored authorization verdict |
 
 Duplicate checking and insertion are atomic. Equivalent compact/URL forms,
 display-text changes and mirror ordering do not create duplicate policies.
@@ -259,6 +262,11 @@ eviction can remove it. Errors and quota failures must remain visible. Durable
 storage requests, export/import of stored evidence and historical retention
 policies are not yet implemented.
 
+Saved proofs are a cache: deleting the selected anchor/network removes its
+associated cache atomically. Reopening a proof reevaluates current trust and time.
+The [station-proof guide](WWCP-POI-Station-Proof.md) specifies the record shape
+and cache behavior; future historical session evidence needs separate retention.
+
 ### 2.7 Trust Management and remaining lifecycle work
 
 ✅ **Settings → Trust Management** contains **Roaming networks**, **Trust
@@ -270,7 +278,7 @@ The roaming-network list uses the authenticated network ID, RNO and exact anchor
 policy as its local identity. Unverified imports remain isolated by policy,
 including when they claim the same network ID. Keys and quorums are never merged.
 Deleting an entry removes only the policy IDs displayed there, including their
-cached documents and manual decisions. Other operators or policies claiming the
+cached documents, manual decisions and station proofs. Other operators or policies claiming the
 same network ID, bundled keys and exclusions are retained.
 
 The exact anchor policy is a conservative bootstrap lineage, not a permanent
@@ -314,9 +322,10 @@ checked. A changed statement must first be downloaded and reevaluated, and this
 does not implement historical succession.
 
 Operator, version, station and station-checkpoint verification accept this
-context directly. The app service exposes operator verification and a station
-verification seam, tested with a genuine proof. There is no station-download,
-station-selection or session/meter-key UI yet. Existing library APIs accepting a
+context directly. The app service exposes operator verification and the station
+verification used by the manual network/EVSE check. Retrieval, qualified results,
+progressive details, cache and rechecking are implemented; automatic session
+selection and meter-key handoff remain future work. Existing library APIs accepting a
 raw `TrustAnchor` still mean that its pins are already trusted; `POIClient` and
 `verifyEvidence` must not bypass the app's authorization policy.
 
@@ -355,8 +364,10 @@ and key material, not only the logarithmic audit-path length.
 
 Use `POITrustService.verifyStation(policyId, proof, { evseId })` for the app path.
 It rereads local decisions and passes a library `TrustContext`, never an arbitrary
-imported anchor, to the verifier. The seam is implemented; station retrieval and
-session integration remain planned.
+imported anchor, to the verifier. Manual retrieval and display are implemented;
+automatic session integration remains planned. See the
+[station-proof guide](WWCP-POI-Station-Proof.md) for screenshots, transport, cache
+and current limitations.
 
 This verifier establishes the RNO-attested station version. It does not replay
 the entire history of CPO-signed changes. Claim independent verification of a CPO
@@ -558,7 +569,8 @@ fixed test setup and automatic CI artifact are documented in the
 | 0 | ✅ Package, lockfile and SBOM | Existing project checks pass with the dependency |
 | 1 | ✅ Core anchor workflow: shared routing, content-only preview, bounded KeyStatement download, real checks, scoped manual trust, IndexedDB, management and fingerprint images | Equivalent inputs use the same policy; no download before Import; errors, cancellation, refresh, persistence and offline management work |
 | 1a | ✅ Shared authorization and authenticated RN/RNO/policy grouping; remaining lifecycle work planned | Fresh local decisions gate all app service checks. Verified succession/revocation, historical policy and evidence export/import remain outstanding |
-| 2 | Planned station proof per EVSE, station status and meter-key adapter; OCMF pilot and additive Core API | Correct EVSE/meter binding; a foreign key or modified proof cannot establish trusted association |
+| 2a | ✅ Manual station proof per EVSE, qualified station status, details, cache and current-trust recheck | Genuine proof succeeds; wrong EVSE/tampering/expiry fail; migration, cancellation and storage errors are tested |
+| 2b | Planned automatic session binding and meter-key adapter; OCMF pilot and additive Core API | Correct session/EVSE/meter binding; a foreign key cannot establish trusted association |
 | 3 | Planned tariff applicability, PriceStatements and tariff detail UI | Missing, expired, foreign and conflicting prices are distinguished; selection/override policy is tested |
 | 4 | Planned checkpoints, witness policy, evidence storage and exchange | Historical offline verification has complete inclusion evidence; missing evidence stays visible |
 | 5 | Planned further Core formats and agreed EMP-offer verification | Consistent trust and association rules cover supported formats and contract cases |
@@ -601,7 +613,7 @@ capture runs produced identical PNGs. CI is configured to regenerate captures
 on its Ubuntu/Node 26 leg and upload the images as an artifact.
 
 Latest recorded project checks: `npm run verify` passed app/test typechecking,
-ESLint, **456 tests with 3 skipped**, and the production build with updated SBOM.
+ESLint, **482 tests with 3 skipped**, and the production build with updated SBOM.
 The build reports three size/performance warnings. This is a dated verification
 record, not a claim that future test counts remain unchanged.
 
@@ -615,11 +627,14 @@ The initial package evaluation also checked the installed library against public
 `csharp-33447ac` vectors from the neighboring library checkout: an ML-DSA anchor,
 station `DE*GEF*S1`, two meters and prices for EVSE `DE*GEF*E1*1` verified;
 a foreign EVSE and modified station proof were rejected. That was library-level
-validation, not an implemented station path in the app or a portable repository
-CI test.
+validation. The repository now also contains genuine public vectors and a
+manual station-check UI/browser regression path; session handoff remains future work.
 
-Still add targeted station/price/evidence tests for modified audit paths, wrong
-EVSEs or meters, quorum reduction, key succession, decimal handling, empty price
+Station retrieval tests now cover wrong EVSE, tampered data, expired attestations,
+trust withdrawal, mirror fallback, transport limits, abort and deadlines. Browser
+checks cover real v1 migration, reload/recheck, deduplication, quota failure/retry,
+expiry, cancellation, navigation and cache deletion. Still add session/price/
+evidence tests for meter binding, key succession, decimal handling, empty price
 sets, sequence rollback, split views, expired attestations and optional evidence
 missing despite a successful `verifyEvidence` call. Include evidence bundles
 with unauthorized embedded anchors, redirects, CORS failures and session switches
@@ -627,7 +642,7 @@ during ongoing verification. Import suitable public vectors with their provenanc
 and a fixed evaluation clock.
 
 Physical-camera testing, a live production POI-server integration and complete
-station/tariff/session-evidence UX are not covered by the current browser QA.
+session-bound meter/price/publication UX are not covered by the current browser QA.
 
 ## 8. Sources and implementation entry points
 

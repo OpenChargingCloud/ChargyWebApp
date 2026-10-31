@@ -78,12 +78,13 @@ getrennte Einträge und überschreiben keinen vorhandenen Anchor.
 
 ## Lokaler Speicher
 
-Die App verwendet IndexedDB **`ChargyTrustManagement`**, Schema-Version **1**:
+Die App verwendet IndexedDB **`ChargyTrustManagement`**, Schema-Version **2**:
 
 | Object Store | Schlüssel / Inhalt |
 | --- | --- |
 | `trustAnchors` | `id`: Duplikatkennung; `qrCode`: vollständiger kanonischer Anchor; `sourceText`: ursprünglicher Eingabetext; `importedAt`: UTC-Importzeit; optional `trustedKeys`: explizite Entscheidungen mit Key-ID und `acceptedAt`; optional `downloadedData`: Quelle, Downloadzeit und Original-JSON des KeyStatements |
 | `deletedBundledKeys` | `id`: Thumbprint eines für diese Installation entfernten mitgelieferten Keys |
+| `poiStationProofs` | Original-JSON des Stationsproofs, Policy-ID und Anchor, EVSE, Quelle, Download- und Prüfzeit; inhaltsbasierte ID, kein gespeicherter Vertrauensstatus |
 
 Duplikatprüfung und Import laufen in einer gemeinsamen Schreibtransaktion.
 Auch zwei gleichzeitig importierende Tabs erzeugen dadurch nur einen Eintrag.
@@ -232,3 +233,30 @@ das KeyStatement ab.
 Ein Test mit physischer Kamera ist davon nicht abgedeckt. Die POI-Endpunkte
 werden in der Browser-QA kontrolliert simuliert; dies ist kein Integrationstest
 gegen einen produktiven POI-Server.
+
+## Stationsproof laden und anzeigen
+
+✅ In den Roamingnetzdetails führt **Ladestation prüfen** zur EVSE-Eingabe.
+Der Abruf verwendet ausschließlich Quellen des ausgewählten Anchors und benötigt
+ein aktuell vertrauenswürdiges KeyStatement. Nach dem Download werden die lokalen
+Vertrauensentscheidungen erneut gelesen. Die gemeinsame POI-Library prüft die
+angefragte EVSE, RNO-Zertifikate, Attestierungen, Quorum und Merkle-Inclusion.
+
+Bei Erfolg erscheint ein grüner Prüfbereich mit Haken, bei Hinweisen ein gelber.
+Details zeigen EVSEs, Zähler und Keys, statische Tarifdefinitionen, Quorum,
+Versionsdaten und Originalproof. Das Ergebnis bestätigt diese Stationsversion
+zum angezeigten Prüfzeitpunkt; Zählerwertsignaturen, dynamische Preise und
+Veröffentlichungsnachweise werden dadurch noch nicht bestätigt.
+
+Der Originalproof wird mit Herkunft in einem lokalen Cache gespeichert.
+**Öffnen und erneut prüfen** validiert ohne erneuten Download gegen heutiges
+Vertrauen und die aktuelle Zeit. Speicherfehler erscheinen getrennt vom
+Prüfergebnis und erlauben einen erneuten Speicherversuch. Abbrechen oder
+Navigation bricht laufende Abrufe ab.
+
+Die Migration von Version 1 auf 2 erhält vorhandene Anchors und Key-Entscheidungen.
+Einzelne Proofs lassen sich löschen; beim Löschen eines Anchors beziehungsweise
+der angezeigten Netzkonfiguration wird auch deren Stationsproof-Cache atomar
+entfernt. Dies ist noch kein historisches Sitzungsarchiv.
+
+[English feature guide, screenshots and maintenance](WWCP-POI-Station-Proof.md).

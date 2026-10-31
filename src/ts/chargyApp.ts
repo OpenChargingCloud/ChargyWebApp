@@ -835,7 +835,7 @@ export class ChargyApp {
         this.settingsMenuDiv                          = this.settingsScreenDiv. querySelector("#settingsMenu")              as HTMLDivElement;
         this.settingsTrustManagementDiv               = this.settingsScreenDiv.querySelector("#settingsTrustManagement")     as HTMLDivElement;
         this.trustManagement = new TrustManagement(this.settingsTrustManagementDiv, this.trustStore, bundledTrustedPublicKeys,
-                                                  key => this.chargy.GetLocalizedMessage(key), () => this.UILanguage);
+                                                  key => this.chargy.GetLocalizedMessage(key), () => this.UILanguage, transportAllowances);
         this.settingsTrustedOriginsDiv                = this.settingsScreenDiv. querySelector("#settingsTrustedOrigins")    as HTMLDivElement;
         this.settingsTrustedOriginsEntry              = this.settingsScreenDiv. querySelector("#settingsTrustedOriginsEntry") as HTMLButtonElement;
         this.trustedOriginsListDiv                    = this.settingsScreenDiv. querySelector("#trustedOriginsList")        as HTMLDivElement;

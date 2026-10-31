@@ -95,6 +95,18 @@ jobs:
           path: artifacts/poi-live-screenshots/
           if-no-files-found: error
 
+      - name: Check station proof UI and capture documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:station-proof:capture -- --output-dir artifacts/station-proof-screenshots
+
+      - name: Upload station proof documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: station-proof-documentation-screenshots
+          path: artifacts/station-proof-screenshots/
+          if-no-files-found: error
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

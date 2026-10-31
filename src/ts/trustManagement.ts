@@ -9,30 +9,56 @@ import { renderTrustAnchorValidation } from './trustAnchorPreview';
 import { parseTrustAnchorData } from './trustAnchorData';
 import { renderTrustAnchorData } from './trustAnchorDataView';
 import { renderSecurityFingerprint } from './securityFingerprintView';
+import { POITrustService } from './poiTrustContext';
+import { StationProofPanel } from './stationProofPanel';
+import type { ITransportAllowances } from './liveLinkTrust';
 
-type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails";
+type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails" | "stationProof";
 
 export class TrustManagement {
     private page: TrustManagementPage = "menu";
     private generation = 0;
     private selectedNetworkId: string | null = null;
+    private stationPanel: StationProofPanel | null = null;
+    private stationPolicyId: string | null = null;
+    private stationQuery = '';
 
     public constructor(private readonly root: HTMLElement,
                         private readonly store: TrustStore,
                         private readonly bundledKeys: readonly POIPublicKey[],
                         private readonly localize: (key: string) => string,
-                        private readonly language: () => string) {}
+                        private readonly language: () => string,
+                        private readonly allowances: ITransportAllowances = {}) {
+        const settings = root.closest<HTMLElement>('#settingsScreen');
+        if (settings !== null)
+            new MutationObserver(() => {
+                if (settings.style.display === 'none' || settings.hidden !== false)
+                    this.hide();
+            }).observe(settings, { attributes: true, attributeFilter: ['style', 'hidden'] });
+    }
 
     public open(): void { this.root.hidden = false; this.page = "menu"; this.selectedNetworkId = null; void this.render(); }
-    public hide(): void { this.root.hidden = true; this.generation++; }
+    public hide(): void { this.root.hidden = true; this.generation++; this.disposeStationPanel(); }
     public refresh(): void { if (this.root.hidden === false) void this.render(); }
     public back(): boolean {
         if (this.page === "menu")
             return false;
-        this.page = this.page === "networkDetails" ? "networks" : "menu";
-        this.selectedNetworkId = null;
+        if (this.page === 'stationProof')
+            this.page = 'networkDetails';
+        else {
+            this.page = this.page === "networkDetails" ? "networks" : "menu";
+            this.selectedNetworkId = null;
+        }
         void this.render();
         return true;
+    }
+
+    private disposeStationPanel(): void {
+        if (this.stationPanel !== null) {
+            this.stationQuery = this.stationPanel.value;
+            this.stationPanel.dispose();
+            this.stationPanel = null;
+        }
     }
 
     private button(parent: HTMLElement, label: string, action: () => void, className: string = ""): HTMLButtonElement {
@@ -78,6 +104,7 @@ export class TrustManagement {
         this.text(card, anchor.id, "trustManagementIdentifier");
         this.text(card, `${this.localize("trustAnchorImportedAtLabel")}: ${new Date(record.importedAt).toLocaleString(this.language())}`);
         this.text(card, this.localize("trustAnchorSavedStatus"));
+        this.text(card, this.localize('poiAnchorDeleteNotice'));
         const details = card.appendChild(document.createElement("details"));
         const summary = details.appendChild(document.createElement("summary"));
         summary.textContent = this.localize("trustAnchorDetailsLabel");
@@ -128,6 +155,14 @@ export class TrustManagement {
         if (network.context !== undefined)
             this.text(parent, `${this.localize("trustDataOperatorLabel")}: ${network.context.roamingNetworkOperatorId}`, "trustManagementIdentifier");
         this.text(parent, `${this.localize("trustNetworkAnchorCount")}: ${network.anchors.length}`);
+        const policy = network.anchors[0];
+        if (policy !== undefined)
+            this.button(parent, 'poiCheckStation', () => {
+                if (this.stationPolicyId !== policy.id) this.stationQuery = '';
+                this.stationPolicyId = policy.id;
+                this.page = 'stationProof';
+                void this.render();
+            }, 'settingsEntry');
         if (network.anchors.every(record => record.downloadedData === undefined)) {
             const statement = parent.appendChild(document.createElement("section"));
             statement.className = "trustNetworkKeyStatement";
@@ -156,6 +191,7 @@ export class TrustManagement {
     }
 
     private async render(): Promise<void> {
+        this.disposeStationPanel();
         const generation = ++this.generation;
         this.root.replaceChildren();
         const settings = this.root.closest<HTMLElement>("#settingsScreen");
@@ -172,15 +208,21 @@ export class TrustManagement {
         }
 
         const title = this.root.appendChild(document.createElement("h3"));
-        const titles = { anchors: "trustAnchorsTitle", keys: "trustBundledKeysTitle", networks: "trustRoamingNetworksTitle", networkDetails: "trustRoamingNetworkDetailsTitle" };
+        const titles = { anchors: "trustAnchorsTitle", keys: "trustBundledKeysTitle", networks: "trustRoamingNetworksTitle", networkDetails: "trustRoamingNetworkDetailsTitle", stationProof: 'poiCheckStation' };
         title.textContent = this.localize(titles[this.page]);
-        const descriptions = { anchors: "trustAnchorsStorageDescription", keys: "trustBundledKeysDescription", networks: "trustRoamingNetworksDescription", networkDetails: "trustRoamingNetworkDetailsDescription" };
+        const descriptions = { anchors: "trustAnchorsStorageDescription", keys: "trustBundledKeysDescription", networks: "trustRoamingNetworksDescription", networkDetails: "trustRoamingNetworkDetailsDescription", stationProof: 'poiStationDescription' };
         this.text(this.root, this.localize(descriptions[this.page]));
         const list = this.root.appendChild(document.createElement("div"));
         list.className = "trustManagementList";
         list.setAttribute("aria-busy", "true");
         try {
-            if (this.page === "networks" || this.page === "networkDetails") {
+            if (this.page === 'stationProof' && this.stationPolicyId !== null) {
+                const panel = new StationProofPanel(list, this.store, new POITrustService(this.store, this.bundledKeys),
+                    this.stationPolicyId, this.localize, this.language(), this.allowances, this.stationQuery);
+                this.stationPanel = panel;
+                await panel.mount();
+            }
+            else if (this.page === "networks" || this.page === "networkDetails") {
                 const { records: anchors, deleted: deletedKeys } = await this.store.listTrustSnapshot();
                 if (this.generation !== generation)
                     return;

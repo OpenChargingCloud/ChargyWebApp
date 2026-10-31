@@ -25,7 +25,7 @@ rather than claiming that the complete workflow already exists.
 | --- | --- |
 | Import TrustAnchors, check KeyStatements, manage local key trust | Implemented |
 | Shared `TrustContext`, fresh local authorization snapshots, RN/RNO/policy binding | Implemented in the library and app |
-| `POITrustService.verifyStation(...)` | Implemented verification seam, tested with a genuine proof; no session-driven download or UI yet |
+| `POITrustService.verifyStation(...)` | ✅ Manual network/EVSE download, result details and cache/recheck implemented; no session-driven download yet |
 | Live link without readings, HTTPS updates and verification of received OCMF readings | Implemented using the existing Core path |
 | Automatic discovery and refresh of POI evidence from a session | Proposed here |
 | POI-derived meter-key selection and provenance passed to Core | Proposed here |
@@ -727,7 +727,8 @@ not that any particular live session has already been associated with it.
 
 The existing UI can already display and check a signed live envelope with no
 readings. Its “Valid live link” badge concerns the existing signature path;
-there is no POI station/witness validation panel yet. The map tiles are suppressed
+there is no session-linked POI station/witness validation panel yet. A separate
+manual station-check page is now available in Trust Management. The map tiles are suppressed
 for reproducible captures. No POI outcome has been injected.
 
 ### C. First genuine signed reading received
@@ -744,6 +745,15 @@ The first-reading crypto-detail drill-down did not open during the capture
 exploration; the current handler requires a measurement method on the parsed
 value. Making the initial reading's details reliably inspectable is an explicit
 acceptance requirement for the new flow.
+
+### D. Manual station proof (implemented next step)
+
+The separate **Check charging station** page now loads and verifies an EVSE
+against its selected saved policy and displays station, meter and static tariff
+details. It caches original proofs and rechecks them against current trust/time.
+See [the feature guide and real screenshots](WWCP-POI-Station-Proof.md).
+This does not yet associate the POI fixture with the live-link fixture or supply
+a proven meter key to the live session.
 
 ### Proposed witness management
 
@@ -764,7 +774,9 @@ Keep original input/update bytes, raw POI documents, source/reception metadata,
 immutable content identifiers, session/EVSE/meter associations, local policy
 revision, event/evaluation times and individual verification results. Suggested
 future stores are `poiDocuments`, `sessionEvidence`, `knownHeads` and a witness
-policy store. They are not existing IndexedDB object stores.
+policy store. They are not existing IndexedDB object stores. The implemented
+`poiStationProofs` store is a policy-scoped manual-check cache, without historical
+session binding; deleting its anchor removes that cache.
 
 Store decisions and evidence, not a permanent green authorization token. Current
 verification is recomputed from current local decisions; historical reports retain
