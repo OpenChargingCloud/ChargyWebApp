@@ -6,6 +6,9 @@ import { activeBundledPublicKeys } from './trustStore';
 import { groupRoamingNetworks, roamingNetworkDisplayName } from './roamingNetworks';
 import type { StoredRoamingNetwork } from './roamingNetworks';
 import { renderTrustAnchorValidation } from './trustAnchorPreview';
+import { parseTrustAnchorData } from './trustAnchorData';
+import { renderTrustAnchorData } from './trustAnchorDataView';
+import { renderSecurityFingerprint } from './securityFingerprintView';
 
 type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails";
 
@@ -83,18 +86,31 @@ export class TrustManagement {
         for (const url of anchor.urls)
             this.text(details, url, "trustManagementIdentifier");
         this.text(details, `${this.localize("trustAnchorQuorumLabel")}: ${anchor.minConsensus} / ${anchor.holders.length}`);
-        for (const [index, holder] of anchor.holders.entries()) {
-            this.text(details, `${this.localize("trustAnchorHolderLabel")} ${index + 1}`);
-            for (const key of holder) {
-                this.text(details, key, "trustManagementIdentifier");
-                if (deletedKeys !== undefined) {
-                    const known = this.bundledKeys.find(entry => entry.id === key);
-                    const status = deletedKeys.has(key) ? "deleted" : known === undefined ? "unknown" : known.isValidAt(Date.now()) ? "trusted" : "expired";
-                    const labels = { deleted: "trustNetworkKeyDeleted", unknown: "trustNetworkKeyUnknown", trusted: "trustNetworkKeyTrusted", expired: "trustNetworkKeyExpired" };
-                    const label = this.text(details, this.localize(labels[status]), "trustNetworkKeyStatus");
-                    label.dataset["keyTrust"] = status;
-                }
+        if (record.downloadedData !== undefined) {
+            try {
+                const data = parseTrustAnchorData(anchor, record.downloadedData, this.bundledKeys);
+                details.appendChild(renderTrustAnchorData(anchor, data, {
+                    record, bundled: this.bundledKeys, deleted: deletedKeys ?? new Set(), localize: this.localize,
+                    onChange: async (keyId, trusted) => {
+                        if (this.generation !== generation)
+                            return;
+                        await this.store.setKeyTrust(record.id, keyId, trusted);
+                        if (this.generation === generation)
+                            await this.render();
+                    }
+                }));
             }
+            catch {
+                this.text(details, this.localize("trustDataStoredInvalid"), "trustManagementError");
+            }
+        }
+        else {
+            for (const [index, holder] of anchor.holders.entries()) {
+                this.text(details, `${this.localize("trustAnchorHolderLabel")} ${index + 1}`);
+                for (const id of holder)
+                    details.appendChild(renderSecurityFingerprint(id, this.localize));
+            }
+            this.text(details, this.localize("trustNetworkKeyStatementMissing"));
         }
         const button = this.button(card, "trustAnchorDeleteLabel", () => {
             void this.mutate(button, async () => this.store.deleteAnchor(record.id), generation);
@@ -109,14 +125,16 @@ export class TrustManagement {
         this.text(parent, `${this.localize("trustAnchorNetworkLabel")}: ${network.id}`, "trustManagementIdentifier");
         this.text(parent, this.localize("trustNetworkNameSource"));
         this.text(parent, `${this.localize("trustNetworkAnchorCount")}: ${network.anchors.length}`);
-        const statement = parent.appendChild(document.createElement("section"));
-        statement.className = "trustNetworkKeyStatement";
-        const heading = statement.appendChild(document.createElement("h4"));
-        heading.textContent = this.localize("trustNetworkKeyStatementTitle");
-        statement.appendChild(renderTrustAnchorValidation(
-            { signatures: "unavailable", signers: "unavailable", quorum: "unavailable" }, this.localize,
-            activeBundledPublicKeys(this.bundledKeys, deletedKeys).length, "trustNetworkKeyStatementMissing"
-        ));
+        if (network.anchors.every(record => record.downloadedData === undefined)) {
+            const statement = parent.appendChild(document.createElement("section"));
+            statement.className = "trustNetworkKeyStatement";
+            const heading = statement.appendChild(document.createElement("h4"));
+            heading.textContent = this.localize("trustNetworkKeyStatementTitle");
+            statement.appendChild(renderTrustAnchorValidation(
+                { signatures: "unavailable", signers: "unavailable", quorum: "unavailable" }, this.localize,
+                activeBundledPublicKeys(this.bundledKeys, deletedKeys).length, "trustNetworkKeyStatementMissing"
+            ));
+        }
         this.text(parent, this.localize("trustNetworkPoliciesSeparate"));
         for (const record of network.anchors)
             this.renderAnchor(parent, record, generation, deletedKeys);
@@ -194,13 +212,13 @@ export class TrustManagement {
                 }
             }
             else if (this.page === "anchors") {
-                const anchors = await this.store.listAnchors();
+                const [anchors, deletedKeys] = await Promise.all([this.store.listAnchors(), this.store.deletedBundledKeyIds()]);
                 if (this.generation !== generation)
                     return;
                 if (anchors.length === 0)
                     this.text(list, this.localize("trustAnchorsEmpty"));
                 for (const record of anchors)
-                    this.renderAnchor(list, record, generation);
+                    this.renderAnchor(list, record, generation, deletedKeys);
             }
             else {
                 const deleted = await this.store.deletedBundledKeyIds();
@@ -216,7 +234,7 @@ export class TrustManagement {
                     card.dataset["state"] = isDeleted ? "deleted" : "active";
                     if (key.holder !== undefined)
                         this.text(card, key.holder);
-                    this.text(card, key.id, "trustManagementIdentifier");
+                    card.appendChild(renderSecurityFingerprint(key.id, this.localize));
                     this.text(card, this.localize(isDeleted ? "trustBundledKeyDeleted" : "trustBundledKeyActive"));
                     const details = card.appendChild(document.createElement("details"));
                     const summary = details.appendChild(document.createElement("summary"));

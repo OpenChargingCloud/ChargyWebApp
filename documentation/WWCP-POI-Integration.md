@@ -10,6 +10,15 @@ implementiert. Eine nach Netzwerk-ID gruppierte Roamingnetzliste bietet
 Detailansichten zur lokalen Vertrauensbasis und das Löschen aller Anchors
 eines Netzes; siehe [Trust Management](TrustManagement.md).
 Die kryptografische Stations-/Tarifprüfung bleibt geplant.
+Kamera, Zwischenablage und Dateiimport erkennen inzwischen dieselben TA-Formate
+(einschließlich JSON und QR-Bildern). Nach dem Import ist ausdrücklich bestätigtes,
+auf die jeweilige Anchor-Konfiguration begrenztes Schlüsselvertrauen optional
+verfügbar; Details und Test-Fixtures sind in [Trust Management](TrustManagement.md)
+beschrieben. Dies ersetzt keine Signatur- oder Quorumprüfung.
+Der Import ist jetzt zweistufig: zunächst nur Anchor-Inhalt und Key-Hashes mit
+**Importieren/Abbrechen**; erst nach **Importieren** erfolgt der begrenzte Download
+von `/keyStatement`. Dessen Signaturen, Unterzeichnervertrauen, Holder-Quorum und
+Gültigkeit werden tatsächlich geprüft; das Originaldokument wird mitgespeichert.
 
 ## 1. Ausgangspunkt und Leitentscheidungen
 
@@ -57,10 +66,10 @@ Hintergrund und links den in Chargy verwendeten grünen `fa-check-circle`-Haken.
 Die einzelnen Ergebnisse bleiben sichtbar. Die Darstellung erhält ihre
 Ergebnisse getrennt vom QR-Inhalt; ein QR-Code kann keinen Prüfstatus setzen.
 
-Der aktuelle `WWCP/TA-2`-Anchor enthält keine eigenen Signaturen. Die
-Vorschau zeigt deshalb „Keine Signaturen vorhanden“ und zweimal „Nicht
-prüfbar“. Für eine echte Prüfung signierter Anchors ist zuerst ein
-spezifiziertes signiertes Format samt Bibliotheksunterstützung nötig.
+Der aktuelle `WWCP/TA-2`-Anchor enthält keine eigenen Signaturen. Die erste
+Vorschau zeigt deshalb ausschließlich seinen Inhalt, noch keine Prüfstatus.
+Nach **Importieren** werden die Signaturen des geladenen KeyStatements geprüft.
+Ein zusätzlich signierter Anchor würde ein eigenes spezifiziertes Format benötigen.
 Die Mehrfachsignaturen des vorhandenen KeyStatements bestätigen dessen
 Inhalt; sie sind keine Signaturen über die URLs und Texte des Anchors.
 

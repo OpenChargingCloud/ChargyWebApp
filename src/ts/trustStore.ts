@@ -1,5 +1,6 @@
 import { TrustAnchor, hash, toHex } from '@open-charging-cloud/wwcp-poi';
 import type { POIPublicKey } from '@open-charging-cloud/wwcp-poi';
+import type { StoredTrustAnchorData } from './trustAnchorData';
 
 export const trustDatabaseName = "ChargyTrustManagement";
 const anchorsStore = "trustAnchors";
@@ -10,6 +11,14 @@ export interface StoredTrustAnchor {
     readonly qrCode: string;
     readonly sourceText: string;
     readonly importedAt: string;
+    /** Explicit local decisions, scoped to this exact anchor policy, never global roots. */
+    readonly trustedKeys?: readonly ManuallyTrustedKey[];
+    readonly downloadedData?: StoredTrustAnchorData;
+}
+
+export interface ManuallyTrustedKey {
+    readonly id: string;
+    readonly acceptedAt: string;
 }
 
 /** Names/descriptions do not create duplicates between compact and URL forms. */
@@ -35,9 +44,32 @@ function readAnchor(value: unknown): StoredTrustAnchor {
         typeof record["sourceText"] !== "string" || typeof record["importedAt"] !== "string" ||
         !Number.isFinite(Date.parse(record["importedAt"])))
         throw new Error("Invalid stored trust anchor");
-    if (trustAnchorStorageId(TrustAnchor.parse(record["qrCode"])) !== record["id"])
+    const anchor = TrustAnchor.parse(record["qrCode"]);
+    if (trustAnchorStorageId(anchor) !== record["id"])
         throw new Error("Stored trust anchor identity does not match its content");
-    return { id: record["id"], qrCode: record["qrCode"], sourceText: record["sourceText"], importedAt: record["importedAt"] };
+    const trustedKeys: ManuallyTrustedKey[] = [];
+    if (record["trustedKeys"] !== undefined) {
+        if (!Array.isArray(record["trustedKeys"]))
+            throw new Error("Invalid manual key trust");
+        for (const entry of record["trustedKeys"]) {
+            const key = object(entry);
+            if (typeof key["id"] !== "string" || !anchor.keys.includes(key["id"]) ||
+                typeof key["acceptedAt"] !== "string" || !Number.isFinite(Date.parse(key["acceptedAt"])) ||
+                trustedKeys.some(existing => existing.id === key["id"]))
+                throw new Error("Invalid manual key trust");
+            trustedKeys.push({ id: key["id"], acceptedAt: key["acceptedAt"] });
+        }
+    }
+    let downloadedData: StoredTrustAnchorData | undefined;
+    if (record["downloadedData"] !== undefined) {
+        const data = object(record["downloadedData"]);
+        if (typeof data["sourceURL"] !== "string" || typeof data["text"] !== "string" ||
+            typeof data["downloadedAt"] !== "string" || !Number.isFinite(Date.parse(data["downloadedAt"])))
+            throw new Error("Invalid downloaded trust anchor data");
+        downloadedData = { sourceURL: data["sourceURL"], text: data["text"], downloadedAt: data["downloadedAt"] };
+    }
+    return { id: record["id"], qrCode: record["qrCode"], sourceText: record["sourceText"], importedAt: record["importedAt"], trustedKeys,
+             ...(downloadedData === undefined ? {} : { downloadedData }) };
 }
 
 /** Version 1 keeps imports and local exclusions separate from immutable build-time keys. */
@@ -72,18 +104,26 @@ export class TrustStore {
     }
 
     private async transaction<T>(name: string, mode: IDBTransactionMode,
-                                  run: (store: IDBObjectStore, result: (value: T) => void) => void): Promise<T> {
+                                  run: (store: IDBObjectStore, result: (value: T) => void) => void,
+                                  signal?: AbortSignal): Promise<T> {
         const database = await this.open();
+        signal?.throwIfAborted();
         return new Promise<T>((resolve, reject) => {
             const transaction = database.transaction(name, mode);
+            const abort = (): void => { try { transaction.abort(); } catch { /* Already committed. */ } };
+            signal?.addEventListener("abort", abort, { once: true });
             let result: { value: T } | null = null;
             transaction.oncomplete = (): void => {
+                signal?.removeEventListener("abort", abort);
                 if (result === null)
                     reject(new Error("Trust management operation returned no result"));
                 else
                     resolve(result.value);
             };
-            transaction.onabort = (): void => { reject(transaction.error ?? new Error("Trust management operation was aborted")); };
+            transaction.onabort = (): void => {
+                signal?.removeEventListener("abort", abort);
+                reject(transaction.error ?? new Error("Trust management operation was aborted"));
+            };
             transaction.onerror = (): void => { reject(transaction.error ?? new Error("Trust management operation failed")); };
             try {
                 run(transaction.objectStore(name), value => { result = { value }; });
@@ -110,23 +150,59 @@ export class TrustStore {
         });
     }
 
+    public async getAnchor(anchor: TrustAnchor): Promise<StoredTrustAnchor | undefined> {
+        const value = await this.transaction<unknown>(anchorsStore, "readonly", (store, result) => {
+            const request = store.get(trustAnchorStorageId(anchor));
+            request.onsuccess = (): void => { result(request.result); };
+        });
+        return value === undefined ? undefined : readAnchor(value);
+    }
+
+    /** A separate user action; import never calls this. Updating one key preserves concurrent decisions. */
+    public async setKeyTrust(anchorId: string, keyId: string, trusted: boolean): Promise<void> {
+        return this.transaction(anchorsStore, "readwrite", (store, result) => {
+            const request = store.get(anchorId);
+            request.onsuccess = (): void => {
+                try {
+                    const record = readAnchor(request.result);
+                    if (!TrustAnchor.parse(record.qrCode).keys.includes(keyId))
+                        throw new Error("The key is not part of this trust anchor");
+                    const keys = [...(record.trustedKeys ?? [])];
+                    if (trusted && !keys.some(key => key.id === keyId))
+                        keys.push({ id: keyId, acceptedAt: new Date().toISOString() });
+                    store.put({ ...record, trustedKeys: trusted ? keys : keys.filter(key => key.id !== keyId) });
+                    result(undefined);
+                }
+                catch {
+                    store.transaction.abort();
+                }
+            };
+        });
+    }
+
     /** The unique-key check and insertion share one transaction, including across tabs. */
-    public async importAnchor(anchor: TrustAnchor, sourceText: string): Promise<"imported" | "exists"> {
+    public async importAnchor(anchor: TrustAnchor, sourceText: string, downloadedData?: StoredTrustAnchorData,
+                               signal?: AbortSignal): Promise<"imported" | "exists"> {
         const record: StoredTrustAnchor = {
             id: trustAnchorStorageId(anchor), qrCode: anchor.toQRCode(), sourceText,
-            importedAt: new Date().toISOString()
+            importedAt: new Date().toISOString(), ...(downloadedData === undefined ? {} : { downloadedData })
         };
         return this.transaction(anchorsStore, "readwrite", (store, result) => {
-            const request = store.getKey(record.id);
+            const request = store.get(record.id);
             request.onsuccess = (): void => {
-                if (request.result !== undefined)
+                if (request.result !== undefined) {
+                    if (downloadedData !== undefined) {
+                        try { store.put({ ...readAnchor(request.result), downloadedData }); }
+                        catch { store.transaction.abort(); return; }
+                    }
                     result("exists");
+                }
                 else {
                     store.add(record);
                     result("imported");
                 }
             };
-        });
+        }, signal);
     }
 
     public async deleteAnchor(id: string): Promise<void> {

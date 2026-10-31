@@ -1,4 +1,5 @@
-import { TrustAnchor, TRUST_ANCHOR_QR_PREFIX } from '@open-charging-cloud/wwcp-poi';
+import { TrustAnchor, TRUST_ANCHOR_QR_PREFIX, TRUST_ANCHOR_CONTEXT, parseJSON, isObject } from '@open-charging-cloud/wwcp-poi';
+import { renderSecurityFingerprint } from './securityFingerprintView';
 
 export interface TrustAnchorPreview {
     readonly anchor: TrustAnchor;
@@ -12,32 +13,51 @@ export interface TrustAnchorValidation {
     readonly signatures: TrustAnchorCheckState;
     readonly signers: TrustAnchorCheckState;
     readonly quorum: TrustAnchorCheckState;
+    readonly validity?: TrustAnchorCheckState;
+    readonly reasons?: Readonly<Partial<Record<"signatures" | "signers" | "quorum" | "validity", string>>>;
 }
 
 export interface TrustAnchorPreviewOptions {
-    readonly isImported?: boolean;
     readonly busy?: boolean;
-    readonly activeTrustedKeyCount?: number;
     readonly onImport?: () => void;
     readonly onDiscard?: () => void;
 }
 
-// TA-2 has no anchor signatures. Key pins and their count are not verification results.
-const unsignedAnchorValidation: TrustAnchorValidation = {
-    signatures: "unavailable",
-    signers: "unavailable",
-    quorum: "unavailable"
-};
-
 export type ScannedTrustAnchor =
     | { readonly kind: "other" }
-    | { readonly kind: "invalid"; readonly message: string }
+    | { readonly kind: "invalid"; readonly message: string; readonly messageKey?: string }
     | { readonly kind: "anchor"; readonly preview: TrustAnchorPreview };
 
-/** Recognize the two QR representations without following URLs or establishing trust. */
-export function parseScannedTrustAnchor(text: string): ScannedTrustAnchor {
+/** Shared by camera, clipboard and files. Never follows URLs or establishes trust. */
+export function parseTrustAnchorInput(text: string): ScannedTrustAnchor {
     const trimmed = text.trim();
     let candidate = trimmed.startsWith(TRUST_ANCHOR_QR_PREFIX);
+
+    if (trimmed.startsWith("{")) {
+        candidate = trimmed.includes(TRUST_ANCHOR_CONTEXT) || /"trustAnchor"\s*:/.test(trimmed);
+        try {
+            const parsed = parseJSON(trimmed);
+            if (isObject(parsed)) {
+                const context = parsed["@context"];
+                const direct = context === TRUST_ANCHOR_CONTEXT || Array.isArray(context) && context.includes(TRUST_ANCHOR_CONTEXT);
+                // Do not consume a charging receipt or evidence bundle merely because it embeds an anchor.
+                const responseFields = ["roamingNetworkId", "identityKeyIds", "minConsensus", "uri", "qrCode", "trustAnchor"];
+                const response = "trustAnchor" in parsed && Object.keys(parsed).every(key => responseFields.includes(key));
+                if (!direct && !response)
+                    return { kind: "other" };
+                const value = response ? parsed["trustAnchor"] : parsed;
+                if (isObject(value)) {
+                    const valueContext = value["@context"];
+                    if (valueContext === TRUST_ANCHOR_CONTEXT || Array.isArray(valueContext) && valueContext.includes(TRUST_ANCHOR_CONTEXT))
+                        return { kind: "anchor", preview: { anchor: TrustAnchor.fromJSON(value), text: trimmed } };
+                }
+            }
+            return candidate ? { kind: "invalid", message: "Invalid trust anchor document" } : { kind: "other" };
+        }
+        catch (error) {
+            return candidate ? { kind: "invalid", message: error instanceof Error ? error.message : String(error) } : { kind: "other" };
+        }
+    }
 
     if (!candidate) {
         try {
@@ -62,6 +82,8 @@ export function parseScannedTrustAnchor(text: string): ScannedTrustAnchor {
     }
 }
 
+export const parseScannedTrustAnchor = parseTrustAnchorInput;
+
 /** All three checks must pass before the whole field receives the success appearance. */
 export function renderTrustAnchorValidation(result: TrustAnchorValidation,
                                             localize: (key: string) => string,
@@ -69,7 +91,7 @@ export function renderTrustAnchorValidation(result: TrustAnchorValidation,
                                             unavailableReason?: string): HTMLElement {
     const validation = document.createElement("section");
     validation.className = "trustAnchorValidation";
-    const states = [ result.signatures, result.signers, result.quorum ];
+    const states = [ result.signatures, result.signers, result.quorum, ...(result.validity === undefined ? [] : [result.validity]) ];
     const allValid = states.every(state => state === "valid");
     validation.dataset["state"] = allValid ? "valid" : states.includes("invalid") ? "invalid" : "unavailable";
     validation.setAttribute("aria-labelledby", "trustAnchorValidationTitle");
@@ -83,11 +105,13 @@ export function renderTrustAnchorValidation(result: TrustAnchorValidation,
         validationTitle.prepend(icon, document.createTextNode(" "));
     }
 
-    const checks = [
+    const checks: { id: "signatures" | "signers" | "quorum" | "validity", state: TrustAnchorCheckState, label: string, reason: string }[] = [
         { id: "signatures", state: result.signatures, label: "trustAnchorSignaturesValid", reason: "trustAnchorNoSignatures" },
         { id: "signers", state: result.signers, label: "trustAnchorSignersTrusted", reason: "trustAnchorSignersNotCheckable" },
         { id: "quorum", state: result.quorum, label: "trustAnchorQuorumMet", reason: "trustAnchorQuorumNotCheckable" }
     ];
+    if (result.validity !== undefined)
+        checks.push({ id: "validity", state: result.validity, label: "trustDataValidityLabel", reason: "trustDataValidityUnknown" });
     const checkList = validation.appendChild(document.createElement("ul"));
     for (const check of checks) {
         const row = checkList.appendChild(document.createElement("li"));
@@ -106,7 +130,7 @@ export function renderTrustAnchorValidation(result: TrustAnchorValidation,
         const label = content.appendChild(document.createElement("strong"));
         label.textContent = localize(check.label);
         const reason = content.appendChild(document.createElement("p"));
-        reason.textContent = localize(check.state === "valid" ? "trustAnchorCheckPassed" :
+        reason.textContent = result.reasons?.[check.id] ?? localize(check.state === "valid" ? "trustAnchorCheckPassed" :
                                       check.state === "invalid" ? "trustAnchorCheckFailed" : unavailableReason ?? check.reason);
     }
     const trustPolicy = validation.appendChild(document.createElement("p"));
@@ -119,11 +143,10 @@ export function renderTrustAnchorValidation(result: TrustAnchorValidation,
     return validation;
 }
 
-/** Display QR data alongside independently supplied verification results. */
+/** Step one contains only the supplied anchor. No storage, downloads, key trust or verification. */
 export function renderTrustAnchorPreview(preview: TrustAnchorPreview,
                                          language: string,
                                          localize: (key: string) => string,
-                                         validation: TrustAnchorValidation = unsignedAnchorValidation,
                                          options: TrustAnchorPreviewOptions = {}): HTMLElement {
     const { anchor, text } = preview;
     const section = document.createElement("section");
@@ -133,11 +156,6 @@ export function renderTrustAnchorPreview(preview: TrustAnchorPreview,
     const title = section.appendChild(document.createElement("h2"));
     title.id = "trustAnchorPreviewTitle";
     title.textContent = localize("trustAnchorPreviewTitle");
-
-    const notice = section.appendChild(document.createElement("p"));
-    notice.className = "trustAnchorPreviewNotice";
-    notice.textContent = localize(options.isImported === true ? "trustAnchorAlreadyImported" : "trustAnchorPreviewNotice");
-    section.appendChild(renderTrustAnchorValidation(validation, localize, options.activeTrustedKeyCount));
 
     const fields = section.appendChild(document.createElement("dl"));
     const addField = (label: string, values: readonly string[], monospace: boolean = false): void => {
@@ -167,18 +185,22 @@ export function renderTrustAnchorPreview(preview: TrustAnchorPreview,
     addField(localize("trustAnchorQuorumLabel"), [ `${anchor.minConsensus} / ${anchor.holders.length}` ]);
 
     const keys = section.appendChild(document.createElement("details"));
+    keys.open = true;
     const keysSummary = keys.appendChild(document.createElement("summary"));
     keysSummary.textContent = `${localize("trustAnchorIdentityKeysLabel")} (${anchor.keys.length})`;
+    const holders = keys.appendChild(document.createElement("div"));
+    holders.className = "trustAnchorFingerprintHolders";
     for (const [index, holder] of anchor.holders.entries()) {
-        const group = keys.appendChild(document.createElement("div"));
+        const group = holders.appendChild(document.createElement("div"));
         group.className = "trustAnchorHolder";
+        group.style.flexGrow = String(holder.length);
+        group.style.flexBasis = `${Math.min(holder.length, 2) * 164}px`;
         const heading = group.appendChild(document.createElement("h3"));
         heading.textContent = `${localize("trustAnchorHolderLabel")} ${index + 1}`;
-        for (const key of holder) {
-            const fingerprint = group.appendChild(document.createElement("div"));
-            fingerprint.className = "trustAnchorMonospace";
-            fingerprint.textContent = key;
-        }
+        const grid = group.appendChild(document.createElement("div"));
+        grid.className = "securityFingerprintGrid";
+        for (const key of holder)
+            grid.appendChild(renderSecurityFingerprint(key, localize));
     }
 
     const raw = section.appendChild(document.createElement("details"));
@@ -194,15 +216,15 @@ export function renderTrustAnchorPreview(preview: TrustAnchorPreview,
         button.type = "button";
         button.dataset["action"] = "import";
         button.className = "trustAnchorImport";
-        button.textContent = localize(options.isImported === true ? "trustAnchorImportedLabel" : "trustAnchorImportLabel");
-        button.disabled = options.isImported === true || options.busy === true;
+        button.textContent = localize("trustAnchorImportLabel");
+        button.disabled = options.busy === true;
         button.onclick = options.onImport;
     }
     if (options.onDiscard !== undefined) {
         const button = actions.appendChild(document.createElement("button"));
         button.type = "button";
         button.dataset["action"] = "discard";
-        button.textContent = localize(options.isImported === true ? "trustCloseLabel" : "trustAnchorDiscardLabel");
+        button.textContent = localize("trustManualCancel");
         button.onclick = options.onDiscard;
     }
 

@@ -106,7 +106,12 @@ import {
 }                                      from './trustAnchorPreview';
 import { TrustStore }                  from './trustStore';
 import { TrustManagement }             from './trustManagement';
-import { bundledTrustedPublicKeys, getActiveBundledTrustedPublicKeys } from './bundledTrustedPublicKeys';
+import { bundledTrustedPublicKeys }    from './bundledTrustedPublicKeys';
+import type { StoredTrustAnchor }      from './trustStore';
+import { findTrustAnchorImport }       from './trustAnchorImport';
+import { downloadTrustAnchorData, validateTrustAnchorData } from './trustAnchorData';
+import type { LoadedTrustAnchorData }  from './trustAnchorData';
+import { renderTrustAnchorData }       from './trustAnchorDataView';
 // import {
 //     normalizePublicKeys,
 //     tryParseStandalonePublicKeys
@@ -701,6 +706,7 @@ export class ChargyApp {
     private readonly qrCodeScannerResultText:            HTMLPreElement;
     private readonly qrCodeScannerRawContentDiv:         HTMLDivElement;
     private readonly qrCodeScannerTrustAnchorDiv:        HTMLDivElement;
+    private readonly qrCodeScannerTrustAnchorActionsDiv: HTMLDivElement;
     private readonly qrCodeScannerURLActionsDiv:         HTMLDivElement;
     private readonly qrCodeScannerOpenURLButton:         HTMLButtonElement;
     private readonly qrCodeScannerRescanButton:          HTMLButtonElement;
@@ -712,6 +718,8 @@ export class ChargyApp {
     private          qrCodeScannerLastURL:               URL         | null   = null;
     private          qrCodeScannerTrustAnchor:           TrustAnchorPreview | null = null;
     private          qrCodeScannerPreviewGeneration = 0;
+    private          qrCodeScannerTrustAnchorData: LoadedTrustAnchorData | null = null;
+    private          qrCodeScannerTrustAnchorAbort: AbortController | null = null;
 
     private          currentChargeTransparencyRecord:    chargeTransparencyRecord.IChargeTransparencyRecord     | null   = null;
     private          currentChargeTransparencyLiveLink:  chargeTransparencyLiveLink.IChargeTransparencyLiveLink | null   = null;
@@ -911,6 +919,7 @@ export class ChargyApp {
         this.qrCodeScannerResultText                  = this.qrCodeScannerDiv.querySelector("#qrCodeScannerResultText")     as HTMLPreElement;
         this.qrCodeScannerRawContentDiv               = this.qrCodeScannerDiv.querySelector("#qrCodeScannerRawContent")     as HTMLDivElement;
         this.qrCodeScannerTrustAnchorDiv              = this.qrCodeScannerDiv.querySelector("#qrCodeScannerTrustAnchorPreview") as HTMLDivElement;
+        this.qrCodeScannerTrustAnchorActionsDiv       = this.qrCodeScannerDiv.querySelector("#qrCodeScannerTrustAnchorActions") as HTMLDivElement;
         this.qrCodeScannerURLActionsDiv               = this.qrCodeScannerDiv.querySelector("#qrCodeScannerURLActions")     as HTMLDivElement;
         this.qrCodeScannerOpenURLButton               = this.qrCodeScannerDiv.querySelector("#qrCodeScannerOpenURLButton")  as HTMLButtonElement;
         this.qrCodeScannerRescanButton                = this.qrCodeScannerDiv.querySelector("#qrCodeScannerRescanButton")   as HTMLButtonElement;
@@ -1710,8 +1719,14 @@ export class ChargyApp {
 
     private rerenderCurrentView(): void {
 
-        if (this.qrCodeScannerTrustAnchor != null)
-            void this.showQRCodeScannerTrustAnchor(this.qrCodeScannerTrustAnchor);
+        if (this.qrCodeScannerTrustAnchor != null) {
+            if (this.qrCodeScannerTrustAnchorData !== null)
+                void this.refreshQRCodeScannerTrustAnchorData().catch(() => {
+                    this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage("trustStorageError");
+                });
+            else
+                this.showQRCodeScannerTrustAnchor(this.qrCodeScannerTrustAnchor);
+        }
 
         this.trustManagement.refresh();
 
@@ -2581,6 +2596,15 @@ export class ChargyApp {
 
     private resetQRCodeScannerDialog(statusText: string): void
     {
+        this.qrCodeScannerTrustAnchorAbort?.abort();
+        this.qrCodeScannerTrustAnchorAbort = null;
+        this.qrCodeScannerTrustAnchorData = null;
+        const intro = this.qrCodeScannerDiv.querySelector<HTMLElement>(".headline .intro");
+        if (intro !== null) {
+            intro.dataset["i18nKey"] = "scanQRCodeLabel";
+            intro.textContent = this.chargy.GetLocalizedMessage("scanQRCodeLabel");
+        }
+        this.qrCodeScannerRescanButton.style.removeProperty("display");
 
         this.qrCodeScannerErrorDiv.textContent             = "";
         this.qrCodeScannerStatusDiv.textContent            = statusText;
@@ -2590,6 +2614,8 @@ export class ChargyApp {
         this.qrCodeScannerTrustAnchor                      = null;
         this.qrCodeScannerPreviewGeneration++;
         this.qrCodeScannerTrustAnchorDiv.replaceChildren();
+        this.qrCodeScannerTrustAnchorActionsDiv.replaceChildren();
+        this.qrCodeScannerTrustAnchorActionsDiv.hidden = true;
         this.qrCodeScannerTrustAnchorDiv.hidden            = true;
         this.qrCodeScannerRawContentDiv.hidden             = false;
         this.qrCodeScannerDiv.classList.remove("showingTrustAnchor");
@@ -2657,7 +2683,7 @@ export class ChargyApp {
         const trustAnchor = parseScannedTrustAnchor(qrText);
         if (trustAnchor.kind === "anchor")
         {
-            await this.showQRCodeScannerTrustAnchor(trustAnchor.preview);
+            this.showQRCodeScannerTrustAnchor(trustAnchor.preview);
             return;
         }
         if (trustAnchor.kind === "invalid")
@@ -2690,65 +2716,144 @@ export class ChargyApp {
 
     }
 
-    private async showQRCodeScannerTrustAnchor(preview: TrustAnchorPreview): Promise<void>
+    private showQRCodeScannerTrustAnchor(preview: TrustAnchorPreview): void
     {
+        this.qrCodeScannerTrustAnchorAbort?.abort();
+        this.qrCodeScannerTrustAnchorAbort = null;
+        this.qrCodeScannerTrustAnchorData = null;
         const generation = ++this.qrCodeScannerPreviewGeneration;
         this.qrCodeScannerTrustAnchor = preview;
         this.stopQRCodeScannerCamera();
+        this.qrCodeScannerDiv.style.display = "block";
         this.qrCodeScannerDiv.classList.add("showingTrustAnchor");
+        const intro = this.qrCodeScannerDiv.querySelector<HTMLElement>(".headline .intro");
+        if (intro !== null) {
+            intro.dataset["i18nKey"] = "trustAnchorPreviewTitle";
+            intro.textContent = this.chargy.GetLocalizedMessage("trustAnchorPreviewTitle");
+        }
+        this.qrCodeScannerRescanButton.style.display = "none";
         this.qrCodeScannerErrorDiv.textContent = "";
         this.qrCodeScannerResultDiv.style.display = "flex";
         this.qrCodeScannerRawContentDiv.hidden = true;
         this.qrCodeScannerURLActionsDiv.style.display = "none";
         this.qrCodeScannerLastURL = null;
         this.qrCodeScannerTrustAnchorDiv.hidden = false;
-        const render = (isImported: boolean, busy: boolean, activeTrustedKeyCount: number): void => {
-            this.qrCodeScannerTrustAnchorDiv.replaceChildren(renderTrustAnchorPreview(
-                preview, this.UILanguage, key => this.chargy.GetLocalizedMessage(key), undefined,
-                { isImported, busy, activeTrustedKeyCount,
-                  onImport: () => { void this.importQRCodeScannerTrustAnchor(preview, generation); },
-                  onDiscard: () => { this.closeQRCodeScanner(); } }
-            ));
-        };
-        render(false, true, 0);
-        this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("trustAnchorDetected"));
-        try {
-            const [isImported, keys] = await Promise.all([
-                this.trustStore.hasAnchor(preview.anchor), getActiveBundledTrustedPublicKeys(this.trustStore)
-            ]);
-            if (generation !== this.qrCodeScannerPreviewGeneration)
-                return;
-            render(isImported, false, keys.length);
-            if (isImported)
-                this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("trustAnchorAlreadyImported"));
-        }
-        catch {
-            if (generation === this.qrCodeScannerPreviewGeneration) {
-                render(false, false, 0);
-                this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage("trustStorageError");
+        this.qrCodeScannerTrustAnchorDiv.dataset["stage"] = "preview";
+        this.qrCodeScannerTrustAnchorDiv.setAttribute("aria-busy", "false");
+        this.mountQRCodeScannerTrustAnchorContent(renderTrustAnchorPreview(
+            preview, this.UILanguage, key => this.chargy.GetLocalizedMessage(key), {
+                onImport: () => { void this.importQRCodeScannerTrustAnchor(preview, generation); },
+                onDiscard: () => { this.closeQRCodeScanner(); }
             }
-        }
+        ));
+        this.setQRCodeScannerStatus("");
     }
 
     private async importQRCodeScannerTrustAnchor(preview: TrustAnchorPreview, generation: number): Promise<void>
     {
         if (generation !== this.qrCodeScannerPreviewGeneration)
             return;
-        for (const button of this.qrCodeScannerTrustAnchorDiv.querySelectorAll<HTMLButtonElement>("button"))
-            button.disabled = true;
+        const controls = [...this.qrCodeScannerDiv.querySelectorAll<HTMLButtonElement>("button")]
+            .map(button => ({ button, disabled: button.disabled }));
+        for (const { button } of controls)
+            if (button.dataset["action"] !== "discard")
+                button.disabled = true;
+        const controller = new AbortController();
+        this.qrCodeScannerTrustAnchorAbort?.abort();
+        this.qrCodeScannerTrustAnchorAbort = controller;
+        this.qrCodeScannerTrustAnchorDiv.setAttribute("aria-busy", "true");
         this.qrCodeScannerErrorDiv.textContent = "";
+        this.setQRCodeScannerStatus(this.chargy.GetLocalizedMessage("trustDataLoading"));
+        let phase: "download" | "storage" = "download";
         try {
-            await this.trustStore.importAnchor(preview.anchor, preview.text);
-            if (generation === this.qrCodeScannerPreviewGeneration)
-                await this.showQRCodeScannerTrustAnchor(preview);
-        }
-        catch {
+            const data = await downloadTrustAnchorData(preview.anchor, {
+                signal: controller.signal, allowances: transportAllowances, additionalKeys: bundledTrustedPublicKeys
+            });
+            if (generation !== this.qrCodeScannerPreviewGeneration)
+                return;
+            this.qrCodeScannerTrustAnchorData = data;
+            phase = "storage";
+            let record = await this.trustStore.getAnchor(preview.anchor);
+            const deleted = await this.trustStore.deletedBundledKeyIds();
+            controller.signal.throwIfAborted();
+            if (generation !== this.qrCodeScannerPreviewGeneration)
+                return;
+            const validation = validateTrustAnchorData(preview.anchor, data, record, bundledTrustedPublicKeys, deleted);
+            if (validation.canTrustKeys) {
+                await this.trustStore.importAnchor(preview.anchor, preview.text, data.document, controller.signal);
+                record = await this.trustStore.getAnchor(preview.anchor);
+            }
             if (generation === this.qrCodeScannerPreviewGeneration) {
-                this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage("trustStorageError");
-                for (const button of this.qrCodeScannerTrustAnchorDiv.querySelectorAll<HTMLButtonElement>("button"))
-                    button.disabled = false;
+                this.renderQRCodeScannerTrustAnchorData(preview, data, record, deleted);
+                this.trustManagement.refresh();
             }
         }
+        catch {
+            if (generation === this.qrCodeScannerPreviewGeneration && !controller.signal.aborted) {
+                if (phase === "storage" && this.qrCodeScannerTrustAnchorData !== null)
+                    this.renderQRCodeScannerTrustAnchorData(preview, this.qrCodeScannerTrustAnchorData, undefined,
+                        new Set(bundledTrustedPublicKeys.map(key => key.id)));
+                this.qrCodeScannerErrorDiv.textContent = this.chargy.GetLocalizedMessage(phase === "download" ? "trustDataDownloadFailed" : "trustStorageError");
+                this.qrCodeScannerTrustAnchorDiv.setAttribute("aria-busy", "false");
+                this.setQRCodeScannerStatus("");
+                for (const { button, disabled } of controls)
+                    button.disabled = disabled;
+            }
+        }
+        finally {
+            if (this.qrCodeScannerTrustAnchorAbort === controller)
+                this.qrCodeScannerTrustAnchorAbort = null;
+        }
+    }
+
+    private renderQRCodeScannerTrustAnchorData(preview: TrustAnchorPreview, data: LoadedTrustAnchorData,
+                                               record: StoredTrustAnchor | undefined, deleted: ReadonlySet<string>): void {
+        const generation = ++this.qrCodeScannerPreviewGeneration;
+        this.qrCodeScannerTrustAnchorDiv.dataset["stage"] = "downloaded";
+        this.qrCodeScannerTrustAnchorDiv.setAttribute("aria-busy", "false");
+        this.setQRCodeScannerStatus("");
+        const content = renderTrustAnchorData(preview.anchor, data, {
+            record, deleted, bundled: bundledTrustedPublicKeys, localize: key => this.chargy.GetLocalizedMessage(key),
+            onChange: async (keyId, trusted) => {
+                if (generation !== this.qrCodeScannerPreviewGeneration || record === undefined)
+                    return;
+                await this.trustStore.setKeyTrust(record.id, keyId, trusted);
+                if (generation === this.qrCodeScannerPreviewGeneration)
+                    await this.refreshQRCodeScannerTrustAnchorData();
+                this.trustManagement.refresh();
+            }
+        });
+        const actions = content.appendChild(document.createElement("div"));
+        actions.className = "trustAnchorPreviewActions";
+        const reload = actions.appendChild(document.createElement("button"));
+        reload.type = "button";
+        reload.textContent = this.chargy.GetLocalizedMessage("trustDataReload");
+        reload.dataset["action"] = "reload";
+        reload.onclick = (): void => { void this.importQRCodeScannerTrustAnchor(preview, generation); };
+        const close = actions.appendChild(document.createElement("button"));
+        close.type = "button";
+        close.textContent = this.chargy.GetLocalizedMessage("trustCloseLabel");
+        close.dataset["action"] = "discard";
+        close.onclick = (): void => { this.closeQRCodeScanner(); };
+        this.mountQRCodeScannerTrustAnchorContent(content);
+    }
+
+    private mountQRCodeScannerTrustAnchorContent(content: HTMLElement): void {
+        const actions = content.querySelector<HTMLElement>(".trustAnchorPreviewActions");
+        this.qrCodeScannerTrustAnchorActionsDiv.replaceChildren(...(actions === null ? [] : [actions]));
+        this.qrCodeScannerTrustAnchorActionsDiv.hidden = actions === null;
+        this.qrCodeScannerTrustAnchorDiv.replaceChildren(content);
+    }
+
+    private async refreshQRCodeScannerTrustAnchorData(): Promise<void> {
+        const preview = this.qrCodeScannerTrustAnchor;
+        const data = this.qrCodeScannerTrustAnchorData;
+        const generation = this.qrCodeScannerPreviewGeneration;
+        if (preview === null || data === null)
+            return;
+        const [record, deleted] = await Promise.all([this.trustStore.getAnchor(preview.anchor), this.trustStore.deletedBundledKeyIds()]);
+        if (generation === this.qrCodeScannerPreviewGeneration)
+            this.renderQRCodeScannerTrustAnchorData(preview, data, record, deleted);
     }
 
     private showQRCodeScannerRejectedText(qrText: string,
@@ -3067,6 +3172,27 @@ export class ChargyApp {
 
     private async detectAndConvertContentFormat(FileInfos:  Array<chargyInterfaces.IFileInfo>|chargyInterfaces.IFileInfo|string,
                                                 options?:   DetectionOptions): Promise<boolean> {
+
+        const trustAnchor = await findTrustAnchorImport(FileInfos);
+        if (options?.isCurrent !== undefined && !options.isCurrent())
+            return false;
+        if (trustAnchor.kind !== "other") {
+            if (trustAnchor.kind === "anchor" && options?.liveReload !== true) {
+                this.showQRCodeScannerTrustAnchor(trustAnchor.preview);
+                return true;
+            }
+            const error = {
+                status: chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,
+                message: this.chargy.GetMultilanguageText(trustAnchor.kind === "invalid" ? trustAnchor.messageKey ?? "trustAnchorInvalid" : "trustAnchorInvalid"),
+                exception: new Error(trustAnchor.kind === "invalid" ? trustAnchor.message : "A live response must contain session data, not a trust anchor"),
+                certainty: 0
+            };
+            if (options?.onError !== undefined)
+                options.onError(error);
+            else
+                this.doGlobalError(error);
+            return false;
+        }
 
         if (options?.prepareUI !== false)
         {

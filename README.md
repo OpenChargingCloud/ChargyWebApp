@@ -149,6 +149,12 @@ Local anchor imports and per-installation key removal are available under
 [`documentation/TrustManagement.md`](documentation/TrustManagement.md).
 Its **Roaming networks** section groups imported anchors by network and shows
 their details, current local key trust and deletion controls.
+Camera, clipboard and file imports share TrustAnchor detection. The first preview
+shows only anchor content and key hashes; Import then downloads and verifies the
+RNO's KeyStatement before displaying validation results. Imported anchors
+offer optional, explicit trust decisions for individual key pins, scoped to the
+selected anchor configuration. See the public
+[TrustAnchor test fixtures](tests/fixtures/TrustAnchors/README.md) for sample inputs.
 See the English [WWCP POI Trust Architecture](documentation/WWCP-POI-Trust-Architecture.md)
 for the data relationships, verification chain, remaining integration work and
 logical risks.

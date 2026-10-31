@@ -1,5 +1,41 @@
 {
 
+    "fingerprintImageLabel": { "de": "Visueller Fingerprint", "en": "Visual fingerprint" },
+    "fingerprintShowLabel": { "de": "Fingerprint anzeigen", "en": "Show fingerprint" },
+    "fingerprintCopyLabel": { "de": "Kopieren", "en": "Copy" },
+    "fingerprintCopiedLabel": { "de": "Kopiert", "en": "Copied" },
+    "fingerprintCopyFailed": { "de": "Kopieren nicht möglich. Bitte den Fingerprint markieren und kopieren.", "en": "Could not copy. Please select and copy the fingerprint." },
+
+    "trustDataTitle": { "de": "Geladenes KeyStatement", "en": "Downloaded KeyStatement" },
+    "trustDataLoading": { "de": "Datensatz wird geladen …", "en": "Downloading record …" },
+    "trustDataDownloadFailed": { "de": "Der Datensatz konnte von keiner der angegebenen Quellen geladen werden. Es wurde nichts importiert. Bitte erneut versuchen.", "en": "The record could not be downloaded from any of the listed sources. Nothing was imported. Please try again." },
+    "trustDataNotSaved": { "de": "Dieser geladene Datensatz wurde nicht gespeichert. Signaturen und Gültigkeit müssen erfolgreich geprüft und der lokale Speicher verfügbar sein.", "en": "This downloaded record was not saved. Signatures and validity must pass verification and local storage must be available." },
+    "trustDataReload": { "de": "Erneut laden", "en": "Reload record" },
+    "trustDataOperatorLabel": { "de": "Roamingnetzbetreiber-ID", "en": "Roaming network operator ID" },
+    "trustDataSignedAtLabel": { "de": "Signiert am", "en": "Signed at" },
+    "trustDataValidUntilLabel": { "de": "Gültig bis", "en": "Valid until" },
+    "trustDataSourceLabel": { "de": "Geladen von", "en": "Downloaded from" },
+    "trustDataDownloadedAtLabel": { "de": "Geladen am", "en": "Downloaded at" },
+    "trustDataKeysLabel": { "de": "Vollständige Identity Keys im KeyStatement", "en": "Full identity keys in the KeyStatement" },
+    "trustDataRawLabel": { "de": "Signierten Datensatz anzeigen", "en": "Show signed record" },
+    "trustDataDiagnosticLabel": { "de": "Prüfdetails", "en": "Verification details" },
+    "trustDataValidityLabel": { "de": "Gültigkeitszeitraum gültig", "en": "Validity period valid" },
+    "trustDataValidityUnknown": { "de": "Gültigkeitszeitraum nicht prüfbar.", "en": "Validity period cannot be checked." },
+    "trustDataStoredInvalid": { "de": "Der gespeicherte Datensatz kann nicht gelesen oder diesem Anchor zugeordnet werden. Es wird kein Vertrauen daraus abgeleitet.", "en": "The stored record cannot be read or associated with this anchor. No trust is derived from it." },
+
+    "trustManualTitle": { "de": "Optional: Schlüsselvertrauen", "en": "Optional: key trust" },
+    "trustManualImportFirst": { "de": "Nach dem Import können Sie einzelnen Schlüsseln ausdrücklich vertrauen. Der Import allein erteilt kein Vertrauen.", "en": "After import, you can explicitly trust individual keys. Import alone does not grant trust." },
+    "trustManualDescription": { "de": "Manuelles Vertrauen gilt nur für diese TrustAnchor-Konfiguration mit ihren Datenquellen, Schlüsselinhabern und ihrem Quorum. Es bestätigt keine Signaturen und gilt nicht für andere Imports.", "en": "Manual trust applies only to this trust anchor configuration, including its sources, holders and quorum. It does not verify signatures or apply to other imports." },
+    "trustManualAccepted": { "de": "Manuell vertraut · nur für diese TrustAnchor-Konfiguration", "en": "Manually trusted · only for this trust anchor configuration" },
+    "trustManualAcceptedAt": { "de": "Vertrauen erteilt am", "en": "Trust granted at" },
+    "trustManualStart": { "de": "Diesem Schlüssel vertrauen …", "en": "Trust this key …" },
+    "trustManualConfirmDescription": { "de": "Vergleichen Sie den Fingerprint über einen unabhängigen Weg. Mit der Bestätigung akzeptieren Sie diesen Schlüssel in der hier angezeigten Inhaberzuordnung und mit dem angegebenen Quorum. Signaturen und Gültigkeit werden unabhängig von Ihrer Vertrauensentscheidung geprüft.", "en": "Compare the fingerprint through an independent channel. Confirming accepts this key with the holder assignment and quorum shown here. Signatures and validity are checked independently of your trust decision." },
+    "trustManualDeletedKeyNote": { "de": "Dieser Key wurde lokal aus der mitgelieferten Liste entfernt. Sie erteilen hier ausschließlich Vertrauen für diese Konfiguration.", "en": "This key was locally removed from the bundled list. You are granting trust only for this configuration." },
+    "trustManualConfirm": { "de": "Schlüssel ausdrücklich vertrauen", "en": "Explicitly trust key" },
+    "trustManualCancel": { "de": "Abbrechen", "en": "Cancel" },
+    "trustManualRevoke": { "de": "Manuelles Vertrauen zurücknehmen", "en": "Withdraw manual trust" },
+    "trustAnchorSingleFile": { "de": "Bitte TrustAnchor-Dateien einzeln und getrennt von anderen Dateien importieren. Es wurde keine Datei aus dieser Auswahl importiert.", "en": "Please import trust anchor files individually, separately from other files. No file from this selection was imported." },
+
     "trustManagementTitle": { "de": "Trust Management", "en": "Trust Management" },
     "trustManagementDescription": { "de": "Roamingnetze, Trust Anchors und mitgelieferte Public Keys verwalten.", "en": "Manage roaming networks, trust anchors and bundled public keys." },
     "trustRoamingNetworksTitle": { "de": "Roamingnetze", "en": "Roaming networks" },
@@ -35,7 +71,7 @@
     "trustBundledKeyRestore": { "de": "Key wiederherstellen", "en": "Restore key" },
     "trustStorageError": { "de": "Der lokale Vertrauensspeicher ist nicht verfügbar. Die Änderung wurde nicht bestätigt. Bitte erneut versuchen.", "en": "Local trust storage is unavailable. The change could not be confirmed. Please try again." },
     "trustRetryLabel": { "de": "Erneut versuchen", "en": "Retry" },
-    "trustAnchorImportLabel": { "de": "Import", "en": "Import" },
+    "trustAnchorImportLabel": { "de": "Importieren", "en": "Import" },
     "trustAnchorDiscardLabel": { "de": "Verwerfen", "en": "Discard" },
     "trustAnchorImportedLabel": { "de": "Bereits importiert", "en": "Already imported" },
     "trustAnchorAlreadyImported": { "de": "Dieser Trust Anchor ist bereits gespeichert. Seine Prüfstatus bleiben davon unabhängig.", "en": "This trust anchor is already saved. Its validation status remains independent." },
@@ -46,8 +82,8 @@
         "en": "Trust anchor"
     },
     "trustAnchorPreviewNotice": {
-        "de": "Vorschau der QR-Code-Daten. Dieser Trust Anchor wurde noch nicht importiert.",
-        "en": "Preview of the QR code data. This trust anchor has not been imported."
+        "de": "Vorschau der eingelesenen Daten. Dieser Trust Anchor wurde noch nicht importiert.",
+        "en": "Preview of the supplied data. This trust anchor has not been imported."
     },
     "trustAnchorValidationTitle": {
         "de": "Vertrauensprüfung",
@@ -86,8 +122,8 @@
         "en": "Cannot be checked: no valid signatures from trusted signers are available."
     },
     "trustAnchorTrustPolicy": {
-        "de": "Vertrauensbasis sind die mit Chargy ausgelieferten Public Keys. Die Schlüsselangaben im QR-Code begründen kein zusätzliches Vertrauen.",
-        "en": "Trust is based on the public keys shipped with Chargy. Keys listed in the QR code do not establish additional trust."
+        "de": "Vertrauensbasis sind die aktiven mitgelieferten Public Keys und Ihre ausdrücklichen lokalen Vertrauensentscheidungen. Ein Import allein begründet kein zusätzliches Vertrauen.",
+        "en": "Trust is based on active bundled public keys and your explicit local trust decisions. Import alone does not establish additional trust."
     },
     "trustAnchorBundledKeysLabel": {
         "de": "Mitgelieferte vertrauenswürdige Public Keys",
@@ -98,16 +134,16 @@
         "en": "Trust anchor detected"
     },
     "trustAnchorInvalid": {
-        "de": "Der QR-Code enthält einen ungültigen Trust Anchor.",
-        "en": "The QR code contains an invalid trust anchor."
+        "de": "Die Eingabe enthält einen ungültigen Trust Anchor.",
+        "en": "The input contains an invalid trust anchor."
     },
     "trustAnchorNameLabel": {
-        "de": "Name aus dem QR-Code",
-        "en": "Name from the QR code"
+        "de": "Name aus dem Trust Anchor",
+        "en": "Name from the trust anchor"
     },
     "trustAnchorDescriptionLabel": {
-        "de": "Beschreibung aus dem QR-Code",
-        "en": "Description from the QR code"
+        "de": "Beschreibung aus dem Trust Anchor",
+        "en": "Description from the trust anchor"
     },
     "trustAnchorNetworkLabel": {
         "de": "Roamingnetz-ID",
