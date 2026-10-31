@@ -63,6 +63,22 @@ jobs:
       - name: Build production application
         run: npm run build:production
 
+      - name: Install Chromium for documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npx playwright install --with-deps chromium
+
+      - name: Capture current TrustAnchor documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:capture -- --output-dir artifacts/documentation-screenshots
+
+      - name: Upload documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: trust-anchor-documentation-screenshots
+          path: artifacts/documentation-screenshots/
+          if-no-files-found: error
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

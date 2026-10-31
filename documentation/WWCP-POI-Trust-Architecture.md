@@ -175,6 +175,10 @@ characters in JSON. The complete public keys are absent from the anchor.
 Chargy primarily renders each fingerprint as a blue **Drunken Bishop** image,
 computed locally from those exact bytes. Holder groups stay visible; a short
 hash caption and expandable full hash with a copy action remain available.
+The algorithm interprets successive two-bit groups of the hash as diagonal
+moves on a board, starting in its center. Cells become darker the more often
+they are visited, producing a reproducible pattern that is easier to recognize
+than a long hexadecimal string. No key download is needed to draw it.
 The same renderer is used in downloaded-key views, explicit trust confirmations
 and Trust Management. Its versioned 17×9 mapping and palette are consistent
 across these views. Image colors encode visit counts, not trust. Randomart is
@@ -192,6 +196,11 @@ two out of three distinct holders instead, independently of each holder's key
 count. The fixture retains two keys for A specifically to exercise that boundary.
 Display names and source URLs are discovery information, not authenticated
 operator details.
+
+![TrustAnchor preview before Import, with three visual fingerprints and Import/Cancel actions](screenshots/trust-anchor/step-1-preview.png)
+
+*End of Step 1: the actual dialog shows only the supplied anchor. The two keys
+of holder 1 share a group; holder 2 has its own key. No POI request has been made.*
 
 ### Step 2: Import downloads the signed KeyStatement
 
@@ -284,6 +293,18 @@ with a different hash cannot replace a pinned key or contribute its trusted vote
 Additional identity keys may be present in the statement, but their presence
 alone does not create trusted bootstrap votes. Matching the pin proves the key
 material's identity; trusting that pin remains a separate policy or user decision.
+
+![Downloaded KeyStatement with valid signatures, unknown signers and trusted quorum 0/2](screenshots/trust-anchor/step-2-key-statement.png)
+
+*After Import: the app has downloaded and checked the signed fixture. Signatures
+and validity pass, while signer trust and quorum remain unfulfilled because no
+fixture keys have been accepted. This is an expected trust state, not a failed
+download. The following steps explain storage and optional key acceptance.*
+
+These screenshots are generated from the running app with fixed test data.
+They must be regenerated whenever relevant UI/UX changes; the repeatable command,
+capture setup and CI artifact are documented in the
+[screenshot maintenance instructions](screenshots/trust-anchor/README.md).
 
 ### Step 3: show verification results and save the import
 
