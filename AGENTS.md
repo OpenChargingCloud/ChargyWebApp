@@ -12,3 +12,11 @@ test fixtures and the fixed locale/time/viewport in the capture script. Never
 hand-edit screenshots, set verification outcomes directly or add fixture keys
 to the production trust roots. CI regenerates current captures as downloadable
 artifacts; check the checked-in documentation images as well when changing UI.
+
+For changes to the trust-ready state, live-link layout/consent, update processing
+or first-reading presentation, also run `npm run docs:screenshots:poi-live` and
+inspect all images in `documentation/screenshots/poi-live-use-case/`. Keep its
+`capture-info.json` and the use-case captions current. Run
+`npm run docs:validate:poi-live` when changing the accompanying POI examples.
+Those screenshots show actual current behavior; proposed POI/witness integration
+must stay clearly labeled and must not be represented by injected success states.

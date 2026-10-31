@@ -26,6 +26,9 @@ This is a local trust decision, not a cryptographic verification result.
 
 Related documents:
 
+- [Charging-session and live-link trust use case](WWCP-POI-Session-and-Live-Trust.md)
+  — evidence sources, witness discovery and independent trust, first-reading
+  verification, JSON examples and actual UI screenshots.
 - [WWCP POI integration: current implementation and remaining plan](WWCP-POI-Integration.md)
 - [Current Trust Management implementation](TrustManagement.md) (German)
 - [Bundled public-key configuration](../src/trust/README.md)

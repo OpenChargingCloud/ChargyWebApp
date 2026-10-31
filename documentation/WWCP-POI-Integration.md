@@ -12,6 +12,9 @@ remaining station, tariff, publication and meter-key integration. For the comple
 trust chain, matching JSON examples and screenshots, see
 [WWCP POI Trust Architecture](WWCP-POI-Trust-Architecture.md). Detailed storage and
 management notes are in [Trust Management](TrustManagement.md) (German).
+The [session and live-link use case](WWCP-POI-Session-and-Live-Trust.md) describes
+the next session-driven flow, evidence sources, witness authorization and
+verification of the first incoming reading, with diagrams, JSON and screenshots.
 
 | Area | Status |
 | --- | --- |

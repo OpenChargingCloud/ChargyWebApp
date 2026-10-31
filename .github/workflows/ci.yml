@@ -79,6 +79,22 @@ jobs:
           path: artifacts/documentation-screenshots/
           if-no-files-found: error
 
+      - name: Validate POI session documentation examples
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:validate:poi-live
+
+      - name: Capture session and live-link documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-live:capture -- --output-dir artifacts/poi-live-screenshots
+
+      - name: Upload session and live-link documentation screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-live-use-case-documentation-screenshots
+          path: artifacts/poi-live-screenshots/
+          if-no-files-found: error
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

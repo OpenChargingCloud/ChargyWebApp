@@ -27,7 +27,10 @@
     "test:typecheck": "tsc -p tests/tsconfig.json --noEmit",
     "verify": "npm run typecheck && npm run test:typecheck && npm run lint && npm test && npm run build:production",
     "docs:screenshots": "npm run bundle:production && npm run docs:screenshots:capture",
-    "docs:screenshots:capture": "node build-tools/captureTrustScreenshots.mjs"
+    "docs:screenshots:capture": "node build-tools/captureTrustScreenshots.mjs",
+    "docs:validate:poi-live": "node build-tools/validatePoiLiveUseCaseExamples.mjs",
+    "docs:screenshots:poi-live": "npm run bundle:production && npm run docs:screenshots:poi-live:capture",
+    "docs:screenshots:poi-live:capture": "node build-tools/capturePoiLiveUseCaseScreenshots.mjs"
   },
   "keywords": [
     "Chargy",

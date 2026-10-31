@@ -27,3 +27,8 @@ secrrct                             binary
 *.jpeg                              binary
 *.png                               binary
 *.pdf                               binary
+
+# Documentation conformance fixtures retain the exact upstream bytes and hashes.
+documentation/examples/poi-session-live/evidence.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+documentation/examples/poi-session-live/trusted-witnesses.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+documentation/examples/poi-session-live/trusted-anchor.txt -text
