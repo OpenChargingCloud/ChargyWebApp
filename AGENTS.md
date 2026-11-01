@@ -96,3 +96,16 @@ manual trust from an archive, accept only a new self-signature, or conflate sign
 timestamps with independent actual time. Independent sequence-0 policy and epoch
 fixture worlds use separate installations; resetting observations retains accepted
 policy decisions and is not a way to replace one certificate with another.
+
+For publication-witness policy, receipt retrieval, pre-start timing or related
+price/live UI changes, also run `npm run docs:screenshots:poi-publication` and
+review all eight images in `documentation/screenshots/poi-publication/`. Keep
+its guide, genuine fixture provenance and capture metadata current. No input
+recommendation, RNO key or source response grants witness authority. Count
+organizations under the current separately accepted local role/network/time
+policy, not signatures or aliases. Apply the locally accepted clock uncertainty;
+a later checkpoint or existence timestamp alone proves no earlier public
+availability. Label the signed-start time basis and actual-time limitation.
+Missing optional witness evidence must not invalidate valid independent meter
+or CPO-signature checks. Receipts and archive data never restore witness trust.
+Withdrawal and concurrent changes must prevent stale success across tabs.

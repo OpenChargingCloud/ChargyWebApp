@@ -115,6 +115,9 @@ import {
 }                                      from './trustAnchorPreview';
 import { TrustStore, trustAnchorStorageId } from './trustStore';
 import { TrustManagement }             from './trustManagement';
+import {POIWitnessTrustStore} from './poiWitnessTrust';
+import {loadPricePublicationReceipts} from './pricePublicationData';
+import {pricePublicationOfferHashes,PriceStatement} from '@open-charging-cloud/wwcp-poi';
 import { bundledTrustedPublicKeys }    from './bundledTrustedPublicKeys';
 import type { StoredTrustAnchor }      from './trustStore';
 import { findTrustAnchorImport }       from './trustAnchorImport';
@@ -878,6 +881,7 @@ export class ChargyApp {
                                                   });
         window.addEventListener('chargy-poi-history-reset',()=>{++this.inputDetectionGeneration;this.clearRenderedChargeData();this.detailedInfosDiv.appendChild(document.createElement('p')).textContent=this.chargy.GetLocalizedMessage('poiObservedResetDone');});
         window.addEventListener('chargy-poi-policy-change',()=>{++this.inputDetectionGeneration;this.clearRenderedChargeData();this.detailedInfosDiv.appendChild(document.createElement('p')).textContent=this.chargy.GetLocalizedMessage('poiTransitionApplied');this.trustManagement.refresh();});
+        window.addEventListener('chargy-poi-witness-change',()=>{++this.inputDetectionGeneration;this.clearRenderedChargeData();this.detailedInfosDiv.appendChild(document.createElement('p')).textContent=this.chargy.GetLocalizedMessage('poiWitnessChanged');this.trustManagement.refresh();});
         new MutationObserver(() => {
             if (this.chargingSessionScreenDiv.style.display === 'none') {
                 this.sessionPOIPanel?.dispose(); this.sessionPOIPanel = null;
@@ -6902,6 +6906,7 @@ export class ChargyApp {
                 JSON.stringify(current.authorizedHolders)!==JSON.stringify(checkedMeter.context.authorizedHolders)||current.requiredConsensus!==checkedMeter.context.requiredConsensus||
                 current.evaluatedAt>checked.context.validUntil||current.requiredConsensus!==checked.context.requiredConsensus||current.keyStatementDigest!==checked.context.keyStatementDigest||JSON.stringify(current.authorizedHolders)!==JSON.stringify(checked.context.authorizedHolders))throw new Error('Price authorization changed during verification');
             const rates=compareOCMFPriceRates(subject,checked.price.selected?.rates);
+            await service.assertPublicationPolicy(checked.publicationPolicyRevision);signal.throwIfAborted();
             return {...checked,start,rates,document};
         };
         const saveEvidence=async(policyId:string,signal:AbortSignal):Promise<void>=>{
@@ -6963,6 +6968,22 @@ export class ChargyApp {
                 waitingForStart:sourceSession===undefined,
                 get hasEvidence():boolean{return priceDocument!==undefined;},
                 check:checkPrices,
+                loadPublication:async(policyId,signal):Promise<SessionPriceCheck>=>{
+                    const original=await checkPrices(policyId,signal),policy=await new POIWitnessTrustStore().snapshot();
+                    const selected=original.price.selected;if(selected===undefined||original.price.publication!=='valid')throw new Error('An included selected price is required');
+                    const result=await loadPricePublicationReceipts(original.document,policy,{roamingNetworkId:original.context.roamingNetworkId,evseId,digest:selected.digest,...pricePublicationOfferHashes(PriceStatement.parse(selected.statement),selected.tariff),checkpointIds:original.price.checkpointIds},
+                        async document=>{
+                            const checked=await checkPrices(policyId,signal,document);
+                            if(checked.price.publicationBeforeStart!=='witnessed-before-signed-start')throw new Error('The received receipts do not meet the locally authorized pre-start witness quorum');
+                            return checked;
+                        },{signal,allowances:transportAllowances});
+                    if((await new POIWitnessTrustStore().snapshot()).revision!==policy.revision)throw new Error('Witness policy changed during retrieval');signal.throwIfAborted();
+                    priceDocument=result.document;
+                    const existing=this.sessionPOISources.get(owner)??[],base=existing.find(item=>item.evseId===evseId&&item.sessionId===sessionId)??evidence??{evseId,sessionId};
+                    this.sessionPOISources.set(owner,replaceSessionPOIEvidence(existing,{...base,priceEvidence:result.document.text,priceSource:{origin:result.document.origin,sourceURL:result.document.sourceURL,receivedAt:result.document.receivedAt}},sessionId,count));
+                    if(liveState!==undefined)liveState.evidence=this.sessionPOISources.get(owner)??[];
+                    return result;
+                },
                 load:async(policyId,signal):Promise<SessionPriceCheck>=>{
                     const current=await new POITrustService(this.trustStore,bundledTrustedPublicKeys).resolveHistorical(policyId);
                     const result=await loadSessionPriceEvidence(TrustAnchor.parse(current.evidence.anchorQRCode).urls,evseId,stationForPrices??null,async document=>{

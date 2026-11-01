@@ -4,6 +4,7 @@ import {IsAChargeTransparencyRecord,readOCMFSessionPriceContext} from '@open-cha
 import {parseJSON,prettyJSON,TrustAnchor,ChargingStationProof,stationVersionObservation} from '@open-charging-cloud/wwcp-poi';
 import type {JSONObject,JSONValue} from '@open-charging-cloud/wwcp-poi';
 import {POITrustService} from '../src/ts/poiTrustContext';
+import {MemoryWitnessPolicy} from '../src/ts/poiWitnessTrust';
 import {MemoryPOIObservedHistory,POIObservedHistoryStore} from '../src/ts/poiObservedHistory';
 import {readSessionPOIEvidence} from '../src/ts/sessionPOIData';
 import {trustAnchorStorageId} from '../src/ts/trustStore';
@@ -20,7 +21,7 @@ function setup(history=new MemoryPOIObservedHistory()):{service:POITrustService;
         downloadedData:{text:vectors.bootstrap.keyStatement,sourceURL:required(anchor.urls[0])+'/keyStatement',downloadedAt:new Date(now).toISOString()},
         trustedKeys:anchor.keys.map(id=>({id,acceptedAt:new Date(now).toISOString()}))};
     const snapshot=vi.fn().mockResolvedValue({record,deleted:new Set<string>()});
-    return {service:new POITrustService({trustSnapshot:snapshot},[],()=>now,history),history,snapshot,record};
+    return {service:new POITrustService({trustSnapshot:snapshot},[],()=>now,history,new MemoryWitnessPolicy()),history,snapshot,record};
 }
 const station=async(service:POITrustService,revision:number):ReturnType<POITrustService['verifyStation']>=>service.verifyStation(policyId,required(vectors.proofs[revision]),{evseId:vectors.evseId});
 async function historical(service:POITrustService,name:string):ReturnType<POITrustService['verifySessionPriceEvidence']> {

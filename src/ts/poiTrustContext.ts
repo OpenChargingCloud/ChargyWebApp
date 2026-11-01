@@ -9,6 +9,8 @@ import { parseTrustAnchorData } from './trustAnchorData';
 import type { StoredTrustAnchorData } from './trustAnchorData';
 import { trustAnchorStorageId } from './trustStore';
 import type { StoredTrustAnchor, TrustStore } from './trustStore';
+import {POIWitnessTrustStore} from './poiWitnessTrust';
+import type {WitnessPolicyRepository} from './poiWitnessTrust';
 
 /** An immutable report at evaluatedAt, never a reusable authorization token or a stored green flag. */
 export interface POITrustContext {
@@ -108,7 +110,12 @@ export class POITrustService {
     public constructor(private readonly store: Pick<TrustStore, 'trustSnapshot'>,
                         private readonly bundled: readonly POIPublicKey[],
                         private readonly now: () => number = Date.now,
-                        private readonly history:ObservedHistoryRepository=new POIObservedHistoryStore()) {}
+                        private readonly history:ObservedHistoryRepository=new POIObservedHistoryStore(),
+                        private readonly witnessPolicies:WitnessPolicyRepository=new POIWitnessTrustStore()) {}
+
+    public async assertPublicationPolicy(revision:string):Promise<void>{
+        if((await this.witnessPolicies.snapshot()).revision!==revision)throw new Error('Witness authorization changed during verification');
+    }
 
     public async resolve(anchorPolicyId: string): Promise<POITrustContext> {
         const { record, deleted } = await this.store.trustSnapshot(anchorPolicyId);
@@ -201,13 +208,16 @@ export class POITrustService {
     }
 
     public async verifySessionPriceEvidence(anchorPolicyId:string,evidence:JSONValue,request:SessionPriceRequest,
-        relatedCheckpoints:readonly {readonly checkpoint:JSONValue;readonly operator:JSONValue}[]=[],signal?:AbortSignal):Promise<{readonly context:POIHistoricalContext;readonly price:SessionPriceVerification;readonly consistency:VersionComparison}>{
+        relatedCheckpoints:readonly {readonly checkpoint:JSONValue;readonly operator:JSONValue}[]=[],signal?:AbortSignal):Promise<{readonly context:POIHistoricalContext;readonly price:SessionPriceVerification;readonly consistency:VersionComparison;readonly publicationPolicyRevision:string}>{
         const ticket=await this.beginObservations(anchorPolicyId,true,signal),context=ticket.context as POIHistoricalContext;
-        const price=verifySessionPriceEvidence(context.verification,evidence,request,{relatedCheckpoints}),parsed=parseSessionPriceEvidence(evidence);
+        const witnesses=await this.witnessPolicies.snapshot();signal?.throwIfAborted();
+        const price=verifySessionPriceEvidence(context.verification,evidence,request,{relatedCheckpoints,publicationPolicy:witnesses.policy}),parsed=parseSessionPriceEvidence(evidence);
         const points=[this.stationPoint(ticket,ChargingStationProof.parse(parsed.proof),true,this.authenticatedCheckpoints(context,parsed.checkpoints))];
         if(price.signatures==='valid'&&price.applicability!=='invalid')points.push(...parsed.priceStatements.map(item=>priceVersionObservation(PriceStatement.parse(item))));
         if(price.publication==='valid'||price.publication==='incomplete')points.push(...this.checkpoints(context,parsed.checkpoints));
-        const consistency=await this.recordObservations(ticket,points,'historical',{signal});return {context,price,consistency};
+        const consistency=await this.recordObservations(ticket,points,'historical',{signal});
+        await this.assertPublicationPolicy(witnesses.revision);signal?.throwIfAborted();
+        return {context,price,consistency,publicationPolicyRevision:witnesses.revision};
     }
 
     /** Integration seam only: no fetching, station selection, caching or ChargyCore handoff here. */

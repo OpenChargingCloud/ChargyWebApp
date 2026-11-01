@@ -320,12 +320,14 @@ The Chargy Transparency Software is one of the winners of the [1. Thuringia's Op
 The [session price evidence guide](documentation/WWCP-POI-Session-Prices.md) describes the implemented CPO-signed
 price workflow, experimental fixed-at-start assignment, exact start-rate
 comparison and separate price inclusion, with signed examples and screenshots.
-Customer consent, pre-charge publication and full billing remain unproven.
+Customer consent and full billing remain unproven. Pre-start public retrieval
+needs the separately authorized witness receipts described below.
 
 The [complete cumulative live pilot](documentation/WWCP-POI-Live-Pilot.md) is now implemented, including
 preparation before readings, verification before adoption, fixed-price retention,
 verified completion and original-envelope archival. Wider discovery, variable
-prices, independent witnesses and envelope-signer authorization remain separate.
+prices and wider automatic discovery remain separate. CPO signer authorization
+and experimental publication witnessing are described in the following guides.
 
 The [locally observed versions guide](documentation/WWCP-POI-Observed-Versions.md)
 describes persistent rollback/fork constraints across reloads and tabs, historical
@@ -336,3 +338,9 @@ The [CPO authority and trust-succession guide](documentation/WWCP-POI-Trust-Succ
 describes independent initial-envelope authorization, CPO document-key rotation,
 explicit dual-quorum compact policy delegation and verified epoch continuation.
 The compact delegation profile is experimental; existing negative history remains.
+
+The [price publication guide](documentation/WWCP-POI-Price-Publication.md) describes
+the experimental public-retrieval receipts, separate witness organization/time
+policy, explicit bounded retrieval and scoped pre-signed-start claim, with real
+signed fixtures and screenshots. Actual physical charging time, customer agreement
+and globally latest/sole offer remain independently unproven.

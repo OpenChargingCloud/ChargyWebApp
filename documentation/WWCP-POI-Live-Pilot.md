@@ -265,3 +265,8 @@ chain through Settings → Trust Management → Observed versions → Open last 
 live data and recheck. Original documents, meter signatures and prices are checked
 again using current key decisions. Explicit history reset removes this protection
 and cancels pending checks; it retains trusted keys and the separate evidence archive.
+
+The [experimental publication pilot](WWCP-POI-Price-Publication.md) adds a separate
+organization/network/clock policy and signed public-retrieval receipts. Its new
+live fixture retains the exact selected price and scoped pre-signed-start claim
+through completion. Receipt enrichment does not reprice a pinned session.

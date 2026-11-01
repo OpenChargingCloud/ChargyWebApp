@@ -51,7 +51,10 @@
     "docs:screenshots:poi-observations:capture": "node build-tools/capturePOIObservedVersionsScreenshots.mjs",
     "fixtures:poi-succession:generate": "node build-tools/generatePOITrustTransitionExample.mjs",
     "docs:screenshots:poi-succession": "npm run bundle:production && npm run docs:screenshots:poi-succession:capture",
-    "docs:screenshots:poi-succession:capture": "node build-tools/capturePOITrustSuccessionScreenshots.mjs"
+    "docs:screenshots:poi-succession:capture": "node build-tools/capturePOITrustSuccessionScreenshots.mjs",
+    "fixtures:poi-publication:generate": "node build-tools/generatePOIPublicationExample.mjs",
+    "docs:screenshots:poi-publication": "npm run bundle:production && npm run docs:screenshots:poi-publication:capture",
+    "docs:screenshots:poi-publication:capture": "node build-tools/capturePOIPublicationScreenshots.mjs"
   },
   "keywords": [
     "Chargy",
@@ -110,8 +113,8 @@
     "@open-charging-cloud/chargy-core": "file:vendor/open-charging-cloud-chargy-core-0.17.1-dev.0.tgz",
     "@open-charging-cloud/totp": "^0.3.1",
     "@open-charging-cloud/wwcp-poi": "file:vendor/open-charging-cloud-wwcp-poi-0.1.2-dev.0.tgz",
-    "@vanaheimr/cose": "^0.10.0",
-    "@vanaheimr/metrological-cbor": "^0.11.1",
+    "@vanaheimr/cose": "^0.12.0",
+    "@vanaheimr/metrological-cbor": "^0.12.0",
     "asn1.js": "^5.4.1",
     "base32-decode": "^1.0.0",
     "buffer": "^6.0.3",

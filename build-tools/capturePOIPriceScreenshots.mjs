@@ -131,14 +131,15 @@ try {
     assert.match(await price.textContent(),/Original start reading verified/);
     assert.match(await price.textContent(),/Gross rates and currency match/);
     assert.match(await price.textContent(),/Still not proven: publication before charging, customer consent/);
-    await price.scrollIntoViewIfNeeded();await price.screenshot({path:path.join(output,imageNames[1]),animations:'disabled',scale:'css'});
+    const detailsViewport={width:1440,height:1900};
+    async function capturePrice(index){await page.setViewportSize(detailsViewport);await price.scrollIntoViewIfNeeded();await price.screenshot({path:path.join(output,imageNames[index]),animations:'disabled',scale:'css'});await page.setViewportSize(viewport);}
+    await capturePrice(1);
     await drop(await readFixture('pqc-price'));await settled('valid');
     await price.locator(':scope > details > summary').click();assert.match(await price.textContent(),/ML-DSA-65/);
-    await page.setViewportSize({width:1440,height:1800});
-    await price.screenshot({path:path.join(output,imageNames[2]),animations:'disabled',scale:'css'});await page.setViewportSize(viewport);
+    await capturePrice(2);
     await drop(main);await settled('valid');await page.setViewportSize({width:390,height:844});
     await price.scrollIntoViewIfNeeded();assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
-    await price.screenshot({path:path.join(output,imageNames[3]),animations:'disabled',scale:'css'});
+    await page.screenshot({path:path.join(output,imageNames[3]),animations:'disabled',scale:'css'});
     await price.locator(':scope > details > summary').click();assert.ok(await price.evaluate(element=>element.scrollWidth<=element.clientWidth));
     await page.setViewportSize(viewport);
     for(const [name,state,applicability,publication] of [
@@ -157,8 +158,8 @@ try {
         assert.equal(await price.getAttribute('data-applicability'),applicability,name);
         assert.equal(await price.getAttribute('data-publication'),publication,name);
         if(name==='decimal-price')assert.match(await price.textContent(),/0\.3500 EUR\/kWh/);
-        if(name==='signed-rate-conflict')await price.screenshot({path:path.join(output,imageNames[4]),animations:'disabled',scale:'css'});
-        if(name==='missing-publication')await price.screenshot({path:path.join(output,imageNames[5]),animations:'disabled',scale:'css'});
+        if(name==='signed-rate-conflict')await capturePrice(4);
+        if(name==='missing-publication')await capturePrice(5);
     }
     assert.equal(priceRequests,0); // Embedded prices are not silently replaced with today's prices.
     const withoutPrice=JSON.parse(main);delete withoutPrice.poiEvidence.priceEvidence;
@@ -226,7 +227,7 @@ try {
     assert.equal(await page.locator('.sessionPriceResult[data-state=valid]').count(),0);
     assert.equal(priceRequests,2);assert.equal(proofRequests,0);assert.equal(statementRequests,0);assert.deepEqual(failures,[]);
     await writeFile(path.join(output,'capture-info.json'),JSON.stringify({command:'npm run docs:screenshots:poi-prices',locale:'en-US',timezone:'UTC',viewport,
-        mobileViewport:{width:390,height:844},detailsViewport:{width:1440,height:1800},fixedTime,browser:browser.version(),screenshots:imageNames,
+        mobileViewport:{width:390,height:844},detailsViewport,fixedTime,browser:browser.version(),screenshots:imageNames,
         fixture:{path:fixturePaths.session,sha256:createHash('sha256').update(main).digest('hex')},
         checks:['real Drag & Drop and explicit two-holder trust','Ed25519 and ML-DSA-65 CPO signatures','historically associated original start signature',
             'fixed-at-start price expires before end without rebinding','lossless 0.3500','all 21 signed fixtures','signature/assignment/rate/inclusion states separate',

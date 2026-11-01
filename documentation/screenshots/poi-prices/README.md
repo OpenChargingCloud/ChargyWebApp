@@ -7,7 +7,9 @@ trust withdrawal during actual Core crypto. It never injects a success state.
 
 The source fixture is `tests/fixtures/POIPrices/session-with-price.chargy`.
 `capture-info.json` records its SHA-256, evaluation clock, viewport, browser and
-tested paths. Desktop uses 1440×1050, the expanded detail capture 1440×1800; mobile uses 390×844; locale is en-US and
+tested paths. Desktop uses 1440×1050; complete price-component captures use a
+taller 1440×1900 viewport to avoid clipping by the app's scroll container/footer.
+The mobile frame uses 390×844; locale is en-US and
 timezone UTC. All external requests are explicitly routed or blocked.
 
 | Image | Content |

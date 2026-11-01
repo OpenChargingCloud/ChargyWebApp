@@ -606,11 +606,13 @@ steps can proceed independently of these decisions.
 
 ### Current next priorities
 
-1. **Independent publication and witness/time evidence:** define separately
-   authorized witness identities, scope, quorum, discovery and time semantics.
-   Then verify compact evidence that the exact price offer was published before
-   charging began. An RNO-recommended witness list alone grants no independent
-   trust, and a later checkpoint alone does not establish earlier publication.
+1. **Production publication witnesses and time assurance:** the
+   [experimental publication pilot](WWCP-POI-Price-Publication.md) now implements
+   separate local organization/key/network/clock decisions, explicit receipt
+   retrieval and the scoped pre-signed-start claim. Next agree the producer
+   contract, deploy independent witnesses and define stronger actual-meter-time
+   evidence and authorized automatic discovery. An RNO recommendation or a later
+   checkpoint alone still grants neither independent trust nor earlier publication.
 2. **Compromise and revocation:** distinguish a legitimate key transition from
    an authorized statement that a key must no longer be used. Define effective
    times, historical consequences, retrieval and persistent replay protection.

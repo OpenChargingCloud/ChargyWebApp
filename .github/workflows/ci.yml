@@ -179,6 +179,18 @@ jobs:
           path: artifacts/poi-trust-succession-screenshots/
           if-no-files-found: error
 
+      - name: Check publication witness trust and pre-start receipts
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-publication:capture -- --output-dir artifacts/poi-publication-screenshots
+
+      - name: Upload publication witness screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-publication-screenshots
+          path: artifacts/poi-publication-screenshots/
+          if-no-files-found: error
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

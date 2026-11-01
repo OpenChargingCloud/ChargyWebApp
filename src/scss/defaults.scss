@@ -3589,3 +3589,20 @@ body {
     .trustTransitionResult[data-state="invalid"] { background: #fff1f1; padding: 12px; margin-top: 10px; }
 }
 .poiCPOKeyList { display: flex; flex-wrap: wrap; gap: 8px; .securityFingerprint { max-width: 220px; } }
+.poiWitnessManagement, .poiPricePublication { min-width: 0; overflow-wrap: anywhere; }
+.poiWitnessPolicyEditor {
+    margin-top: 18px; padding: 14px; border: 1px solid #c4d4df; border-radius: 4px;
+    textarea { display: block; width: 100%; box-sizing: border-box; margin: 8px 0; }
+    input[type="file"] { display: block; max-width: 100%; margin: 8px 0; }
+    pre { white-space: pre-wrap; max-height: 300px; overflow: auto; }
+}
+.poiWitnessPolicyPreview[data-state="review"] { margin-top: 12px; background: #fff9e9; padding: 10px; }
+.poiWitnessPolicyPreview[data-state="invalid"] { margin-top: 12px; background: #fff1f1; padding: 10px; }
+.poiPricePublication {
+    margin: 10px 0; padding: 10px; border: 1px solid #e4c276; border-radius: 4px; background: #fff9e9;
+    &[data-state="valid"] { border-color: #88c971; background: #edf8e8; }
+    &[data-state="invalid"] { border-color: #d39393; background: #fff1f1; }
+    .poiPublicationReceipt { border-top: 1px solid #c4d4df; margin-top: 10px; padding-top: 6px; }
+    .poiPublicationReceipts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px; }
+    .securityFingerprint { max-width: 220px; }
+}

@@ -51,11 +51,13 @@ function notifyReset():void {
 }
 function resetChannel():void {
     if(channel===undefined&&typeof window!=='undefined'&&typeof window.addEventListener==='function'&&typeof BroadcastChannel!=='undefined'){
-        channel=new BroadcastChannel('chargy-poi-history');channel.onmessage=(event:MessageEvent<unknown>):void=>{if(event.data==='reset')notifyReset();if(event.data==='policy-change')notifyPolicyChange();};
+        channel=new BroadcastChannel('chargy-poi-history');channel.onmessage=(event:MessageEvent<unknown>):void=>{if(event.data==='reset')notifyReset();if(event.data==='policy-change')notifyPolicyChange();if(event.data==='witness-change')notifyWitnessChange();};
     }
 }
 function notifyPolicyChange():void{if(typeof window!=='undefined'&&typeof window.dispatchEvent==='function')window.dispatchEvent(new Event('chargy-poi-policy-change'));}
 export function broadcastTrustPolicyChange():void{resetChannel();notifyPolicyChange();channel?.postMessage('policy-change');}
+function notifyWitnessChange():void{if(typeof window!=='undefined'&&typeof window.dispatchEvent==='function')window.dispatchEvent(new Event('chargy-poi-witness-change'));}
+export function broadcastWitnessPolicyChange():void{resetChannel();notifyWitnessChange();channel?.postMessage('witness-change');}
 export class POIObservedHistoryStore implements ObservedHistoryRepository {
     public async transition(scope:ObservationScope,generation:string,verified:VerifiedTrustTransition,at:number):Promise<VersionComparison>{
         return this.transaction('readwrite',(store,done,fail)=>{const request=store.get(scope.id);request.onsuccess=():void=>{try{

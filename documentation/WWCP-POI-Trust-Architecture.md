@@ -551,3 +551,10 @@ and reloads. Local consistency is separate from signature validity and historica
 applicability. Deleting an anchor does not remove known contradictions. Explicit
 history reset, policy succession, global freshness and witness authorization have
 different consequences and must not be conflated.
+
+The [experimental publication pilot](WWCP-POI-Price-Publication.md) now adds a
+separate local witness organization/network/clock policy and signed public-price
+retrieval receipts. Its additional green claim is explicitly relative to the
+verified signed start timestamp and accepted clock uncertainty. Actual physical
+charging time, continuous availability and globally latest/sole status remain
+independently unproven; supplied witness recommendations grant no trust.

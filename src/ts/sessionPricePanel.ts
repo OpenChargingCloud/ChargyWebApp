@@ -1,6 +1,6 @@
 import {renderPOIConsistency} from './poiConsistencyView';
 import type {VersionComparison} from '@open-charging-cloud/wwcp-poi';
-import {isObject,prettyJSON} from '@open-charging-cloud/wwcp-poi';
+import {isObject,prettyJSON,parseJSON,parseWitnessPublicationPolicy,WITNESS_PUBLICATION_POLICY_CONTEXT} from '@open-charging-cloud/wwcp-poi';
 import type {JSONValue,SessionPriceVerification} from '@open-charging-cloud/wwcp-poi';
 import type {IBoundOCMFResult,IOCMFPriceRateComparison} from '@open-charging-cloud/chargy-core';
 import type {SessionPriceDocument} from './sessionPriceData';
@@ -14,6 +14,7 @@ export interface SessionPriceActions {
     readonly waitingForStart?:boolean;
     readonly check:(policyId:string,signal:AbortSignal)=>Promise<SessionPriceCheck>;
     readonly load:(policyId:string,signal:AbortSignal)=>Promise<SessionPriceCheck>;
+    readonly loadPublication?:(policyId:string,signal:AbortSignal)=>Promise<SessionPriceCheck>;
     readonly save?: (policyId:string,signal:AbortSignal)=>Promise<void>;
 }
 export class SessionPricePanel {
@@ -47,9 +48,11 @@ export class SessionPricePanel {
         const {price,start,rates,document:source}=checked;body.replaceChildren();
         const startOK=start.signaturesValid&&start.historicalAssociation==='rno-attested-at-reading-times';
         const bound=price.applicability==='bound'&&startOK;
-        body.dataset['state']=checked.consistency?.accepted===false?'invalid':bound&&rates.status==='rates-match'&&price.publication==='valid'&&start.status==='verified'&&!price.chainGaps?'valid':
+        body.dataset['state']=checked.consistency?.accepted===false||price.publicationBeforeStart==='invalid'?'invalid':bound&&rates.status==='rates-match'&&price.publication==='valid'&&start.status==='verified'&&!price.chainGaps?'valid':
             price.signatures==='invalid'||price.applicability==='invalid'||price.publication==='invalid'||rates.status==='conflict'?'invalid':'warning';
         body.dataset['applicability']=price.applicability;body.dataset['publication']=price.publication;body.dataset['rates']=rates.status;
+        const beforeStart=price.publicationBeforeStart==='witnessed-before-signed-start'&&startOK;
+        body.dataset['beforeStart']=beforeStart?'witnessed':price.publicationBeforeStart==='invalid'?'invalid':'not-proven';
         const row=(label:string,state:'valid'|'warning'|'invalid'):void=>{
             const p=body.appendChild(document.createElement('p'));p.dataset['state']=state;p.textContent=(state==='valid'?'✅ ':state==='invalid'?'❌ ':'⏳ ')+this.localize(label);
         };
@@ -62,8 +65,31 @@ export class SessionPricePanel {
         if(start.status==='key-conflict')row('poiMeterKeyConflict','warning');
         row(rates.status==='rates-match'&&startOK?'poiPriceRatesMatch':rates.status==='conflict'?'poiPriceRatesConflict':'poiPriceRatesUnproven',rates.status==='rates-match'&&startOK?'valid':rates.status==='conflict'?'invalid':'warning');
         row(price.publication==='valid'?'poiPriceIncluded':price.publication==='invalid'?'poiPricePublicationInvalid':'poiPricePublicationMissing',price.publication==='valid'?'valid':price.publication==='invalid'?'invalid':'warning');
-        if(price.publication==='valid')row(price.witnessedBy.length>0?'poiHistoryWitnessed':'poiHistoryWitnessMissing',price.witnessedBy.length>0?'valid':'warning');
-        body.appendChild(document.createElement('p')).textContent=this.localize('poiPriceLimits');
+        if(price.publication==='valid'&&!beforeStart)row(price.witnessedBy.length>0?'poiHistoryWitnessed':'poiHistoryWitnessMissing',price.witnessedBy.length>0?'valid':'warning');
+        const publication=body.appendChild(document.createElement('section'));publication.className='poiPricePublication';publication.dataset['state']=beforeStart?'valid':price.publicationBeforeStart==='invalid'?'invalid':'warning';
+        publication.appendChild(document.createElement('p')).textContent=(beforeStart?'✅ ':price.publicationBeforeStart==='invalid'?'❌ ':'⏳ ')+this.localize(beforeStart?'poiPublicationBeforeStart':price.publicationBeforeStart==='invalid'?'poiPublicationInvalid':'poiPublicationPending');
+        if(price.publicationWitnesses!==undefined){
+            publication.appendChild(document.createElement('p')).textContent=this.localize('poiWitnessQuorum')+': '+String(price.publicationWitnesses.organizations.length)+' / '+String(price.publicationWitnesses.requiredOrganizations);
+            publication.appendChild(document.createElement('p')).textContent=this.localize('poiPublicationTimeScope');
+            const receiptDetails=publication.appendChild(document.createElement('details'));receiptDetails.appendChild(document.createElement('summary')).textContent=this.localize('poiPublicationDetails');
+            const receiptList=receiptDetails.appendChild(document.createElement('div'));receiptList.className='poiPublicationReceipts';
+            for(const receipt of price.publicationWitnesses.receipts){
+                const article=receiptList.appendChild(document.createElement('article'));article.className='poiPublicationReceipt';article.dataset['receiptState']=receipt.status;
+                article.appendChild(document.createElement('h5')).textContent=(receipt.organization??receipt.witnessId)+' · '+receipt.status;
+                if(receipt.sourceURL!==undefined)article.appendChild(document.createElement('p')).textContent=receipt.sourceURL;
+                if(receipt.latestPublicationAt!==undefined)article.appendChild(document.createElement('p')).textContent=this.localize('poiPublicationLatest')+': '+new Date(receipt.latestPublicationAt).toLocaleString(this.language);
+                if(receipt.keyId!==undefined)article.appendChild(renderSecurityFingerprint(receipt.keyId,this.localize));
+                article.appendChild(document.createElement('p')).textContent=receipt.detail;
+            }
+            if(price.publicationWitnesses.receipts.length===0)receiptDetails.appendChild(document.createElement('p')).textContent=this.localize('poiPublicationNoReceipts');
+        }
+        if(this.actions.loadPublication!==undefined&&price.selected!==undefined&&price.publication==='valid'){
+            const fetchButton=publication.appendChild(document.createElement('button'));fetchButton.type='button';fetchButton.textContent=this.localize('poiPublicationLoad');fetchButton.dataset['action']='load-publication';
+            fetchButton.onclick=():void=>{fetchButton.disabled=true;void this.actions.loadPublication?.(policyId,signal).then(next=>{signal.throwIfAborted();this.render(body,next,policyId,signal);}).catch((error:unknown)=>{
+                if(!signal.aborted){fetchButton.disabled=false;const p=publication.appendChild(document.createElement('p'));p.textContent=this.localize('poiPublicationLoadFailed')+': '+(error instanceof Error?error.message:String(error));p.setAttribute('role','alert');}
+            });};
+        }
+        body.appendChild(document.createElement('p')).textContent=this.localize(beforeStart?'poiPriceWitnessedLimits':'poiPriceLimits');
         if(price.chainGaps)row('poiPriceChainGaps','warning');
         const selected=price.selected;
         if(selected!==undefined){
@@ -75,6 +101,16 @@ export class SessionPricePanel {
             }
         }
         const details=body.appendChild(document.createElement('details'));details.appendChild(document.createElement('summary')).textContent=this.localize('poiPriceDetails');
+        const supplied=parseJSON(source.text);
+        if(isObject(supplied)&&Array.isArray(supplied['witnessCandidates'])&&supplied['witnessCandidates'].length>0){
+            const candidates=details.appendChild(document.createElement('details'));candidates.appendChild(document.createElement('summary')).textContent=this.localize('poiWitnessCandidates');
+            candidates.appendChild(document.createElement('p')).textContent=this.localize('poiWitnessCandidatesScope');
+            candidates.appendChild(document.createElement('p')).textContent=this.localize('poiWitnessSettingsPath');
+            try{const recommended=parseWitnessPublicationPolicy({'@context':WITNESS_PUBLICATION_POLICY_CONTEXT,requiredOrganizations:2,witnesses:supplied['witnessCandidates']});
+                for(const witness of recommended.witnesses){candidates.appendChild(document.createElement('p')).textContent=witness.organization+' · '+witness.id;for(const key of witness.keys)candidates.appendChild(renderSecurityFingerprint(key.id,this.localize));}
+                candidates.appendChild(document.createElement('pre')).textContent=prettyJSON(recommended.json);
+            }catch{candidates.appendChild(document.createElement('pre')).textContent=prettyJSON(supplied['witnessCandidates']);}
+        }
         details.appendChild(document.createElement('p')).textContent=this.localize(source.origin==='network'?'poiPriceDownloaded':'poiPriceSupplied')+': '+source.sourceURL;
         details.appendChild(document.createElement('p')).textContent=new Date(source.receivedAt).toLocaleString(this.language);
         if(selected!==undefined){details.appendChild(document.createElement('p')).textContent=asText(selected.statement['algorithm']);details.appendChild(renderSecurityFingerprint(asText(selected.statement['keyId']),this.localize));

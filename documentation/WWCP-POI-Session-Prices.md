@@ -23,6 +23,7 @@ consistency with its OCMF start tariff text, and separate checkpoint inclusion.
 | OCMF rate consistency | Exact decimal comparison of currency and unconditional gross rates in the verified start tariff text |
 | Price checkpoint inclusion | `PriceStatementProof`, its embedded CPO signature, matching Merkle root, authorized RNO checkpoint signatures and any supplied checkpoint links |
 | Independent witnesses | Only caller-authorized witnesses count; names or public keys included by the source do not authorize themselves |
+| Public retrieval before signed start | Experimental signed publication receipts under a separately accepted organization, network and clock policy; [implementation and limitations](WWCP-POI-Price-Publication.md) |
 
 The CPO price and assignment verifiers use the shared POI signature dispatcher.
 The fixtures exercise **Ed25519 and ML-DSA-65**. This does not widen the separate
@@ -76,8 +77,10 @@ Clearing the policy, changing sessions or leaving the view cancels pending work.
 
 A source may relay CPO-signed objects; it need not be the CPO. The source's
 authority comes from verified signatures and inclusion, rather than from a
-claim made by its HTTP response. Witness discovery and management remain future
-work. The app does not trust a witness list simply because the RNO supplied it.
+claim made by its HTTP response. Automatic witness-directory discovery remains
+future work. Explicit local witness/time management and publication receipts are
+now implemented in the [publication pilot](WWCP-POI-Price-Publication.md).
+The app does not trust a witness list simply because the RNO supplied it.
 
 The endpoint can return a plain price array, a `priceStatements` wrapper, or the
 experimental full envelope below. A plain array is combined with the supplied
@@ -295,7 +298,7 @@ capture.
 
 Remaining work includes a standardized session-price assignment profile,
 EMP/contract offers, variable tariffs and full billing evaluation;
-independently trusted witness management and time evidence; journal backup;
+production witness services and independently attested actual charging time; journal backup;
 and wider live discovery/transition profiles. Verified compact policy and epoch
 succession are now implemented in the
 [experimental succession profile](WWCP-POI-Trust-Succession.md).

@@ -1,6 +1,6 @@
 import {verifyLiveSessionAuthority,readLiveSessionDocument,verifyLiveSessionTransition,verifyHistoricalOCMFSession,readOCMFSessionPriceContext,compareOCMFPriceRates,collectDocumentPublicKeys,verifyDocumentSignaturesWithKeys} from '@open-charging-cloud/chargy-core';
 import type {Chargy,IChargingSession,ChargyInterfaces} from '@open-charging-cloud/chargy-core';
-import {prettyJSON,compareObservedVersions,toHex,hash,parseJSON,canonicalJSONBytes,HISTORICAL_METER_EVIDENCE_CONTEXT,parseHistoricalMeterEvidence} from '@open-charging-cloud/wwcp-poi';
+import {prettyJSON,isObject,compareObservedVersions,toHex,hash,parseJSON,canonicalJSONBytes,HISTORICAL_METER_EVIDENCE_CONTEXT,parseHistoricalMeterEvidence} from '@open-charging-cloud/wwcp-poi';
 import type {VersionObservation,SessionPriceVerification} from '@open-charging-cloud/wwcp-poi';
 import type {SessionPOIEvidence} from './sessionPOIData';
 import {exportSessionPOIEvidence,readSessionPOIEvidence} from './sessionPOIData';
@@ -30,6 +30,10 @@ export function originalLiveInput(input:string|ChargyInterfaces.IFileInfo|readon
 }
 function sameJSON(left:string,right:string):boolean {
     return new TextDecoder().decode(canonicalJSONBytes(parseJSON(left)))===new TextDecoder().decode(canonicalJSONBytes(parseJSON(right)));
+}
+function sameSelectedPrice(left:string,right:string):boolean {
+    const content=(text:string):string=>{const json=parseJSON(text);if(!isObject(json))throw new Error('Invalid pinned price evidence');const {publicationReceipts:_,witnessCandidates:__,...price}=json;return prettyJSON(price);};
+    return sameJSON(content(left),content(right));
 }
 function liveObservation(original:string,pinned?:VersionObservation):VersionObservation {
     const parsed=readLiveSessionDocument(original),json=parsed.json,cpo=json['chargingStationOperator'] as Record<string,unknown>;
@@ -66,7 +70,7 @@ export function prepareLivePOIState(text:string,incoming:readonly SessionPOIEvid
         const normalized=(version:typeof before.versions[number]):string=>prettyJSON({chargingStationProof:version.proof,...(version.commitProof===undefined?{}:{commitProof:version.commitProof}),checkpoints:version.checkpoints.map(entry=>({checkpoint:entry.checkpoint,operator:entry.operator}))});
         if(after.evseId!==before.evseId||after.versions.length<before.versions.length||before.versions.some((version,index)=>after.versions[index]===undefined||!sameJSON(normalized(version),normalized(after.versions[index]))))throw new Error('Historical station evidence must retain every previous original version');
     }
-    if(previous?.pricePinned===true&&old?.priceEvidence!==undefined&&next?.priceEvidence!==undefined&&!sameJSON(old.priceEvidence,next.priceEvidence))priceChanged=true;
+    if(previous?.pricePinned===true&&old?.priceEvidence!==undefined&&next?.priceEvidence!==undefined&&!sameSelectedPrice(old.priceEvidence,next.priceEvidence))priceChanged=true;
     const originals=[...(previous?.originals??[]),text];
     if(new TextEncoder().encode(JSON.stringify(originals)).length>4*1024*1024)throw new Error('Live evidence archive limit reached; original history was retained');
     const merged:SessionPOIEvidence|undefined=old===undefined?next:next===undefined?old:{...old,...next,
@@ -93,7 +97,7 @@ export async function checkLivePOISession(chargy:Chargy,service:POITrustService,
         const authority=await service.verifyLiveDocumentKeys(state.policyId,parseJSON(proof),{evseId:state.evseId,operatorId:cpo['@id'],at:Date.parse(String(parsed.json['lastUpdated']))},signal);
         verifyLiveSessionAuthority(original,authority,state.originals[index-1]);operatorId=authority.operatorId;for(const key of authority.keys)cpoKeys.add(key.id);
     }
-    let price:SessionPriceVerification|undefined,stage:LivePOICheck['stage']='waiting';
+    let price:SessionPriceVerification|undefined,publicationPolicyRevision:string|undefined,stage:LivePOICheck['stage']='waiting';
     if(session===undefined){
         if(state.readingCount!==0||evidence.document===undefined)throw new Error('No usable station proof for live preparation');
         await service.verifyMeterKey(state.policyId,parseJSON(evidence.document.text),{evseId:state.evseId,meterSerialNumber:state.meterSerialNumber,keyFormat:'spki-der'},signal);
@@ -110,6 +114,7 @@ export async function checkLivePOISession(chargy:Chargy,service:POITrustService,
         if(evidence.priceEvidence!==undefined){
             const related=parseHistoricalMeterEvidence(material).versions.flatMap(version=>version.checkpoints);
             const priced=await service.verifySessionPriceEvidence(state.policyId,parseJSON(evidence.priceEvidence),subject,related,signal);
+            publicationPolicyRevision=priced.publicationPolicyRevision;
             if(!priced.consistency.accepted)throw new Error('Price evidence contradicts locally observed versions');price=priced.price;
             if(price.signatures!=='valid'||price.applicability!=='bound'||price.publication==='invalid')throw new Error('The fixed session price could not be verified');
             const rates=compareOCMFPriceRates({...subject,tariffTexts:subject.allTariffTexts??subject.tariffTexts},price.selected?.rates);
@@ -125,6 +130,7 @@ export async function checkLivePOISession(chargy:Chargy,service:POITrustService,
     const {liveDocuments:_,...snapshot}=evidence;
     const report=await service.recordObservations(ticket,points,'current',{signal,live:{chain:state.id,evidence:JSON.stringify(exportSessionPOIEvidence(snapshot))}});
     if(!report.accepted)throw new Error('Local live-version history rejected: '+report.issues.map(issue=>issue.code+': '+issue.detail).join('; '));
+    if(publicationPolicyRevision!==undefined)await service.assertPublicationPolicy(publicationPolicyRevision);signal.throwIfAborted();
     if(price?.applicability==='bound')state.pricePinned=true;
     return {stage,readingCount:state.readingCount,cpo:{operatorId,documents:state.originals.length,keyIds:[...cpoKeys]},...(price===undefined?{}:{price})};
 }
@@ -135,7 +141,7 @@ export function restoreObservedLive(originals:readonly string[],evidenceText:str
     let state:LivePOIState|undefined,priceChanged=false;const selected=source[0]?.priceEvidence;
     for(const original of originals){
         const own=readSessionPOIEvidence(original);
-        if((state?.readingCount??0)>0&&selected!==undefined&&own[0]?.priceEvidence!==undefined&&!sameJSON(selected,own[0].priceEvidence))priceChanged=true;
+        if((state?.readingCount??0)>0&&selected!==undefined&&own[0]?.priceEvidence!==undefined&&!sameSelectedPrice(selected,own[0].priceEvidence))priceChanged=true;
         state=prepareLivePOIState(original,state===undefined&&own.length===0?source:own,state);
     }
     if(state===undefined)throw new Error('No saved live originals');return {...state,evidence:source,policyId,priceChanged:state.priceChanged||priceChanged};

@@ -6,10 +6,16 @@ are development candidates, not published npm releases. A clean checkout can
 install/build the app without sibling repositories. Their normal dependencies
 continue to come from the lockfile; no production trust keys are added.
 
+The app and both shared candidates use `@vanaheimr/cose` and
+`@vanaheimr/metrological-cbor` from the `^0.12.0` release line together. Keep
+these ranges aligned so the app resolves one CBOR implementation and error class.
+
 `manifest.json` records tarball integrity, source repositories, base commits,
 and hashes of complete, reviewable source patches in `source/`. To reconstruct
 a source candidate, check out the recorded base and apply its patch with
-`git apply`; it includes new source/tests and public fixtures. Package archives
+`git apply --allow-empty`; it includes new source/tests and public fixtures.
+An unchanged dependency may have an empty patch because its recorded base commit
+already contains the complete source candidate. Package archives
 include their licenses and source maps. No duplicated app-side cryptographic
 adapter is compiled from these patches: the app calls the packaged libraries.
 Use an LF checkout (`core.autocrlf=false`) to reproduce source bytes exactly.

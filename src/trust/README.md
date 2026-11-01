@@ -80,3 +80,20 @@ Speicherung, Benutzeroberfläche und kryptografischer Prüfung getrennt.
 
 Prüfen: `npm run typecheck`, `npm run test:typecheck`, `npm run lint`,
 `npm test`, `npm run bundle:production`.
+
+## Publication witnesses
+
+`publication-witness-policy.json` is the separate build-time policy for witness
+organizations, explicit `price-publication-and-time` roles, network scopes,
+public keys, validity, clock uncertainty and organization quorum. It intentionally
+ships no witness keys. An RNO/CPO key does not automatically receive a witness
+role. Never add fixture keys here. Existing POI key restrictions apply; use the
+experimental `witnessPublications` usage or an explicitly unrestricted witness key.
+
+Users can review/replace this policy and remove individual witnesses under
+Settings → Trust Management → Publication witnesses. A saved explicit policy
+overrides the build configuration for that installation. Decisions remain in
+the separate `ChargyPOIWitnessTrust` IndexedDB database; receipt/archive imports
+never restore them. Policy acceptance authorizes the named organizations and
+their clocks, while network retrieval still needs the explicit load action.
+See the [publication guide](../../documentation/WWCP-POI-Price-Publication.md).

@@ -885,4 +885,8 @@ Customer consent, pre-charge publication and full billing remain unproven.
 The [complete cumulative live pilot](WWCP-POI-Live-Pilot.md) is now implemented, including
 preparation before readings, verification before adoption, fixed-price retention,
 verified completion and original-envelope archival. Wider discovery, variable
-prices, independent witnesses and envelope-signer authorization remain separate.
+prices and wider automatic discovery remain separate. CPO authority and compact
+trust succession are now implemented in the [succession guide](WWCP-POI-Trust-Succession.md).
+The [experimental publication pilot](WWCP-POI-Price-Publication.md) adds explicit
+local witness organization/network/clock decisions, bounded receipt retrieval and
+a scoped public-retrieval claim before the verified signed start timestamp.

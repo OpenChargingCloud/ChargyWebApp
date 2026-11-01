@@ -16,8 +16,9 @@ import { StationProofPanel } from './stationProofPanel';
 import type { ITransportAllowances } from './liveLinkTrust';
 import { SessionEvidenceStore } from './sessionEvidenceStore';
 import {renderTrustTransitionManager} from './trustTransitionView';
+import {renderPOIWitnessManagement} from './poiWitnessManagement';
 
-type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails" | "stationProof" | 'archives' | 'observations';
+type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails" | "stationProof" | 'archives' | 'observations' | 'witnesses';
 
 export class TrustManagement {
     private page: TrustManagementPage = "menu";
@@ -217,19 +218,23 @@ export class TrustManagement {
             this.button(this.root, "trustBundledKeysTitle", () => { this.page = "keys"; void this.render(); }, "settingsEntry");
             this.button(this.root, 'poiHistoryArchiveTitle', () => { this.page = 'archives'; void this.render(); }, 'settingsEntry');
             this.button(this.root,'poiObservedTitle',()=>{this.page='observations';void this.render();},'settingsEntry');
+            this.button(this.root,'poiWitnessTitle',()=>{this.page='witnesses';void this.render();},'settingsEntry');
             return;
         }
 
         const title = this.root.appendChild(document.createElement("h3"));
-        const titles = { observations:'poiObservedTitle', archives:'poiHistoryArchiveTitle', anchors: "trustAnchorsTitle", keys: "trustBundledKeysTitle", networks: "trustRoamingNetworksTitle", networkDetails: "trustRoamingNetworkDetailsTitle", stationProof: 'poiCheckStation' };
+        const titles = { witnesses:'poiWitnessTitle', observations:'poiObservedTitle', archives:'poiHistoryArchiveTitle', anchors: "trustAnchorsTitle", keys: "trustBundledKeysTitle", networks: "trustRoamingNetworksTitle", networkDetails: "trustRoamingNetworkDetailsTitle", stationProof: 'poiCheckStation' };
         title.textContent = this.localize(titles[this.page]);
-        const descriptions = { observations:'poiObservedDescription', archives:'poiHistoryArchiveDescription', anchors: "trustAnchorsStorageDescription", keys: "trustBundledKeysDescription", networks: "trustRoamingNetworksDescription", networkDetails: "trustRoamingNetworkDetailsDescription", stationProof: 'poiStationDescription' };
+        const descriptions = { witnesses:'poiWitnessDescription', observations:'poiObservedDescription', archives:'poiHistoryArchiveDescription', anchors: "trustAnchorsStorageDescription", keys: "trustBundledKeysDescription", networks: "trustRoamingNetworksDescription", networkDetails: "trustRoamingNetworkDetailsDescription", stationProof: 'poiStationDescription' };
         this.text(this.root, this.localize(descriptions[this.page]));
         const list = this.root.appendChild(document.createElement("div"));
         list.className = "trustManagementList";
         list.setAttribute("aria-busy", "true");
         try {
-            if(this.page==='observations'){
+            if(this.page==='witnesses'){
+                await renderPOIWitnessManagement(list,this.localize,()=>this.generation===generation,()=>{void this.render();});
+            }
+            else if(this.page==='observations'){
                 const store=new POIObservedHistoryStore(),records=(await store.list()).filter(record=>record.state.points.length>0||record.state.conflicts.length>0);
                 if(this.generation!==generation)return;
                 if(records.length===0)this.text(list,this.localize('poiObservedEmpty'));

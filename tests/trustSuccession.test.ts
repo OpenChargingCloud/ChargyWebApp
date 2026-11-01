@@ -4,6 +4,7 @@ import {TrustAnchor,parseJSON,KeyStatement} from '@open-charging-cloud/wwcp-poi'
 import type {JSONObject} from '@open-charging-cloud/wwcp-poi';
 import {IsAChargeTransparencyLiveLink} from '@open-charging-cloud/chargy-core';
 import {POITrustService} from '../src/ts/poiTrustContext';
+import {MemoryWitnessPolicy} from '../src/ts/poiWitnessTrust';
 import {MemoryPOIObservedHistory} from '../src/ts/poiObservedHistory';
 import {trustAnchorStorageId} from '../src/ts/trustStore';
 import type {StoredTrustAnchor} from '../src/ts/trustStore';
@@ -19,7 +20,7 @@ function setup():{service:POITrustService;history:MemoryPOIObservedHistory;recor
     const record:StoredTrustAnchor={id,qrCode:anchor.toQRCode(),sourceText:anchor.toQRCode(),importedAt:new Date(now).toISOString(),
         downloadedData:{text:JSON.stringify(vectors['operator']),sourceURL:(anchor.urls[0]??'')+'/keyStatement',downloadedAt:new Date(now).toISOString()},trustedKeys:anchor.keys.map(id=>({id,acceptedAt:new Date(now).toISOString()}))};
     const snapshot=vi.fn().mockResolvedValue({record,deleted:new Set<string>()}),history=new MemoryPOIObservedHistory();
-    return {record,history,snapshot,service:new POITrustService({trustSnapshot:snapshot},[],()=>now,history)};
+    return {record,history,snapshot,service:new POITrustService({trustSnapshot:snapshot},[],()=>now,history,new MemoryWitnessPolicy())};
 }
 describe('Explicit policy succession under current local root decisions',()=>{
     test('preview grants no new local key decision and applying preserves the bootstrap identity/history',async()=>{
