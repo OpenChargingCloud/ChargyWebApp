@@ -260,3 +260,15 @@ der angezeigten Netzkonfiguration wird auch deren Stationsproof-Cache atomar
 entfernt. Dies ist noch kein historisches Sitzungsarchiv.
 
 [English feature guide, screenshots and maintenance](WWCP-POI-Station-Proof.md).
+
+## Mitgelieferte Vertrauensbasis eines Ladevorgangs
+
+Ein Ladevorgang kann jetzt ein `poiEvidence`-Objekt mit EVSE-Proof, TrustAnchor
+und signiertem KeyStatement mitliefern. Die Ladevorgangsansicht erlaubt den
+ausdrücklichen Import dieser Vertrauensbasis ohne Netzabruf. Die Vorschau zeigt
+zunächst nur den Anchor; nach „Importieren“ erscheinen die normalen Prüfungen
+und optionalen manuellen Vertrauensentscheidungen. Es entsteht kein Vertrauen
+allein aus dem Dateiinhalt. Mitgelieferte Dokumente tragen `origin: "embedded"`;
+die angegebene Quelle wird ausdrücklich als deklarierte Quelle gekennzeichnet.
+
+[Completed-session example and illustrated workflow](WWCP-POI-Session-Integration.md).

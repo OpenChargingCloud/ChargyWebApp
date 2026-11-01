@@ -11,6 +11,7 @@ const stationProofsStore = "poiStationProofs";
 
 /** Original cached evidence and provenance; no persisted authorization verdict. */
 export interface StoredStationProof {
+    readonly origin?: 'embedded';
     readonly id: string;
     readonly anchorPolicyId: string;
     readonly anchorQRCode: string;
@@ -95,7 +96,10 @@ function readAnchor(value: unknown): StoredTrustAnchor {
         if (typeof data["sourceURL"] !== "string" || typeof data["text"] !== "string" ||
             typeof data["downloadedAt"] !== "string" || !Number.isFinite(Date.parse(data["downloadedAt"])))
             throw new Error("Invalid downloaded trust anchor data");
-        downloadedData = { sourceURL: data["sourceURL"], text: data["text"], downloadedAt: data["downloadedAt"] };
+        if (data['origin'] !== undefined && data['origin'] !== 'embedded')
+            throw new Error('Invalid KeyStatement origin');
+        downloadedData = { sourceURL: data["sourceURL"], text: data["text"], downloadedAt: data["downloadedAt"],
+            ...(data['origin'] === 'embedded' ? { origin: 'embedded' as const } : {}) };
     }
     return { id: record["id"], qrCode: record["qrCode"], sourceText: record["sourceText"], importedAt: record["importedAt"], trustedKeys,
              ...(downloadedData === undefined ? {} : { downloadedData }) };
@@ -108,9 +112,12 @@ function readStationProof(value: unknown): StoredStationProof {
         if (typeof raw[field] !== 'string')
             throw new Error('Invalid saved station proof');
     const record = raw as unknown as StoredStationProof;
+    if (raw['origin'] !== undefined && raw['origin'] !== 'embedded')
+        throw new Error('Invalid station proof origin');
     const anchor = TrustAnchor.parse(record.anchorQRCode);
     if (trustAnchorStorageId(anchor) !== record.anchorPolicyId || stationEVSEId(record.evseId) !== record.evseId ||
-        !anchor.urls.some(base => stationProofURL(base, record.evseId) === record.sourceURL) ||
+        (record.origin === undefined ? !anchor.urls.some(base => stationProofURL(base, record.evseId) === record.sourceURL)
+            : !record.sourceURL.startsWith('input:')) ||
         !Number.isFinite(Date.parse(record.downloadedAt)) || !Number.isFinite(Date.parse(record.checkedAt)) ||
         stationProofStorageId(record.anchorPolicyId, record.evseId, record.text) !== record.id)
         throw new Error('Saved station proof provenance does not match its content');

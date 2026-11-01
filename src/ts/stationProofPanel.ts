@@ -29,7 +29,9 @@ export class StationProofPanel {
     public constructor(private readonly root: HTMLElement, private readonly store: TrustStore,
                         private readonly trust: POITrustService, private readonly policyId: string,
                         private readonly localize: (key: string) => string, private readonly language: string,
-                        private readonly allowances: ITransportAllowances = {}, value: string = '') {
+                        private readonly allowances: ITransportAllowances = {}, value: string = '',
+                        private readonly subject?: { readonly evseId: string; readonly document?: StationProofDocument;
+                            readonly onState?: (state: 'pending' | 'valid' | 'warning' | 'invalid' | 'idle', proof?: LoadedStationProof) => void }) {
         root.classList.add('poiStationPanel');
         const form = root.appendChild(document.createElement('form'));
         form.className = 'poiStationForm';
@@ -45,7 +47,8 @@ export class StationProofPanel {
         this.input.autocomplete = 'off';
         this.input.spellcheck = false;
         this.input.placeholder = 'DE*GEF*E1*1';
-        this.input.value = value;
+        this.input.value = subject?.evseId ?? value;
+        this.input.readOnly = subject !== undefined;
         this.input.oninput = (): void => { this.input.setCustomValidity(''); };
         const actions = form.appendChild(document.createElement('div'));
         this.submit = this.button(actions, 'poiLoadProof', () => undefined);
@@ -57,6 +60,7 @@ export class StationProofPanel {
             this.operation = null;
             this.busy(false);
             this.message.textContent = this.localize('poiCancelled');
+            this.subject?.onState?.('idle');
         });
         this.cancel.hidden = true;
         form.onsubmit = (event): void => {
@@ -64,7 +68,7 @@ export class StationProofPanel {
             if (this.operation !== null || !this.ready)
                 return;
             let evseId: string;
-            try { evseId = stationEVSEId(this.input.value); }
+            try { evseId = stationEVSEId(this.subject?.evseId ?? this.input.value); }
             catch {
                 this.input.setCustomValidity(this.localize('poiEVSEInvalid'));
                 this.input.reportValidity();
@@ -100,6 +104,15 @@ export class StationProofPanel {
             this.ready = true;
             this.submit.disabled = false;
             this.message.textContent = `${this.localize('poiTrustReady')}: ${context.value.roamingNetworkId} / ${context.value.roamingNetworkOperatorId}`;
+            if (this.subject?.document !== undefined) {
+                const document = this.subject.document;
+                const evseId = this.subject.evseId;
+                await this.run(async signal => {
+                    const verified = await this.trust.verifyStation(this.policyId, parseJSON(document.text), { evseId });
+                    signal.throwIfAborted();
+                    return { ...verified, document, evseId };
+                }, false);
+            }
         }
         else {
             this.ready = false;
@@ -135,6 +148,7 @@ export class StationProofPanel {
     }
 
     private showError(error: unknown): void {
+        this.subject?.onState?.('invalid');
         const box = this.result.appendChild(document.createElement('section'));
         box.className = 'poiStationFailure';
         box.setAttribute('role', 'alert');
@@ -155,6 +169,8 @@ export class StationProofPanel {
     private async openDocument(document: StationProofDocument, evseId: string): Promise<void> {
         if (this.operation !== null)
             return;
+        if (this.subject !== undefined && this.subject.evseId !== evseId)
+            return;
         this.input.value = evseId;
         await this.run(async signal => {
             const result = await this.trust.verifyStation(this.policyId, parseJSON(document.text), { evseId });
@@ -172,6 +188,7 @@ export class StationProofPanel {
         this.lastProof = null;
         this.result.replaceChildren();
         this.message.textContent = this.localize(cached ? 'poiRechecking' : 'poiLoading');
+        this.subject?.onState?.('pending');
         this.busy(true);
         const active = (): boolean => !this.disposed && generation === this.generation && !controller.signal.aborted;
         try {
@@ -188,6 +205,7 @@ export class StationProofPanel {
                 return;
             this.lastProof = { document: proof.document, evseId: proof.evseId };
             this.result.appendChild(renderStationProof(proof, { localize: this.localize, language: this.language, saved, cached }));
+            this.subject?.onState?.(proof.station.warnings.length === 0 ? 'valid' : 'warning', proof);
             if (storageError) {
                 const warning = this.result.appendChild(document.createElement('p'));
                 warning.className = 'trustManagementError';
@@ -221,7 +239,8 @@ export class StationProofPanel {
     private async refreshHistory(): Promise<void> {
         const generation = ++this.historyGeneration;
         try {
-            const records = await this.store.listStationProofs(this.policyId);
+            const all = await this.store.listStationProofs(this.policyId);
+            const records = this.subject === undefined ? all : all.filter(record => record.evseId === this.subject?.evseId).slice(0, 10);
             if (this.disposed || generation !== this.historyGeneration)
                 return;
             this.history.replaceChildren();

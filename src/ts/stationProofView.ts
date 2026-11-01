@@ -95,7 +95,7 @@ export function renderStationProof(proof: LoadedStationProof, options: {
         basic('poiLocation', prettyJSON(location));
     basic('poiSource', proof.document.sourceURL);
     basic('poiRetrievedAt', new Date(proof.document.downloadedAt).toLocaleString(language));
-    text(root, localize(options.cached ? 'poiCachedEvidenceNotice' : 'poiFetchedEvidenceNotice'));
+    text(root, localize(proof.document.origin === 'embedded' ? 'poiEmbeddedProofNotice' : options.cached ? 'poiCachedEvidenceNotice' : 'poiFetchedEvidenceNotice'));
     const persistence = text(root, localize(options.saved ? 'poiProofSaved' : 'poiProofNotSaved'));
     persistence.className = options.saved ? 'poiStationSaved' : 'trustManagementError';
 
@@ -138,6 +138,10 @@ export function renderStationProof(proof: LoadedStationProof, options: {
     }
     const tariffs = station.tariffs.get(evseId) ?? [];
     const tariffDetails = details(root, `${localize('poiStaticTariffs')} (${tariffs.length})`);
+    if (tariffs.length > 0 && station.warnings.length === 0) {
+        const included = text(tariffDetails, '✅ ' + localize('poiStaticTariffProven'));
+        included.className = 'poiStaticTariffCheck';
+    }
     text(tariffDetails, localize('poiTariffScope'));
     if (tariffs.length === 0)
         text(tariffDetails, localize('poiTariffsMissing'));

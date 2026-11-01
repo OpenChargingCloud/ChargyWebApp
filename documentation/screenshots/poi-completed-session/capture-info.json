@@ -1,0 +1,51 @@
+{
+  "command": "npm run docs:screenshots:poi-session",
+  "locale": "en-US",
+  "timezone": "UTC",
+  "viewport": {
+    "width": 1440,
+    "height": 1050
+  },
+  "mobileViewport": {
+    "width": 390,
+    "height": 844
+  },
+  "fixedTime": "2026-11-01T00:16:21.000Z",
+  "browser": "156.0.8078.4",
+  "screenshots": [
+    "01-before-trust.png",
+    "02-session-verified.png",
+    "03-static-tariff.png",
+    "04-mobile.png",
+    "05-signed-readings.png"
+  ],
+  "fixtures": {
+    "session": {
+      "path": "tests/fixtures/POISession/completed-session-with-evse-proof.chargy",
+      "sha256": "3f6f30792af9caa235eba568ab6e005f98b48a265ca368cf4181335cc35f13ce"
+    },
+    "provenance": {
+      "path": "tests/fixtures/POISession/provenance.json",
+      "sha256": "11671f6c73d23b4b164f9d22b7b817ec01fb03b79bdefe398952221b4a01428c"
+    }
+  },
+  "checks": [
+    "real Drag & Drop",
+    "two genuine OCMF signatures",
+    "signed-reading detail dialog",
+    "no self-authorized trust",
+    "offline explicit bootstrap import",
+    "manual authorization of two holders",
+    "genuine pruned EVSE proof",
+    "static tariff inclusion",
+    "locked EVSE",
+    "explicit fresh retrieval",
+    "reload/file selection",
+    "tampered proof",
+    "wrong EVSE",
+    "tampered end reading",
+    "expiry",
+    "no console errors"
+  ],
+  "scope": "Session-bound station verification. OCMF uses the supplied container key; automatic POI-to-Core key handoff remains separate work."
+}

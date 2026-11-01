@@ -43,8 +43,10 @@ export function renderTrustAnchorData(anchor: TrustAnchor, data: LoadedTrustAnch
     field("trustDataOperatorLabel", data.statement.roamingNetworkOperatorId);
     field("trustDataSignedAtLabel", new Date(data.statement.signedAt).toISOString());
     field("trustDataValidUntilLabel", new Date(data.statement.validUntil).toISOString());
-    field("trustDataSourceLabel", data.document.sourceURL);
-    field("trustDataDownloadedAtLabel", data.document.downloadedAt);
+    field(data.document.origin === 'embedded' ? 'poiDeclaredSource' : 'trustDataSourceLabel', data.document.sourceURL);
+    field(data.document.origin === 'embedded' ? 'poiReceivedAt' : 'trustDataDownloadedAtLabel', data.document.downloadedAt);
+    if (data.document.origin === 'embedded')
+        root.appendChild(document.createElement('p')).textContent = localize('poiEmbeddedStatement');
     root.appendChild(renderAnchorKeyTrust(anchor, {
         ...options, loadedKeys: data.identityKeys, allowChanges: result.canTrustKeys
     }));

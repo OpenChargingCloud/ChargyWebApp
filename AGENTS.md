@@ -29,3 +29,13 @@ Keep capture metadata and `documentation/WWCP-POI-Station-Proof.md` current.
 Preserve the fixed fixture clock; never edit signatures or production roots to
 make an expired fixture pass. The green station verdict must not imply verified
 meter readings, dynamic prices, publication or globally latest data.
+
+For session/EVSE association, embedded POI evidence, offline bootstrap import,
+the session evidence panel or responsive session-layout changes, run
+`npm run docs:screenshots:poi-session` and inspect all captures in
+`documentation/screenshots/poi-completed-session/`. Keep the fixture guide,
+screenshots and capture metadata current. This script performs genuine Drag &
+Drop and explicit trust decisions; it must never inject verification outcomes.
+The fixture generator uses public test keys only. Never extend an attestation's
+signed validity without regenerating and signing a new proof. Do not claim
+POI-to-Core meter-key handoff or dynamic/publication verification before implemented.

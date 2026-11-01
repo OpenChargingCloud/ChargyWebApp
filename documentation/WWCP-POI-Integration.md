@@ -1,6 +1,6 @@
 # WWCP POI Integration: Current Implementation and Remaining Plan
 
-Status: 31 October 2026. Based on the installed
+Status: 1 November 2026. Based on the installed
 `@open-charging-cloud/wwcp-poi@0.1.1`, ChargyCore `0.17.0` and the current WebApp.
 The POI package is pinned in the lockfile and included in the SBOM.
 
@@ -29,7 +29,8 @@ verification of the first incoming reading, with diagrams, JSON and screenshots.
 | IndexedDB storage and Trust Management, including roaming networks | ✅ Implemented |
 | Drunken Bishop fingerprints and reproducible documentation screenshots | ✅ Implemented |
 | Manual EVSE station proof, operational RNO certificates, qualified result and local proof cache | ✅ Implemented |
-| Runtime prices, publication evidence, witnesses and session evidence | Planned |
+| Session/EVSE-bound proof panel and completed Drag & Drop fixture | ✅ Implemented; [guide](WWCP-POI-Session-Integration.md) |
+| Runtime prices, publication evidence, witnesses and historical session evidence | Planned |
 | Proven meter-key handoff to ChargyCore and EMP contract offers | Planned |
 
 ## 1. Starting point and design decisions
@@ -318,14 +319,15 @@ The library context is bound to RN, RNO, canonical signed KeyStatement content
 and one evaluation time. A proof cannot silently substitute another statement,
 even genuinely signed. Embedded JSON-LD context omission and signature ordering
 do not change content identity; all supplied signatures and the quorum are still
-checked. A changed statement must first be downloaded and reevaluated, and this
+checked. A changed statement must first be imported and reevaluated, and this
 does not implement historical succession.
 
 Operator, version, station and station-checkpoint verification accept this
 context directly. The app service exposes operator verification and the station
 verification used by the manual network/EVSE check. Retrieval, qualified results,
-progressive details, cache and rechecking are implemented; automatic session
-selection and meter-key handoff remain future work. Existing library APIs accepting a
+progressive details, cache, rechecking, session/EVSE association and an explicit
+local-policy selector are implemented.
+Meter-key handoff remains future work. Existing library APIs accepting a
 raw `TrustAnchor` still mean that its pins are already trusted; `POIClient` and
 `verifyEvidence` must not bypass the app's authorization policy.
 
@@ -336,8 +338,9 @@ key delegated by an otherwise authorized KeyStatement.
 
 ## 3. Planned data contract with CPOs, EMPs and roaming networks
 
-The following station, price and publication paths are available in the library
-or specified by POI; they are **not yet connected to the app's session flow**.
+The manual and session-bound station path is implemented. The following price
+and publication paths remain future session integration work; their library
+APIs and required provider contracts are described here.
 Here `{base}` means the selected network URL ending in `/RNs/{networkId}`.
 
 ### 3.1 A particular station
@@ -365,7 +368,8 @@ and key material, not only the logarithmic audit-path length.
 Use `POITrustService.verifyStation(policyId, proof, { evseId })` for the app path.
 It rereads local decisions and passes a library `TrustContext`, never an arbitrary
 imported anchor, to the verifier. Manual retrieval and display are implemented;
-automatic session integration remains planned. See the
+session-bound display and explicit retrieval are now implemented. Meter-key
+handoff and fully automatic discovery/refresh remain subsequent steps. See the
 [station-proof guide](WWCP-POI-Station-Proof.md) for screenshots, transport, cache
 and current limitations.
 
@@ -493,7 +497,9 @@ visual fingerprints, expandable signed documents, manual trust and management.
 Its screenshots and JSON examples are in the
 [architecture document](WWCP-POI-Trust-Architecture.md#2-user-journey-anchor-preview-download-verification-and-storage).
 
-The following session views are still planned. Existing meter details
+The session-bound station/static-tariff panel is now implemented, with a complete
+[Drag & Drop example](WWCP-POI-Session-Integration.md). The remaining combined
+session/key/price/publication views below are still planned. Existing meter details
 (`showMeasurementCryptoDetails`) and the PKI dialog are the model for progressive
 disclosure. `showChargingTariffDetails` currently opens a placeholder overlay;
 it does not yet implement POI tariff verification or evidence presentation.
@@ -570,7 +576,8 @@ fixed test setup and automatic CI artifact are documented in the
 | 1 | ✅ Core anchor workflow: shared routing, content-only preview, bounded KeyStatement download, real checks, scoped manual trust, IndexedDB, management and fingerprint images | Equivalent inputs use the same policy; no download before Import; errors, cancellation, refresh, persistence and offline management work |
 | 1a | ✅ Shared authorization and authenticated RN/RNO/policy grouping; remaining lifecycle work planned | Fresh local decisions gate all app service checks. Verified succession/revocation, historical policy and evidence export/import remain outstanding |
 | 2a | ✅ Manual station proof per EVSE, qualified station status, details, cache and current-trust recheck | Genuine proof succeeds; wrong EVSE/tampering/expiry fail; migration, cancellation and storage errors are tested |
-| 2b | Planned automatic session binding and meter-key adapter; OCMF pilot and additive Core API | Correct session/EVSE/meter binding; a foreign key cannot establish trusted association |
+| 2b.1 | ✅ Session/EVSE binding, embedded proofs, explicit policy choice, offline bootstrap and completed OCMF example | Genuine Drag & Drop checks two original signatures and the matching station/tariff proof; wrong/competing EVSE associations fail |
+| 2b.2 | Planned POI meter-key adapter/handoff and additive Core API; fully automatic discovery/refresh | Correct session/EVSE/meter/key/time binding; foreign keys and conflicting supplied keys cannot establish trusted association |
 | 3 | Planned tariff applicability, PriceStatements and tariff detail UI | Missing, expired, foreign and conflicting prices are distinguished; selection/override policy is tested |
 | 4 | Planned checkpoints, witness policy, evidence storage and exchange | Historical offline verification has complete inclusion evidence; missing evidence stays visible |
 | 5 | Planned further Core formats and agreed EMP-offer verification | Consistent trust and association rules cover supported formats and contract cases |
@@ -613,7 +620,7 @@ capture runs produced identical PNGs. CI is configured to regenerate captures
 on its Ubuntu/Node 26 leg and upload the images as an artifact.
 
 Latest recorded project checks: `npm run verify` passed app/test typechecking,
-ESLint, **482 tests with 3 skipped**, and the production build with updated SBOM.
+ESLint, **486 tests with 3 skipped**, and the production build with updated SBOM.
 The build reports three size/performance warnings. This is a dated verification
 record, not a claim that future test counts remain unchanged.
 
@@ -642,7 +649,7 @@ during ongoing verification. Import suitable public vectors with their provenanc
 and a fixed evaluation clock.
 
 Physical-camera testing, a live production POI-server integration and complete
-session-bound meter/price/publication UX are not covered by the current browser QA.
+POI-derived meter-key handoff, dynamic-price and publication UX are not covered by the current browser QA.
 
 ## 8. Sources and implementation entry points
 

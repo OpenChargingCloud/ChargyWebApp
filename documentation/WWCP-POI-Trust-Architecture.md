@@ -1,6 +1,6 @@
 # WWCP POI Trust Architecture
 
-Status: 31 October 2026. This document describes the intended trust chain,
+Status: 1 November 2026. This document describes the intended trust chain,
 the current integration gaps and the logical risks identified while integrating
 `@open-charging-cloud/wwcp-poi` into Chargy. Shared authorization now uses the
 published npm version **0.1.1**.
@@ -14,6 +14,8 @@ list from them. It now downloads and verifies the RNO's **KeyStatement** after a
 explicit import action. A manual EVSE check now retrieves and verifies station
 proofs through the saved policy and displays/cache-rechecks their dependencies;
 see [the station-proof guide and screenshots](WWCP-POI-Station-Proof.md).
+The [session integration](WWCP-POI-Session-Integration.md) now binds these checks
+to a selected session EVSE and includes a completed Drag & Drop example.
 Runtime prices, session meter-key handoff and publication evidence remain future
 work. The bundled public-key JSONL file and its build integration
 exist, but the file currently contains no keys.

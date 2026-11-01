@@ -1,6 +1,6 @@
 # WWCP/POI Trust Use Case: Charging Sessions and Live Links
 
-Status: 31 October 2026. Architecture and proposed user journey, based on
+Status: 1 November 2026. Architecture and proposed user journey, based on
 WWCP/POI TS **0.1.1**, ChargyCore **0.17.0** and the current Chargy WebApp.
 
 Chargy receives a completed charging record or a live link. The input may carry
@@ -25,7 +25,7 @@ rather than claiming that the complete workflow already exists.
 | --- | --- |
 | Import TrustAnchors, check KeyStatements, manage local key trust | Implemented |
 | Shared `TrustContext`, fresh local authorization snapshots, RN/RNO/policy binding | Implemented in the library and app |
-| `POITrustService.verifyStation(...)` | ✅ Manual network/EVSE download, result details and cache/recheck implemented; no session-driven download yet |
+| `POITrustService.verifyStation(...)` | ✅ Manual network/EVSE download, result details and cache/recheck implemented; session-bound display and explicit retrieval now available; fully automatic discovery/refresh remains future work |
 | Live link without readings, HTTPS updates and verification of received OCMF readings | Implemented using the existing Core path |
 | Automatic discovery and refresh of POI evidence from a session | Proposed here |
 | POI-derived meter-key selection and provenance passed to Core | Proposed here |
@@ -727,8 +727,10 @@ not that any particular live session has already been associated with it.
 
 The existing UI can already display and check a signed live envelope with no
 readings. Its “Valid live link” badge concerns the existing signature path;
-there is no session-linked POI station/witness validation panel yet. A separate
-manual station-check page is now available in Trust Management. The map tiles are suppressed
+the separate station panel correctly reports that no station proof has been
+checked. Its details offer a local-policy-based lookup. These captures show the
+existing live fixture without its own supplied POI evidence; no automatic
+meter-key association or witness validation is asserted. Map tiles are suppressed
 for reproducible captures. No POI outcome has been injected.
 
 ### C. First genuine signed reading received
@@ -752,8 +754,10 @@ The separate **Check charging station** page now loads and verifies an EVSE
 against its selected saved policy and displays station, meter and static tariff
 details. It caches original proofs and rechecks them against current trust/time.
 See [the feature guide and real screenshots](WWCP-POI-Station-Proof.md).
-This does not yet associate the POI fixture with the live-link fixture or supply
-a proven meter key to the live session.
+The new [completed-session example](WWCP-POI-Session-Integration.md) separately
+provides matching signed start/end readings, meter key, EVSE proof and static
+tariff. The original live fixture remains a different station; automatic
+POI-derived key handoff to the live session is still future work.
 
 ### Proposed witness management
 

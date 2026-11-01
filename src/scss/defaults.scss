@@ -32,6 +32,42 @@
     .trustAnchorTrustPolicy { margin: 14px 0 0; line-height: 145%; color: #535d65; }
 }
 
+@mixin poi-station-panel {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    .poiStationForm {
+        display: grid;
+        gap: 8px;
+        label { font-weight: bold; }
+        input { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px; border: 1px solid #b8cbd8; border-radius: 4px; font: inherit; }
+    }
+    .poiStaticTariffCheck { color: #367327; font-weight: bold; }
+    .poiStationMessage { color: #39576c; }
+    .poiStationVerdict {
+        @include trust-validation;
+        h3 i { margin-right: 6px; }
+        &[data-state="warning"] { background: #fff7e5; border-color: #d5b568; }
+    }
+    .poiStationFailure { padding: 12px; border: 1px solid #d39393; border-radius: 4px; background: #fff1f1; }
+    .poiStationResult { margin: 18px 0; }
+    .poiStationResult > details { margin: 14px 0; border-top: 1px solid #d4dde4; padding-top: 10px; }
+    summary { cursor: pointer; font-weight: bold; }
+    dl { display: grid; grid-template-columns: minmax(0, 140px) minmax(0, 1fr); gap: 7px 12px; }
+    dt { font-weight: bold; }
+    dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .poiEntityCard, .poiSavedProof { margin: 12px 0; padding: 12px; border: 1px solid #cddbe4; border-radius: 4px; background: #fff; }
+    .poiEntityCard[data-selected="true"] { border-color: #6698ba; background: #f0f7fb; }
+    h4 { margin: 0 0 8px; }
+    .poiStationRaw { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 340px; overflow: auto; font-size: 12px; line-height: 1.5; background: #f4f7f9; padding: 10px; }
+    .poiStationHistory { margin-top: 24px; border-top: 1px solid #cddbe4; }
+    button { min-height: 40px; }
+    @media (max-width: 600px) {
+        dl { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+        dd { margin-bottom: 7px; }
+    }
+}
+
+
 body {
 
     .securityFingerprint {
@@ -584,39 +620,7 @@ body {
                                 &[data-key-trust="deleted"], &[data-key-trust="expired"] { color: #ab1e1e; }
                             }
                             .trustNetworkRemoval { margin-top: 20px; padding-top: 10px; border-top: 1px solid #d4dde4; }
-                            .poiStationPanel {
-                                min-width: 0;
-                                overflow-wrap: anywhere;
-                                .poiStationForm {
-                                    display: grid;
-                                    gap: 8px;
-                                    label { font-weight: bold; }
-                                    input { box-sizing: border-box; width: 100%; min-width: 0; padding: 10px; border: 1px solid #b8cbd8; border-radius: 4px; font: inherit; }
-                                }
-                                .poiStationMessage { color: #39576c; }
-                                .poiStationVerdict {
-                                    @include trust-validation;
-                                    h3 i { margin-right: 6px; }
-                                    &[data-state="warning"] { background: #fff7e5; border-color: #d5b568; }
-                                }
-                                .poiStationFailure { padding: 12px; border: 1px solid #d39393; border-radius: 4px; background: #fff1f1; }
-                                .poiStationResult { margin: 18px 0; }
-                                .poiStationResult > details { margin: 14px 0; border-top: 1px solid #d4dde4; padding-top: 10px; }
-                                summary { cursor: pointer; font-weight: bold; }
-                                dl { display: grid; grid-template-columns: minmax(0, 140px) minmax(0, 1fr); gap: 7px 12px; }
-                                dt { font-weight: bold; }
-                                dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
-                                .poiEntityCard, .poiSavedProof { margin: 12px 0; padding: 12px; border: 1px solid #cddbe4; border-radius: 4px; background: #fff; }
-                                .poiEntityCard[data-selected="true"] { border-color: #6698ba; background: #f0f7fb; }
-                                h4 { margin: 0 0 8px; }
-                                .poiStationRaw { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 340px; overflow: auto; font-size: 12px; line-height: 1.5; background: #f4f7f9; padding: 10px; }
-                                .poiStationHistory { margin-top: 24px; border-top: 1px solid #cddbe4; }
-                                button { min-height: 40px; }
-                                @media (max-width: 600px) {
-                                    dl { grid-template-columns: minmax(0, 1fr); gap: 4px; }
-                                    dd { margin-bottom: 7px; }
-                                }
-                            }
+                            .poiStationPanel { @include poi-station-panel; }
                         }
 
                         h1 {
@@ -3447,6 +3451,73 @@ body {
                         padding-bottom: 12px;
                         scroll-padding-bottom: 12px;
                     }
+                }
+            }
+        }
+    }
+}
+
+.sessionPOI {
+    box-sizing: border-box;
+    min-width: 0;
+    padding: 16px;
+    margin: 0 0 20px;
+    border: 1px solid #b8cbd8;
+    border-radius: 6px;
+    background: #f5f8fa;
+    overflow-wrap: anywhere;
+    h3 { margin-top: 0; }
+    label { display: block; margin-top: 14px; font-weight: bold; }
+    select { box-sizing: border-box; width: 100%; max-width: 100%; padding: 10px; margin: 8px 0 16px; font: inherit; }
+    button { padding: 10px; cursor: pointer; margin-right: 8px; margin-bottom: 8px; }
+    .poiStationPanel { @include poi-station-panel; }
+}
+
+.sessionPOIStatus {
+    @include trust-validation;
+    p { margin: 4px 0; }
+    &[data-state="warning"] { background: #fff7e5; border-color: #d5b568; }
+    &[data-state="invalid"] { background: #fff1f1; border-color: #d39393; }
+}
+.sessionPOIDetails { margin-top: 12px; summary { cursor: pointer; font-weight: bold; } }
+
+// The session evidence and signed readings must remain readable on narrow screens.
+@media (max-width: 700px) {
+    body #app:has(.sessionPOI) {
+        #headline {
+            flex-shrink: 0;
+            #logo {
+                display: flex; align-items: center; min-height: 60px;
+                background-size: 38px auto; font-size: 80%; line-height: 130%;
+                span { padding-left: 44px; }
+            }
+            #windowButtons { flex-shrink: 0; }
+        }
+        #verifyframe {
+            display: block; min-height: 0; max-height: none !important; overflow-y: auto;
+            #leftbar {
+                width: 100%; overflow: visible; display: block;
+                #input {
+                    flex-grow: 0;
+                    #chargingSessionScreen {
+                        overflow: visible;
+                        #chargingSessions {
+                            height: auto;
+                            .chargingSession .verificationStatus {
+                                position: static; width: auto; text-align: left; margin-top: 8px;
+                                flex-direction: row; justify-content: flex-start;
+                            }
+                            .chargingSession .verificationStatus i { font-size: 130%; margin-right: 6px; }
+                        }
+                    }
+                }
+            }
+            #rightbar {
+                width: calc(100% - 30px); margin: 0 15px 15px; display: block;
+                #map { display: none; }
+                #detailedInfos {
+                    overflow: visible;
+                    .measurementValueRows { display: block; max-width: 100%; overflow-x: auto; }
                 }
             }
         }

@@ -5,8 +5,9 @@ Status: 31 October 2026. Implemented with `@open-charging-cloud/wwcp-poi@0.1.1`.
 ✅ **Settings → Trust Management → Roaming networks → select network → Check
 charging station** accepts one EVSE ID and retrieves its station proof. This is
 the first manual step toward the [session/live-link workflow](WWCP-POI-Session-and-Live-Trust.md).
-Automatic discovery from records/live links and the meter-key handoff to Core
-remain subsequent steps.
+A [session-bound panel and completed Drag & Drop example](WWCP-POI-Session-Integration.md)
+now reuse this verifier. Fully automatic discovery/refresh and meter-key handoff
+to Core remain subsequent steps.
 
 ## User journey and trust boundary
 

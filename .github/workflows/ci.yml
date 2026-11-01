@@ -107,6 +107,18 @@ jobs:
           path: artifacts/station-proof-screenshots/
           if-no-files-found: error
 
+      - name: Check completed session Drag & Drop and capture screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-session:capture -- --output-dir artifacts/poi-session-screenshots
+
+      - name: Upload completed POI session screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-completed-session-screenshots
+          path: artifacts/poi-session-screenshots/
+          if-no-files-found: error
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

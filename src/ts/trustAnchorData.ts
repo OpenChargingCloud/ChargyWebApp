@@ -8,6 +8,7 @@ import type { ITransportAllowances } from './liveLinkTrust';
 import { readResponseWithinLimit } from './deepLinks';
 
 export interface StoredTrustAnchorData {
+    readonly origin?: 'embedded';
     readonly sourceURL: string;
     readonly downloadedAt: string;
     /** Original signed JSON, parsed with WWCP's parser again whenever it is used. */

@@ -9,6 +9,8 @@ import { stationEVSEId, stationProofURL } from './poiURLs';
 export const stationProofMaxBytes = 2 * 1024 * 1024;
 
 export interface StationProofDocument {
+    /** Supplied with the original session input, rather than retrieved from sourceURL. */
+    readonly origin?: 'embedded';
     readonly sourceURL: string;
     readonly downloadedAt: string;
     readonly text: string;
