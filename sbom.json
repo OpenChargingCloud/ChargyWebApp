@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:e6b3184b-4c49-4c09-ace2-de83886912bd",
+  "serialNumber": "urn:uuid:9ce7c03d-b93e-4041-a74e-391184b390b6",
   "metadata": {
-    "timestamp": "2026-11-01T00:30:08.742Z",
+    "timestamp": "2026-11-01T19:20:53.225Z",
     "tools": {
       "components": [
         {
@@ -396,8 +396,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.17.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0",
+      "version": "0.17.1-dev.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.1-dev.0",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -408,7 +408,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.17.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.17.1-dev.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -424,11 +424,6 @@
           "url": "https://github.com/OpenChargingCloud/ChargyCore.TS/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.17.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
         }
       ],
       "properties": [
@@ -439,110 +434,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@open-charging-cloud/chargy-core"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "cose",
-          "group": "@vanaheimr",
-          "version": "0.9.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0|@vanaheimr/cose@0.9.0",
-          "author": "GraphDefined GmbH",
-          "description": "CBOR Object Signing and Encryption (RFC 9052) in TypeScript, on top of the Metrological CBOR codec — the TypeScript counterpart of Vanaheimr Styx's Illias/COSE.",
-          "licenses": [
-            {
-              "license": {
-                "id": "Apache-2.0",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/%40vanaheimr/cose@0.9.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/Vanaheimr/COSE.TS.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/Vanaheimr/COSE.TS#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/Vanaheimr/COSE.TS/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/@vanaheimr/cose/-/cose-0.9.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=20"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/@vanaheimr/cose"
-            }
-          ],
-          "components": [
-            {
-              "type": "library",
-              "name": "metrological-cbor",
-              "group": "@vanaheimr",
-              "version": "0.10.0",
-              "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0",
-              "author": "GraphDefined GmbH",
-              "description": "Reference implementation of Metrological CBOR (mCBOR), CBOR tag 44252: quantity values with unit of measure, SI prefix and GUM measurement uncertainty.",
-              "licenses": [
-                {
-                  "license": {
-                    "id": "Apache-2.0",
-                    "acknowledgement": "declared"
-                  }
-                }
-              ],
-              "purl": "pkg:npm/%40vanaheimr/metrological-cbor@0.10.0",
-              "externalReferences": [
-                {
-                  "url": "git+https://github.com/Vanaheimr/MetrologicalCBOR.TS.git",
-                  "type": "vcs",
-                  "comment": "as detected from PackageJson property \"repository.url\""
-                },
-                {
-                  "url": "https://github.com/Vanaheimr/MetrologicalCBOR.TS#readme",
-                  "type": "website",
-                  "comment": "as detected from PackageJson property \"homepage\""
-                },
-                {
-                  "url": "https://github.com/Vanaheimr/MetrologicalCBOR.TS/issues",
-                  "type": "issue-tracker",
-                  "comment": "as detected from PackageJson property \"bugs.url\""
-                },
-                {
-                  "url": "https://registry.npmjs.org/@vanaheimr/metrological-cbor/-/metrological-cbor-0.10.0.tgz",
-                  "type": "distribution",
-                  "comment": "as detected from npm-ls property \"resolved\""
-                }
-              ],
-              "properties": [
-                {
-                  "name": "cdx:npm:package:constraint:engine:node",
-                  "value": ">=20"
-                },
-                {
-                  "name": "cdx:npm:package:path",
-                  "value": "node_modules/@open-charging-cloud/chargy-core/node_modules/@vanaheimr/cose/node_modules/@vanaheimr/metrological-cbor"
-                }
-              ]
-            }
-          ]
         }
       ]
     },
@@ -600,8 +491,8 @@
       "type": "library",
       "name": "wwcp-poi",
       "group": "@open-charging-cloud",
-      "version": "0.1.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.1",
+      "version": "0.1.2-dev.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.2-dev.0",
       "author": "GraphDefined GmbH",
       "description": "Verifies WWCP/POI data in TypeScript: trust anchors, key statements, roaming networks and their ETags, commits, checkpoints, charging station proofs and price statements - so that an EV driver's app knows the charging station and its tariffs it shows are the ones the roaming network signed and published.",
       "licenses": [
@@ -612,7 +503,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/wwcp-poi@0.1.1",
+      "purl": "pkg:npm/%40open-charging-cloud/wwcp-poi@0.1.2-dev.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/WWCP_POI.TS.git",
@@ -628,11 +519,6 @@
           "url": "https://github.com/OpenChargingCloud/WWCP_POI.TS/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@open-charging-cloud/wwcp-poi/-/wwcp-poi-0.1.1.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
         }
       ],
       "properties": [
@@ -31683,9 +31569,9 @@
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.1",
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.1-dev.0",
         "chargytransparenzsoftware@1.4.7|@open-charging-cloud/totp@0.3.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.1",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.2-dev.0",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.22",
         "chargytransparenzsoftware@1.4.7|@types/node@26.6.6",
@@ -31766,13 +31652,13 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.1-dev.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.1.0",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.4.0",
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0|@vanaheimr/cose@0.9.0",
+        "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.10.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/metrological-cbor@0.11.1",
         "chargytransparenzsoftware@1.4.7|asn1.js@5.4.1",
         "chargytransparenzsoftware@1.4.7|base32-decode@1.0.0",
@@ -31791,29 +31677,13 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0|@vanaheimr/cose@0.9.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@noble/ciphers@2.4.0",
-        "chargytransparenzsoftware@1.4.7|@noble/curves@2.4.0",
-        "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
-        "chargytransparenzsoftware@1.4.7|@noble/post-quantum@0.7.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.0|@vanaheimr/cose@0.9.0|@vanaheimr/metrological-cbor@0.10.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/totp@0.3.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.1",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.2-dev.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.10.0",

@@ -6,6 +6,8 @@ import type { LoadedStationProof, StationProofDocument } from './stationProofDat
 import type { ITransportAllowances } from './liveLinkTrust';
 import { stationEVSEId } from './poiURLs';
 import { renderStationProof } from './stationProofView';
+import {POIHistoryError} from './poiTrustContext';
+import {renderPOIConsistency} from './poiConsistencyView';
 
 /** Owns one settings-page operation. Navigation, cancellation and a newer operation invalidate all pending UI writes. */
 export class StationProofPanel {
@@ -108,7 +110,7 @@ export class StationProofPanel {
                 const document = this.subject.document;
                 const evseId = this.subject.evseId;
                 await this.run(async signal => {
-                    const verified = await this.trust.verifyStation(this.policyId, parseJSON(document.text), { evseId });
+                    const verified = await this.trust.verifyStation(this.policyId, parseJSON(document.text), { evseId },signal);
                     signal.throwIfAborted();
                     return { ...verified, document, evseId };
                 }, false);
@@ -152,6 +154,8 @@ export class StationProofPanel {
         const box = this.result.appendChild(document.createElement('section'));
         box.className = 'poiStationFailure';
         box.setAttribute('role', 'alert');
+        const reports=error instanceof POIHistoryError?[error.report]:error instanceof StationProofLoadError?error.attempts.flatMap(attempt=>attempt.consistency===undefined?[]:[attempt.consistency]):[];
+        for(const report of reports)box.appendChild(renderPOIConsistency(report,this.localize));
         const message = box.appendChild(document.createElement('p'));
         message.textContent = this.localize('poiLoadFailed');
         const hint = box.appendChild(document.createElement('p'));
@@ -173,7 +177,7 @@ export class StationProofPanel {
             return;
         this.input.value = evseId;
         await this.run(async signal => {
-            const result = await this.trust.verifyStation(this.policyId, parseJSON(document.text), { evseId });
+            const result = await this.trust.verifyStation(this.policyId, parseJSON(document.text), { evseId },signal);
             signal.throwIfAborted();
             return { ...result, document, evseId };
         }, true);
@@ -213,7 +217,7 @@ export class StationProofPanel {
                 warning.textContent = this.localize('poiSaveFailed');
                 this.button(this.result, 'trustRetryLabel', () => {
                     void this.run(async signal => {
-                        const verified = await this.trust.verifyStation(this.policyId, parseJSON(proof.document.text), { evseId: proof.evseId });
+                        const verified = await this.trust.verifyStation(this.policyId, parseJSON(proof.document.text), { evseId: proof.evseId },signal);
                         signal.throwIfAborted();
                         return { ...verified, document: proof.document, evseId: proof.evseId };
                     }, false);

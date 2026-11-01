@@ -1,4 +1,4 @@
-import { isObject, parseJSON, prettyJSON, TrustAnchor } from '@open-charging-cloud/wwcp-poi';
+import { isObject, parseJSON, prettyJSON, TrustAnchor, parseHistoricalMeterEvidence, parseSessionPriceEvidence } from '@open-charging-cloud/wwcp-poi';
 import type { JSONObject } from '@open-charging-cloud/wwcp-poi';
 import type { ChargyInterfaces, IChargingSession } from '@open-charging-cloud/chargy-core';
 import type { StationProofDocument } from './stationProofData';
@@ -12,8 +12,21 @@ export interface SessionPOIEvidence {
     readonly sessionId?: string;
     readonly roamingNetworkId?: string;
     readonly document?: StationProofDocument;
+    readonly historicalEvidence?: string;
+    readonly priceEvidence?: string;
+    /** Original live envelopes for audit/export only; never restored as authorization. */
+    readonly liveDocuments?: readonly string[];
+    readonly priceSource?: {readonly origin:'embedded'|'network';readonly sourceURL:string;readonly receivedAt:string};
+    readonly historicalSource?: { readonly source: string; readonly receivedAt: string };
+    /** Untrusted audit metadata; never consumed by a trust resolver. */
+    readonly archiveAudit?: string;
     readonly bootstrap?: { readonly anchor: TrustAnchor; readonly document: StoredTrustAnchorData };
     readonly error?: string;
+}
+
+/** Replace a session's evidence by its association, including after immutable copies were made during live preparation. */
+export function replaceSessionPOIEvidence(sources:readonly SessionPOIEvidence[],updated:SessionPOIEvidence,sessionId:string,count:number):readonly SessionPOIEvidence[] {
+    return [...sources.filter(item=>!(item.evseId===updated.evseId&&(item.sessionId===updated.sessionId||item.sessionId===sessionId||count===1&&item.sessionId===undefined))),updated];
 }
 
 /** Read the original source with POI's lossless parser before Core performs its own conversion. No trust is imported. */
@@ -39,11 +52,28 @@ export function readSessionPOIEvidence(input: string | ChargyInterfaces.IFileInf
             if (suppliedSessionId !== undefined && (typeof suppliedSessionId !== 'string' || suppliedSessionId.trim() === ''))
                 throw new Error('Invalid POI session association');
             const proof = evidence['chargingStationProof'];
+            const historical = evidence['historicalEvidence'];
+            const historicalText = historical === undefined ? undefined : typeof historical === 'string' ? historical : prettyJSON(historical);
+            if (historicalText !== undefined) {
+                if (new TextEncoder().encode(historicalText).length > 4 * 1024 * 1024) throw new Error('Historical evidence exceeds 4 MiB');
+                if (parseHistoricalMeterEvidence(parseJSON(historicalText)).evseId !== evseId) throw new Error('Historical evidence belongs to another EVSE');
+            }
             const proofText = proof === undefined ? undefined : typeof proof === 'string' ? proof : prettyJSON(proof);
             if (proofText !== undefined && new TextEncoder().encode(proofText).length > 2 * 1024 * 1024)
                 throw new Error('Embedded station proof exceeds 2 MiB');
             if (proofText !== undefined) parseJSON(proofText);
             const receivedAt = new Date().toISOString();
+            const prices=evidence['priceEvidence'];
+            const priceText=prices===undefined?undefined:typeof prices==='string'?prices:prettyJSON(prices);
+            if(priceText!==undefined){
+                if(new TextEncoder().encode(priceText).length>4*1024*1024)throw new Error('Price evidence exceeds 4 MiB');
+                if(parseSessionPriceEvidence(parseJSON(priceText)).evseId!==evseId)throw new Error('Price evidence belongs to another EVSE');
+            }
+            const liveDocuments=evidence['liveDocuments'];
+            if(liveDocuments!==undefined&&(!Array.isArray(liveDocuments)||liveDocuments.some(item=>typeof item!=='string')||new TextEncoder().encode(JSON.stringify(liveDocuments)).length>8*1024*1024))throw new Error('Invalid original live document archive');
+            const archiveAudit = evidence['archiveAudit'];
+            if (archiveAudit !== undefined && (typeof archiveAudit !== 'string' || archiveAudit.length > 2 * 1024 * 1024))
+                throw new Error('Invalid archival audit metadata');
             let bootstrap: SessionPOIEvidence['bootstrap'];
             if (evidence['bootstrap'] !== undefined) {
                 const supplied = evidence['bootstrap'];
@@ -61,6 +91,11 @@ export function readSessionPOIEvidence(input: string | ChargyInterfaces.IFileInf
             const network = evidence['roamingNetworkId'];
             if (network !== undefined && typeof network !== 'string') throw new Error('Invalid network hint');
             result.push({ evseId,
+                ...(Array.isArray(liveDocuments)?{liveDocuments:liveDocuments as string[]}:{}),
+                ...(priceText===undefined?{}:{priceEvidence:priceText,priceSource:{origin:'embedded' as const,sourceURL:`input:${file.name}`,receivedAt}}),
+                ...(typeof archiveAudit === 'string' ? { archiveAudit } : {}),
+                ...(historicalText === undefined ? {} : { historicalEvidence: historicalText }),
+                ...(historicalText === undefined ? {} : { historicalSource: {source:`input:${file.name}`,receivedAt} }),
                 ...(typeof suppliedSessionId === 'string' ? { sessionId: suppliedSessionId } : {}),
                 ...(typeof network === 'string' ? { roamingNetworkId: network } : {}),
                 ...(proofText === undefined ? {} : { document: { origin: 'embedded' as const,
@@ -111,6 +146,10 @@ export function liveEVSEId(station: unknown): string | undefined {
 export function exportSessionPOIEvidence(evidence: SessionPOIEvidence): Record<string, unknown> {
     if (evidence.error !== undefined) throw new Error('Cannot export invalid POI evidence');
     return { '@context': sessionPOIContext, EVSEId: evidence.evseId,
+        ...(evidence.liveDocuments===undefined?{}:{liveDocuments:[...evidence.liveDocuments]}),
+        ...(evidence.priceEvidence===undefined?{}:{priceEvidence:evidence.priceEvidence}),
+        ...(evidence.historicalEvidence === undefined ? {} : { historicalEvidence: evidence.historicalEvidence }),
+        ...(evidence.archiveAudit === undefined ? {} : { archiveAudit: evidence.archiveAudit }),
         ...(evidence.sessionId === undefined ? {} : { sessionId: evidence.sessionId }),
         ...(evidence.roamingNetworkId === undefined ? {} : { roamingNetworkId: evidence.roamingNetworkId }),
         ...(evidence.document === undefined ? {} : { chargingStationProof: evidence.document.text }),

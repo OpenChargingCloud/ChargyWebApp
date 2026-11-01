@@ -1,6 +1,9 @@
 # Session-Bound Station and Static Tariff Evidence
 
-Status: 1 November 2026. Implemented with WWCP/POI TS 0.1.1 and ChargyCore 0.17.0.
+Status: 1 November 2026. Station integration plus the P-256/OCMF key-handoff
+pilot use local WWCP/POI TS 0.1.2-dev.0 and ChargyCore 0.17.1-dev.0 candidates.
+See [package provenance](../vendor/README.md) and the
+[shared meter-key handoff](WWCP-POI-Meter-Key-Handoff.md).
 
 ✅ The charging-session details now contain **Station and tariff evidence**.
 The session's EVSE is fixed for this check; the user selects one saved local
@@ -33,6 +36,10 @@ The station status stays visible while controls, sources and detailed data are
 collapsed. Green applies to the attested station version and checked EVSE;
 warnings, verification errors and pending results remain distinct. Measurement
 signature verification and POI-based meter-key authorization are separate claims.
+The additional meter-key result now rechecks the original readings with the
+explicitly associated EVSE key. It exposes source-key conflicts, gives access to
+the newly checked readings' crypto details and keeps historical association
+explicitly unproven. The original Core/container verdict remains separate.
 Changing an OCMF end reading fails its own signature while the unchanged station
 proof can still pass. Altering the station data fails the station proof while
 the original OCMF signatures can remain mathematically valid.
@@ -42,7 +49,9 @@ the original OCMF signatures can remain mathematically valid.
 Static tariff definitions are inspectable with a qualified inclusion check.
 This does not establish dynamic prices, billing applicability or independently
 witnessed publication. The example's tariff amount matches both signed OCMF
-tariff texts; general comparison/price-policy enforcement remains future work.
+tariff texts. The separate [price fixture](WWCP-POI-Session-Prices.md) now
+implements a qualified experimental fixed-at-start comparison; full billing
+evaluation remains future work.
 
 ![Session evidence on a narrow screen](screenshots/poi-completed-session/04-mobile.png)
 
@@ -101,6 +110,11 @@ sequenceDiagram
     end
     App->>POI: Fresh TrustContext + proof + selected session EVSE
     POI-->>App: Station version, dependencies, warnings or failure
+    App->>POI: Reverify proof; bind exact EVSE/meter and normalize its key
+    POI-->>App: Current key association and provenance
+    App->>Core: Original OCMF + authorized key binding
+    Core-->>App: Signatures, signed identity and source-key conflicts
+    App->>Local: Reread authorization after asynchronous checks
     App-->>User: Separate measurement and station/tariff results
 ```
 
@@ -113,8 +127,11 @@ bounded proof transport; supplied-proof verification itself makes no POI request
 Live links can show this panel before readings exist. Same-session, same-EVSE
 live updates may retain the preceding supplied evidence when no new evidence
 is supplied; verification is repeated against current decisions/time. A changed
-identity cannot inherit it. Meter-key preparation and update-time key handoff
-remain subsequent work, rather than a new claim of this panel.
+identity cannot inherit it. The shared APIs now prepare a current key before
+readings exist and check a single signed start reading. A complete matching live
+series and update/replay policy are now implemented in the
+[live pilot](WWCP-POI-Live-Pilot.md), with a separate
+[persistent observed-version journal](WWCP-POI-Observed-Versions.md).
 
 ## Storage, freshness and remaining work
 
@@ -127,26 +144,41 @@ evidence; cache deletion and current-time rechecking follow the existing rules.
 
 The normal app rejects expired fixture attestations. Regeneration signs new
 documents; screenshot tests alone fix their clock to `provenance.generatedAt`.
-This does not implement historical policy snapshots or prove which station
-version was published before the charging session.
+This current-only path does not prove which station version was published
+before the charging session. The separate
+[historical path](WWCP-POI-Historical-Sessions.md) checks attested signed-reading
+times and checkpoint inclusion, and retains audit-only policy snapshots without
+restoring them as trust.
 
-The next shared-library/Core step is explicit normalized meter-key selection,
-EVSE/meter/key/time association, conflict handling and passing that provenance
-to Core. The completed fixture already supplies matching genuine material for
-it. Runtime prices, EMP offers, witnesses and historical session archives remain
-independent work.
+✅ Shared-library meter-key selection and an additive Core verification API are
+implemented for explicit uncompressed P-256/OCMF inputs. They enforce signed
+EVSE/meter identity, key identity and current observation time, without trying
+unrelated keys. The [handoff guide](WWCP-POI-Meter-Key-Handoff.md) covers the
+result contract and genuine counterexamples. Historical session archives and
+experimental fixed-at-start CPO prices are now implemented separately. EMP
+offers, independent witnesses and full billing evaluation remain future work.
 
 ## Verification and screenshot maintenance
 
 `tests/sessionPOI.test.ts` checks actual Core parsing and both measurement
 signatures, fixture provenance, matching meter key, real station/tariff inclusion,
 unknown trust, wrong EVSE, competing evidence and decimal-preserving export.
+`tests/sessionMeterKeys.test.ts` additionally checks shared association and actual
+Core re-verification, wrong/ambiguous meters, source-key conflicts, invalid
+signatures, trust withdrawal and a single start reading.
 The browser script exercises real Drag & Drop, file selection/reload, explicit
 offline bootstrap import, two-holder trust, static tariffs, fresh retrieval,
 tampering, expiry, the original measurement-signature detail dialog and
-desktop/mobile rendering. It never injects green outcomes.
+desktop/mobile rendering. It also checks the key counterexamples, conflict-
+preserving export/reimport and trust withdrawal during real asynchronous crypto.
+It never injects green outcomes.
 
 Run `npm run docs:screenshots:poi-session` whenever this UI, association or import
 flow changes. Inspect **all** captures, update captions and include the new
 [capture metadata](screenshots/poi-completed-session/capture-info.json). CI runs
 the browser checks and publishes fresh captures as an artifact.
+
+The [session price evidence guide](WWCP-POI-Session-Prices.md) describes the implemented CPO-signed
+price workflow, experimental fixed-at-start assignment, exact start-rate
+comparison and separate price inclusion, with signed examples and screenshots.
+Customer consent, pre-charge publication and full billing remain unproven.

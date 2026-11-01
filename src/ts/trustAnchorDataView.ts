@@ -1,7 +1,7 @@
 import { toBase64 } from '@open-charging-cloud/wwcp-poi';
 import type { POIPublicKey, TrustAnchor } from '@open-charging-cloud/wwcp-poi';
 import type { LoadedTrustAnchorData } from './trustAnchorData';
-import { validateTrustAnchorData } from './trustAnchorData';
+import { validateTrustAnchorData, validateHistoricalReferenceData } from './trustAnchorData';
 import type { StoredTrustAnchor } from './trustStore';
 import { activeBundledPublicKeys } from './trustStore';
 import { renderTrustAnchorValidation } from './trustAnchorPreview';
@@ -16,6 +16,7 @@ export function renderTrustAnchorData(anchor: TrustAnchor, data: LoadedTrustAnch
                                           readonly deleted: ReadonlySet<string>;
                                           readonly localize: (key: string) => string;
                                           readonly onChange: (id: string, trusted: boolean) => Promise<void>;
+                                          readonly historicalReference?: boolean;
                                       }): HTMLElement {
     const { localize } = options;
     const root = document.createElement("section");
@@ -24,9 +25,14 @@ export function renderTrustAnchorData(anchor: TrustAnchor, data: LoadedTrustAnch
     const heading = root.appendChild(document.createElement("h2"));
     heading.textContent = localize("trustDataTitle");
     const result = validateTrustAnchorData(anchor, data, options.record, options.bundled, options.deleted);
+    const historical = options.historicalReference === true ? validateHistoricalReferenceData(anchor,data,options.record,options.bundled,options.deleted) : undefined;
+    if (historical !== undefined) {
+        const note = root.appendChild(document.createElement('p')); note.dataset['historicalReference'] = 'true';
+        note.textContent = localize('poiHistoryReferenceImport');
+    }
     const status = root.appendChild(document.createElement("p"));
     const saved = options.record?.downloadedData?.text === data.document.text && options.record.downloadedData.sourceURL === data.document.sourceURL;
-    status.textContent = localize(saved ? "trustAnchorSavedStatus" : "trustDataNotSaved");
+    status.textContent = localize(saved ? "trustAnchorSavedStatus" : historical !== undefined && options.record?.downloadedData !== undefined ? 'poiHistoryExistingReference' : "trustDataNotSaved");
     root.appendChild(renderTrustAnchorValidation({ ...result, reasons: {
         signatures: localize(result.signatures === "valid" ? "trustAnchorCheckPassed" : "trustAnchorCheckFailed") + ` (${result.signatureCount})`,
         quorum: `${result.trustedHolderCount} / ${result.requiredConsensus} · ${localize(result.quorum === "valid" ? "trustAnchorCheckPassed" : "trustAnchorCheckFailed")}`
@@ -48,7 +54,7 @@ export function renderTrustAnchorData(anchor: TrustAnchor, data: LoadedTrustAnch
     if (data.document.origin === 'embedded')
         root.appendChild(document.createElement('p')).textContent = localize('poiEmbeddedStatement');
     root.appendChild(renderAnchorKeyTrust(anchor, {
-        ...options, loadedKeys: data.identityKeys, allowChanges: result.canTrustKeys
+        ...options, loadedKeys: data.identityKeys, allowChanges: result.canTrustKeys || historical?.canTrustKeys === true
     }));
     const keys = root.appendChild(document.createElement("details"));
     const summary = keys.appendChild(document.createElement("summary"));

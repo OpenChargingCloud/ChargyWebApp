@@ -132,7 +132,7 @@ try {
             [key, { path: file, sha256: createHash('sha256').update(fixtures[key]).digest('hex') }])),
         states: { trust: 'Genuine KeyStatement; two holders explicitly authorized through the UI',
             waiting: 'Genuine signed live link; no readings; first response held until capture',
-            firstReading: 'Genuine first HTTPS update processed by the existing Core/UI; POI association is not implemented' }
+            firstReading: 'Genuine first HTTPS update processed by the existing Core/UI; this legacy fixture has no matching POI evidence; association remains unproven' }
     }, null, 2) + '\n');
     console.log(`Captured ${imageNames.length} use-case screenshots in ${output}`);
     await context.close();

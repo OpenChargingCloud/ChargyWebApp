@@ -3523,3 +3523,69 @@ body {
         }
     }
 }
+
+.sessionMeterKey { margin-top: 12px; font-size: 95%; }
+.sessionMeterKeyResult {
+    @include trust-validation;
+    margin: 12px 0;
+    p { margin: 5px 0; }
+    > p:first-child { font-weight: bold; }
+    &[data-state="warning"] { background: #fff7e5; border-color: #d5b568; }
+    &[data-state="invalid"] { background: #fff1f1; border-color: #d39393; }
+    .poiMeterHistorical { color: #635729; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+    button { display: block; max-width: 100%; }
+}
+
+.historicalSessionResult {
+    @include trust-validation;
+    margin: 12px 0;
+    p { margin: 7px 0; }
+    &[data-state="warning"], &[data-state="pending"] { background: #fff7e5; border-color: #d5b568; }
+    &[data-state="invalid"] { background: #fff1f1; border-color: #d39393; }
+    > p[data-state="warning"] { color: #635729; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+    button { display: block; max-width: 100%; margin-top: 8px; }
+}
+.trustManagementCard pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.sessionPrices { margin-top: 16px; }
+.sessionPriceResult {
+    @include trust-validation;
+    overflow-wrap: anywhere;
+    margin: 12px 0;
+    p { margin: 7px 0; }
+    &[data-state="warning"], &[data-state="pending"], &[data-state="idle"] { background: #fff7e5; border-color: #d5b568; }
+    &[data-state="invalid"] { background: #fff1f1; border-color: #d39393; }
+    > p[data-state="warning"] { color: #635729; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; max-height: 380px; overflow-y: auto; }
+    button { display: block; max-width: 100%; margin-top: 8px; }
+    .sessionPriceSelected { font-weight: bold; }
+    .sessionPriceComponents { display: grid; grid-template-columns: auto 1fr; gap: 4px 16px; }
+    dd { margin: 0; overflow-wrap: anywhere; }
+    .securityFingerprint { max-width: 320px; }
+}
+
+.livePOIResult {
+    @include trust-validation;
+    margin: 12px 0;
+    overflow-wrap: anywhere;
+    p { margin: 7px 0; }
+    &[data-state="warning"], &[data-state="pending"], &[data-state="idle"] { background: #fff7e5; border-color: #d5b568; }
+    &[data-state="invalid"] { background: #fff1f1; border-color: #d39393; }
+    pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+}
+
+.poiConsistency { margin: 10px 0; padding: 8px; border: 1px solid #c4d4df; border-radius: 4px; overflow-wrap: anywhere;
+    &[data-state="invalid"] { background: #fff1f1; border-color: #d39393; }
+    p { margin: 4px 0; }
+}
+.trustManagementCard pre { max-height: 380px; overflow: auto; }
+.trustTransitionManager { margin: 16px 0; padding: 14px; border: 1px solid #c4d4df; border-radius: 4px; overflow-wrap: anywhere;
+    textarea { display: block; width: 100%; box-sizing: border-box; margin: 8px 0; }
+    input[type="file"] { display: block; width: 100%; margin: 8px 0; }
+    pre { max-height: 300px; overflow: auto; white-space: pre-wrap; }
+    .trustTransitionResult[data-state="valid"] { background: #edf8e8; padding: 12px; margin-top: 10px; }
+    .trustTransitionResult[data-state="invalid"] { background: #fff1f1; padding: 12px; margin-top: 10px; }
+}
+.poiCPOKeyList { display: flex; flex-wrap: wrap; gap: 8px; .securityFingerprint { max-width: 220px; } }

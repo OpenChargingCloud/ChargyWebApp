@@ -1,0 +1,28 @@
+{
+  "status": "Unpublished local development candidates; no npm publication",
+  "regeneration": "npm run dev:pack:trust -- --poi <POI checkout> --core <Core checkout>",
+  "packages": [
+    {
+      "name": "@open-charging-cloud/wwcp-poi",
+      "version": "0.1.2-dev.0",
+      "repository": "https://github.com/OpenChargingCloud/WWCP_POI.TS",
+      "baseCommit": "5e573fe2ed771e7458daa2084c1a9bccb4f40a77",
+      "sourcePatch": "source/poi.patch",
+      "patchSHA256": "f00653d6fb8346b87e898f4a2fdcab0dfecba125b5992e20a930f31510352784",
+      "filename": "open-charging-cloud-wwcp-poi-0.1.2-dev.0.tgz",
+      "integrity": "sha512-gbRm3RWL0ltpoa65WniicSt+qBNVFU/Zl8q/vjPm7cB51zPklBom9AjvUAZ6zoCyYC74hctF/1MOWkSV3vE/bA==",
+      "sha256": "e55f618eaf94d7e8c2b470ad51ced1c6c769e33d22f86da1005afcf523143d03"
+    },
+    {
+      "name": "@open-charging-cloud/chargy-core",
+      "version": "0.17.1-dev.0",
+      "repository": "https://github.com/OpenChargingCloud/ChargyCore.TS",
+      "baseCommit": "97a6f4baa6ee31266efab97cd00262a1519b5c27",
+      "sourcePatch": "source/core.patch",
+      "patchSHA256": "6941eb8e497e771434fe0291d768780fb78d8e11edbee44f9233c74d6af663c2",
+      "filename": "open-charging-cloud-chargy-core-0.17.1-dev.0.tgz",
+      "integrity": "sha512-ssXU5Fp84JQyvyzyZ+64HQw7tf955wmN+k7XMO4s2SeZMQsnrStnJdZv/qy0W20jlWvhng9I8L7XZDhhgHjdOw==",
+      "sha256": "c719d3c3db8316873f24d0107dda143e6b13a9bf9742909ceea693ce742bf141"
+    }
+  ]
+}

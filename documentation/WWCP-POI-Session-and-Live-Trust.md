@@ -1,7 +1,8 @@
 # WWCP/POI Trust Use Case: Charging Sessions and Live Links
 
-Status: 1 November 2026. Architecture and proposed user journey, based on
-WWCP/POI TS **0.1.1**, ChargyCore **0.17.0** and the current Chargy WebApp.
+Status: 1 November 2026. Architecture and proposed user journey. The current
+P-256/OCMF pilot uses local unpublished WWCP/POI TS **0.1.2-dev.0** and ChargyCore
+**0.17.1-dev.0** candidates; see [package provenance](../vendor/README.md).
 
 Chargy receives a completed charging record or a live link. The input may carry
 station and tariff evidence, or only identify an EVSE. Chargy resolves the relevant
@@ -28,9 +29,11 @@ rather than claiming that the complete workflow already exists.
 | `POITrustService.verifyStation(...)` | ✅ Manual network/EVSE download, result details and cache/recheck implemented; session-bound display and explicit retrieval now available; fully automatic discovery/refresh remains future work |
 | Live link without readings, HTTPS updates and verification of received OCMF readings | Implemented using the existing Core path |
 | Automatic discovery and refresh of POI evidence from a session | Proposed here |
-| POI-derived meter-key selection and provenance passed to Core | Proposed here |
+| POI-derived meter-key selection and provenance passed to Core | ✅ P-256/OCMF pilot, including single start reading and current-key preparation; [guide](WWCP-POI-Meter-Key-Handoff.md). A complete cumulative live series is now implemented; see the live pilot guide |
 | Witness discovery, role-specific trust management and publication status in the app | Proposed here |
-| Historical policy snapshots, checkpoint retention and complete session evidence | Proposed here |
+| Historical signed-reading-time association, RNO checkpoint inclusion and session archive | ✅ Implemented; [guide](WWCP-POI-Historical-Sessions.md) |
+| CPO prices, experimental session selection, start-rate consistency and price inclusion | ✅ Implemented; [guide](WWCP-POI-Session-Prices.md); customer consent and pre-start publication remain unproven |
+| Full historical policy/succession, independent time and complete publication evidence | Proposed here |
 
 An input's embedded TrustAnchor, keys or proof URLs are initially hints. They
 cannot replace the user's saved trust policy. A valid document signature using a
@@ -531,7 +534,7 @@ the original ID and derivation. An OCMF meter serial (`MS`), station serial (`GS
 and EVSE ID (`CT`/`CI` where supplied) have distinct meanings; require a documented
 mapping and check the signed fields rather than comparing unrelated ID strings.
 
-A **proposed app/Core handoff result** could include:
+A **broader proposed app/Core handoff result** could include:
 
 ```json
 {
@@ -559,8 +562,10 @@ A **proposed app/Core handoff result** could include:
 }
 ```
 
-This is not an existing Core interface. The handoff also needs the decoded/public
-key material and actual evaluation metadata. Core must reject a signature/algorithm
+This broader example is not the pilot's actual Core interface. The implemented
+`IMeterKeyBinding` includes decoded/public key material and actual current
+evaluation metadata; see the [contract](WWCP-POI-Meter-Key-Handoff.md).
+Core must reject a signature/algorithm
 mismatch and expose conflicting keys supplied in the original record. Do not try
 unrelated global keys until one verifies, or overwrite an embedded key silently.
 Stations that sign their own measurements require their own explicitly proven
@@ -756,8 +761,9 @@ details. It caches original proofs and rechecks them against current trust/time.
 See [the feature guide and real screenshots](WWCP-POI-Station-Proof.md).
 The new [completed-session example](WWCP-POI-Session-Integration.md) separately
 provides matching signed start/end readings, meter key, EVSE proof and static
-tariff. The original live fixture remains a different station; automatic
-POI-derived key handoff to the live session is still future work.
+tariff and now exercises actual POI-derived key handoff. The original live
+fixture remains a different station; a matching live series with update/replay
+policy is still future work.
 
 ### Proposed witness management
 
@@ -795,10 +801,11 @@ export/import, deletion and quota behavior before relying on offline disputes.
 | Meter-key normalization/binding and additive Core resolver contract | User selection when identities conflict or are missing |
 | Reading verification using the selected key and signed identity | Scheduling updates, displaying and exporting results |
 
-Core 0.17.0 has explicit key arguments for its OCMF parsers, suitable for a pilot.
-It lacks the general session-bound resolver with POI provenance. Keep common
-authorization and key-binding rules in libraries, not separately implemented in
-web, desktop and mobile apps.
+The local Core candidate now has `verifyOCMFSessionWithMeterKey` with a neutral
+binding/provenance contract for the P-256/OCMF pilot; POI association and decoding
+are in the shared POI candidate. A general resolver for all formats remains
+future work. Common authorization and key-binding rules stay in libraries,
+not separately implemented in web, desktop and mobile apps.
 
 The legacy `verifyEvidence` still accepts an embedded TrustAnchor as its trust
 basis. A production caller must authorize that policy externally; an evidence
@@ -869,3 +876,13 @@ Implementation acceptance should cover:
 - Real live fixtures:
   [initial envelope](../tests/fixtures/ChargeTransparencyLive/OCMF-Test-01/OCMF-Test-01__0000.json)
   and [first update](../tests/fixtures/ChargeTransparencyLive/OCMF-Test-01/OCMF-Test-01__0001.json).
+
+The [session price evidence guide](WWCP-POI-Session-Prices.md) describes the implemented CPO-signed
+price workflow, experimental fixed-at-start assignment, exact start-rate
+comparison and separate price inclusion, with signed examples and screenshots.
+Customer consent, pre-charge publication and full billing remain unproven.
+
+The [complete cumulative live pilot](WWCP-POI-Live-Pilot.md) is now implemented, including
+preparation before readings, verification before adoption, fixed-price retention,
+verified completion and original-envelope archival. Wider discovery, variable
+prices, independent witnesses and envelope-signer authorization remain separate.

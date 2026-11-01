@@ -1,0 +1,13 @@
+{
+  "generator": "build-tools/generatePOIObservedVersionsExample.mjs",
+  "evaluatedAt": "2026-11-01T00:16:21Z",
+  "testKeys": "PUBLIC TEST KEYS ONLY: CPO Ed25519 seed161, RNO operational42/44, identities41/43; existing P-256 meter fixture.",
+  "files": {
+    "vectors.json": "cb6e6ed1356a5c1b31ea2a4d5617fb14ef64bcbf5df947702f3a15df139497ad",
+    "archive-0.chargy": "6c3e172a3056c36de3f6e90503e149fbb7ecfaa91265c236740455a6aab9021b",
+    "archive-1.chargy": "c288162a65c148eb79f50cc2bb648019980a167a69b038590c673b39c7df6ffb",
+    "archive-2.chargy": "358409648061eb7e2eb099fffe4caaa4e0207316ec8410f7f04d0a9cb1604b48",
+    "checkpoint-fork-1.chargy": "b29f922e0aa07d219d2b7b0bc5154ab5483d58cac405242d4544762b9cacff92",
+    "price-fork-1.chargy": "6a0f5e331327ac71279838583411c4921b9666d11e8ca144baf4ce319357bb03"
+  }
+}

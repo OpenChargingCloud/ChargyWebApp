@@ -1,0 +1,22 @@
+{
+  "generator": "build-tools/generatePOITrustTransitionExample.mjs",
+  "publicTestSeeds": "RNO old identities41/43, operations42/44; new51/53 and52/54; CPO161/162; forged199",
+  "files": {
+    "vectors.json": "f9e153c68d4d351fc2fd1526c96587678e7d99a770fa6f4cd05d96bcd2e56281",
+    "policy-transition.json": "094fcf6bab7f169e53d8980ebd8b66546d4d21d78c1f32a4301262ae503788ac",
+    "epoch-transition.json": "76b4691cce446d0c425af80e4eeabdc61e484d7a5e7bddd47c21c9af8c3cfb0e",
+    "missing-old-quorum.json": "78faca24d0ad570c2554c143c378327ac008c644a5719cbe5e1fadba7f9dc14a",
+    "missing-new-quorum.json": "4c52e215684fb6758b6d84e3223f1d52c1fba69b7e6b3a6c6a8ba37013590b03",
+    "tampered-target-url.json": "69af0a9fa0c04ab173cebf2e4b023e945871de0cedd2ee30ab69466013dc8361",
+    "wrong-genesis.json": "e60f394565510b159fffe976f20cc8a8a9a43262605cec0124fde8ea4cdba975",
+    "invalid-target-certificate.json": "fb8bcae401f97254e553e3a31664b7d223d78b10d0e8e0f20f470da3f311d92b",
+    "live-price-only-key.json": "fe056cf2d7ae7208700fcb13e7c3206b38769ab02ae72762d1c1ab6b8356bbed",
+    "live-forged-first.json": "c2a6f6300ed9cd24f765e2a89c959063231331be7944a47a41be4f8190148ac9",
+    "live-wrong-cpo.json": "b3d67f5f372db45d32e76dc483f89581ee24a9684f3db2c2ccd8c0af5116d78f",
+    "live-key-transition.json": "d8648ebd7552279d054c3058f0ccc62f8f592de6c840256dd13cd5db41fe8e29",
+    "live-after-key-transition.json": "63a5f0a48c82c1da244aaab34f3ec0f92e37dcf3ee271b43c1ec603b30807d00",
+    "live-after-policy-transition.json": "323843fc2085f382ed10abd4202354895c060ea37f5cb647ba61f8047df8f1b6",
+    "live-key-change-without-cosignature.json": "599a19e0f54e1c48ddba9ce14a5598537b13d0e62b65498618098a1606209633",
+    "live-key-change-without-poi.json": "44ac0f853bf1be518974ab545beb5ff6016d18a321dbdb7471573c648c36cfcc"
+  }
+}

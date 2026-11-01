@@ -12,7 +12,13 @@ served a fixture response at the saved HTTPS source. Version metadata/map images
 are stubbed for reproducibility. The Browser plugin is unavailable; Playwright
 is used for the browser checks.
 
-Regenerate and inspect all five PNGs after relevant UI changes. Keep captions in
+The checks include original-reading verification with the proven EVSE key,
+source-key conflicts, genuinely re-signed foreign/wrong/ambiguous meter proofs,
+export/reimport and trust withdrawal while real SHA-256 work is delayed. The
+withdrawal removes an existing decision from IndexedDB; restoring trust uses
+the actual UI. No positive verification or trust outcome is injected.
+
+Regenerate and inspect all seven PNGs after relevant UI changes. Keep captions in
 [`WWCP-POI-Session-Integration.md`](../../WWCP-POI-Session-Integration.md) and
 `capture-info.json` current. Never hand-edit screenshots, insert verification
 outcomes or add demo keys to production trust roots. CI uploads the captures as

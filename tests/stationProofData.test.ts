@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, test, vi } from 'vitest';
 import { TrustAnchor, TrustContext, KeyStatement, parseJSON, isObject } from '@open-charging-cloud/wwcp-poi';
-import { POITrustService } from '../src/ts/poiTrustContext';
+import {TestPOITrustService as POITrustService} from './poiTestService';
 import { loadStationProof, stationProofMaxBytes, StationProofLoadError } from '../src/ts/stationProofData';
 import { keyStatementURL } from '../src/ts/trustAnchorData';
 import { stationEVSEId, stationProofURL } from '../src/ts/poiURLs';

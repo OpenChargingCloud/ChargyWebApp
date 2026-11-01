@@ -1,0 +1,20 @@
+{
+  "generator": "build-tools/generateHistoricalPOIExample.mjs",
+  "evaluatedAt": "2026-11-01T00:16:21.000Z",
+  "begin": "2026-06-01T10:00:00.000Z",
+  "end": "2026-06-01T10:30:00.000Z",
+  "checkpointAt": "2026-06-02T10:00:00.000Z",
+  "attestationUntil": "2026-06-01T11:00:00.000Z",
+  "historicalStatementUntil": "2026-06-01T14:00:00.000Z",
+  "evseId": "DE*POI*E1*1",
+  "keys": "PUBLIC TEST KEYS ONLY; identities 41/43, old operational keys 142/144, checkpoint keys 42/44, witness 151",
+  "files": {
+    "archived-session.chargy": "763b6fc62e7574f948f90fc3e7ef947b6ddb35bff019d37db517c2d1d5fb5343",
+    "expired-bootstrap-session.chargy": "54f171d0a51860a1ad7694c8125c5a73cd48bb87bf3fa6be3f9162bb5c8aba5f",
+    "missing-checkpoint.chargy": "526df9adc50ad0929631216e7f3b0088e7ffbacd65b577e3481b16da13825cb4",
+    "wrong-period.chargy": "9ec77f10c1e88891b8212a6c526f9c2739218da95092236fc6f0fc4a4922e8f2",
+    "key-rotation.chargy": "068927cac1c2dac13f79eb291e16d49e4864d7960317dab95da7d1131c2a8c3e",
+    "conflicting-assignments.chargy": "24f12b2984f60096e2e232d3718d71a09fd1fbc83bf3177f30b0b6319d660823",
+    "tampered-checkpoint.chargy": "24cd4c1e55023386533403e7998778af32e11ed6f66435e56215964c80503e3a"
+  }
+}

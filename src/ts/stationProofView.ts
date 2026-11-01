@@ -1,3 +1,4 @@
+import {renderPOIConsistency} from './poiConsistencyView';
 import { canonicalJSON, etagToText, isObject, parseJSON, prettyJSON } from '@open-charging-cloud/wwcp-poi';
 import type { JSONValue } from '@open-charging-cloud/wwcp-poi';
 import type { LoadedStationProof } from './stationProofData';
@@ -59,6 +60,7 @@ export function renderStationProof(proof: LoadedStationProof, options: {
             text(parent, `${localize('poiShowingItems')}: ${limit} / ${values.length}. ${localize('poiRemainingInOriginal')}`);
         return values.slice(0, limit);
     };
+    if(proof.consistency!==undefined)root.appendChild(renderPOIConsistency(proof.consistency,localize));
     const banner = root.appendChild(document.createElement('section'));
     banner.className = 'poiStationVerdict';
     banner.dataset['state'] = station.warnings.length === 0 ? 'valid' : 'warning';

@@ -1,6 +1,7 @@
 import { parseJSON } from '@open-charging-cloud/wwcp-poi';
-import type { VerifiedChargingStation } from '@open-charging-cloud/wwcp-poi';
+import type { VersionComparison, VerifiedChargingStation } from '@open-charging-cloud/wwcp-poi';
 import type { POITrustContext, POITrustService } from './poiTrustContext';
+import {POIHistoryError} from './poiTrustContext';
 import { pollTargetProblem } from './liveLinkTrust';
 import type { ITransportAllowances } from './liveLinkTrust';
 import { readResponseWithinLimit } from './deepLinks';
@@ -17,6 +18,7 @@ export interface StationProofDocument {
 }
 
 export interface LoadedStationProof {
+    readonly consistency?:VersionComparison;
     readonly document: StationProofDocument;
     readonly evseId: string;
     readonly context: POITrustContext;
@@ -24,6 +26,7 @@ export interface LoadedStationProof {
 }
 
 export interface StationProofAttempt {
+    readonly consistency?:VersionComparison;
     readonly sourceURL: string;
     readonly stage: 'download' | 'verification';
     readonly message: string;
@@ -89,7 +92,7 @@ export async function loadStationProof(trust: Pick<POITrustService, 'resolve' | 
                 };
                 stage = 'verification';
                 // Read current local decisions again after I/O. The downloaded operator cannot replace the saved policy.
-                const verified = await trust.verifyStation(policyId, parseJSON(document.text), { evseId });
+                const verified = await trust.verifyStation(policyId, parseJSON(document.text), { evseId },controller.signal);
                 controller.signal.throwIfAborted();
                 options.signal.throwIfAborted();
                 return { ...verified, document, evseId };
@@ -97,7 +100,8 @@ export async function loadStationProof(trust: Pick<POITrustService, 'resolve' | 
             catch (error) {
                 options.signal.throwIfAborted();
                 const reason: unknown = controller.signal.aborted ? controller.signal.reason : error;
-                attempts.push({ sourceURL, stage, message: reason instanceof Error ? reason.message : String(reason) });
+                attempts.push({ sourceURL, stage, message: reason instanceof Error ? reason.message : String(reason),
+                    ...(reason instanceof POIHistoryError?{consistency:reason.report}:{}) });
             }
             finally {
                 clearTimeout(timer);

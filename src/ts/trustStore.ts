@@ -1,4 +1,4 @@
-import { TrustAnchor, hash, toHex } from '@open-charging-cloud/wwcp-poi';
+import { TrustAnchor, hash, toHex,trustPolicyId } from '@open-charging-cloud/wwcp-poi';
 import type { POIPublicKey } from '@open-charging-cloud/wwcp-poi';
 import type { StoredTrustAnchorData } from './trustAnchorData';
 import type { LoadedStationProof } from './stationProofData';
@@ -11,6 +11,7 @@ const stationProofsStore = "poiStationProofs";
 
 /** Original cached evidence and provenance; no persisted authorization verdict. */
 export interface StoredStationProof {
+    readonly effectiveAnchorQRCode?:string;
     readonly origin?: 'embedded';
     readonly id: string;
     readonly anchorPolicyId: string;
@@ -37,6 +38,8 @@ function deletePolicyProofs(transaction: IDBTransaction, policyId: string): void
 }
 
 export interface StoredTrustAnchor {
+    /** Explicitly accepted original delegation evidence, reverified under current local roots on each operation. */
+    readonly transitions?:readonly {readonly text:string;readonly acceptedAt:string}[];
     readonly id: string;
     readonly qrCode: string;
     readonly sourceText: string;
@@ -53,13 +56,7 @@ export interface ManuallyTrustedKey {
 
 /** Names/descriptions do not create duplicates between compact and URL forms. */
 export function trustAnchorStorageId(anchor: TrustAnchor): string {
-    const identity = JSON.stringify({
-        network: anchor.id,
-        holders: anchor.holders,
-        minConsensus: anchor.minConsensus,
-        urls: anchor.urls.map(url => new URL(url).href.replace(/\/+$/, "")).sort()
-    });
-    return toHex(hash("sha256", new TextEncoder().encode(identity)));
+    return trustPolicyId(anchor);
 }
 
 function object(value: unknown): Record<string, unknown> {
@@ -101,7 +98,12 @@ function readAnchor(value: unknown): StoredTrustAnchor {
         downloadedData = { sourceURL: data["sourceURL"], text: data["text"], downloadedAt: data["downloadedAt"],
             ...(data['origin'] === 'embedded' ? { origin: 'embedded' as const } : {}) };
     }
+    const transitions=record['transitions'];
+    if(transitions!==undefined&&(!Array.isArray(transitions)||transitions.length>32||new TextEncoder().encode(JSON.stringify(transitions)).length>8*1024*1024||transitions.some(value=>{
+        const item=object(value);return typeof item['text']!=='string'||typeof item['acceptedAt']!=='string'||!Number.isFinite(Date.parse(item['acceptedAt']));
+    })))throw new Error('Invalid stored trust transitions');
     return { id: record["id"], qrCode: record["qrCode"], sourceText: record["sourceText"], importedAt: record["importedAt"], trustedKeys,
+             ...(transitions===undefined?{}:{transitions:transitions as {text:string;acceptedAt:string}[]}),
              ...(downloadedData === undefined ? {} : { downloadedData }) };
 }
 
@@ -115,8 +117,9 @@ function readStationProof(value: unknown): StoredStationProof {
     if (raw['origin'] !== undefined && raw['origin'] !== 'embedded')
         throw new Error('Invalid station proof origin');
     const anchor = TrustAnchor.parse(record.anchorQRCode);
+    const effective=record.effectiveAnchorQRCode===undefined?anchor:TrustAnchor.parse(record.effectiveAnchorQRCode);
     if (trustAnchorStorageId(anchor) !== record.anchorPolicyId || stationEVSEId(record.evseId) !== record.evseId ||
-        (record.origin === undefined ? !anchor.urls.some(base => stationProofURL(base, record.evseId) === record.sourceURL)
+        (record.origin === undefined ? !effective.urls.some(base => stationProofURL(base, record.evseId) === record.sourceURL)
             : !record.sourceURL.startsWith('input:')) ||
         !Number.isFinite(Date.parse(record.downloadedAt)) || !Number.isFinite(Date.parse(record.checkedAt)) ||
         stationProofStorageId(record.anchorPolicyId, record.evseId, record.text) !== record.id)
@@ -126,6 +129,22 @@ function readStationProof(value: unknown): StoredStationProof {
 
 /** Version 2 adds a proof cache, retaining the version-1 anchors and local decisions. */
 export class TrustStore {
+    /** Compare the complete reviewed policy and exclusions in the same transaction; concurrent decisions cannot be overwritten. */
+    public async appendTrustTransition(expected:StoredTrustAnchor,expectedDeleted:ReadonlySet<string>,text:string,acceptedAt:string,
+        validate:(record:StoredTrustAnchor,deleted:ReadonlySet<string>)=>void):Promise<void>{
+        const db=await this.open();await new Promise<void>((resolve,reject)=>{
+            const tx=db.transaction([anchorsStore,deletedKeysStore],'readwrite'),store=tx.objectStore(anchorsStore),request=store.get(expected.id),excluded=tx.objectStore(deletedKeysStore).getAll();
+            let failure:unknown;let remaining=2;
+            const ready=():void=>{if(--remaining>0)return;try{
+                const record=readAnchor(request.result),deleted=readDeletedKeys(excluded.result as unknown[]);
+                if(JSON.stringify(record)!==JSON.stringify(readAnchor(expected))||JSON.stringify([...deleted].sort())!==JSON.stringify([...expectedDeleted].sort()))throw new Error('Local policy or trust changed after transition review');
+                validate(record,deleted);const transitions=[...record.transitions??[],{text,acceptedAt}];
+                if(transitions.length>32||new TextEncoder().encode(JSON.stringify(transitions)).length>8*1024*1024)throw new Error('Trust-transition storage capacity reached');
+                store.put({...record,transitions});
+            }catch(error){failure=error;tx.abort();}};
+            request.onsuccess=ready;excluded.onsuccess=ready;tx.oncomplete=():void=> { resolve(); };tx.onabort=():void=> { reject(failure instanceof Error?failure:tx.error??new Error('Could not store trust transition')); };
+        });
+    }
     private connection: Promise<IDBDatabase> | null = null;
 
     private async open(): Promise<IDBDatabase> {
@@ -285,7 +304,7 @@ export class TrustStore {
             const request = store.get(record.id);
             request.onsuccess = (): void => {
                 if (request.result !== undefined) {
-                    if (downloadedData !== undefined) {
+                    if (downloadedData !== undefined && (readAnchor(request.result).transitions?.length??0)===0) {
                         try { store.put({ ...readAnchor(request.result), downloadedData }); }
                         catch { store.transaction.abort(); return; }
                     }
@@ -348,7 +367,8 @@ export class TrustStore {
     public async saveStationProof(proof: LoadedStationProof, signal?: AbortSignal): Promise<'saved' | 'exists'> {
         const record = readStationProof({
             id: stationProofStorageId(proof.context.anchorPolicyId, proof.evseId, proof.document.text),
-            anchorPolicyId: proof.context.anchorPolicyId, anchorQRCode: proof.context.evidence.anchorQRCode,
+            anchorPolicyId: proof.context.anchorPolicyId, anchorQRCode: proof.context.evidence.bootstrapAnchorQRCode??proof.context.evidence.anchorQRCode,
+            effectiveAnchorQRCode:proof.context.evidence.anchorQRCode,
             evseId: proof.evseId, ...proof.document, checkedAt: new Date(proof.context.evaluatedAt).toISOString()
         });
         return this.transaction([anchorsStore, stationProofsStore], 'readwrite', (anchors, result) => {

@@ -75,10 +75,11 @@ const network = RoamingNetwork.parse(json({ '@context': ROAMING_NETWORK_CONTEXT,
         chargingTariffs: [tariff], chargingPools: [{ '@id': 'DE*POI*P1', name: { en: 'Demo pool' },
             chargingStations: [station, other], created: fixed, lastChange: fixed }], created: fixed, lastChange: fixed }],
     created: fixed, lastChange: fixed }));
+function stationProof(network, revision = 1) {
 const rootETag = network.effectiveTreeETag('sha256');
 const commitId = createHash('sha256').update('Chargy demo version: ' + canonicalJSON(etagToJSON(rootETag))).digest('hex');
 const attestations = signingKeys.map(item => {
-    const value = { roamingNetworkId: networkId, commitId, revision: 1, eTag: etagToJSON(rootETag),
+    const value = { roamingNetworkId: networkId, commitId, revision, eTag: etagToJSON(rootETag),
         role: 'roamingNetworkOperator', signer: operatorId, signedAt: iso(at - 60000), validUntil: iso(at + 23 * 3600000),
         algorithm: 'Ed25519', keyId: item.publicKey.id, value: 'placeholder' };
     return { ...value, value: item.sign(Attestation.parse(json(value)).signingBytes()) };
@@ -91,7 +92,10 @@ pruned.chargingStationOperators[0].chargingPools[0].chargingStations = {
     '@size': stations.length, '@leaves': [{ '@index': 0, '@auditPath': auditPath('sha256', leaves, 0).map(toHex), '@entity': stations[0] }]
 };
 const proof = { '@context': 'https://open.charging.cloud/contexts/wwcp/roamingNetwork/proof/v1',
-    hashAlgorithm: 'sha256', commitId, revision: 1, roamingNetwork: pruned, attestations };
+    hashAlgorithm: 'sha256', commitId, revision, roamingNetwork: pruned, attestations };
+return proof;
+}
+const proof = stationProof(network);
 const context = TrustContext.create(anchor, KeyStatement.parse(statement), { trustedIdentityKeyIds: anchor.keys, at });
 const verified = verifyChargingStation(context, proof, { evseId });
 assert.equal(verified.evses[0]['@id'], evseId);
@@ -117,8 +121,32 @@ const container = { format: 'ptb', formatVersion: '1.0', publicKey: meterSPKI.to
     poiEvidence: { '@context': 'https://open.charging.cloud/contexts/chargy/poiEvidence/v1', EVSEId: evseId,
         roamingNetworkId: networkId, bootstrap: { trustAnchor: anchor.toQRCode(), keyStatement: network.content.operator },
         chargingStationProof: proof } };
-const files = { 'completed-session-with-evse-proof.chargy': prettyJSON({ ...json({ ...container, poiEvidence: undefined }), poiEvidence: container.poiEvidence }) + '\n',
-    'trust-anchor.txt': anchor.toQRCode() + '\n', 'key-statement.json': prettyJSON(network.content.operator) + '\n' };
+// Counterexamples are genuine RNO-attested versions, except for the deliberately tampered OCMF payload.
+const foreignSPKI = createPublicKey(await readFile(path.join(repo,
+    'tests/fixtures/ChargeTransparencyLive/OCMF-Test-01/publicKey_cpo_signCTRs.pem'))).export({ type: 'spki', format: 'der' });
+const foreignKey = { '@id': createHash('sha256').update(foreignSPKI).digest('hex'), key: foreignSPKI.toString('base64') };
+function changedProof(change, revision) {
+    const content = clone(network.content);
+    change(content.chargingStationOperators[0].chargingPools[0].chargingStations[0].EVSEs[0].energyMeter);
+    return stationProof(RoamingNetwork.parse(content), revision);
+}
+const variants = {
+    'container-key-conflict.chargy': { ...container, publicKey: foreignSPKI.toString('base64') },
+    'foreign-meter-key-proof.chargy': { ...container, poiEvidence: { ...container.poiEvidence,
+        chargingStationProof: changedProof(meter => { meter.publicKeys = [foreignKey]; }, 2) } },
+    'wrong-meter-proof.chargy': { ...container, poiEvidence: { ...container.poiEvidence,
+        chargingStationProof: changedProof(meter => { meter.serialNumber = 'OTHER-METER'; }, 3) } },
+    'ambiguous-meter-keys.chargy': { ...container, poiEvidence: { ...container.poiEvidence,
+        chargingStationProof: changedProof(meter => { meter.publicKeys = [...meter.publicKeys, foreignKey]; }, 4) } },
+    'tampered-end-reading.chargy': { ...container, ocmfEnd: container.ocmfEnd.replace('"RV":1011', '"RV":1012') }
+};
+for (const candidate of Object.values(variants))
+    verifyChargingStation(context, candidate.poiEvidence.chargingStationProof, { evseId });
+const render = value => prettyJSON({ ...json({ ...value, poiEvidence: undefined }), poiEvidence: value.poiEvidence }) + '\n';
+const files = { 'completed-session-with-evse-proof.chargy': render(container),
+    'trust-anchor.txt': anchor.toQRCode() + '\n', 'key-statement.json': prettyJSON(network.content.operator) + '\n',
+    ...Object.fromEntries(Object.entries(variants).map(([name,value]) => [name,render(value)])) };
+
 for (const [file,text] of Object.entries(files)) await writeFile(path.join(output,file),text);
 await writeFile(path.join(output,'provenance.json'),JSON.stringify({ generator: 'build-tools/generatePOISessionExample.mjs',
     generatedAt: iso(at), begin: iso(begin), end: iso(end), attestationsValidUntil: iso(at + 23 * 3600000),

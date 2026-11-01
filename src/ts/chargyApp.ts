@@ -1,3 +1,6 @@
+import {readLiveSessionDocument} from '@open-charging-cloud/chargy-core';
+import {observeRejectedLiveCandidate,restoreObservedLive,prepareLivePOIState,originalLiveInput,checkLivePOISession} from './livePOISession';
+import type {LivePOIState,LivePOICheck} from './livePOISession';
 /*
  * Copyright (c) 2018-2026 GraphDefined GmbH <achim.friedland@graphdefined.com>
  * This file is part of Chargy WebApp <https://github.com/OpenChargingCloud/ChargyWebApp>
@@ -23,7 +26,13 @@ import {
     PublicKeyInfo              as publicKeyInfo,
     SimpleURL                  as simpleURL,
     OCMF,
-    readQRCodeTextFromImageData
+    readQRCodeTextFromImageData,
+    ocmfSessionMaterial,
+    verifyOCMFSessionWithMeterKey,
+    verifyHistoricalOCMFSession,
+    readOCMFSessionPriceContext,
+    verifyOCMFPriceStart,
+    compareOCMFPriceRates
 }                                       from '@open-charging-cloud/chargy-core'
 import * as chargyLib                   from '@open-charging-cloud/chargy-core'
 import * as L                           from 'leaflet';
@@ -109,12 +118,20 @@ import { TrustManagement }             from './trustManagement';
 import { bundledTrustedPublicKeys }    from './bundledTrustedPublicKeys';
 import type { StoredTrustAnchor }      from './trustStore';
 import { findTrustAnchorImport }       from './trustAnchorImport';
-import { downloadTrustAnchorData, parseTrustAnchorData, validateTrustAnchorData } from './trustAnchorData';
+import { downloadTrustAnchorData, parseTrustAnchorData, validateTrustAnchorData, validateHistoricalReferenceData } from './trustAnchorData';
 import type { LoadedTrustAnchorData, StoredTrustAnchorData } from './trustAnchorData';
 import { renderTrustAnchorData }       from './trustAnchorDataView';
-import { evidenceForSession, exportSessionPOIEvidence, liveEVSEId, readSessionPOIEvidence, sessionEVSEId } from './sessionPOIData';
+import { replaceSessionPOIEvidence, evidenceForSession, exportSessionPOIEvidence, liveEVSEId, readSessionPOIEvidence, sessionEVSEId } from './sessionPOIData';
 import type { SessionPOIEvidence } from './sessionPOIData';
 import { SessionPOIPanel } from './sessionPOIPanel';
+import { POITrustService, POIHistoryError } from './poiTrustContext';
+import { parseJSON, isObject, TrustAnchor, parseSessionPriceEvidence, parseHistoricalMeterEvidence, HISTORICAL_METER_EVIDENCE_CONTEXT } from '@open-charging-cloud/wwcp-poi';
+import type {JSONValue} from '@open-charging-cloud/wwcp-poi';
+import {loadSessionPriceEvidence} from './sessionPriceData';
+import type {SessionPriceDocument} from './sessionPriceData';
+import type {SessionPriceCheck} from './sessionPricePanel';
+import type { SessionMeterKeyCheck } from './sessionMeterKeyView';
+import { SessionEvidenceStore } from './sessionEvidenceStore';
 // import {
 //     normalizePublicKeys,
 //     tryParseStandalonePublicKeys
@@ -129,6 +146,8 @@ type DetectionOptions = {
     prepareUI?: boolean;
     onError?:   (result: chargyInterfaces.ISessionCryptoResult) => void;
     liveReload?: boolean;
+    recoveredLive?:LivePOIState;
+    signal?: AbortSignal;
     isCurrent?:  () => boolean;
 };
 
@@ -585,9 +604,12 @@ type MarkerLeaflet = typeof L & {
 
 export class ChargyApp {
     private readonly sessionPOISources = new WeakMap<object, readonly SessionPOIEvidence[]>();
+    private readonly livePOIStates=new WeakMap<object,LivePOIState>();
+    private readonly liveOriginalInputs=new WeakMap<object,string>();
     private sessionPOIPanel: SessionPOIPanel | null = null;
     private inputDetectionGeneration = 0;
     private qrCodeScannerEmbeddedStatement: StoredTrustAnchorData | null = null;
+    private qrCodeScannerHistoricalReference = false;
 
     //#region Data
 
@@ -842,7 +864,20 @@ export class ChargyApp {
         this.settingsMenuDiv                          = this.settingsScreenDiv. querySelector("#settingsMenu")              as HTMLDivElement;
         this.settingsTrustManagementDiv               = this.settingsScreenDiv.querySelector("#settingsTrustManagement")     as HTMLDivElement;
         this.trustManagement = new TrustManagement(this.settingsTrustManagementDiv, this.trustStore, bundledTrustedPublicKeys,
-                                                  key => this.chargy.GetLocalizedMessage(key), () => this.UILanguage, transportAllowances);
+                                                  key => this.chargy.GetLocalizedMessage(key), () => this.UILanguage, transportAllowances,
+                                                  async text => { this.trustManagement.hide(); await this.detectAndConvertContentFormat(text); },
+                                                  async(record,chain)=>{
+                                                      const ticket=await new POITrustService(this.trustStore,bundledTrustedPublicKeys).beginObservations(record.policyId);
+                                                      if(ticket.scope.id!==record.id||ticket.generation!==record.generation)throw new Error('Stored version-history reference changed');
+                                                      const head=record.state.heads[JSON.stringify(['live',chain])];if(head===undefined)throw new Error('No observed live head');
+                                                      const points=record.state.points.filter(point=>point.kind==='live'&&point.chain===chain),originals:string[]=[];
+                                                      let cursor=points.find(point=>point.digest===head.digest);const visited=new Set<string>();
+                                                      while(cursor!==undefined&&!visited.has(cursor.digest)){visited.add(cursor.digest);originals.unshift(cursor.original);cursor=points.find(point=>point.digest===cursor?.previous);}
+                                                      const state=restoreObservedLive(originals,record.liveEvidence[chain]??'null',record.policyId);state.expectedHistoryGeneration=record.generation;
+                                                      this.trustManagement.hide();await this.detectAndConvertContentFormat(originals.at(-1)??'',{recoveredLive:state});
+                                                  });
+        window.addEventListener('chargy-poi-history-reset',()=>{++this.inputDetectionGeneration;this.clearRenderedChargeData();this.detailedInfosDiv.appendChild(document.createElement('p')).textContent=this.chargy.GetLocalizedMessage('poiObservedResetDone');});
+        window.addEventListener('chargy-poi-policy-change',()=>{++this.inputDetectionGeneration;this.clearRenderedChargeData();this.detailedInfosDiv.appendChild(document.createElement('p')).textContent=this.chargy.GetLocalizedMessage('poiTransitionApplied');this.trustManagement.refresh();});
         new MutationObserver(() => {
             if (this.chargingSessionScreenDiv.style.display === 'none') {
                 this.sessionPOIPanel?.dispose(); this.sessionPOIPanel = null;
@@ -2729,9 +2764,10 @@ export class ChargyApp {
 
     }
 
-    private showQRCodeScannerTrustAnchor(preview: TrustAnchorPreview, supplied?: StoredTrustAnchorData): void
+    private showQRCodeScannerTrustAnchor(preview: TrustAnchorPreview, supplied?: StoredTrustAnchorData, historicalReference: boolean = false): void
     {
         this.qrCodeScannerEmbeddedStatement = supplied ?? null;
+        this.qrCodeScannerHistoricalReference = historicalReference;
         this.qrCodeScannerTrustAnchorAbort?.abort();
         this.qrCodeScannerTrustAnchorAbort = null;
         this.qrCodeScannerTrustAnchorData = null;
@@ -2796,8 +2832,18 @@ export class ChargyApp {
             if (generation !== this.qrCodeScannerPreviewGeneration)
                 return;
             const validation = validateTrustAnchorData(preview.anchor, data, record, bundledTrustedPublicKeys, deleted);
-            if (validation.canTrustKeys) {
-                await this.trustStore.importAnchor(preview.anchor, preview.text, data.document, controller.signal);
+            let preserveCurrentReference = false;
+            if (this.qrCodeScannerHistoricalReference && !data.statement.isValidAt(Date.now()) && record?.downloadedData !== undefined) {
+                try {
+                    preserveCurrentReference = validateTrustAnchorData(preview.anchor,
+                        parseTrustAnchorData(preview.anchor,record.downloadedData,bundledTrustedPublicKeys),record,bundledTrustedPublicKeys,deleted).canTrustKeys;
+                }
+                catch { /* A malformed stored reference may be replaced by a genuinely verified one. */ }
+            }
+            if (validation.canTrustKeys || this.qrCodeScannerHistoricalReference &&
+                validateHistoricalReferenceData(preview.anchor,data,record,bundledTrustedPublicKeys,deleted).canTrustKeys) {
+                if (!preserveCurrentReference)
+                    await this.trustStore.importAnchor(preview.anchor, preview.text, data.document, controller.signal);
                 ({ record, deleted } = await this.trustStore.trustSnapshot(trustAnchorStorageId(preview.anchor)));
             }
             if (generation === this.qrCodeScannerPreviewGeneration) {
@@ -2831,6 +2877,7 @@ export class ChargyApp {
         this.setQRCodeScannerStatus("");
         const content = renderTrustAnchorData(preview.anchor, data, {
             record, deleted, bundled: bundledTrustedPublicKeys, localize: key => this.chargy.GetLocalizedMessage(key),
+            historicalReference:this.qrCodeScannerHistoricalReference,
             onChange: async (keyId, trusted) => {
                 if (generation !== this.qrCodeScannerPreviewGeneration || record === undefined)
                     return;
@@ -2987,9 +3034,9 @@ export class ChargyApp {
 
     }
 
-    private getChargeTransparencyRecordExportJSON(): string {
+    private getChargeTransparencyRecordExportJSON(record?:chargeTransparencyRecord.IChargeTransparencyRecord,evidenceOwner?:object): string {
 
-        const CTR = this.currentChargeTransparencyRecord;
+        const CTR = record??this.currentChargeTransparencyRecord;
 
         if (CTR == null)
             return "{}";
@@ -3004,19 +3051,26 @@ export class ChargyApp {
             "chargingPool",
             "chargingStation",
             "EVSE",
-            "meter",
-            "publicKey"
+            "meter"
         ]);
 
         const serializedCTR = JSON.stringify(
             CTR,
-            (key: string, value: unknown) => runtimeKeys.has(key) ? undefined : value
+            (key: string, value: unknown) => {
+                // OCMF retains the original container key in this public value/XY wrapper.
+                // Preserve it for conflict diagnostics; runtime crypto key objects are not exportable.
+                if (key === 'publicKey')
+                    return typeof value === 'string' || publicKeyInfo.IsAPublicKeyXY(value) ? value : undefined;
+                return runtimeKeys.has(key) ? undefined : value;
+            }
         );
 
         const exportCTR = JSON.parse(serializedCTR) as chargeTransparencyRecord.IChargeTransparencyRecord;
-        const poi = this.sessionPOISources.get(CTR);
-        if (poi?.length === 1 && poi[0] !== undefined && poi[0].error === undefined)
-            exportCTR['poiEvidence'] = exportSessionPOIEvidence(poi[0]);
+        const poi = this.sessionPOISources.get(evidenceOwner??CTR);
+        if (poi?.length === 1 && poi[0] !== undefined && poi[0].error === undefined){
+            const completedSessionId=this.currentChargeTransparencyLiveLink===evidenceOwner&&CTR.chargingSessions?.length===1?CTR.chargingSessions[0]?.['@id']:undefined;
+            exportCTR['poiEvidence'] = exportSessionPOIEvidence({...poi[0],...(completedSessionId===undefined?{}:{sessionId:completedSessionId})});
+        }
         const status    = this.getChargeTransparencyRecordExportStatus(CTR);
 
         if (status != null)
@@ -3274,10 +3328,25 @@ export class ChargyApp {
         if (chargeTransparencyLiveLink.IsAChargeTransparencyLiveLink(result))
         {
             const predecessor = this.currentChargeTransparencyLiveLink;
-            const inherited = poiEvidence.length === 0 && options?.liveReload === true && predecessor !== null &&
-                predecessor['@id'] === result['@id'] && liveEVSEId(predecessor.chargingStation) === liveEVSEId(result.chargingStation)
-                ? this.sessionPOISources.get(predecessor) ?? [] : [];
-            this.sessionPOISources.set(result, poiEvidence.length === 0 ? inherited : poiEvidence);
+            let liveState:LivePOIState|undefined;
+            const previous=options?.liveReload===true&&predecessor!==null?this.livePOIStates.get(predecessor):undefined;
+            const previousEvidence=previous?.evidence;
+            const original=originalLiveInput(FileInfos);
+            try{
+                if(poiEvidence.length>0||previous!==undefined||options?.recoveredLive!==undefined){
+                    if(original===undefined)throw new Error('Original JSON live document required');
+                    liveState=options?.recoveredLive??prepareLivePOIState(original,poiEvidence,previous);
+                }
+            }catch(error){
+                if(previous!==undefined&&original!==undefined){
+                    try{await observeRejectedLiveCandidate(new POITrustService(this.trustStore,bundledTrustedPublicKeys),previous,original,options?.signal??new AbortController().signal);}
+                    catch{/* A rejected update cannot grant success when its journal cannot be updated. */}
+                }
+                const rejected={status:chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,message:this.chargy.GetMultilanguageText('poiLiveRejected'),exception:error,certainty:0};
+                if(options?.onError!==undefined)options.onError(rejected);else this.doGlobalError(rejected);return false;
+            }
+            if(original!==undefined)this.liveOriginalInputs.set(result,original);
+            this.sessionPOISources.set(result,liveState?.evidence??poiEvidence);
 
             const meterValues = await this.chargy.TryToParseLiveLinkMeterValues(result) ?? null;
 
@@ -3314,6 +3383,14 @@ export class ChargyApp {
                 this.errorTextDiv.style.display  = 'none';
             }
 
+            if(liveState!==undefined){
+                if(options?.liveReload===true||options?.recoveredLive!==undefined){
+                    try{await checkLivePOISession(this.chargy,new POITrustService(this.trustStore,bundledTrustedPublicKeys),liveState,meterValues?.chargingSessions?.[0],options.signal??new AbortController().signal);}
+                    catch(error){options.onError?.({status:chargyInterfaces.SessionVerificationResult.InvalidSessionFormat,message:this.chargy.GetMultilanguageText('poiLiveRejected'),exception:error,certainty:0});return false;}
+                    if(detectionGeneration!==this.inputDetectionGeneration||options.isCurrent!==undefined&&!options.isCurrent()||previous!==undefined&&(previous.policyId!==liveState.policyId||previous.evidence!==previousEvidence))return false;
+                }
+                this.livePOIStates.set(result,liveState);
+            }
             this.showChargeTransparencyLiveLink(
                 result,
                 meterValues,
@@ -4896,8 +4973,19 @@ export class ChargyApp {
                 continue;
             }
 
-            if (!this.isNewerLiveLink(reloaded, LiveLink))
+            if (!this.isNewerLiveLink(reloaded, LiveLink)){
+                const state=this.livePOIStates.get(LiveLink);
+                if(state!==undefined){
+                    try{
+                        const incoming=readLiveSessionDocument(response.text),current=readLiveSessionDocument(state.originals.at(-1)??'');
+                        if(incoming.reference!==current.reference){
+                            await observeRejectedLiveCandidate(new POITrustService(this.trustStore,bundledTrustedPublicKeys),state,response.text,signal);
+                            failures.push({kind:'conversion',origin:response.origin,detail:this.chargy.GetLocalizedMessage('poiLiveRejected')});continue;
+                        }
+                    }catch{failures.push({kind:'conversion',origin:response.origin,detail:this.chargy.GetLocalizedMessage('poiLiveRejected')});continue;}
+                }
                 return { kind: "unchanged", origin: response.origin };
+            }
 
             let detail: string | undefined;
             const previousResult = this.liveLinkPollResult;
@@ -4911,6 +4999,7 @@ export class ChargyApp {
                 const accepted = await this.detectAndConvertContentFormat(response.text, {
                     prepareUI: false,
                     liveReload: true,
+                    signal,
                     isCurrent: () => this.isLiveLinkRefreshCurrent(LiveLink, generation),
                     onError: error => { detail = this.getSessionCryptoResultText(error); }
                 });
@@ -6758,7 +6847,8 @@ export class ChargyApp {
 
     //#endregion
 
-    private mountSessionPOI(parent: HTMLElement, owner: object, evseId: string | undefined, sessionId: string, count: number): void {
+    private mountSessionPOI(parent: HTMLElement, owner: object, evseId: string | undefined, sessionId: string, count: number,
+        sourceSession?: chargeTransparencyRecord.IChargingSession): void {
         this.sessionPOIPanel?.dispose(); this.sessionPOIPanel = null;
         const root = parent.appendChild(document.createElement('section'));
         root.className = 'sessionPOI';
@@ -6766,10 +6856,144 @@ export class ChargyApp {
             root.appendChild(document.createElement('p')).textContent = this.chargy.GetLocalizedMessage('poiSessionNoEVSE');
             return;
         }
+        const liveState=this.livePOIStates.get(owner);
         const evidence = evidenceForSession(this.sessionPOISources.get(owner) ?? [], evseId, sessionId, count);
+        let priceDocument:SessionPriceDocument|undefined=evidence?.priceEvidence===undefined?undefined:{
+            text:evidence.priceEvidence,origin:evidence.priceSource?.origin??'embedded',sourceURL:evidence.priceSource?.sourceURL??'input:session',receivedAt:evidence.priceSource?.receivedAt??new Date().toISOString()
+        };
+        let stationForPrices:JSONValue|undefined=evidence?.document===undefined?undefined:parseJSON(evidence.document.text);
+        if(stationForPrices===undefined&&evidence?.historicalEvidence!==undefined)stationForPrices=parseHistoricalMeterEvidence(parseJSON(evidence.historicalEvidence)).versions[0]?.proof;
+        const checkHistory = async (policyId: string, signal: AbortSignal): Promise<{
+            readonly evidence: Awaited<ReturnType<POITrustService['verifyHistoricalMeterEvidence']>>['evidence'];
+            readonly readings: Awaited<ReturnType<typeof verifyHistoricalOCMFSession>>;
+            readonly context: Awaited<ReturnType<POITrustService['resolveHistorical']>>;
+        }> => {
+            if (sourceSession === undefined || evidence?.historicalEvidence === undefined) throw new Error('Original session and historical evidence required');
+            const service = new POITrustService(this.trustStore,bundledTrustedPublicKeys);
+            const material = ocmfSessionMaterial(sourceSession);
+            const times = (sourceSession.measurements ?? []).flatMap(measurement => measurement.values.map(value => Date.parse(value.timestamp)));
+            const checked = await service.verifyHistoricalMeterEvidence(policyId,parseJSON(evidence.historicalEvidence),{
+                evseId,meterSerialNumber:material.meterSerialNumber,measurementTimes:times,keyFormat:'spki-der'
+            },signal);
+            signal.throwIfAborted();
+            const readings = await verifyHistoricalOCMFSession(this.chargy,sourceSession,checked.evidence.bindings,{signal});
+            const current = await service.resolveHistorical(policyId); signal.throwIfAborted();
+            if (current.keyStatementDigest !== checked.context.keyStatementDigest || current.evaluatedAt > checked.context.validUntil ||
+                JSON.stringify(current.authorizedHolders) !== JSON.stringify(checked.context.authorizedHolders) || current.requiredConsensus !== checked.context.requiredConsensus)
+                throw new Error('Historical authorization changed or expired during verification');
+            return { ...checked,readings };
+        };
+        const checkPrices=async(policyId:string,signal:AbortSignal,supplied?:SessionPriceDocument):Promise<SessionPriceCheck&{readonly context:Awaited<ReturnType<POITrustService['resolveHistorical']>>}>=>{
+            if(sourceSession===undefined)throw new Error('Original session required for price binding');
+            const document=supplied??priceDocument;if(document===undefined)throw new Error('No original price evidence supplied');
+            const service=new POITrustService(this.trustStore,bundledTrustedPublicKeys),subject=await readOCMFSessionPriceContext(this.chargy,sourceSession);
+            const parsed=parseSessionPriceEvidence(parseJSON(document.text));
+            const checkedMeter=await service.verifyHistoricalMeterEvidence(policyId,{
+                '@context':HISTORICAL_METER_EVIDENCE_CONTEXT,EVSEId:evseId,versions:[{chargingStationProof:parsed.proof}]
+            },{evseId,meterSerialNumber:subject.meterSerialNumber,measurementTimes:[subject.chargingStarted],keyFormat:'spki-der'},signal);
+            const binding=checkedMeter.evidence.bindings[0];if(binding===undefined)throw new Error('No start-meter key association');
+            signal.throwIfAborted();const start=await verifyOCMFPriceStart(this.chargy,sourceSession,subject,binding,{signal});
+            signal.throwIfAborted();
+            const related=evidence?.historicalEvidence===undefined?[]:parseHistoricalMeterEvidence(parseJSON(evidence.historicalEvidence)).versions.flatMap(version=>version.checkpoints);
+            const checked=await service.verifySessionPriceEvidence(policyId,parseJSON(document.text),subject,related,signal);
+            if(!checkedMeter.consistency.accepted&&checked.consistency.accepted)throw new POIHistoryError(checkedMeter.consistency);
+            const current=await service.resolveHistorical(policyId);signal.throwIfAborted();
+            if(current.keyStatementDigest!==checkedMeter.context.keyStatementDigest||current.evaluatedAt>checkedMeter.context.validUntil||
+                JSON.stringify(current.authorizedHolders)!==JSON.stringify(checkedMeter.context.authorizedHolders)||current.requiredConsensus!==checkedMeter.context.requiredConsensus||
+                current.evaluatedAt>checked.context.validUntil||current.requiredConsensus!==checked.context.requiredConsensus||current.keyStatementDigest!==checked.context.keyStatementDigest||JSON.stringify(current.authorizedHolders)!==JSON.stringify(checked.context.authorizedHolders))throw new Error('Price authorization changed during verification');
+            const rates=compareOCMFPriceRates(subject,checked.price.selected?.rates);
+            return {...checked,start,rates,document};
+        };
+        const saveEvidence=async(policyId:string,signal:AbortSignal):Promise<void>=>{
+            if(evidence?.historicalEvidence!==undefined)await checkHistory(policyId,signal);
+            if(priceDocument!==undefined)await checkPrices(policyId,signal);
+            const checked=await new POITrustService(this.trustStore,bundledTrustedPublicKeys).resolveHistorical(policyId);
+            if(this.currentChargeTransparencyRecord!==owner&&this.currentChargeTransparencyLiveLink!==owner)throw new Error('The session changed before archiving');
+            const snapshot=await this.trustStore.trustSnapshot(policyId);signal.throwIfAborted();
+            const policySnapshot=JSON.stringify({purpose:'audit-only; never restored as authorization',checkedAt:checked.evaluatedAt,
+                anchorQRCode:checked.evidence.anchorQRCode,keyStatement:checked.evidence.keyStatement,trustedKeys:snapshot.record?.trustedKeys,deletedBundledKeys:[...snapshot.deleted],
+                inputEvidence:evidence?.historicalSource,priceEvidenceSource:priceDocument===undefined?undefined:{origin:priceDocument.origin,sourceURL:priceDocument.sourceURL,receivedAt:priceDocument.receivedAt},
+                timeBasis:'signed-measurement-timestamps',independentTime:'not-proven'});
+            const exported=JSON.parse(this.getChargeTransparencyRecordExportJSON(this.currentChargeTransparencyLiveLink===owner?this.currentLiveLinkMeterValues??undefined:undefined,owner)) as Record<string,unknown>,poi=exported['poiEvidence'];
+            if(poi===null||typeof poi!=='object')throw new Error('Original POI evidence required for archive');
+            (poi as Record<string,unknown>)['archiveAudit']=policySnapshot;
+            await new SessionEvidenceStore().save({anchorPolicyId:policyId,evseId,sessionId,document:JSON.stringify(exported,null,4),policySnapshot},signal);
+        };
         const panel = new SessionPOIPanel(root, this.trustStore, bundledTrustedPublicKeys, evseId, evidence,
             key => this.chargy.GetLocalizedMessage(key), this.UILanguage, transportAllowances,
-            bootstrap => { this.showQRCodeScannerTrustAnchor({ anchor: bootstrap.anchor, text: bootstrap.anchor.toQRCode() }, bootstrap.document); });
+            bootstrap => { this.showQRCodeScannerTrustAnchor({ anchor: bootstrap.anchor, text: bootstrap.anchor.toQRCode() }, bootstrap.document,evidence?.historicalEvidence !== undefined||evidence?.priceEvidence!==undefined); }, {
+                check: async (proof, signal): Promise<SessionMeterKeyCheck> => {
+                    stationForPrices=parseJSON(proof.document.text);
+                    const service = new POITrustService(this.trustStore, bundledTrustedPublicKeys);
+                    const declared = proof.station.evses.find(item => item['@id'] === evseId)?.['energyMeter'];
+                    const serial = sourceSession === undefined
+                        ? isObject(declared) && typeof declared['serialNumber'] === 'string'
+                            ? declared['serialNumber'] : undefined
+                        : ocmfSessionMaterial(sourceSession).meterSerialNumber;
+                    if (serial === undefined) throw new Error('The proof provides no unambiguous EVSE meter serial number');
+                    const { binding,context:authorized } = await service.verifyMeterKey(proof.context.anchorPolicyId, parseJSON(proof.document.text), {
+                        evseId, meterSerialNumber: serial, keyFormat: 'spki-der'
+                    },signal);
+                    signal.throwIfAborted();
+                    const result = sourceSession === undefined ? undefined
+                        : await verifyOCMFSessionWithMeterKey(this.chargy, sourceSession, binding, { signal });
+                    signal.throwIfAborted();
+                    // A key check is not an authorization lease: withdrawal during crypto work must take effect too.
+                    const current = await service.resolve(proof.context.anchorPolicyId);
+                    if (current.keyStatementDigest !== binding.evidence.keyStatementDigest || current.evaluatedAt > binding.evidence.validUntil ||
+                        JSON.stringify(current.authorizedHolders) !== JSON.stringify(authorized.authorizedHolders) || current.requiredConsensus !== authorized.requiredConsensus)
+                        throw new Error('The meter-key authorization changed or expired while readings were being checked');
+                    signal.throwIfAborted();
+                    if(this.currentChargeTransparencyLiveLink===owner){
+                        const existing=this.livePOIStates.get(owner),raw=this.liveOriginalInputs.get(owner);
+                        if(existing!==undefined){existing.evidence=existing.evidence.map(item=>({...item,document:proof.document}));this.sessionPOISources.set(owner,existing.evidence);}
+                        else if(raw!==undefined){
+                            const prepared=prepareLivePOIState(raw,[{evseId,document:proof.document}]);prepared.policyId=proof.context.anchorPolicyId;
+                            this.livePOIStates.set(owner,prepared);this.sessionPOISources.set(owner,prepared.evidence);
+                        }
+                    }
+                    return { binding, ...(result === undefined ? {} : { result }) };
+                },
+                showReading: (value): void => { this.showMeasurementCryptoDetails(value); }
+            }, evidence?.historicalEvidence === undefined || sourceSession === undefined ? undefined : {
+                check: checkHistory,
+                showReading: (value): void => { this.showMeasurementCryptoDetails(value); },
+                save:saveEvidence
+            },sourceSession===undefined&&liveState===undefined?undefined:{
+                waitingForStart:sourceSession===undefined,
+                get hasEvidence():boolean{return priceDocument!==undefined;},
+                check:checkPrices,
+                load:async(policyId,signal):Promise<SessionPriceCheck>=>{
+                    const current=await new POITrustService(this.trustStore,bundledTrustedPublicKeys).resolveHistorical(policyId);
+                    const result=await loadSessionPriceEvidence(TrustAnchor.parse(current.evidence.anchorQRCode).urls,evseId,stationForPrices??null,async document=>{
+                        const checked=await checkPrices(policyId,signal,document);
+                        if(checked.price.signatures!=='valid'||checked.price.selected===undefined)throw new Error(checked.price.diagnostics.join('; '));
+                        return checked;
+                    },{signal,allowances:transportAllowances});
+                    signal.throwIfAborted();
+                    priceDocument=result.document;
+                    const updated:SessionPOIEvidence={...(evidence??{evseId,sessionId}),priceEvidence:result.document.text,
+                        priceSource:{origin:result.document.origin,sourceURL:result.document.sourceURL,receivedAt:result.document.receivedAt},
+                        ...(evidence?.bootstrap===undefined?{bootstrap:{anchor:TrustAnchor.parse(result.context.evidence.anchorQRCode),document:result.context.evidence.keyStatement}}:{})};
+                    const existing=this.sessionPOISources.get(owner)??[];
+                    this.sessionPOISources.set(owner,replaceSessionPOIEvidence(existing,updated,sessionId,count));
+                    if(liveState!==undefined){liveState.evidence=this.sessionPOISources.get(owner)??[];if(result.price.applicability==='bound'&&result.start.signaturesValid&&result.rates.status==='rates-match'&&result.price.publication!=='invalid')liveState.pricePinned=true;}
+                    return result;
+                },
+                ...(evidence?.historicalEvidence===undefined?{save:saveEvidence}:{})
+
+            },liveState===undefined?undefined:{
+                get policyId():string{return liveState.policyId;},get priceChanged():boolean{return liveState.priceChanged;},
+                selected:(id:string):void=>{
+                    if(liveState.policyId!==id)this.liveLinkRequestController?.abort();
+                    liveState.policyId=id;
+                },
+                check:async(_id,signal):Promise<LivePOICheck>=>{
+                    const checked=await checkLivePOISession(this.chargy,new POITrustService(this.trustStore,bundledTrustedPublicKeys),liveState,sourceSession,signal);
+                    if(checked.stage==='complete'&&this.currentChargeTransparencyLiveLink===owner){this.stopLiveLinkRefresh();this.renderLiveLinkPollStatus();}
+                    return checked;
+                }
+            });
         this.sessionPOIPanel = panel;
         void panel.mount();
     }
@@ -6797,8 +7021,8 @@ export class ChargyApp {
             try {
                 const owner = this.currentChargeTransparencyLiveLink ?? this.currentChargeTransparencyRecord;
                 if (owner !== null)
-                    this.mountSessionPOI(this.detailedInfosDiv, owner, sessionEVSEId(chargingSession), chargingSession['@id'],
-                        this.currentChargeTransparencyLiveLink === null ? this.currentChargeTransparencyRecord?.chargingSessions?.length ?? 0 : 1);
+                    this.mountSessionPOI(this.detailedInfosDiv, owner, sessionEVSEId(chargingSession), chargyLib.asString(this.currentChargeTransparencyLiveLink?.['@id'])??chargingSession['@id'],
+                        this.currentChargeTransparencyLiveLink === null ? this.currentChargeTransparencyRecord?.chargingSessions?.length ?? 0 : 1, chargingSession);
             }
             catch (error) { this.showSessionPOIError(this.detailedInfosDiv, error); }
 

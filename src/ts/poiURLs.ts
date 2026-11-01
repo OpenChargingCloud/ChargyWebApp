@@ -18,3 +18,7 @@ export function stationProofURL(base: string, evseId: string): string {
     url.pathname = url.pathname.replace(/\/+$/, '') + '/EVSEs/' + encodeURIComponent(stationEVSEId(evseId)) + '/proof';
     return url.href;
 }
+
+export function stationPriceStatementsURL(base:string,evseId:string):string {
+    return stationProofURL(base,evseId).replace(/\/proof$/,'/priceStatements');
+}

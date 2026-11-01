@@ -2,8 +2,10 @@
 
 Status: 1 November 2026. This document describes the intended trust chain,
 the current integration gaps and the logical risks identified while integrating
-`@open-charging-cloud/wwcp-poi` into Chargy. Shared authorization now uses the
-published npm version **0.1.1**.
+`@open-charging-cloud/wwcp-poi` into Chargy. Shared authorization was introduced
+in published version **0.1.1**. The current P-256/OCMF meter-key pilot uses local
+unpublished POI **0.1.2-dev.0** / Core **0.17.1-dev.0** candidates with
+[package provenance and source patches](../vendor/README.md).
 
 A TrustAnchor and an authenticated RoamingNetworkOperator provide the trust
 foundation. Validating a particular charging station and its tariff additionally
@@ -16,8 +18,15 @@ proofs through the saved policy and displays/cache-rechecks their dependencies;
 see [the station-proof guide and screenshots](WWCP-POI-Station-Proof.md).
 The [session integration](WWCP-POI-Session-Integration.md) now binds these checks
 to a selected session EVSE and includes a completed Drag & Drop example.
-Runtime prices, session meter-key handoff and publication evidence remain future
-work. The bundled public-key JSONL file and its build integration
+The [shared meter-key handoff](WWCP-POI-Meter-Key-Handoff.md) now binds the EVSE's
+meter/key and checks original OCMF signatures with that key, exposing source-key
+conflicts and an explicitly unproven historical association for current-only
+proofs. The [historical session path](WWCP-POI-Historical-Sessions.md) now checks
+signed reading-time association, RNO checkpoint inclusion and separate archival
+storage. The [session price path](WWCP-POI-Session-Prices.md) now checks CPO
+prices, an experimental fixed-at-start assignment, start-rate consistency and
+separate price inclusion. Independent pre-charge publication/time evidence and
+wider live discovery and transition profiles remain future work. The bundled public-key JSONL file and its build integration
 exist, but the file currently contains no keys.
 Camera scans, clipboard text and file imports now share TrustAnchor detection,
 including JSON documents and QR images. The first preview shows only anchor
@@ -371,27 +380,29 @@ Bundled keys and their separate local exclusions remain unchanged. Storage is
 local to the app's browser origin and profile; clearing browser data also removes
 the imported documents and local decisions.
 
-## 3. Missing integration steps
+## 3. Integration status and remaining steps
 
 1. **Bootstrap authorization — implemented in the shared library.** The app
    supplies current locally authorized IDs to `TrustContext.evaluate/create`.
    Only valid signatures, validity, holder consistency and a trusted quorum
    produce a context. The app service reconstructs it from a consistent storage
    snapshot for each verification. The shared API is available in npm version 0.1.1.
-2. **Complete RNO verification.** KeyStatement download, identity-key parsing,
+2. **RNO verification — implemented for station proofs.** KeyStatement download, identity-key parsing,
    signatures, local signer trust, holder quorum, network binding and validity are
-   now integrated. SigningKeyCertificates and the binding of operational RNO
-   signing keys to subsequent attestations remain to be integrated.
-3. **Load a station proof.** Request a ChargingStationProof for the actual station
-   or EVSE and verify it using `verifyChargingStation(...)`.
+   now integrated. Station attestations use certified operational keys bound to
+   the authorized RNO identities; identity keys are not direct operational signers.
+3. **Station proof — implemented.** Request or accept a supplied
+   ChargingStationProof for the actual EVSE and verify it using the current
+   `TrustContext`; a small Merkle path replaces downloading the network directory.
 4. **Verify the tariff and price.** Resolve tariff references, verify the relevant
    PriceStatement and establish its applicability to the EVSE, charging time and
    charging mode, including ad hoc versus contractual charging.
 5. **Verify publication.** Require the relevant checkpoints and inclusion proofs
    before claiming that an ad hoc tariff's publication has been established.
-6. **Bind the result to the charging session.** Match the proven meter key to the
-   station, EVSE and meter ID, then supply it to ChargyCore to verify the signed
-   energy measurements.
+6. **Bind the result to the charging session — P-256/OCMF pilot implemented.**
+   Shared POI/Core APIs check exact EVSE/meter identity and original signatures,
+   and expose key conflicts. Current association is checked; historical
+   association, broader formats and a full matching live series remain separate.
 
 The library provides `verifyChargingStation`, `verifyPriceStatements` and
 `verifyEvidence`. Some publication evidence is optional in the
@@ -518,3 +529,25 @@ Details should be progressively accessible: first the outcome, then participatin
 holders and quorum, followed by document identities, key fingerprints, validity
 times, signatures, roots, Merkle paths and checkpoint or witness evidence.
 This follows the existing approach used for signed meter values and OCMF records.
+
+The [session price evidence guide](WWCP-POI-Session-Prices.md) describes the implemented CPO-signed
+price workflow, experimental fixed-at-start assignment, exact start-rate
+comparison and separate price inclusion, with signed examples and screenshots.
+Customer consent, pre-charge publication and full billing remain unproven.
+
+The [complete cumulative live pilot](WWCP-POI-Live-Pilot.md) is now implemented, including
+preparation before readings, verification before adoption, fixed-price retention,
+verified completion and original-envelope archival. Wider discovery, variable
+prices and independent witnesses remain separate. The
+[CPO authority and verified succession guide](WWCP-POI-Trust-Succession.md)
+describes the implemented first-envelope authorization, CPO document-key rotation,
+explicit dual-quorum policy delegation and verified epoch continuation. The
+compact delegation profile is experimental; it does not claim full History
+owner/change-set replay.
+
+The [persistent observed-version journal](WWCP-POI-Observed-Versions.md) now records
+authenticated station revisions, checkpoints, prices and live heads across tabs
+and reloads. Local consistency is separate from signature validity and historical
+applicability. Deleting an anchor does not remove known contradictions. Explicit
+history reset, policy succession, global freshness and witness authorization have
+different consequences and must not be conflated.

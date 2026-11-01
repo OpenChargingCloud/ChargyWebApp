@@ -119,6 +119,66 @@ jobs:
           path: artifacts/poi-session-screenshots/
           if-no-files-found: error
 
+      - name: Check historical POI sessions and archive UX
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-history:capture -- --output-dir artifacts/poi-history-screenshots
+
+      - name: Upload historical POI screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-history-screenshots
+          path: artifacts/poi-history-screenshots/
+          if-no-files-found: error
+
+      - name: Check session price evidence and capture screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-prices:capture -- --output-dir artifacts/poi-price-screenshots
+
+      - name: Upload session price screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-price-screenshots
+          path: artifacts/poi-price-screenshots/
+          if-no-files-found: error
+
+      - name: Check complete POI live pilot
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-live-pilot:capture -- --output-dir artifacts/poi-live-pilot-screenshots
+
+      - name: Upload POI live pilot screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-live-pilot-screenshots
+          path: artifacts/poi-live-pilot-screenshots/
+          if-no-files-found: error
+
+      - name: Check durable observed versions and recovery UX
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-observations:capture -- --output-dir artifacts/poi-observed-versions-screenshots
+
+      - name: Upload observed-version screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-observed-versions-screenshots
+          path: artifacts/poi-observed-versions-screenshots/
+          if-no-files-found: error
+
+      - name: Check CPO authority and trust succession
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run docs:screenshots:poi-succession:capture -- --output-dir artifacts/poi-trust-succession-screenshots
+
+      - name: Upload trust-succession screenshots
+        if: ${{ matrix.leg == 'ubuntu-node-26' && success() }}
+        uses: actions/upload-artifact@v7
+        with:
+          name: poi-trust-succession-screenshots
+          path: artifacts/poi-trust-succession-screenshots/
+          if-no-files-found: error
+
       - name: Upload test results
         if: ${{ !cancelled() }}
         uses: actions/upload-artifact@v7

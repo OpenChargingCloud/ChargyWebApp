@@ -1,3 +1,5 @@
+import {POIObservedHistoryStore} from './poiObservedHistory';
+import type {StoredObservedHistory} from './poiObservedHistory';
 import { TrustAnchor, toBase64 } from '@open-charging-cloud/wwcp-poi';
 import type { POIPublicKey } from '@open-charging-cloud/wwcp-poi';
 import type { TrustStore } from './trustStore';
@@ -12,8 +14,10 @@ import { renderSecurityFingerprint } from './securityFingerprintView';
 import { POITrustService } from './poiTrustContext';
 import { StationProofPanel } from './stationProofPanel';
 import type { ITransportAllowances } from './liveLinkTrust';
+import { SessionEvidenceStore } from './sessionEvidenceStore';
+import {renderTrustTransitionManager} from './trustTransitionView';
 
-type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails" | "stationProof";
+type TrustManagementPage = "menu" | "anchors" | "keys" | "networks" | "networkDetails" | "stationProof" | 'archives' | 'observations';
 
 export class TrustManagement {
     private page: TrustManagementPage = "menu";
@@ -28,7 +32,9 @@ export class TrustManagement {
                         private readonly bundledKeys: readonly POIPublicKey[],
                         private readonly localize: (key: string) => string,
                         private readonly language: () => string,
-                        private readonly allowances: ITransportAllowances = {}) {
+                        private readonly allowances: ITransportAllowances = {},
+                        private readonly openArchive?: (text: string) => Promise<void>,
+                        private readonly openObservedLive?:(record:StoredObservedHistory,chain:string)=>Promise<void>) {
         const settings = root.closest<HTMLElement>('#settingsScreen');
         if (settings !== null)
             new MutationObserver(() => {
@@ -154,6 +160,10 @@ export class TrustManagement {
         this.text(parent, this.localize(network.context === undefined ? "trustNetworkIdentityUnverified" : "trustNetworkIdentityVerified"));
         if (network.context !== undefined)
             this.text(parent, `${this.localize("trustDataOperatorLabel")}: ${network.context.roamingNetworkOperatorId}`, "trustManagementIdentifier");
+        if(network.context?.effectivePolicyId!==undefined){
+            this.text(parent,'Epoch '+String(network.context.epoch??1));
+            parent.appendChild(renderSecurityFingerprint(network.context.effectivePolicyId,this.localize));
+        }
         this.text(parent, `${this.localize("trustNetworkAnchorCount")}: ${network.anchors.length}`);
         const policy = network.anchors[0];
         if (policy !== undefined)
@@ -176,6 +186,7 @@ export class TrustManagement {
         this.text(parent, this.localize("trustNetworkPoliciesSeparate"));
         for (const record of network.anchors)
             this.renderAnchor(parent, record, generation, deletedKeys);
+        for(const record of network.anchors)renderTrustTransitionManager(parent,record,this.store,this.bundledKeys,this.localize,()=>this.generation===generation,()=>{void this.render();});
         const removal = parent.appendChild(document.createElement("div"));
         removal.className = "trustNetworkRemoval";
         this.text(removal, this.localize("trustNetworkDeleteDescription"));
@@ -204,19 +215,72 @@ export class TrustManagement {
             this.button(this.root, "trustRoamingNetworksTitle", () => { this.page = "networks"; void this.render(); }, "settingsEntry");
             this.button(this.root, "trustAnchorsTitle", () => { this.page = "anchors"; void this.render(); }, "settingsEntry");
             this.button(this.root, "trustBundledKeysTitle", () => { this.page = "keys"; void this.render(); }, "settingsEntry");
+            this.button(this.root, 'poiHistoryArchiveTitle', () => { this.page = 'archives'; void this.render(); }, 'settingsEntry');
+            this.button(this.root,'poiObservedTitle',()=>{this.page='observations';void this.render();},'settingsEntry');
             return;
         }
 
         const title = this.root.appendChild(document.createElement("h3"));
-        const titles = { anchors: "trustAnchorsTitle", keys: "trustBundledKeysTitle", networks: "trustRoamingNetworksTitle", networkDetails: "trustRoamingNetworkDetailsTitle", stationProof: 'poiCheckStation' };
+        const titles = { observations:'poiObservedTitle', archives:'poiHistoryArchiveTitle', anchors: "trustAnchorsTitle", keys: "trustBundledKeysTitle", networks: "trustRoamingNetworksTitle", networkDetails: "trustRoamingNetworkDetailsTitle", stationProof: 'poiCheckStation' };
         title.textContent = this.localize(titles[this.page]);
-        const descriptions = { anchors: "trustAnchorsStorageDescription", keys: "trustBundledKeysDescription", networks: "trustRoamingNetworksDescription", networkDetails: "trustRoamingNetworkDetailsDescription", stationProof: 'poiStationDescription' };
+        const descriptions = { observations:'poiObservedDescription', archives:'poiHistoryArchiveDescription', anchors: "trustAnchorsStorageDescription", keys: "trustBundledKeysDescription", networks: "trustRoamingNetworksDescription", networkDetails: "trustRoamingNetworkDetailsDescription", stationProof: 'poiStationDescription' };
         this.text(this.root, this.localize(descriptions[this.page]));
         const list = this.root.appendChild(document.createElement("div"));
         list.className = "trustManagementList";
         list.setAttribute("aria-busy", "true");
         try {
-            if (this.page === 'stationProof' && this.stationPolicyId !== null) {
+            if(this.page==='observations'){
+                const store=new POIObservedHistoryStore(),records=(await store.list()).filter(record=>record.state.points.length>0||record.state.conflicts.length>0);
+                if(this.generation!==generation)return;
+                if(records.length===0)this.text(list,this.localize('poiObservedEmpty'));
+                for(const record of records){
+                    const card=list.appendChild(document.createElement('article'));card.className='trustManagementCard';card.dataset['observationId']=record.id;
+                    this.text(card,record.roamingNetworkId+' · '+record.operatorId);this.text(card,this.localize('poiObservedCount')+': '+String(record.state.points.length));
+                    this.text(card,this.localize('poiObservedConflicts')+': '+String(record.state.conflicts.length));
+                    for(const [key,head]of Object.entries(record.state.heads)){
+                        this.text(card,key+' · '+head.epoch+' / '+String(head.position));
+                        if(key.startsWith('["live",')&&this.openObservedLive!==undefined){
+                            const parsed=JSON.parse(key) as [string,string];const open=this.button(card,'poiObservedOpenLive',()=>{
+                                open.disabled=true;void this.openObservedLive?.(record,parsed[1]).catch(()=>{open.disabled=false;this.text(card,this.localize('poiObservedOpenFailed'));});
+                            });open.dataset['action']='open-observed-live';
+                        }
+                    }
+                    const detail=card.appendChild(document.createElement('details'));detail.appendChild(document.createElement('summary')).textContent=this.localize('poiObservedDetails');
+                    detail.appendChild(document.createElement('pre')).textContent=JSON.stringify(record.state,null,2);
+                    const reset=this.button(card,'poiObservedReset',()=>{
+                        reset.disabled=true;const warning=this.text(card,this.localize('poiObservedResetWarning'));warning.setAttribute('role','alert');
+                        const confirm=this.button(card,'poiObservedResetConfirm',()=>{void this.mutate(confirm,async()=>store.reset(record.id),generation);},'trustManagementDelete');confirm.dataset['action']='confirm-reset-observations';
+                    },'trustManagementDelete');reset.dataset['action']='reset-observations';
+                }
+            }
+            else if (this.page === 'archives') {
+                const store = new SessionEvidenceStore(); const records = await store.list();
+                if (this.generation !== generation) return;
+                if (records.length === 0) this.text(list,this.localize('poiHistoryArchiveEmpty'));
+                for (const record of records) {
+                    const card = list.appendChild(document.createElement('article')); card.className = 'trustManagementCard'; card.dataset['archiveId'] = record.id;
+                    this.text(card,record.evseId,'trustManagementIdentifier');
+                    this.text(card,new Date(record.savedAt).toLocaleString(this.language()));
+                    this.text(card,this.localize('poiHistoryArchiveRecheck'));
+                    if (this.openArchive !== undefined) {
+                        const button = this.button(card,'poiHistoryOpen',() => {
+                            button.disabled = true;
+                            void this.openArchive?.(record.document).catch(() => { button.disabled = false; this.text(card,this.localize('poiHistoryFailed')); });
+                        }); button.dataset['action'] = 'open-archive';
+                    }
+                    const exportButton = this.button(card,'poiHistoryExport',() => {
+                        const blob = new Blob([record.document],{type:'application/json'}); const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a'); link.href = url; link.download = 'chargy-evidence-' + record.id.slice(0,12) + '.chargy';
+                        document.body.appendChild(link); link.click(); link.remove(); window.setTimeout(() => { URL.revokeObjectURL(url); },1000);
+                    }); exportButton.dataset['action'] = 'export-archive';
+                    const details = card.appendChild(document.createElement('details'));
+                    details.appendChild(document.createElement('summary')).textContent = this.localize('poiHistoryPolicySnapshot');
+                    details.appendChild(document.createElement('pre')).textContent = record.policySnapshot;
+                    const remove = this.button(card,'poiHistoryDelete',() => { void this.mutate(remove,async () => store.delete(record.id),generation); },'trustManagementDelete');
+                    remove.dataset['action'] = 'delete-archive';
+                }
+            }
+            else if (this.page === 'stationProof' && this.stationPolicyId !== null) {
                 const panel = new StationProofPanel(list, this.store, new POITrustService(this.store, this.bundledKeys),
                     this.stationPolicyId, this.localize, this.language(), this.allowances, this.stationQuery);
                 this.stationPanel = panel;

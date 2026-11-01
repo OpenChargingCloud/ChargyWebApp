@@ -71,6 +71,16 @@ export function validateTrustAnchorData(anchor: TrustAnchor, data: LoadedTrustAn
     });
 }
 
+/** Historical-reference eligibility uses original validity and fresh local decisions; it never grants trust. */
+export function validateHistoricalReferenceData(anchor: TrustAnchor, data: LoadedTrustAnchorData,
+    record: StoredTrustAnchor | undefined, bundled: readonly POIPublicKey[], deleted: ReadonlySet<string>, now: number = Date.now()): TrustAnchorDataValidation {
+    if (data.statement.signedAt > now) return validateTrustAnchorData(anchor,data,record,bundled,deleted,now);
+    return TrustContext.evaluate(anchor,data.statement,{
+        trustedIdentityKeyIds:trustedAnchorHolders(anchor,record,bundled,deleted,now).flat(),
+        otherIdentityKeys:data.identityKeys,at:data.statement.signedAt
+    });
+}
+
 /** Called only after Import. Downloads only /keyStatement, not the complete roaming network. */
 export async function downloadTrustAnchorData(anchor: TrustAnchor, options: {
     readonly signal: AbortSignal;

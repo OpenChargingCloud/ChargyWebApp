@@ -159,6 +159,14 @@ See the English [WWCP POI Trust Architecture](documentation/WWCP-POI-Trust-Archi
 for the data relationships, verification chain, remaining integration work and
 logical risks.
 
+The [P-256/OCMF meter-key handoff](documentation/WWCP-POI-Meter-Key-Handoff.md)
+now verifies original readings with the key associated in the checked EVSE
+proof, with explicit source-key conflicts and historical limits. It includes a
+[Drag & Drop session and counterexamples](tests/fixtures/POISession/README.md).
+The [historical-session guide](documentation/WWCP-POI-Historical-Sessions.md)
+covers expired historical documents, per-reading key assignment, checkpoint
+inclusion and the separate session-evidence archive, with a genuine old fixture.
+
 ## Deep Links
 
 The hosted WebApp supports deep links for CPOs and backend systems that want to send customers directly to a verification result.
@@ -308,3 +316,23 @@ The Chargy Transparency Software is one of the winners of the [1. Thuringia's Op
 <center>
   <img src="static/images/TMWWDG.svg" width="300"> <img src="static/images/ITnet_Thueringen_small.png" height="60">
 </center>
+
+The [session price evidence guide](documentation/WWCP-POI-Session-Prices.md) describes the implemented CPO-signed
+price workflow, experimental fixed-at-start assignment, exact start-rate
+comparison and separate price inclusion, with signed examples and screenshots.
+Customer consent, pre-charge publication and full billing remain unproven.
+
+The [complete cumulative live pilot](documentation/WWCP-POI-Live-Pilot.md) is now implemented, including
+preparation before readings, verification before adoption, fixed-price retention,
+verified completion and original-envelope archival. Wider discovery, variable
+prices, independent witnesses and envelope-signer authorization remain separate.
+
+The [locally observed versions guide](documentation/WWCP-POI-Observed-Versions.md)
+describes persistent rollback/fork constraints across reloads and tabs, historical
+fixed-price compatibility, explicit reset and rechecking remembered live originals.
+These local observations do not establish a globally latest state.
+
+The [CPO authority and trust-succession guide](documentation/WWCP-POI-Trust-Succession.md)
+describes independent initial-envelope authorization, CPO document-key rotation,
+explicit dual-quorum compact policy delegation and verified epoch continuation.
+The compact delegation profile is experimental; existing negative history remains.
