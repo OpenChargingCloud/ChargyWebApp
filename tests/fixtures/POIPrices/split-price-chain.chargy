@@ -13,8 +13,8 @@
     "lat": 50.9271,
     "lng": 11.5892
   },
-  "ocmfBegin": "OCMF|{\"FV\":\"1.0\",\"GI\":\"Chargy POI demo\",\"GS\":\"DEMO-GATEWAY-001\",\"GV\":\"1.0\",\"PG\":\"T42\",\"MV\":\"Chargy\",\"MM\":\"Demo meter\",\"MS\":\"CHARGY-POI-METER-001\",\"MF\":\"1.0\",\"IS\":true,\"IL\":\"VERIFIED\",\"IF\":[\"OCPP_AUTH\"],\"IT\":\"NONE\",\"ID\":\"ADHOC-PRICE-DEMO\",\"CT\":\"EVSEID\",\"CI\":\"DE*POI*E1*1\",\"TT\":\"001;EUR;0;35;0;0\",\"RD\":[{\"TM\":\"2026-06-01T10:00:00,000+0000 S\",\"TX\":\"B\",\"RV\":1000,\"RI\":\"1-b:1.8.0\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SD\":\"304502202A4674C1C261E66FFA8E317B01E65ACBA0B786DC63B1F58A8E5025FCC801BE1B022100E17B054DEF8AD973C1E6FA075B6E37F5582BE0D5E97A7724479D062C676300D1\"}",
-  "ocmfEnd": "OCMF|{\"FV\":\"1.0\",\"GI\":\"Chargy POI demo\",\"GS\":\"DEMO-GATEWAY-001\",\"GV\":\"1.0\",\"PG\":\"T42\",\"MV\":\"Chargy\",\"MM\":\"Demo meter\",\"MS\":\"CHARGY-POI-METER-001\",\"MF\":\"1.0\",\"IS\":true,\"IL\":\"VERIFIED\",\"IF\":[\"OCPP_AUTH\"],\"IT\":\"NONE\",\"ID\":\"ADHOC-PRICE-DEMO\",\"CT\":\"EVSEID\",\"CI\":\"DE*POI*E1*1\",\"TT\":\"001;EUR;0;35;0;0\",\"RD\":[{\"TM\":\"2026-06-01T10:30:00,000+0000 S\",\"TX\":\"E\",\"RV\":1011,\"RI\":\"1-b:1.8.0\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SD\":\"3044022074B7A408FA6ECCF9CA6B53341357979AA274B3BB771E2BD48C2F07913A1C7AAA0220783C86DAD9505EB6FAC99154DBDCC2952D9DDBD1E214A5442E63FF7EE688E884\"}",
+  "ocmfBegin": "OCMF|{\"FV\":\"1.0\",\"GI\":\"Chargy POI demo\",\"GS\":\"DEMO-GATEWAY-001\",\"GV\":\"1.0\",\"PG\":\"T42\",\"MV\":\"Chargy\",\"MM\":\"Demo meter\",\"MS\":\"CHARGY-POI-METER-001\",\"MF\":\"1.0\",\"IS\":true,\"IL\":\"VERIFIED\",\"IF\":[\"OCPP_AUTH\"],\"IT\":\"NONE\",\"ID\":\"ADHOC-PRICE-DEMO\",\"CT\":\"EVSEID\",\"CI\":\"DE*POI*E1*1\",\"TT\":\"001;EUR;0;35;0;0\",\"RD\":[{\"TM\":\"2026-06-01T10:00:00,000+0000 S\",\"TX\":\"B\",\"RV\":1000,\"RI\":\"1-b:1.8.0\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SD\":\"304402207A59A28D219927ABF24C2543CE69AF04EE97AF67E268A4155003EFAE6ECB3E4002207B82E06CAA9588DC215FEC3DF73ED05F7814359ABF9543C3C08E9FF9F732741F\"}",
+  "ocmfEnd": "OCMF|{\"FV\":\"1.0\",\"GI\":\"Chargy POI demo\",\"GS\":\"DEMO-GATEWAY-001\",\"GV\":\"1.0\",\"PG\":\"T42\",\"MV\":\"Chargy\",\"MM\":\"Demo meter\",\"MS\":\"CHARGY-POI-METER-001\",\"MF\":\"1.0\",\"IS\":true,\"IL\":\"VERIFIED\",\"IF\":[\"OCPP_AUTH\"],\"IT\":\"NONE\",\"ID\":\"ADHOC-PRICE-DEMO\",\"CT\":\"EVSEID\",\"CI\":\"DE*POI*E1*1\",\"TT\":\"001;EUR;0;35;0;0\",\"RD\":[{\"TM\":\"2026-06-01T10:30:00,000+0000 S\",\"TX\":\"E\",\"RV\":1011,\"RI\":\"1-b:1.8.0\",\"RU\":\"kWh\",\"RT\":\"AC\",\"EF\":\"\",\"ST\":\"G\"}]}|{\"SA\":\"ECDSA-secp256r1-SHA256\",\"SE\":\"hex\",\"SD\":\"30440220107ADFD499CD86F1929AC953EC41DFD7557B9916C3C3FB2004D84D328E83C27302205FC3211F1D46984D461BC447DA80B1BF257E1D4411B34FE4E77C784FE9D3442A\"}",
   "poiEvidence": {
     "@context": "https://open.charging.cloud/contexts/chargy/poiEvidence/v1",
     "EVSEId": "DE*POI*E1*1",
@@ -120,7 +120,7 @@
           "chargingStationProof": {
             "@context": "https://open.charging.cloud/contexts/wwcp/roamingNetwork/proof/v1",
             "hashAlgorithm": "sha256",
-            "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+            "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
             "revision": 0,
             "roamingNetwork": {
               "@context": "https://open.charging.cloud/contexts/wwcp/roamingNetwork/v1",
@@ -346,7 +346,7 @@
             "attestations": [
               {
                 "roamingNetworkId": "CHARGY-POI-DEMO",
-                "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+                "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
                 "revision": 0,
                 "eTag": [
                   "effectiveTree",
@@ -360,11 +360,11 @@
                 "validUntil": "2026-06-01T11:00:00.000Z",
                 "algorithm": "Ed25519",
                 "keyId": "e46e676b85515c73e626404cbaaf31150943ed73ed20722465f079c17cf031b8",
-                "value": "pXEoQvcnL8L7ssERQvr7U3Ay3DOk3/DwU9tMlidOkqHL9hRgKuvvf5JiHAx8ZOyoBSSDXJtdUTWE3/AEQiqDBg=="
+                "value": "BhwoA0e+eeXbpcKYZ3jLZzBJ7HrKePhOfsooq4uEHGdvXwRm1jBhy17szgPVLf7EJDE8a1pTz21wg2SpMtpdAQ=="
               },
               {
                 "roamingNetworkId": "CHARGY-POI-DEMO",
-                "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+                "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
                 "revision": 0,
                 "eTag": [
                   "effectiveTree",
@@ -378,16 +378,28 @@
                 "validUntil": "2026-06-01T11:00:00.000Z",
                 "algorithm": "Ed25519",
                 "keyId": "3b2420873134ac1aa5e9cb3ec2529cfdfa3ace466eee01da9f6c02174aeee44f",
-                "value": "6mUzY8dqhXYq2+1ZWbqnJyjt87c2K3aCnymsh/Widp0slLxh26xb70HvekueIVvGnCqJ3VEzvc98hks7bmICCA=="
+                "value": "KoZAWygMIlQgFEtNF3C0EjtQV61aLoGP1mFN+cmPB5/DGfY58gyEh8vXdESKhQxTHqU83x2uWZbo+1hDPQB8Bg=="
               }
             ]
           },
           "commitProof": {
             "@context": "https://open.charging.cloud/contexts/wwcp/roamingNetwork/checkpointProof/v1",
-            "checkpointId": "1ab35fb8a1aa0a018c025fd95a045ee663caa1f71e669cbf46b85cd85f03934f",
+            "checkpointId": "e3fdc961aed6a5672fd3fb1cb6441888d9496eb96002f1535eca95a49f587dc0",
             "leaf": {
-              "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+              "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
               "eTags": [
+                [
+                  "json",
+                  "sha256",
+                  "hex",
+                  "bcab48c0bb47358725148e4c5e023b8033d31cd2068cdac1808f73f822c10a80"
+                ],
+                [
+                  "cbor",
+                  "sha256",
+                  "hex",
+                  "0fe560b42c6dc5447fbe650fcc9b76cb65a6ad9136280899bd96c196ddfac701"
+                ],
                 [
                   "effectiveTree",
                   "sha256",
@@ -404,14 +416,26 @@
           "checkpoints": [
             {
               "checkpoint": {
-                "@id": "1ab35fb8a1aa0a018c025fd95a045ee663caa1f71e669cbf46b85cd85f03934f",
+                "@id": "e3fdc961aed6a5672fd3fb1cb6441888d9496eb96002f1535eca95a49f587dc0",
                 "@context": "https://open.charging.cloud/contexts/wwcp/roamingNetwork/checkpoint/v1",
                 "roamingNetworkId": "CHARGY-POI-DEMO",
                 "epoch": 1,
                 "sequence": 0,
-                "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+                "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
                 "revision": 0,
                 "eTags": [
+                  [
+                    "json",
+                    "sha256",
+                    "hex",
+                    "bcab48c0bb47358725148e4c5e023b8033d31cd2068cdac1808f73f822c10a80"
+                  ],
+                  [
+                    "cbor",
+                    "sha256",
+                    "hex",
+                    "0fe560b42c6dc5447fbe650fcc9b76cb65a6ad9136280899bd96c196ddfac701"
+                  ],
                   [
                     "effectiveTree",
                     "sha256",
@@ -420,7 +444,7 @@
                   ]
                 ],
                 "commits": {
-                  "@merkleRoot": "55cb10f5581119fbc8926411c7ee7418dc2a8ca41126556e536ac2ef6ee413f0",
+                  "@merkleRoot": "1d22153745a247fa0bc35918138f472f9feb2cb99b21447c919ef00232c66af4",
                   "@size": 1
                 },
                 "priceStatements": {
@@ -435,7 +459,7 @@
                     "signedAt": "2026-06-02T10:00:00.000Z",
                     "algorithm": "Ed25519",
                     "keyId": "b6b112c5e7c8b3e9f630ceba38a7b2b46828d0cf3d932b7b0d992fb2299026c6",
-                    "value": "vbSGOg39b9qALc5e4zkbL9LDUOpate8Dnas0P/IawVcKAlQuTQvx8VDUHyxVbQLJ/SzKWho+BsVt7cZ8xROKAw=="
+                    "value": "bF1JDRjDCV/W6aRVpyPV0VOorx2pGaxSbRE0TZ60w1yj49H54T71ksEmhviQLGiqaRpefF43lsFeJKwVCQe8Cg=="
                   },
                   {
                     "role": "roamingNetworkOperator",
@@ -443,7 +467,7 @@
                     "signedAt": "2026-06-02T10:00:00.000Z",
                     "algorithm": "Ed25519",
                     "keyId": "e390e8d9949a5bd60b036132621265eeb93474b5b8da1ae3660740eaad5e8ae7",
-                    "value": "/OG56PD9joSGhBgGeTeulfJRFTTRO+62yati1Dj2PnYrd173SUwOPsg7DFGY657PTjaN4xFxhi+KNz0qNAIuDw=="
+                    "value": "ahd7Wbq7p6lSlO6JAeqKDlnGv7mNsvas7xTxpV4ScF9PzOanDfBBfULRVfMGnsAvWDfMc2WecjDzx+X3QlI0CQ=="
                   },
                   {
                     "role": "witness",
@@ -451,7 +475,7 @@
                     "signedAt": "2026-06-02T10:00:00.000Z",
                     "algorithm": "Ed25519",
                     "keyId": "3a3d7c5d05402ef4b7f95bb77e37b2b7084912abda42a446d26e6e046131405d",
-                    "value": "su6pnoiIK9PpEicSg6530XcgG1y3APX3p0u+78W/suJvnnR+YkCr9+VoqY4pDF0WKdl9aBi709NzpMGvJmMlDQ=="
+                    "value": "1yZLc0704QMaF/Hh9yMare24JY8GuuIG0BZGK3Mol4pKeQ1dZnMkEQ+3YESUKZh8v9JcfA3iYlfFADHenoVRCQ=="
                   }
                 ]
               },
@@ -556,7 +580,7 @@
       "chargingStationProof": {
         "@context": "https://open.charging.cloud/contexts/wwcp/roamingNetwork/proof/v1",
         "hashAlgorithm": "sha256",
-        "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+        "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
         "revision": 0,
         "roamingNetwork": {
           "@context": "https://open.charging.cloud/contexts/wwcp/roamingNetwork/v1",
@@ -782,7 +806,7 @@
         "attestations": [
           {
             "roamingNetworkId": "CHARGY-POI-DEMO",
-            "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+            "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
             "revision": 0,
             "eTag": [
               "effectiveTree",
@@ -796,11 +820,11 @@
             "validUntil": "2026-06-01T11:00:00.000Z",
             "algorithm": "Ed25519",
             "keyId": "e46e676b85515c73e626404cbaaf31150943ed73ed20722465f079c17cf031b8",
-            "value": "pXEoQvcnL8L7ssERQvr7U3Ay3DOk3/DwU9tMlidOkqHL9hRgKuvvf5JiHAx8ZOyoBSSDXJtdUTWE3/AEQiqDBg=="
+            "value": "BhwoA0e+eeXbpcKYZ3jLZzBJ7HrKePhOfsooq4uEHGdvXwRm1jBhy17szgPVLf7EJDE8a1pTz21wg2SpMtpdAQ=="
           },
           {
             "roamingNetworkId": "CHARGY-POI-DEMO",
-            "commitId": "28809bb688d9af02d10cf448dc9f3a148a3ed9ed1d1bff14e46ee553162bf362",
+            "commitId": "69c84c0a1303fb9291ce908d44aeaf8e9db83faa08a24876c47394a5b1124c18",
             "revision": 0,
             "eTag": [
               "effectiveTree",
@@ -814,7 +838,7 @@
             "validUntil": "2026-06-01T11:00:00.000Z",
             "algorithm": "Ed25519",
             "keyId": "3b2420873134ac1aa5e9cb3ec2529cfdfa3ace466eee01da9f6c02174aeee44f",
-            "value": "6mUzY8dqhXYq2+1ZWbqnJyjt87c2K3aCnymsh/Widp0slLxh26xb70HvekueIVvGnCqJ3VEzvc98hks7bmICCA=="
+            "value": "KoZAWygMIlQgFEtNF3C0EjtQV61aLoGP1mFN+cmPB5/DGfY58gyEh8vXdESKhQxTHqU83x2uWZbo+1hDPQB8Bg=="
           }
         ]
       },
@@ -892,7 +916,7 @@
         "EVSEId": "DE*POI*E1*1",
         "meterSerialNumber": "CHARGY-POI-METER-001",
         "chargingStarted": "2026-06-01T10:00:00.000Z",
-        "startDocumentSHA256": "4a3f531d813c31031029699e87967e790929aadaad301b7bd190c166027c351f",
+        "startDocumentSHA256": "23b69a9c4f611c157b8ba3639539fc4920693f24ddbff01b10af065edeefb2ea",
         "chargingMode": "adhoc",
         "chargingTariffId": "DE*POI*T1",
         "priceStatementDigest": "e3581482ba56a562f612a0f70fa08be468e32d74bed90072d6f4e55a746259ac",
@@ -903,7 +927,7 @@
         "signedAt": "2026-06-01T10:01:00.000Z",
         "algorithm": "Ed25519",
         "keyId": "d423a82879e62cfb33fc10d72b218b28b5656053233a9cd125952bd32053d393",
-        "value": "cW0xZhmMspcJ1aNr5YllzJ4Y9xmSYyz6RTBScK4EdfgEHDRWzCl3wEPwH7CL05LR0ovCRNtIEJppEEEFhcRrAQ=="
+        "value": "Xrp//LwxndEtg+DasgfRdzVvHNm3YWMxd9U1FhmCH0WVVygW9TmHuIGEifxj6vHC9qb8XK6OMe2xn73totykBA=="
       }
     }
   }

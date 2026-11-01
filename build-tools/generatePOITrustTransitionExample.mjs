@@ -6,8 +6,11 @@ import {fileURLToPath} from 'node:url';
 import {CoseKey,CoseCurves} from '@vanaheimr/cose';
 import {canonicalJSONBytes as jcs} from '@open-charging-cloud/chargy-core';
 import {parseJSON,prettyJSON,clone,canonicalJSONBytes,POIPublicKey,KeyStatement,SigningKeyCertificate,TrustAnchor,TrustContext,TrustTransition,VerifiedTrustTransition,
-    TRUST_TRANSITION_CONTEXT,trustPolicyId,trustStatementDigest,initialTrustEpoch,Commit,Checkpoint,commitsRoot,leafHash,auditPath,toHex,toBase64,ChargingStationProof,etagToJSON,Attestation,COMMIT_CONTEXT,CHECKPOINT_CONTEXT} from '@open-charging-cloud/wwcp-poi';
+    TRUST_TRANSITION_CONTEXT,trustPolicyId,trustStatementDigest,initialTrustEpoch,Commit,Checkpoint,commitsRoot,leafHash,auditPath,toHex,toBase64,ChargingStationProof,etagToJSON,jsonETag,cborETag,Attestation,COMMIT_CONTEXT,CHECKPOINT_CONTEXT} from '@open-charging-cloud/wwcp-poi';
 const root=fileURLToPath(new URL('../',import.meta.url)),out=path.join(root,'tests/fixtures/POITrustTransitions');await mkdir(out,{recursive:true});
+// A commit names the json, cbor and effectiveTree ETags of its version (SPECIFICATION.md 8.3): of this demo the version is
+// the roaming network its proof gives, the effectiveTree ETag the root of that proof.
+const versionETags=(network,eTag)=>[etagToJSON(jsonETag(network)),etagToJSON(cborETag(network)),eTag];
 const read=async file=>JSON.parse(await readFile(path.join(root,file),'utf8')),start=await read('tests/fixtures/POILive/01-start.json'),waiting=await read('tests/fixtures/POILive/00-waiting.json');
 const baseProof=parseJSON(start.poiEvidence.chargingStationProof),oldOperator=parseJSON(start.poiEvidence.bootstrap.keyStatement),anchor=TrustAnchor.parse(start.poiEvidence.bootstrap.trustAnchor);
 const hash=(bytes,algorithm='sha256')=>createHash(algorithm).update(bytes).digest('hex'),iso=value=>new Date(value).toISOString(),time=Date.parse('2026-11-01T00:00:00Z');
@@ -28,7 +31,7 @@ const policy=signedTransition({'@context':TRUST_TRANSITION_CONTEXT,sequence:0,fr
 VerifiedTrustTransition.verify(oldContext,oldOperator,TrustTransition.parse(policy),{acceptedAt:time+981000,epoch:initialTrustEpoch(),sequence:0});
 function proofFor(operator=oldOperator,revision=0,cpoKeys,commitId,signedAt=time){const proof=clone(baseProof);proof.roamingNetwork.operator=operator;proof.revision=revision;
     if(cpoKeys!==undefined)proof.roamingNetwork.chargingStationOperators[0].signingKeys=cpoKeys;
-    const eTag=etagToJSON(ChargingStationProof.parse(proof).calculate().eTag),content={'@context':COMMIT_CONTEXT,roamingNetworkId:anchor.id,revision,eTags:[eTag]};
+    const eTag=etagToJSON(ChargingStationProof.parse(proof).calculate().eTag),content={'@context':COMMIT_CONTEXT,roamingNetworkId:anchor.id,revision,eTags:versionETags(proof.roamingNetwork,eTag)};
     proof.commitId=commitId??hash(canonicalJSONBytes(content));
     const operational=operator===targetOperator?newOperational:[key(42,'Demo holder A'),key(44,'Demo holder B')];
     proof.attestations=operational.map((item,index)=>{const attestation={...clone(baseProof.attestations[index]),commitId:proof.commitId,revision,eTag,keyId:item.publicKey.id,signedAt:iso(signedAt),value:'placeholder'};
@@ -37,12 +40,12 @@ const targetProof=proofFor(targetOperator,2,[key(161,undefined,['chargeTranspare
 function checkpoint(content,operational=[key(42,'Demo holder A'),key(44,'Demo holder B')]){const withContext={'@context':CHECKPOINT_CONTEXT,...content},cp=Checkpoint.parse({'@id':hash(canonicalJSONBytes(withContext)),...withContext});
     return {...cp.json,signatures:operational.map(item=>{const signature={role:'roamingNetworkOperator',signer:oldOperator['@id'],signedAt:withContext.createdAt,algorithm:'Ed25519',keyId:item.publicKey.id,value:''};
         return {...signature,value:sign(null,cp.signingBytes({...signature,signedAt:Date.parse(signature.signedAt),json:signature}),item.privateKey).toString('base64')};})};}
-const etag=etagToJSON(ChargingStationProof.parse(baseProof).calculate().eTag),commit=Commit.parse({'@id':baseProof.commitId,'@context':COMMIT_CONTEXT,roamingNetworkId:anchor.id,revision:0,eTags:[etag]});
-const head=checkpoint({roamingNetworkId:anchor.id,epoch:1,sequence:0,commitId:commit.id,revision:0,eTags:[etag],commits:{'@merkleRoot':toHex(commitsRoot([commit],'sha256')),'@size':1},createdAt:iso(time+600000)});
+const etag=etagToJSON(ChargingStationProof.parse(baseProof).calculate().eTag),etags=versionETags(baseProof.roamingNetwork,etag),commit=Commit.parse({'@id':baseProof.commitId,'@context':COMMIT_CONTEXT,roamingNetworkId:anchor.id,revision:0,eTags:etags});
+const head=checkpoint({roamingNetworkId:anchor.id,epoch:1,sequence:0,commitId:commit.id,revision:0,eTags:etags,commits:{'@merkleRoot':toHex(commitsRoot([commit],'sha256')),'@size':1},createdAt:iso(time+600000)});
 const profiles={canonicalization:'styx-canonical-json-v1',identificationHash:'sha256',commit:COMMIT_CONTEXT,checkpoint:CHECKPOINT_CONTEXT,priceStatement:'https://open.charging.cloud/contexts/wwcp/roamingNetwork/priceStatement/v1',signatureAlgorithms:['Ed25519']};
-const final=checkpoint({roamingNetworkId:anchor.id,epoch:1,sequence:1,previousId:head['@id'],commitId:commit.id,revision:0,eTags:[etag],commits:head.commits,createdAt:iso(time+660000),final:true,next:{epoch:2,profiles}});
-const genesis=Commit.genesisOf(anchor.id,[etag],Checkpoint.parse(final).next);
-const first=checkpoint({roamingNetworkId:anchor.id,epoch:2,sequence:0,commitId:genesis.id,revision:0,eTags:[etag],commits:{'@merkleRoot':toHex(commitsRoot([genesis],'sha256')),'@size':1},createdAt:iso(time+700000),previous:{epoch:1,checkpointId:final['@id'],eTags:[etag]}});
+const final=checkpoint({roamingNetworkId:anchor.id,epoch:1,sequence:1,previousId:head['@id'],commitId:commit.id,revision:0,eTags:etags,commits:head.commits,createdAt:iso(time+660000),final:true,next:{epoch:2,profiles}});
+const genesis=Commit.genesisOf(anchor.id,etags,Checkpoint.parse(final).next);
+const first=checkpoint({roamingNetworkId:anchor.id,epoch:2,sequence:0,commitId:genesis.id,revision:0,eTags:etags,commits:{'@merkleRoot':toHex(commitsRoot([genesis],'sha256')),'@size':1},createdAt:iso(time+700000),previous:{epoch:1,checkpointId:final['@id'],eTags:etags}});
 const epoch=signedTransition({...clone(policy),toAnchor:anchor.toQRCode(),toOperator:oldOperator,checkpoints:[head,final],epochChange:{genesis:genesis.json,firstCheckpoint:first}},oldIdentities,oldIdentities);
 VerifiedTrustTransition.verify(oldContext,oldOperator,TrustTransition.parse(epoch),{acceptedAt:time+981000,epoch:initialTrustEpoch(),sequence:0});
 const epochProof=proofFor(oldOperator,0,undefined,genesis.id,time+720000);
@@ -52,7 +55,7 @@ function live(document,signers=[oldCPO]){const {signatures:_,...json}=document;j
 const rotationProof=proofFor(oldOperator,1,[oldCPO.publicKey.json,rotated.publicKey.json],undefined,time+360000);
 const cross=live({...clone(start),lastUpdated:iso(time+360000),updates:hash(jcs(start)).toUpperCase(),poiEvidence:{...clone(start.poiEvidence),chargingStationProof:prettyJSON(rotationProof)}},[oldCPO,rotated]);
 const post=live({...clone(cross),lastUpdated:iso(time+420000),updates:hash(jcs(cross)).toUpperCase()},[rotated]);
-const commitOf=proof=>Commit.parse({'@id':proof.commitId,'@context':COMMIT_CONTEXT,roamingNetworkId:anchor.id,revision:proof.revision,eTags:[etagToJSON(ChargingStationProof.parse(proof).calculate().eTag)]});
+const commitOf=proof=>Commit.parse({'@id':proof.commitId,'@context':COMMIT_CONTEXT,roamingNetworkId:anchor.id,revision:proof.revision,eTags:versionETags(proof.roamingNetwork,etagToJSON(ChargingStationProof.parse(proof).calculate().eTag))});
 const laterCommits=[commitOf(rotationProof),commitOf(targetProof)],oldHistory=parseJSON(start.poiEvidence.historicalEvidence),oldCheckpoint=oldHistory.versions[0].checkpoints[0].checkpoint;
 const laterCheckpoint=checkpoint({roamingNetworkId:anchor.id,epoch:1,sequence:1,previousId:oldCheckpoint['@id'],commitId:targetProof.commitId,revision:2,eTags:laterCommits[1].json.eTags,
     commits:{'@merkleRoot':toHex(commitsRoot(laterCommits,'sha256')),'@size':2},createdAt:iso(time+975000)},newOperational);

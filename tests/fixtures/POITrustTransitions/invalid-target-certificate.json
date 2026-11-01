@@ -1,7 +1,7 @@
 {
   "@context": "https://open.charging.cloud/contexts/wwcp/trustTransition/v1",
   "sequence": 0,
-  "fromPolicyId": "cfa42e11e444b0239fd3b83fbd8405e780d5956d4d096ba844dddd10d0287e5f",
+  "fromPolicyId": "c4ce17559f5bf995b414ca03428b20d2012d181defecd82cd87b946b16d697dd",
   "fromStatementDigest": "f6ca6f926bf309ccb0a97982f28b788237f1cd669dc702805c3776365ff775d8",
   "toAnchor": "WWCP/TA-2:*+KJ68GVCYM8RB8+09ZW521ANW5BY8T1A/PD-FFNLG144NJE7SS*+PR8CN6V45WJLV7Y5*V1SBFT4S982JLR749/WSWDN264A1R-U82:1J/7B2P8H3X9W3USE+F7IB8G7JSRH0TWZ1BLUJBI6%E/VDOGGSR5MWEW9E0G7$:5B$C.UES9EGDDB$CBECP9ESZCAIACPEYM8RB8+09ZW521ANW5BY8X1AD68-3E7WEBAFB9FA9DIWENPEJ/5/3E1$C+%5 8D$KEZED:1DRPC34E.TCUPCG/DB$CLWE10684F98E0LEBECZEDV2D7$CK4F-KE/:56LE QEAC8NPC04E006%G6J$DC.D-3ELQEF/D7%E20",
   "toOperator": {
@@ -102,25 +102,25 @@
       "side": "old",
       "algorithm": "Ed25519",
       "keyId": "d9a2b2d62337103778907c3c1fb8e28a8e604ad5aac269cc50782a2545978e90",
-      "value": "IRRsJFfwExfVDt4iN6EgmpZScaLf86ya/sp7SlD3C7I7C2AZgKKU//MZ9gFiASwDGrU836WjclQXSJ0OoItGCg=="
+      "value": "INbQBiMbyez9KQlD0W4y48YMgmnM3E62mrE2lwt3rbs23BNjbTbNP10hqOLMQqMk2/FsSF6u+GO0ZJxYC2+6Ag=="
     },
     {
       "side": "old",
       "algorithm": "Ed25519",
       "keyId": "5b8a772deb28e786977c8b56f7531a65408cc1fc03ab6d2b2baf5c733e15f8d7",
-      "value": "2f56cP1T08MRVFlsEGZ0vsEm9g9mqqbFwALL3gbqRK5xqUzMUGyq/spznECzgKQsi9TlnbFUFkjorHW3C6xXCA=="
+      "value": "advNygVLdTUizebGPIwyj8CucArh3SApJiRC5jVgPMMiLfBqLJcNyKXiwDturqc/4Ep9qqvfvZcY3vu0ncmkDw=="
     },
     {
       "side": "new",
       "algorithm": "Ed25519",
       "keyId": "59722ce26fccf0606ff65cfe05f8fb2d8e0d8378b2de4d1143d95747ece347b8",
-      "value": "1oZ2dutZ2K75Ygm63F3vS7cKGDoIz5nflU4T9ff+iaB9kFyce3GvOu8i5lByViMdcw3VZjZHvRgfSS4nvNw/BA=="
+      "value": "80fQXZ4zjg/ggZM0h3O/8/oEGuEX/OlvpG/g9qimgTie++19IGKB8wPFSZjFSo2BqM6qan+HLpKnQkf2eHJLCg=="
     },
     {
       "side": "new",
       "algorithm": "Ed25519",
       "keyId": "b4d5ca44b70fa73f01c6261ac0fed6e2c57dbd5a343a37da92e5760e30f10a90",
-      "value": "T62AP9zq2B0r/mHTI8jpMiY/bSUYFyp86mfjoBRpUiTEKV3nr/zv+s5E8mIVZVXsqxY8PDRYNRsOiFnxyabbDg=="
+      "value": "2CvfOCisn+0DhEMtyYnGKDXoINkPRirEuCV6MyLdVgrqVop4oKYopuk/rkqK25UqwW8QsxxqivoujB/XGMiqCg=="
     }
   ]
 }

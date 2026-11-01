@@ -3,10 +3,13 @@ import {readFile,writeFile,mkdir} from 'node:fs/promises';
 import {createHash,createPrivateKey,sign} from 'node:crypto';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
-import {parseJSON,prettyJSON,clone,canonicalJSONBytes,ChargingStationProof,etagToJSON,Commit,Attestation,Checkpoint,CheckpointProof,
+import {parseJSON,prettyJSON,clone,canonicalJSONBytes,ChargingStationProof,etagToJSON,jsonETag,cborETag,Commit,Attestation,Checkpoint,CheckpointProof,
     PriceStatement,PriceStatementProof,priceStatementsRoot,commitsRoot,leafHash,auditPath,toHex,COMMIT_CONTEXT,CHECKPOINT_CONTEXT} from '@open-charging-cloud/wwcp-poi';
 
 const root=fileURLToPath(new URL('../',import.meta.url)),out=path.join(root,'tests/fixtures/POIObservedVersions');await mkdir(out,{recursive:true});
+// A commit names the json, cbor and effectiveTree ETags of its version (SPECIFICATION.md 8.3): of this demo the version is
+// the roaming network its proof gives, the effectiveTree ETag the root of that proof.
+const versionETags=(network,eTag)=>[etagToJSON(jsonETag(network)),etagToJSON(cborETag(network)),eTag];
 const load=async file=>parseJSON(await readFile(path.join(root,file),'utf8'));
 const start=await load('tests/fixtures/POILive/01-start.json'),end=await load('tests/fixtures/POILive/03-completed.json');
 const original=await load('tests/fixtures/POIPrices/session-with-price.chargy');
@@ -18,13 +21,13 @@ function station(revision,fork=false){
     const proof=clone(proof0);proof.revision=revision;
     if(fork)proof.roamingNetwork.chargingStationOperators[0].chargingPools[0].chargingStations['@leaves'][0]['@entity'].name.en='Genuinely signed competing station';
     const eTag=etagToJSON(ChargingStationProof.parse(proof).calculate().eTag);
-    const content={'@context':COMMIT_CONTEXT,roamingNetworkId:network,revision,eTags:[eTag]},commit=Commit.parse({'@id':hash(canonicalJSONBytes(content)),...content});
+    const eTags=versionETags(proof.roamingNetwork,eTag),content={'@context':COMMIT_CONTEXT,roamingNetworkId:network,revision,eTags},commit=Commit.parse({'@id':hash(canonicalJSONBytes(content)),...content});
     proof.commitId=commit.id;
     proof.attestations=[42,44].map((seed,index)=>{
         const value={...clone(proof0.attestations[index]),commitId:commit.id,revision,eTag,value:'placeholder'};
         return {...value,value:sign(null,Attestation.parse(value).signingBytes(),ed(seed)).toString('base64')};
     });
-    return {proof,commit,eTag};
+    return {proof,commit,eTag,eTags};
 }
 const versions=[0,1,2,3].map(value=>station(value)),forkStation=station(1,true);
 function price(sequence,previous,fork=false){
@@ -38,10 +41,10 @@ function price(sequence,previous,fork=false){
 const prices=[price(0)];prices.push(price(1,prices[0]));prices.push(price(2,prices[1]));const forkPrice=price(1,prices[0],true);
 function checkpoint(sequence,previous,statements,revision=sequence,epoch=1,fork=false){
     const commits=versions.slice(0,revision+1).map(item=>item.commit),tree=priceStatementsRoot(statements.map(item=>PriceStatement.parse(item)));
-    const content={'@context':CHECKPOINT_CONTEXT,roamingNetworkId:network,epoch,sequence,commitId:versions[revision].commit.id,revision,eTags:[versions[revision].eTag],
+    const content={'@context':CHECKPOINT_CONTEXT,roamingNetworkId:network,epoch,sequence,commitId:versions[revision].commit.id,revision,eTags:versions[revision].eTags,
         commits:{'@merkleRoot':toHex(commitsRoot(commits,'sha256')),'@size':commits.length},priceStatements:{'@merkleRoot':toHex(tree.root),'@size':tree.size},
         createdAt:iso(base+600000+revision*60000+(fork?30000:0)),...(previous===undefined?{}:{previousId:previous.checkpoint['@id']}),
-        ...(epoch===1?{}:{previous:{epoch:1,checkpointId:checkpoints[2].checkpoint['@id'],eTags:[versions[2].eTag]}})};
+        ...(epoch===1?{}:{previous:{epoch:1,checkpointId:checkpoints[2].checkpoint['@id'],eTags:versions[2].eTags}})};
     const cp=Checkpoint.parse({'@id':hash(canonicalJSONBytes(content)),...content});
     const signed={...cp.json,signatures:[42,44].map((seed,index)=>{
         const signature={role:'roamingNetworkOperator',signer:operator['@id'],signedAt:content.createdAt,algorithm:'Ed25519',keyId:operator.signingKeyCertificates[index].signingKey['@id'],value:''};

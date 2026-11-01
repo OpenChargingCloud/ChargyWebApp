@@ -6,12 +6,12 @@
       "name": "@open-charging-cloud/wwcp-poi",
       "version": "0.1.2-dev.0",
       "repository": "https://github.com/OpenChargingCloud/WWCP_POI.TS",
-      "baseCommit": "38b178fd775fed2280dc43b7f05ebd4048d40dc4",
+      "baseCommit": "8b1946b76563ff0c04342d4f5d57a56f378782a7",
       "sourcePatch": "source/poi.patch",
-      "patchSHA256": "dbdd43d5dee7707c10cccc85168ff9aecab6b2fc0bcf409458d2c45cd49d0166",
+      "patchSHA256": "cecbce28d6185e13f410a04730acc5f0ab4df1d36f438edcc46aec5d945f8888",
       "filename": "open-charging-cloud-wwcp-poi-0.1.2-dev.0.tgz",
-      "integrity": "sha512-eY+tyM600St3cNv64TbDcZ2KCd55SDjiKEoMlfLar4JMUrzWdHAuP4uZfI/SdTNsPZTZJqKTAp0F47ULeP6PLg==",
-      "sha256": "aa45a0c7ba8f9601146f293ad9ca5cc4ddca484f90fc99cd2b655914df0b696c"
+      "integrity": "sha512-pep79M3IFbPwxw2CAeYt7uhO/vEQoaqA4seTYVREQFSHaCsTDRITwONVxecvT+gImm2smZ0K+TRIyp4kMZnTiQ==",
+      "sha256": "288b8cdb51810f335e4bc8705452e33aae73c777ac8e156ebeac4bf1728631dc"
     },
     {
       "name": "@open-charging-cloud/chargy-core",

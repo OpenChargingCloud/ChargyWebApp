@@ -3,11 +3,11 @@
   "evaluatedAt": "2026-11-01T00:16:21Z",
   "testKeys": "PUBLIC TEST KEYS ONLY: CPO Ed25519 seed161, RNO operational42/44, identities41/43; existing P-256 meter fixture.",
   "files": {
-    "vectors.json": "cb6e6ed1356a5c1b31ea2a4d5617fb14ef64bcbf5df947702f3a15df139497ad",
-    "archive-0.chargy": "6c3e172a3056c36de3f6e90503e149fbb7ecfaa91265c236740455a6aab9021b",
-    "archive-1.chargy": "c288162a65c148eb79f50cc2bb648019980a167a69b038590c673b39c7df6ffb",
-    "archive-2.chargy": "358409648061eb7e2eb099fffe4caaa4e0207316ec8410f7f04d0a9cb1604b48",
-    "checkpoint-fork-1.chargy": "b29f922e0aa07d219d2b7b0bc5154ab5483d58cac405242d4544762b9cacff92",
-    "price-fork-1.chargy": "6a0f5e331327ac71279838583411c4921b9666d11e8ca144baf4ce319357bb03"
+    "vectors.json": "180c52625f6b04ab05a651695de2fdf165e205bfcf404db42fe8ff72c6732a3b",
+    "archive-0.chargy": "91cefbec7ce2e12245bb55f5f6afe9e243404ab2dbc17c53bbe6c93dbb2bc569",
+    "archive-1.chargy": "06c7891b601a779f5b6ab75a0f32c244f8f4036d9c2973d9156728bcdf841fca",
+    "archive-2.chargy": "50d7c20ab7067e6e133eda8ae7efdfe5f8afc53c2d169ea11308be70aace8a8f",
+    "checkpoint-fork-1.chargy": "ade0fb551caa716c99e7e28f19d2725cbb172b6127863661e3375cdf4687cf40",
+    "price-fork-1.chargy": "5edf7c301521256bf5cab0f9138de2656270eca19d5a16d3d22ce97df1b14028"
   }
 }

@@ -7,9 +7,12 @@ import path from 'node:path';
 import { CoseCurves, CoseKey } from '@vanaheimr/cose';
 import { POIPublicKey, KeyStatement, SigningKeyCertificate, Attestation, ChargingStationProof, TrustAnchor, TrustContext,
     verifyChargingStation, Commit, Checkpoint, CheckpointProof, commitsRoot, canonicalJSONBytes,
-    parseJSON, prettyJSON, toHex, toBase64, etagToJSON, COMMIT_CONTEXT, CHECKPOINT_CONTEXT } from '@open-charging-cloud/wwcp-poi';
+    parseJSON, prettyJSON, toHex, toBase64, etagToJSON, jsonETag, cborETag, COMMIT_CONTEXT, CHECKPOINT_CONTEXT } from '@open-charging-cloud/wwcp-poi';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
+// A commit names the json, cbor and effectiveTree ETags of its version (SPECIFICATION.md 8.3): of this demo the version is
+// the roaming network its proof gives, the effectiveTree ETag the root of that proof.
+const versionETags=(network,eTag)=>[etagToJSON(jsonETag(network)),etagToJSON(cborETag(network)),eTag];
 const output = path.join(root, 'tests/fixtures/POIHistory'); await mkdir(output, { recursive: true });
 const input = JSON.parse(await readFile(path.join(root, 'tests/fixtures/POISession/completed-session-with-evse-proof.chargy'), 'utf8'));
 const historicalAt = Date.parse('2026-06-01T10:00:00.000Z');
@@ -52,8 +55,8 @@ function version(from, until, privateKey = meterPrivate, revision = 0) {
     const tree = copy(base.roamingNetwork); tree.operator = copy(oldOperator);
     tree.chargingStationOperators[0].chargingPools[0].chargingStations['@leaves'][0]['@entity'].EVSEs[0].energyMeter.publicKeys = [meterKey(privateKey)];
     const incomplete = { ...copy(base), roamingNetwork: tree, attestations: [], revision };
-    const eTag = etagToJSON(ChargingStationProof.parse(json(incomplete)).calculate().eTag);
-    const content = { '@context': COMMIT_CONTEXT, roamingNetworkId: networkId, revision, eTags: [eTag] };
+    const eTag = etagToJSON(ChargingStationProof.parse(json(incomplete)).calculate().eTag), eTags = versionETags(json(tree), eTag);
+    const content = { '@context': COMMIT_CONTEXT, roamingNetworkId: networkId, revision, eTags };
     const commit = Commit.parse(json({ '@id': digest(content), ...content }));
     const proof = { ...incomplete, commitId: commit.id, attestations: oldKeys.map(item => {
         const attestation = { roamingNetworkId: networkId, commitId: commit.id, revision, eTag, role: 'roamingNetworkOperator',
@@ -61,7 +64,7 @@ function version(from, until, privateKey = meterPrivate, revision = 0) {
         return { ...attestation, value: item.sign(Attestation.parse(json(attestation)).signingBytes()) };
     }) };
     const checkpointContent = { '@context': CHECKPOINT_CONTEXT, roamingNetworkId: networkId, epoch: 1, sequence: 0,
-        commitId: commit.id, revision, eTags: [eTag], commits: { '@merkleRoot': toHex(commitsRoot([commit], 'sha256')), '@size': 1 },
+        commitId: commit.id, revision, eTags, commits: { '@merkleRoot': toHex(commitsRoot([commit], 'sha256')), '@size': 1 },
         createdAt: iso(historicalAt + 86400000) };
     const checkpoint = Checkpoint.parse(json({ '@id': digest(checkpointContent), ...checkpointContent }));
     const signatures = [...checkpointKeys.map(item => ({ item, role: 'roamingNetworkOperator', signer: operatorId })),

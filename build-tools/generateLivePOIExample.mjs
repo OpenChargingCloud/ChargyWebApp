@@ -4,9 +4,12 @@ import {createPrivateKey,createPublicKey,createHash,sign} from 'node:crypto';
 import {fileURLToPath} from 'node:url';
 import path from 'node:path';
 import {canonicalJSONBytes as jcs} from '@open-charging-cloud/chargy-core';
-import {parseJSON,prettyJSON,clone,canonicalJSONBytes,ChargingStationProof,etagToJSON,Commit,Attestation,Checkpoint,PriceStatement,
+import {parseJSON,prettyJSON,clone,canonicalJSONBytes,ChargingStationProof,etagToJSON,jsonETag,cborETag,Commit,Attestation,Checkpoint,PriceStatement,
     priceStatementsRoot,commitsRoot,toHex,COMMIT_CONTEXT,CHECKPOINT_CONTEXT} from '@open-charging-cloud/wwcp-poi';
 const root=fileURLToPath(new URL('../',import.meta.url)),out=path.join(root,'tests/fixtures/POILive');await mkdir(out,{recursive:true});
+// A commit names the json, cbor and effectiveTree ETags of its version (SPECIFICATION.md 8.3): of this demo the version is
+// the roaming network its proof gives, the effectiveTree ETag the root of that proof.
+const versionETags=(network,eTag)=>[etagToJSON(jsonETag(network)),etagToJSON(cborETag(network)),eTag];
 const base=parseJSON(await readFile(path.join(root,'tests/fixtures/POIPrices/session-with-price.chargy'),'utf8'));
 const iso=value=>new Date(value).toISOString(),start=Date.parse('2026-11-01T00:05:00Z'),now='2026-11-01T00:16:21.000Z';
 const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -17,7 +20,7 @@ const proof=clone(base.poiEvidence.priceEvidence.chargingStationProof),operator=
 proof.roamingNetwork.operator=operator;
 proof.roamingNetwork.chargingStationOperators[0].signingKeys[0].usages=['chargeTransparencyRecords','priceStatements'];
 const eTag=etagToJSON(ChargingStationProof.parse(proof).calculate().eTag),network=base.poiEvidence.roamingNetworkId,evse=base.poiEvidence.EVSEId;
-const commitContent={'@context':COMMIT_CONTEXT,roamingNetworkId:network,revision:0,eTags:[eTag]},commit=Commit.parse({'@id':hash(canonicalJSONBytes(commitContent)),...commitContent});
+const eTags=versionETags(proof.roamingNetwork,eTag),commitContent={'@context':COMMIT_CONTEXT,roamingNetworkId:network,revision:0,eTags},commit=Commit.parse({'@id':hash(canonicalJSONBytes(commitContent)),...commitContent});
 proof.commitId=commit.id;proof.revision=0;
 proof.attestations=[42,44].map((seed,index)=>{
     const value={...clone(proof.attestations[index]),commitId:commit.id,revision:0,eTag,signedAt:iso(start-300000),validUntil:'2026-11-02T00:00:00.000Z',
@@ -37,7 +40,7 @@ function signedPrice(rate,sequence=0,previous){
     return {...value,value:sign(null,PriceStatement.parse(value).signingBytes(),cpoPrivate).toString('base64')};
 }
 const price=signedPrice('0.35'),priceTree=priceStatementsRoot([PriceStatement.parse(price)]);
-const cpContent={'@context':CHECKPOINT_CONTEXT,roamingNetworkId:network,epoch:1,sequence:0,commitId:commit.id,revision:0,eTags:[eTag],
+const cpContent={'@context':CHECKPOINT_CONTEXT,roamingNetworkId:network,epoch:1,sequence:0,commitId:commit.id,revision:0,eTags,
     commits:{'@merkleRoot':toHex(commitsRoot([commit],'sha256')),'@size':1},priceStatements:{'@merkleRoot':toHex(priceTree.root),'@size':1},createdAt:iso(start+630000)};
 const checkpoint=Checkpoint.parse({'@id':hash(canonicalJSONBytes(cpContent)),...cpContent});
 const cp={...checkpoint.json,signatures:[42,44].map((seed,index)=>{

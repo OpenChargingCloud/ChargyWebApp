@@ -28,7 +28,7 @@ const specs = [
             'tests/vectors/meter-session.json', 'tests/vectors/meter-session-meta.json', 'src/verifier/historicalMeasurements.ts',
             'tests/historicalMeasurements.test.ts', 'tests/vectors/history-session.json', 'tests/vectors/history-witnesses.json', 'src/verifier/sessionPrices.ts', 'tests/sessionPrices.test.ts',
             'tests/vectors/session-price-ed.json', 'tests/vectors/session-price-pqc.json', 'tests/vectors/session-price-decimal.json', 'src/verifier/observedVersions.ts', 'tests/observedVersions.test.ts',
-            'tests/partyKeys.test.ts','src/keys.ts','src/history/epoch.ts','src/proofs/trustContext.ts','src/verifier/documentKeys.ts','src/verifier/trustTransitions.ts','tests/trustTransitions.test.ts','tests/vectors/trust-transitions.json','tests/documentKeys.test.ts',
+            'tests/partyKeys.test.ts','src/keys.ts','src/history/commit.ts','src/history/epoch.ts','src/proofs/trustContext.ts','src/verifier/documentKeys.ts','src/verifier/trustTransitions.ts','tests/trustTransitions.test.ts','tests/vectors/trust-transitions.json','tests/documentKeys.test.ts',
             'src/verifier/pricePublication.ts','tests/pricePublication.test.ts','tests/vectors/price-publication.json'] },
     { id: 'core', name: '@open-charging-cloud/chargy-core', root: values.core, repository: 'https://github.com/OpenChargingCloud/ChargyCore.TS',
         files: ['package.json', 'package-lock.json', 'README.md', 'CHANGELOG.md', 'src/index.ts', 'src/MeterKeyVerification.ts', 'src/OCMF.ts',

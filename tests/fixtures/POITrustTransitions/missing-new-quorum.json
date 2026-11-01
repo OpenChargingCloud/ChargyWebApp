@@ -1,7 +1,7 @@
 {
   "@context": "https://open.charging.cloud/contexts/wwcp/trustTransition/v1",
   "sequence": 0,
-  "fromPolicyId": "cfa42e11e444b0239fd3b83fbd8405e780d5956d4d096ba844dddd10d0287e5f",
+  "fromPolicyId": "c4ce17559f5bf995b414ca03428b20d2012d181defecd82cd87b946b16d697dd",
   "fromStatementDigest": "f6ca6f926bf309ccb0a97982f28b788237f1cd669dc702805c3776365ff775d8",
   "toAnchor": "WWCP/TA-2:*+KJ68GVCYM8RB8+09ZW521ANW5BY8T1A/PD-FFNLG144NJE7SS*+PR8CN6V45WJLV7Y5*V1SBFT4S982JLR749/WSWDN264A1R-U82:1J/7B2P8H3X9W3USE+F7IB8G7JSRH0TWZ1BLUJBI6%E/VDOGGSR5MWEW9E0G7$:5B$C.UES9EGDDB$CBECP9ESZCAIACPEYM8RB8+09ZW521ANW5BY8X1AD68-3E7WEBAFB9FA9DIWENPEJ/5/3E1$C+%5 8D$KEZED:1DRPC34E.TCUPCG/DB$CLWE10684F98E0LEBECZEDV2D7$CK4F-KE/:56LE QEAC8NPC04E006%G6J$DC.D-3ELQEF/D7%E20",
   "toOperator": {
@@ -102,13 +102,13 @@
       "side": "old",
       "algorithm": "Ed25519",
       "keyId": "d9a2b2d62337103778907c3c1fb8e28a8e604ad5aac269cc50782a2545978e90",
-      "value": "GzZKpRd5eHyKw5+w05EzfchafIg9GUbPW88x99iUL8UVHM+p0nrWAaCzhCiOqCiEDiX+iUUIUQDmmXacQIQdDw=="
+      "value": "RqddQSx99m7p35n1m2E74kGJPEI59ef21uQYemNqnpdjBlxmepezT4CyIP/bnUzy4NaP1vJse9XZpz6m4s7oBg=="
     },
     {
       "side": "old",
       "algorithm": "Ed25519",
       "keyId": "5b8a772deb28e786977c8b56f7531a65408cc1fc03ab6d2b2baf5c733e15f8d7",
-      "value": "uR52ZTgjDYDmuYRHWDQQm9oh8UEI8KlZ7LEoJTtHyMKU+OrflvoWGHTXgr5kSywrGY//AHvmN/Hkjha/9p9gBA=="
+      "value": "YjsxeX1sO5s8xR+hZp0hqsvx0NLHYwWgp5x8mUHVf9g7PDsUal7OA5vOE3HznjQLRzK1rZf3lBfC5SGE4JPJAw=="
     }
   ]
 }
