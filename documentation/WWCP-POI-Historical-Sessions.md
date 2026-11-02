@@ -1,8 +1,8 @@
 # Historical EVSE/Meter Evidence and Session Archives
 
-Status: 1 November 2026. Implemented with the local unpublished POI 0.1.2-dev.0
-and Core 0.17.1-dev.0 candidates. [Package provenance](../vendor/README.md)
-includes complete source patches. This extends the
+Status: 2 November 2026. Implemented with the published npm releases POI 0.2.0
+and Core 0.18.0. [Shared package delivery](WWCP-POI-Packages.md) uses the registry
+archives and integrity hashes pinned in the lockfile. This extends the
 [current-version meter-key handoff](WWCP-POI-Meter-Key-Handoff.md).
 
 Chargy can now verify an archived station/key assignment at the **signed reading

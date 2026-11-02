@@ -1,9 +1,9 @@
 # Proven Meter Keys: Shared POI Association and Core Verification
 
-Status: 1 November 2026. Implemented P-256/OCMF pilot using unpublished local
-development packages: WWCP/POI TS 0.1.2-dev.0 and ChargyCore 0.17.1-dev.0.
-[Package provenance and reviewable source patches](../vendor/README.md) keep
-the app reproducible before any npm release is approved.
+Status: 2 November 2026. Implemented P-256/OCMF pilot using the published npm
+releases WWCP/POI TS 0.2.0 and ChargyCore 0.18.0.
+[Shared package delivery](WWCP-POI-Packages.md) uses registry archives and
+integrity hashes pinned in the lockfile, without sibling library checkouts.
 
 The app now reconstructs current local authorization, verifies the original
 station proof, selects the selected EVSE's explicitly associated meter/key and

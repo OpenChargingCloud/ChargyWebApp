@@ -1,8 +1,9 @@
 # WWCP POI: Complete Live-session Pilot
 
-Status: 1 November 2026. Implemented for original JSON live-link envelopes and
-cumulative P-256/OCMF readings, using the local unpublished POI `0.1.2-dev.0`
-and Core `0.17.1-dev.0` candidates. The existing live transport consent remains
+Status: 2 November 2026. Implemented for original JSON live-link envelopes and
+cumulative P-256/OCMF readings, using the published npm releases POI `0.2.0`
+and Core `0.18.0`. See [shared package delivery](WWCP-POI-Packages.md).
+The existing live transport consent remains
 separate from local TrustAnchor/key authorization.
 
 The app prepares station data and a meter key before readings arrive. Each

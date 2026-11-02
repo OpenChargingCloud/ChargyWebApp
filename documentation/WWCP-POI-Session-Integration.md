@@ -1,8 +1,8 @@
 # Session-Bound Station and Static Tariff Evidence
 
-Status: 1 November 2026. Station integration plus the P-256/OCMF key-handoff
-pilot use local WWCP/POI TS 0.1.2-dev.0 and ChargyCore 0.17.1-dev.0 candidates.
-See [package provenance](../vendor/README.md) and the
+Status: 2 November 2026. Station integration plus the P-256/OCMF key-handoff
+pilot use the published npm releases WWCP/POI TS 0.2.0 and ChargyCore 0.18.0.
+See [shared package delivery](WWCP-POI-Packages.md) and the
 [shared meter-key handoff](WWCP-POI-Meter-Key-Handoff.md).
 
 ✅ The charging-session details now contain **Station and tariff evidence**.

@@ -27,9 +27,6 @@ secrrct                             binary
 *.jpeg                              binary
 *.png                               binary
 *.pdf                               binary
-vendor/*.tgz                        binary
-# Unified source patches contain meaningful blank context-line prefixes.
-vendor/source/*.patch               -whitespace
 
 # Documentation conformance fixtures retain the exact upstream bytes and hashes.
 documentation/examples/poi-session-live/evidence.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol

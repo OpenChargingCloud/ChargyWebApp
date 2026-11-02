@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:0770258e-da47-4258-9cb8-5d8abc51b850",
+  "serialNumber": "urn:uuid:1afe3d30-2970-45c3-8a87-774fda625b53",
   "metadata": {
-    "timestamp": "2026-11-01T22:50:30.334Z",
+    "timestamp": "2026-11-02T09:28:35.592Z",
     "tools": {
       "components": [
         {
@@ -396,8 +396,8 @@
       "type": "library",
       "name": "chargy-core",
       "group": "@open-charging-cloud",
-      "version": "0.17.1-dev.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.1-dev.0",
+      "version": "0.18.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.18.0",
       "author": "GraphDefined GmbH",
       "description": "The ChargyCore TypeScript library shared between Chargy Desktop, Web & Mobile applications.",
       "licenses": [
@@ -408,7 +408,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.17.1-dev.0",
+      "purl": "pkg:npm/%40open-charging-cloud/chargy-core@0.18.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/ChargyCore.TS.git",
@@ -424,6 +424,11 @@
           "url": "https://github.com/OpenChargingCloud/ChargyCore.TS/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@open-charging-cloud/chargy-core/-/chargy-core-0.18.0.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
         }
       ],
       "properties": [
@@ -491,8 +496,8 @@
       "type": "library",
       "name": "wwcp-poi",
       "group": "@open-charging-cloud",
-      "version": "0.1.2-dev.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.2-dev.0",
+      "version": "0.2.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.2.0",
       "author": "GraphDefined GmbH",
       "description": "Verifies WWCP/POI data in TypeScript: trust anchors, key statements, roaming networks and their ETags, commits, checkpoints, charging station proofs and price statements - so that an EV driver's app knows the charging station and its tariffs it shows are the ones the roaming network signed and published.",
       "licenses": [
@@ -503,7 +508,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40open-charging-cloud/wwcp-poi@0.1.2-dev.0",
+      "purl": "pkg:npm/%40open-charging-cloud/wwcp-poi@0.2.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/OpenChargingCloud/WWCP_POI.TS.git",
@@ -519,6 +524,11 @@
           "url": "https://github.com/OpenChargingCloud/WWCP_POI.TS/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
+        },
+        {
+          "url": "https://registry.npmjs.org/@open-charging-cloud/wwcp-poi/-/wwcp-poi-0.2.0.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
         }
       ],
       "properties": [
@@ -31569,9 +31579,9 @@
         "chargytransparenzsoftware@1.4.7|@fortawesome/fontawesome-free@7.3.1",
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@oozcitak/dom@3.0.0",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.1-dev.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.18.0",
         "chargytransparenzsoftware@1.4.7|@open-charging-cloud/totp@0.3.1",
-        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.2-dev.0",
+        "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.2.0",
         "chargytransparenzsoftware@1.4.7|@types/elliptic@6.4.18",
         "chargytransparenzsoftware@1.4.7|@types/leaflet@1.9.22",
         "chargytransparenzsoftware@1.4.7|@types/node@26.6.6",
@@ -31652,7 +31662,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.17.1-dev.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/chargy-core@0.18.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@napi-rs/canvas@1.1.0",
         "chargytransparenzsoftware@1.4.7|@noble/curves@2.4.0",
@@ -31683,7 +31693,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.1.2-dev.0",
+      "ref": "chargytransparenzsoftware@1.4.7|@open-charging-cloud/wwcp-poi@0.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@noble/hashes@2.4.0",
         "chargytransparenzsoftware@1.4.7|@vanaheimr/cose@0.12.0",

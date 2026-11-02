@@ -1,8 +1,8 @@
 # WWCP/POI Trust Use Case: Charging Sessions and Live Links
 
-Status: 1 November 2026. Architecture and proposed user journey. The current
-P-256/OCMF pilot uses local unpublished WWCP/POI TS **0.1.2-dev.0** and ChargyCore
-**0.17.1-dev.0** candidates; see [package provenance](../vendor/README.md).
+Status: 2 November 2026. Architecture and proposed user journey. The current
+P-256/OCMF pilot uses the published npm releases WWCP/POI TS **0.2.0** and
+ChargyCore **0.18.0**; see [shared package delivery](WWCP-POI-Packages.md).
 
 Chargy receives a completed charging record or a live link. The input may carry
 station and tariff evidence, or only identify an EVSE. Chargy resolves the relevant

@@ -1,11 +1,11 @@
 # WWCP POI Trust Architecture
 
-Status: 1 November 2026. This document describes the intended trust chain,
+Status: 2 November 2026. This document describes the intended trust chain,
 the current integration gaps and the logical risks identified while integrating
 `@open-charging-cloud/wwcp-poi` into Chargy. Shared authorization was introduced
-in published version **0.1.1**. The current P-256/OCMF meter-key pilot uses local
-unpublished POI **0.1.2-dev.0** / Core **0.17.1-dev.0** candidates with
-[package provenance and source patches](../vendor/README.md).
+in published version **0.1.1**. The current P-256/OCMF meter-key pilot uses the
+published npm releases POI **0.2.0** / Core **0.18.0**; see
+[shared package delivery](WWCP-POI-Packages.md).
 
 A TrustAnchor and an authenticated RoamingNetworkOperator provide the trust
 foundation. Validating a particular charging station and its tariff additionally

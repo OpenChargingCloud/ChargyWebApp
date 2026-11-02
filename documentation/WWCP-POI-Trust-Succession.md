@@ -205,5 +205,6 @@ See [public signed fixtures](../tests/fixtures/POITrustTransitions/README.md).
 Generate them with `npm run fixtures:poi-succession:generate`. Run
 `npm run docs:screenshots:poi-succession` to exercise the real browser UI and
 refresh nine screenshots. Regenerate and visually review images and capture
-metadata whenever these trust, live or management flows change. Local package
-candidates remain unpublished until a separate release decision.
+metadata whenever these trust, live or management flows change. The shared APIs
+are available in published POI 0.2.0 and Core 0.18.0; the compact trust-delegation
+profile remains experimental. See [shared package delivery](WWCP-POI-Packages.md).

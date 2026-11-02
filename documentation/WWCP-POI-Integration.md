@@ -1,10 +1,10 @@
 # WWCP POI Integration: Current Implementation and Remaining Plan
 
-Status: 1 November 2026. The meter-key pilot uses local unpublished candidates
-`@open-charging-cloud/wwcp-poi@0.1.2-dev.0` and ChargyCore `0.17.1-dev.0`.
-Both are pinned to repository-contained tarballs in the lockfile and included
-in the SBOM. [Package provenance and source patches](../vendor/README.md)
-make this checkout reproducible without a new npm publication.
+Status: 2 November 2026. The meter-key pilot uses the published npm releases
+`@open-charging-cloud/wwcp-poi@0.2.0` and ChargyCore `0.18.0`.
+The lockfile pins their registry archives and integrity hashes; both are included
+in the SBOM. See [shared package delivery](WWCP-POI-Packages.md). A clean build
+requires neither local development tarballs nor sibling library checkouts.
 
 This document distinguishes the implemented TrustAnchor workflow, station
 checking, P-256/OCMF meter-key handoff and experimental session-bound prices
@@ -465,7 +465,7 @@ supported/not evidenced** and draw no conclusion about the public ad hoc price.
 
 ## 4. Shared meter-key handoff to ChargyCore
 
-✅ The local library candidates implement an additive P-256/OCMF path, with
+✅ The published shared libraries implement an additive P-256/OCMF path, with
 rules shared across web, desktop and mobile rather than duplicated in an app
 adapter. See [the handoff guide](WWCP-POI-Meter-Key-Handoff.md) for the contract,
 diagram, original-data policy, screenshots and counterexamples.
@@ -495,7 +495,7 @@ independent evidence archive are now implemented in the
 [historical path](WWCP-POI-Historical-Sessions.md). Broader formats, complete
 identity/owner-signed succession, station-owned measurement keys,
 fully automatic discovery and a complete matching live-series pilot remain
-separate work. These candidates are not published to npm by this change.
+separate work. The shared APIs are available in the published releases above.
 
 ## 5. UX: implemented trust views and planned session details
 
@@ -625,9 +625,9 @@ steps can proceed independently of these decisions.
    originals, source permissions, cancellation and freshness qualifications.
 5. **Interoperability and release:** agree the experimental assignment/delegation
    formats with producers and the shared libraries, exercise a real POI server,
-   and prepare the library releases. Extend EMP/contract, variable-price and
-   meter-format coverage in separately scoped steps. Package publication still
-   requires a separate release decision.
+   and adopt future library releases after validation. POI 0.2.0 and Core 0.18.0
+   are now published. Extend EMP/contract, variable-price and meter-format
+   coverage in separately scoped steps.
 
 **Optional future OCCApp integration:** receiving and displaying evidence of
 agreement to the specific price offer is deferred. Capturing that agreement is

@@ -1,7 +1,8 @@
 # WWCP POI: Session-bound Tariffs and Price Evidence
 
-Status: 1 November 2026. Implemented using the local, unpublished POI
-`0.1.2-dev.0` and ChargyCore `0.17.1-dev.0` candidates. The experimental
+Status: 2 November 2026. Implemented using the published npm releases POI
+`0.2.0` and ChargyCore `0.18.0`; see [shared package delivery](WWCP-POI-Packages.md).
+The experimental
 `SessionPriceAgreement` is a CPO assertion about a particular session. It is
 **not evidence of customer consent** and is not an established interchange
 standard. The name describes its intended subject, not a proven contract.
