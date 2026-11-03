@@ -95,6 +95,18 @@ Your prefered web browser should automagically open http://localhost:1608
 
 For Linux production deployments, build the static web application and serve the generated `build/` directory with a web server such as nginx. See [Chargy WebApp on Linux](documentation/LinuxService.md).
 
+### Toolchain compatibility
+
+Vitest uses the 5.1.0 release line. TypeScript remains pinned to 6.0.3 because
+the current `typescript-eslint` parser requires TypeScript `<6.1.0`; upgrade
+the parser and compiler together once TypeScript 7 is supported.
+
+Temporary npm overrides select patched `minimatch` and the `glob` used by
+`rimraf` and `cacache`. They address the build-tool denial-of-service and
+cancellation advisories without downgrading ESLint or the SBOM tool. Remove
+these overrides when the parent packages accept patched versions themselves.
+Use `npm ci`, `npm audit` and `npm run verify` when updating this toolchain.
+
 ### Compile-time switches for test benches
 
 A charge transparency live link is a document from outside that names the URLs its live data is fetched from. Chargy therefore speaks only encrypted transports (`https://`, `wss://`) and only to hosts on the public internet, and no document, setting or user decision can widen that. A test bench that serves plaintext, or that lives on the local network, needs the rule lifted — which is a decision for whoever builds the application, so it is taken at compile time:

@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:1afe3d30-2970-45c3-8a87-774fda625b53",
+  "serialNumber": "urn:uuid:2da07330-79ac-4492-beb1-891d684504dd",
   "metadata": {
-    "timestamp": "2026-11-02T09:28:35.592Z",
+    "timestamp": "2026-11-03T01:45:13.621Z",
     "tools": {
       "components": [
         {
@@ -2045,8 +2045,8 @@
         {
           "type": "library",
           "name": "glob",
-          "version": "13.0.6",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|glob@13.0.6",
+          "version": "14.0.3",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|glob@14.0.3",
           "author": "Isaac Z. Schlueter",
           "description": "the most correct and second fastest glob implementation in JavaScript",
           "licenses": [
@@ -2057,7 +2057,7 @@
               }
             }
           ],
-          "purl": "pkg:npm/glob@13.0.6",
+          "purl": "pkg:npm/glob@14.0.3",
           "externalReferences": [
             {
               "url": "git+ssh://git@github.com/isaacs/node-glob.git",
@@ -2075,7 +2075,7 @@
               "comment": "as detected from PackageJson property \"bugs.url\""
             },
             {
-              "url": "https://registry.npmjs.org/glob/-/glob-13.0.6.tgz",
+              "url": "https://registry.npmjs.org/glob/-/glob-14.0.3.tgz",
               "type": "distribution",
               "comment": "as detected from npm-ls property \"resolved\""
             }
@@ -2094,8 +2094,8 @@
         {
           "type": "library",
           "name": "path-scurry",
-          "version": "2.0.2",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|path-scurry@2.0.2",
+          "version": "3.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|path-scurry@3.0.0",
           "author": "Isaac Z. Schlueter",
           "description": "walk paths fast and efficiently",
           "licenses": [
@@ -2106,7 +2106,7 @@
               }
             }
           ],
-          "purl": "pkg:npm/path-scurry@2.0.2",
+          "purl": "pkg:npm/path-scurry@3.0.0",
           "externalReferences": [
             {
               "url": "git+https://github.com/isaacs/path-scurry.git",
@@ -2124,7 +2124,7 @@
               "comment": "as detected from PackageJson property \"bugs.url\""
             },
             {
-              "url": "https://registry.npmjs.org/path-scurry/-/path-scurry-2.0.2.tgz",
+              "url": "https://registry.npmjs.org/path-scurry/-/path-scurry-3.0.0.tgz",
               "type": "distribution",
               "comment": "as detected from npm-ls property \"resolved\""
             }
@@ -2243,8 +2243,8 @@
     {
       "type": "library",
       "name": "sass",
-      "version": "1.107.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|sass@1.107.0",
+      "version": "1.107.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|sass@1.107.1",
       "author": "Natalie Weizenbaum",
       "description": "A pure JavaScript implementation of Sass.",
       "licenses": [
@@ -2255,7 +2255,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/sass@1.107.0",
+      "purl": "pkg:npm/sass@1.107.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/sass/dart-sass.git",
@@ -2273,7 +2273,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/sass/-/sass-1.107.0.tgz",
+          "url": "https://registry.npmjs.org/sass/-/sass-1.107.1.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -2868,8 +2868,8 @@
     {
       "type": "library",
       "name": "vitest",
-      "version": "5.0.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|vitest@5.0.5",
+      "version": "5.1.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|vitest@5.1.0",
       "author": "Anthony Fu",
       "description": "Next generation testing framework powered by Vite",
       "licenses": [
@@ -2880,7 +2880,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/vitest@5.0.5",
+      "purl": "pkg:npm/vitest@5.1.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/vitest",
@@ -2898,7 +2898,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/vitest/-/vitest-5.0.5.tgz",
+          "url": "https://registry.npmjs.org/vitest/-/vitest-5.1.0.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -2962,8 +2962,8 @@
     {
       "type": "library",
       "name": "webpack-cli",
-      "version": "7.3.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-cli@7.3.0",
+      "version": "7.3.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|webpack-cli@7.3.1",
       "description": "CLI for webpack & friends",
       "licenses": [
         {
@@ -2973,7 +2973,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/webpack-cli@7.3.0",
+      "purl": "pkg:npm/webpack-cli@7.3.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/webpack/webpack-cli.git",
@@ -2991,7 +2991,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/webpack-cli/-/webpack-cli-7.3.0.tgz",
+          "url": "https://registry.npmjs.org/webpack-cli/-/webpack-cli-7.3.1.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -4961,8 +4961,8 @@
     {
       "type": "library",
       "name": "schema-utils",
-      "version": "4.8.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+      "version": "4.8.2",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
       "author": "webpack Contrib",
       "description": "webpack Validation Utils",
       "licenses": [
@@ -4973,7 +4973,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/schema-utils@4.8.1",
+      "purl": "pkg:npm/schema-utils@4.8.2",
       "externalReferences": [
         {
           "url": "git+https://github.com/webpack/schema-utils.git",
@@ -4991,7 +4991,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/schema-utils/-/schema-utils-4.8.1.tgz",
+          "url": "https://registry.npmjs.org/schema-utils/-/schema-utils-4.8.2.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -5447,8 +5447,8 @@
     {
       "type": "library",
       "name": "semver",
-      "version": "7.8.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|semver@7.8.5",
+      "version": "7.8.6",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|semver@7.8.6",
       "author": "GitHub Inc.",
       "description": "The semantic version parser used by npm.",
       "licenses": [
@@ -5459,7 +5459,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/semver@7.8.5",
+      "purl": "pkg:npm/semver@7.8.6",
       "externalReferences": [
         {
           "url": "git+https://github.com/npm/node-semver.git",
@@ -5477,7 +5477,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/semver/-/semver-7.8.5.tgz",
+          "url": "https://registry.npmjs.org/semver/-/semver-7.8.6.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -6942,8 +6942,8 @@
     {
       "type": "library",
       "name": "minimatch",
-      "version": "10.2.6",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
+      "version": "11.0.4",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|minimatch@11.0.4",
       "author": "Isaac Z. Schlueter",
       "description": "a glob matcher in javascript",
       "licenses": [
@@ -6954,7 +6954,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/minimatch@10.2.6",
+      "purl": "pkg:npm/minimatch@11.0.4",
       "externalReferences": [
         {
           "url": "git+ssh://git@github.com/isaacs/minimatch.git",
@@ -6972,7 +6972,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/minimatch/-/minimatch-10.2.6.tgz",
+          "url": "https://registry.npmjs.org/minimatch/-/minimatch-11.0.4.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -6980,7 +6980,7 @@
       "properties": [
         {
           "name": "cdx:npm:package:constraint:engine:node",
-          "value": "18 || 20 || >=22"
+          "value": "20 || >=22"
         },
         {
           "name": "cdx:npm:package:path",
@@ -8478,8 +8478,8 @@
       "type": "library",
       "name": "mocker",
       "group": "@vitest",
-      "version": "5.0.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@5.0.5",
+      "version": "5.1.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@5.1.0",
       "description": "Vitest module mocker implementation",
       "licenses": [
         {
@@ -8489,7 +8489,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/mocker@5.0.5",
+      "purl": "pkg:npm/%40vitest/mocker@5.1.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/mocker",
@@ -8507,7 +8507,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-5.0.5.tgz",
+          "url": "https://registry.npmjs.org/@vitest/mocker/-/mocker-5.1.0.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -8801,8 +8801,8 @@
     {
       "type": "library",
       "name": "tinybench",
-      "version": "6.2.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|tinybench@6.2.2",
+      "version": "6.2.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|tinybench@6.2.3",
       "description": "🔎 A simple, tiny and lightweight benchmarking library!",
       "licenses": [
         {
@@ -8812,7 +8812,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/tinybench@6.2.2",
+      "purl": "pkg:npm/tinybench@6.2.3",
       "externalReferences": [
         {
           "url": "git+https://github.com/tinylibs/tinybench.git",
@@ -8830,7 +8830,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/tinybench/-/tinybench-6.2.2.tgz",
+          "url": "https://registry.npmjs.org/tinybench/-/tinybench-6.2.3.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -9089,55 +9089,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/envinfo"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "import-local",
-      "version": "3.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|import-local@3.2.0",
-      "author": "Sindre Sorhus",
-      "description": "Let a globally installed package use a locally installed version of itself if available",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/import-local@3.2.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/import-local.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/import-local#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/import-local/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/import-local/-/import-local-3.2.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/import-local"
         }
       ]
     },
@@ -10891,8 +10842,8 @@
     {
       "type": "library",
       "name": "ws",
-      "version": "8.22.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|ws@8.22.0",
+      "version": "8.22.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|ws@8.22.1",
       "author": "Einar Otto Stangvik",
       "description": "Simple to use, blazing fast and thoroughly tested websocket client and server for Node.js",
       "licenses": [
@@ -10903,7 +10854,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/ws@8.22.0",
+      "purl": "pkg:npm/ws@8.22.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/websockets/ws.git",
@@ -10921,7 +10872,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/ws/-/ws-8.22.0.tgz",
+          "url": "https://registry.npmjs.org/ws/-/ws-8.22.1.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -12458,8 +12409,8 @@
     {
       "type": "library",
       "name": "strtok3",
-      "version": "10.6.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|strtok3@10.6.3",
+      "version": "10.7.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|strtok3@10.7.0",
       "author": "Borewit",
       "description": "A promise based streaming tokenizer",
       "licenses": [
@@ -12470,7 +12421,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/strtok3@10.6.3",
+      "purl": "pkg:npm/strtok3@10.7.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/Borewit/strtok3.git",
@@ -12488,7 +12439,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/strtok3/-/strtok3-10.6.3.tgz",
+          "url": "https://registry.npmjs.org/strtok3/-/strtok3-10.7.0.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -12507,8 +12458,8 @@
     {
       "type": "library",
       "name": "token-types",
-      "version": "6.1.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
+      "version": "6.2.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|token-types@6.2.0",
       "author": "Borewit",
       "description": "Common token types for decoding and encoding numeric and string values",
       "licenses": [
@@ -12519,7 +12470,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/token-types@6.1.2",
+      "purl": "pkg:npm/token-types@6.2.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/Borewit/token-types.git",
@@ -12537,7 +12488,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/token-types/-/token-types-6.1.2.tgz",
+          "url": "https://registry.npmjs.org/token-types/-/token-types-6.2.0.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -13695,6 +13646,36 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/is-extglob"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "name": "nonrecursive-glob-match",
+      "group": "@isaacs",
+      "version": "1.0.3",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@isaacs/nonrecursive-glob-match@1.0.3",
+      "description": "a single-path-portion glob matcher not subject to recursive backtracking ReDoS",
+      "licenses": [
+        {
+          "license": {
+            "id": "BlueOak-1.0.0",
+            "acknowledgement": "declared"
+          }
+        }
+      ],
+      "purl": "pkg:npm/%40isaacs/nonrecursive-glob-match@1.0.3",
+      "externalReferences": [
+        {
+          "url": "https://registry.npmjs.org/@isaacs/nonrecursive-glob-match/-/nonrecursive-glob-match-1.0.3.tgz",
+          "type": "distribution",
+          "comment": "as detected from npm-ls property \"resolved\""
+        }
+      ],
+      "properties": [
+        {
+          "name": "cdx:npm:package:path",
+          "value": "node_modules/@isaacs/nonrecursive-glob-match"
         }
       ]
     },
@@ -15606,8 +15587,8 @@
       "type": "library",
       "name": "spy",
       "group": "@vitest",
-      "version": "5.0.5",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@5.0.5",
+      "version": "5.1.0",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@5.1.0",
       "description": "Lightweight Jest compatible spy implementation",
       "licenses": [
         {
@@ -15617,7 +15598,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/%40vitest/spy@5.0.5",
+      "purl": "pkg:npm/%40vitest/spy@5.1.0",
       "externalReferences": [
         {
           "url": "git+https://github.com/vitest-dev/vitest.git#packages/spy",
@@ -15635,7 +15616,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-5.0.5.tgz",
+          "url": "https://registry.npmjs.org/@vitest/spy/-/spy-5.1.0.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -15831,302 +15812,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/rolldown"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "pkg-dir",
-      "version": "4.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0",
-      "author": "Sindre Sorhus",
-      "description": "Find the root directory of a Node.js project or npm package",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/pkg-dir@4.2.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/pkg-dir.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/pkg-dir#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/pkg-dir/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/pkg-dir/-/pkg-dir-4.2.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/pkg-dir"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "find-up",
-          "version": "4.1.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|find-up@4.1.0",
-          "author": "Sindre Sorhus",
-          "description": "Find a file or directory by walking up parent directories",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/find-up@4.1.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/find-up.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/find-up#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/find-up/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/find-up/-/find-up-4.1.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/pkg-dir/node_modules/find-up"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "locate-path",
-          "version": "5.0.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|locate-path@5.0.0",
-          "author": "Sindre Sorhus",
-          "description": "Get the first path that exists on disk of multiple paths",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/locate-path@5.0.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/locate-path.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/locate-path#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/locate-path/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/locate-path/-/locate-path-5.0.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/pkg-dir/node_modules/locate-path"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "p-locate",
-          "version": "4.1.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|p-locate@4.1.0",
-          "author": "Sindre Sorhus",
-          "description": "Get the first fulfilled promise that satisfies the provided testing function",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/p-locate@4.1.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/p-locate.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/p-locate#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/p-locate/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/p-locate/-/p-locate-4.1.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/pkg-dir/node_modules/p-locate"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "p-limit",
-          "version": "2.3.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|p-limit@2.3.0",
-          "author": "Sindre Sorhus",
-          "description": "Run multiple promise-returning & async functions with limited concurrency",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/p-limit@2.3.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/p-limit.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/p-limit#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/p-limit/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/p-limit/-/p-limit-2.3.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=6"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/pkg-dir/node_modules/p-limit"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "resolve-cwd",
-      "version": "3.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|resolve-cwd@3.0.0",
-      "author": "Sindre Sorhus",
-      "description": "Resolve the path of a module like `require.resolve()` but from the current working directory",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/resolve-cwd@3.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/resolve-cwd.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/resolve-cwd#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/resolve-cwd/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/resolve-cwd/-/resolve-cwd-3.0.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/resolve-cwd"
         }
       ]
     },
@@ -19464,8 +19149,8 @@
     {
       "type": "library",
       "name": "baseline-browser-mapping",
-      "version": "2.11.34",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|baseline-browser-mapping@2.11.34",
+      "version": "2.11.35",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|baseline-browser-mapping@2.11.35",
       "description": "A library for obtaining browser versions with their maximum supported Baseline feature set and Widely Available status.",
       "licenses": [
         {
@@ -19475,7 +19160,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/baseline-browser-mapping@2.11.34",
+      "purl": "pkg:npm/baseline-browser-mapping@2.11.35",
       "externalReferences": [
         {
           "url": "git+https://github.com/web-platform-dx/baseline-browser-mapping.git",
@@ -19493,7 +19178,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.34.tgz",
+          "url": "https://registry.npmjs.org/baseline-browser-mapping/-/baseline-browser-mapping-2.11.35.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -19557,8 +19242,8 @@
     {
       "type": "library",
       "name": "electron-to-chromium",
-      "version": "1.5.468",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|electron-to-chromium@1.5.468",
+      "version": "1.5.473",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|electron-to-chromium@1.5.473",
       "author": "Kilian Valkhof",
       "description": "Provides a list of electron-to-chromium version mappings",
       "licenses": [
@@ -19569,7 +19254,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/electron-to-chromium@1.5.468",
+      "purl": "pkg:npm/electron-to-chromium@1.5.473",
       "externalReferences": [
         {
           "url": "git+https://github.com/Kilian/electron-to-chromium.git",
@@ -19587,7 +19272,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.468.tgz",
+          "url": "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.473.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -19602,8 +19287,8 @@
     {
       "type": "library",
       "name": "node-releases",
-      "version": "2.0.62",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|node-releases@2.0.62",
+      "version": "2.0.63",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|node-releases@2.0.63",
       "author": "Sergey Rubanov",
       "description": "Node.js releases data",
       "licenses": [
@@ -19614,7 +19299,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/node-releases@2.0.62",
+      "purl": "pkg:npm/node-releases@2.0.63",
       "externalReferences": [
         {
           "url": "git+https://github.com/chicoxyzzy/node-releases.git",
@@ -19632,7 +19317,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.62.tgz",
+          "url": "https://registry.npmjs.org/node-releases/-/node-releases-2.0.63.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -21321,8 +21006,8 @@
     {
       "type": "library",
       "name": "tslib",
-      "version": "2.8.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|tslib@2.8.1",
+      "version": "2.9.1",
+      "bom-ref": "chargytransparenzsoftware@1.4.7|tslib@2.9.1",
       "author": "Microsoft Corp.",
       "description": "Runtime library for TypeScript helper functions",
       "licenses": [
@@ -21333,7 +21018,7 @@
           }
         }
       ],
-      "purl": "pkg:npm/tslib@2.8.1",
+      "purl": "pkg:npm/tslib@2.9.1",
       "externalReferences": [
         {
           "url": "git+https://github.com/Microsoft/tslib.git",
@@ -21351,7 +21036,7 @@
           "comment": "as detected from PackageJson property \"bugs.url\""
         },
         {
-          "url": "https://registry.npmjs.org/tslib/-/tslib-2.8.1.tgz",
+          "url": "https://registry.npmjs.org/tslib/-/tslib-2.9.1.tgz",
           "type": "distribution",
           "comment": "as detected from npm-ls property \"resolved\""
         }
@@ -22259,55 +21944,6 @@
         {
           "name": "cdx:npm:package:path",
           "value": "node_modules/@rolldown/pluginutils"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "resolve-from",
-      "version": "5.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|resolve-from@5.0.0",
-      "author": "Sindre Sorhus",
-      "description": "Resolve the path of a module like `require.resolve()` but from a given path",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/resolve-from@5.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/resolve-from.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/resolve-from#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/resolve-from/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/resolve-from/-/resolve-from-5.0.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/resolve-from"
         }
       ]
     },
@@ -25466,6 +25102,157 @@
           "name": "cdx:npm:package:path",
           "value": "node_modules/cacache"
         }
+      ],
+      "components": [
+        {
+          "type": "library",
+          "name": "glob",
+          "version": "14.0.3",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|cacache@19.0.1|glob@14.0.3",
+          "author": "Isaac Z. Schlueter",
+          "description": "the most correct and second fastest glob implementation in JavaScript",
+          "licenses": [
+            {
+              "license": {
+                "id": "BlueOak-1.0.0",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/glob@14.0.3",
+          "externalReferences": [
+            {
+              "url": "git+ssh://git@github.com/isaacs/node-glob.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/isaacs/node-glob#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/isaacs/node-glob/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/glob/-/glob-14.0.3.tgz",
+              "type": "distribution",
+              "comment": "as detected from npm-ls property \"resolved\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": "18 || 20 || >=22"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/cacache/node_modules/glob"
+            }
+          ]
+        },
+        {
+          "type": "library",
+          "name": "path-scurry",
+          "version": "3.0.0",
+          "bom-ref": "chargytransparenzsoftware@1.4.7|cacache@19.0.1|path-scurry@3.0.0",
+          "author": "Isaac Z. Schlueter",
+          "description": "walk paths fast and efficiently",
+          "licenses": [
+            {
+              "license": {
+                "id": "BlueOak-1.0.0",
+                "acknowledgement": "declared"
+              }
+            }
+          ],
+          "purl": "pkg:npm/path-scurry@3.0.0",
+          "externalReferences": [
+            {
+              "url": "git+https://github.com/isaacs/path-scurry.git",
+              "type": "vcs",
+              "comment": "as detected from PackageJson property \"repository.url\""
+            },
+            {
+              "url": "https://github.com/isaacs/path-scurry#readme",
+              "type": "website",
+              "comment": "as detected from PackageJson property \"homepage\""
+            },
+            {
+              "url": "https://github.com/isaacs/path-scurry/issues",
+              "type": "issue-tracker",
+              "comment": "as detected from PackageJson property \"bugs.url\""
+            },
+            {
+              "url": "https://registry.npmjs.org/path-scurry/-/path-scurry-3.0.0.tgz",
+              "type": "distribution",
+              "comment": "as detected from npm-ls property \"resolved\""
+            }
+          ],
+          "properties": [
+            {
+              "name": "cdx:npm:package:constraint:engine:node",
+              "value": "18 || 20 || >=22"
+            },
+            {
+              "name": "cdx:npm:package:path",
+              "value": "node_modules/cacache/node_modules/path-scurry"
+            }
+          ],
+          "components": [
+            {
+              "type": "library",
+              "name": "lru-cache",
+              "version": "11.5.3",
+              "bom-ref": "chargytransparenzsoftware@1.4.7|cacache@19.0.1|path-scurry@3.0.0|lru-cache@11.5.3",
+              "author": "Isaac Z. Schlueter",
+              "description": "A cache object that deletes the least-recently-used items.",
+              "licenses": [
+                {
+                  "license": {
+                    "id": "BlueOak-1.0.0",
+                    "acknowledgement": "declared"
+                  }
+                }
+              ],
+              "purl": "pkg:npm/lru-cache@11.5.3",
+              "externalReferences": [
+                {
+                  "url": "git+ssh://git@github.com/isaacs/node-lru-cache.git",
+                  "type": "vcs",
+                  "comment": "as detected from PackageJson property \"repository.url\""
+                },
+                {
+                  "url": "https://github.com/isaacs/node-lru-cache#readme",
+                  "type": "website",
+                  "comment": "as detected from PackageJson property \"homepage\""
+                },
+                {
+                  "url": "https://github.com/isaacs/node-lru-cache/issues",
+                  "type": "issue-tracker",
+                  "comment": "as detected from PackageJson property \"bugs.url\""
+                },
+                {
+                  "url": "https://registry.npmjs.org/lru-cache/-/lru-cache-11.5.3.tgz",
+                  "type": "distribution",
+                  "comment": "as detected from npm-ls property \"resolved\""
+                }
+              ],
+              "properties": [
+                {
+                  "name": "cdx:npm:package:constraint:engine:node",
+                  "value": "20 || >=22"
+                },
+                {
+                  "name": "cdx:npm:package:path",
+                  "value": "node_modules/cacache/node_modules/path-scurry/node_modules/lru-cache"
+                }
+              ]
+            }
+          ]
+        }
       ]
     },
     {
@@ -28479,192 +28266,6 @@
     },
     {
       "type": "library",
-      "name": "glob",
-      "version": "10.5.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0",
-      "author": "Isaac Z. Schlueter",
-      "description": "the most correct and second fastest glob implementation in JavaScript",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/glob@10.5.0",
-      "externalReferences": [
-        {
-          "url": "git://github.com/isaacs/node-glob.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/isaacs/node-glob#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/isaacs/node-glob/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/glob/-/glob-10.5.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/glob"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "minimatch",
-          "version": "9.0.9",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0|minimatch@9.0.9",
-          "author": "Isaac Z. Schlueter",
-          "description": "a glob matcher in javascript",
-          "licenses": [
-            {
-              "license": {
-                "id": "ISC",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/minimatch@9.0.9",
-          "externalReferences": [
-            {
-              "url": "git://github.com/isaacs/minimatch.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/isaacs/minimatch#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/isaacs/minimatch/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/minimatch/-/minimatch-9.0.9.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=16 || 14 >=14.17"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/glob/node_modules/minimatch"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "brace-expansion",
-          "version": "2.1.7",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0|brace-expansion@2.1.7",
-          "author": "Julian Gruber",
-          "description": "Brace expansion as known from sh/bash",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/brace-expansion@2.1.7",
-          "externalReferences": [
-            {
-              "url": "git://github.com/juliangruber/brace-expansion.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/juliangruber/brace-expansion",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/juliangruber/brace-expansion/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/brace-expansion/-/brace-expansion-2.1.7.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/glob/node_modules/brace-expansion"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "balanced-match",
-          "version": "1.0.2",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0|balanced-match@1.0.2",
-          "author": "Julian Gruber",
-          "description": "Match balanced character pairs, like \"{\" and \"}\"",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/balanced-match@1.0.2",
-          "externalReferences": [
-            {
-              "url": "git://github.com/juliangruber/balanced-match.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/juliangruber/balanced-match",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/juliangruber/balanced-match/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.2.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/glob/node_modules/balanced-match"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "minipass-collect",
       "version": "2.0.1",
       "bom-ref": "chargytransparenzsoftware@1.4.7|minipass-collect@2.0.1",
@@ -30059,149 +29660,6 @@
     },
     {
       "type": "library",
-      "name": "foreground-child",
-      "version": "3.3.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|foreground-child@3.3.1",
-      "author": "Isaac Z. Schlueter",
-      "description": "Run a child as if it's the foreground process. Give it stdio. Exit when it exits.",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/foreground-child@3.3.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/tapjs/foreground-child.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/tapjs/foreground-child#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/tapjs/foreground-child/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/foreground-child/-/foreground-child-3.3.1.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=14"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/foreground-child"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "jackspeak",
-      "version": "3.4.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|jackspeak@3.4.3",
-      "author": "Isaac Z. Schlueter",
-      "description": "A very strict and proper argument parser.",
-      "licenses": [
-        {
-          "license": {
-            "id": "BlueOak-1.0.0",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/jackspeak@3.4.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/isaacs/jackspeak.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/isaacs/jackspeak#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/isaacs/jackspeak/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/jackspeak/-/jackspeak-3.4.3.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/jackspeak"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "path-scurry",
-      "version": "1.11.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|path-scurry@1.11.1",
-      "author": "Isaac Z. Schlueter",
-      "description": "walk paths fast and efficiently",
-      "licenses": [
-        {
-          "license": {
-            "id": "BlueOak-1.0.0",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/path-scurry@1.11.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/isaacs/path-scurry.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/isaacs/path-scurry#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/isaacs/path-scurry/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/path-scurry/-/path-scurry-1.11.1.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=16 || 14 >=14.18"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/path-scurry"
-        }
-      ]
-    },
-    {
-      "type": "library",
       "name": "unique-slug",
       "version": "5.0.0",
       "bom-ref": "chargytransparenzsoftware@1.4.7|unique-slug@5.0.0",
@@ -30448,1126 +29906,6 @@
           "value": "node_modules/smart-buffer"
         }
       ]
-    },
-    {
-      "type": "library",
-      "name": "signal-exit",
-      "version": "4.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|signal-exit@4.1.0",
-      "author": "Ben Coe",
-      "description": "when you want to fire an event no matter how a process exits.",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/signal-exit@4.1.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/tapjs/signal-exit.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/tapjs/signal-exit#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/tapjs/signal-exit/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/signal-exit/-/signal-exit-4.1.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=14"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/signal-exit"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "cliui",
-      "group": "@isaacs",
-      "version": "8.0.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@isaacs/cliui@8.0.2",
-      "author": "Ben Coe",
-      "description": "easily create complex multi-column command-line-interfaces",
-      "licenses": [
-        {
-          "license": {
-            "id": "ISC",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40isaacs/cliui@8.0.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/yargs/cliui.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/yargs/cliui#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/yargs/cliui/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@isaacs/cliui/-/cliui-8.0.2.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=12"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@isaacs/cliui"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "parseargs",
-      "group": "@pkgjs",
-      "version": "0.11.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|@pkgjs/parseargs@0.11.0",
-      "description": "Polyfill of future proposal for `util.parseArgs()`",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/%40pkgjs/parseargs@0.11.0",
-      "externalReferences": [
-        {
-          "url": "git+ssh://git@github.com/pkgjs/parseargs.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/pkgjs/parseargs#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/pkgjs/parseargs/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=14"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/@pkgjs/parseargs"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "p-try",
-      "version": "2.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|p-try@2.2.0",
-      "author": "Sindre Sorhus",
-      "description": "`Start a promise chain",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/p-try@2.2.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/p-try.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/p-try#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/p-try/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/p-try/-/p-try-2.2.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=6"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/p-try"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "string-width",
-      "version": "4.2.3",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3",
-      "author": "Sindre Sorhus",
-      "description": "Get the visual width of a string - the number of columns required to display it",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/string-width@4.2.3",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/string-width.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/string-width#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/string-width/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/string-width-cjs"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "emoji-regex",
-          "version": "8.0.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3|emoji-regex@8.0.0",
-          "author": "Mathias Bynens",
-          "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/emoji-regex@8.0.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mths.be/emoji-regex",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mathiasbynens/emoji-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width-cjs/node_modules/emoji-regex"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "strip-ansi",
-          "version": "6.0.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3|strip-ansi@6.0.1",
-          "author": "Sindre Sorhus",
-          "description": "Strip ANSI escape codes from a string",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/strip-ansi@6.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/strip-ansi.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/strip-ansi#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/strip-ansi/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width-cjs/node_modules/strip-ansi"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3|ansi-regex@5.0.1",
-          "author": "Sindre Sorhus",
-          "description": "Regular expression for matching ANSI escape codes",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/ansi-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/string-width-cjs/node_modules/ansi-regex"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "string-width",
-      "version": "5.1.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|string-width@5.1.2",
-      "author": "Sindre Sorhus",
-      "description": "Get the visual width of a string - the number of columns required to display it",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/string-width@5.1.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/string-width.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/string-width#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/string-width/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/string-width/-/string-width-5.1.2.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=12"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/string-width"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "strip-ansi",
-      "version": "6.0.1",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|strip-ansi@6.0.1",
-      "author": "Sindre Sorhus",
-      "description": "Strip ANSI escape codes from a string",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/strip-ansi@6.0.1",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/chalk/strip-ansi.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/chalk/strip-ansi#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/chalk/strip-ansi/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/strip-ansi-cjs"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|strip-ansi@6.0.1|ansi-regex@5.0.1",
-          "author": "Sindre Sorhus",
-          "description": "Regular expression for matching ANSI escape codes",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/ansi-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/strip-ansi-cjs/node_modules/ansi-regex"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "strip-ansi",
-      "version": "7.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|strip-ansi@7.2.0",
-      "author": "Sindre Sorhus",
-      "description": "Strip ANSI escape codes from a string",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/strip-ansi@7.2.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/chalk/strip-ansi.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/chalk/strip-ansi#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/chalk/strip-ansi/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-7.2.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=12"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/strip-ansi"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "wrap-ansi",
-      "version": "7.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0",
-      "author": "Sindre Sorhus",
-      "description": "Wordwrap a string with ANSI escape codes",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/wrap-ansi@7.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/chalk/wrap-ansi.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/chalk/wrap-ansi#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/chalk/wrap-ansi/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=10"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/wrap-ansi-cjs"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "string-width",
-          "version": "4.2.3",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|string-width@4.2.3",
-          "author": "Sindre Sorhus",
-          "description": "Get the visual width of a string - the number of columns required to display it",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/string-width@4.2.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/sindresorhus/string-width.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/string-width#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/sindresorhus/string-width/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/string-width"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "strip-ansi",
-          "version": "6.0.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|strip-ansi@6.0.1",
-          "author": "Sindre Sorhus",
-          "description": "Strip ANSI escape codes from a string",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/strip-ansi@6.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/strip-ansi.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/strip-ansi#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/strip-ansi/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/strip-ansi"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "emoji-regex",
-          "version": "8.0.0",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|emoji-regex@8.0.0",
-          "author": "Mathias Bynens",
-          "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/emoji-regex@8.0.0",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://mths.be/emoji-regex",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/mathiasbynens/emoji-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/emoji-regex"
-            }
-          ]
-        },
-        {
-          "type": "library",
-          "name": "ansi-regex",
-          "version": "5.0.1",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|ansi-regex@5.0.1",
-          "author": "Sindre Sorhus",
-          "description": "Regular expression for matching ANSI escape codes",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-regex@5.0.1",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/ansi-regex.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-regex/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=8"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi-cjs/node_modules/ansi-regex"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "wrap-ansi",
-      "version": "8.1.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@8.1.0",
-      "author": "Sindre Sorhus",
-      "description": "Wordwrap a string with ANSI escape codes",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/wrap-ansi@8.1.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/chalk/wrap-ansi.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/chalk/wrap-ansi#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/chalk/wrap-ansi/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-8.1.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=12"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/wrap-ansi"
-        }
-      ],
-      "components": [
-        {
-          "type": "library",
-          "name": "ansi-styles",
-          "version": "6.2.3",
-          "bom-ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@8.1.0|ansi-styles@6.2.3",
-          "author": "Sindre Sorhus",
-          "description": "ANSI escape codes for styling strings in the terminal",
-          "licenses": [
-            {
-              "license": {
-                "id": "MIT",
-                "acknowledgement": "declared"
-              }
-            }
-          ],
-          "purl": "pkg:npm/ansi-styles@6.2.3",
-          "externalReferences": [
-            {
-              "url": "git+https://github.com/chalk/ansi-styles.git",
-              "type": "vcs",
-              "comment": "as detected from PackageJson property \"repository.url\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-styles#readme",
-              "type": "website",
-              "comment": "as detected from PackageJson property \"homepage\""
-            },
-            {
-              "url": "https://github.com/chalk/ansi-styles/issues",
-              "type": "issue-tracker",
-              "comment": "as detected from PackageJson property \"bugs.url\""
-            },
-            {
-              "url": "https://registry.npmjs.org/ansi-styles/-/ansi-styles-6.2.3.tgz",
-              "type": "distribution",
-              "comment": "as detected from npm-ls property \"resolved\""
-            }
-          ],
-          "properties": [
-            {
-              "name": "cdx:npm:package:constraint:engine:node",
-              "value": ">=12"
-            },
-            {
-              "name": "cdx:npm:package:path",
-              "value": "node_modules/wrap-ansi/node_modules/ansi-styles"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "is-fullwidth-code-point",
-      "version": "3.0.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|is-fullwidth-code-point@3.0.0",
-      "author": "Sindre Sorhus",
-      "description": "Check if the character represented by a given Unicode code point is fullwidth",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/is-fullwidth-code-point@3.0.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/sindresorhus/is-fullwidth-code-point.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/is-fullwidth-code-point#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/sindresorhus/is-fullwidth-code-point/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=8"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/is-fullwidth-code-point"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "eastasianwidth",
-      "version": "0.2.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|eastasianwidth@0.2.0",
-      "author": "Masaki Komagata",
-      "description": "Get East Asian Width from a character.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/eastasianwidth@0.2.0",
-      "externalReferences": [
-        {
-          "url": "git://github.com/komagata/eastasianwidth.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/komagata/eastasianwidth#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/komagata/eastasianwidth/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/eastasianwidth/-/eastasianwidth-0.2.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/eastasianwidth"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "emoji-regex",
-      "version": "9.2.2",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|emoji-regex@9.2.2",
-      "author": "Mathias Bynens",
-      "description": "A regular expression to match all Emoji-only symbols as per the Unicode Standard.",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/emoji-regex@9.2.2",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/mathiasbynens/emoji-regex.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://mths.be/emoji-regex",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/mathiasbynens/emoji-regex/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/emoji-regex/-/emoji-regex-9.2.2.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/emoji-regex"
-        }
-      ]
-    },
-    {
-      "type": "library",
-      "name": "ansi-regex",
-      "version": "6.5.0",
-      "bom-ref": "chargytransparenzsoftware@1.4.7|ansi-regex@6.5.0",
-      "author": "Sindre Sorhus",
-      "description": "Regular expression for matching ANSI escape codes",
-      "licenses": [
-        {
-          "license": {
-            "id": "MIT",
-            "acknowledgement": "declared"
-          }
-        }
-      ],
-      "purl": "pkg:npm/ansi-regex@6.5.0",
-      "externalReferences": [
-        {
-          "url": "git+https://github.com/chalk/ansi-regex.git",
-          "type": "vcs",
-          "comment": "as detected from PackageJson property \"repository.url\""
-        },
-        {
-          "url": "https://github.com/chalk/ansi-regex#readme",
-          "type": "website",
-          "comment": "as detected from PackageJson property \"homepage\""
-        },
-        {
-          "url": "https://github.com/chalk/ansi-regex/issues",
-          "type": "issue-tracker",
-          "comment": "as detected from PackageJson property \"bugs.url\""
-        },
-        {
-          "url": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-6.5.0.tgz",
-          "type": "distribution",
-          "comment": "as detected from npm-ls property \"resolved\""
-        }
-      ],
-      "properties": [
-        {
-          "name": "cdx:npm:package:constraint:engine:node",
-          "value": ">=12"
-        },
-        {
-          "name": "cdx:npm:package:path",
-          "value": "node_modules/ansi-regex"
-        }
-      ]
     }
   ],
   "dependencies": [
@@ -31609,7 +29947,7 @@
         "chargytransparenzsoftware@1.4.7|pngjs@7.0.0",
         "chargytransparenzsoftware@1.4.7|rimraf@6.1.3",
         "chargytransparenzsoftware@1.4.7|sass-loader@17.1.0",
-        "chargytransparenzsoftware@1.4.7|sass@1.107.0",
+        "chargytransparenzsoftware@1.4.7|sass@1.107.1",
         "chargytransparenzsoftware@1.4.7|source-map-loader@5.0.0",
         "chargytransparenzsoftware@1.4.7|stream-browserify@3.0.0",
         "chargytransparenzsoftware@1.4.7|stream-http@3.2.0",
@@ -31619,9 +29957,9 @@
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3",
         "chargytransparenzsoftware@1.4.7|url@0.11.4",
         "chargytransparenzsoftware@1.4.7|uuid@14.0.3",
-        "chargytransparenzsoftware@1.4.7|vitest@5.0.5",
+        "chargytransparenzsoftware@1.4.7|vitest@5.1.0",
         "chargytransparenzsoftware@1.4.7|vm-browserify@1.1.2",
-        "chargytransparenzsoftware@1.4.7|webpack-cli@7.3.0",
+        "chargytransparenzsoftware@1.4.7|webpack-cli@7.3.1",
         "chargytransparenzsoftware@1.4.7|webpack-dev-server@6.1.0",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2"
       ]
@@ -31764,7 +30102,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|glob-parent@6.0.2",
         "chargytransparenzsoftware@1.4.7|normalize-path@3.0.0",
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
         "chargytransparenzsoftware@1.4.7|serialize-javascript@7.1.4",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2"
@@ -31780,7 +30118,7 @@
         "chargytransparenzsoftware@1.4.7|postcss-modules-values@4.0.0",
         "chargytransparenzsoftware@1.4.7|postcss-value-parser@4.2.0",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.32",
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5",
+        "chargytransparenzsoftware@1.4.7|semver@7.8.6",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2"
       ]
     },
@@ -31829,7 +30167,7 @@
         "chargytransparenzsoftware@1.4.7|imurmurhash@0.1.4",
         "chargytransparenzsoftware@1.4.7|is-glob@4.0.3",
         "chargytransparenzsoftware@1.4.7|json-stable-stringify-without-jsonify@1.0.1",
-        "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
+        "chargytransparenzsoftware@1.4.7|minimatch@11.0.4",
         "chargytransparenzsoftware@1.4.7|natural-compare@1.4.0",
         "chargytransparenzsoftware@1.4.7|optionator@0.9.4"
       ]
@@ -31903,7 +30241,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|mini-css-extract-plugin@2.10.2",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
         "chargytransparenzsoftware@1.4.7|tapable@2.3.3",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2"
       ]
@@ -31912,7 +30250,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.14.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|jest-worker@27.5.1",
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
         "chargytransparenzsoftware@1.4.7|terser@5.51.2",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2"
       ]
@@ -31935,20 +30273,20 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|glob@13.0.6",
+        "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|glob@14.0.3",
         "chargytransparenzsoftware@1.4.7|package-json-from-dist@1.0.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|glob@13.0.6",
+      "ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|glob@14.0.3",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
+        "chargytransparenzsoftware@1.4.7|minimatch@11.0.4",
         "chargytransparenzsoftware@1.4.7|minipass@7.1.3",
-        "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|path-scurry@2.0.2"
+        "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|path-scurry@3.0.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|path-scurry@2.0.2",
+      "ref": "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|path-scurry@3.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|rimraf@6.1.3|lru-cache@11.5.3",
         "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
@@ -31960,12 +30298,12 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|sass-loader@17.1.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|sass@1.107.0",
+        "chargytransparenzsoftware@1.4.7|sass@1.107.1",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|sass@1.107.0",
+      "ref": "chargytransparenzsoftware@1.4.7|sass@1.107.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@parcel/watcher@2.6.0",
         "chargytransparenzsoftware@1.4.7|chokidar@5.0.0",
@@ -32051,11 +30389,11 @@
       "ref": "chargytransparenzsoftware@1.4.7|uuid@14.0.3"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|vitest@5.0.5",
+      "ref": "chargytransparenzsoftware@1.4.7|vitest@5.1.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/chai@5.2.3",
         "chargytransparenzsoftware@1.4.7|@types/node@26.6.6",
-        "chargytransparenzsoftware@1.4.7|@vitest/mocker@5.0.5",
+        "chargytransparenzsoftware@1.4.7|@vitest/mocker@5.1.0",
         "chargytransparenzsoftware@1.4.7|chai@6.3.0",
         "chargytransparenzsoftware@1.4.7|es-module-lexer@2.3.2",
         "chargytransparenzsoftware@1.4.7|expect-type@1.4.0",
@@ -32063,7 +30401,7 @@
         "chargytransparenzsoftware@1.4.7|obug@3.0.0",
         "chargytransparenzsoftware@1.4.7|picomatch@4.0.7",
         "chargytransparenzsoftware@1.4.7|std-env@4.3.0",
-        "chargytransparenzsoftware@1.4.7|tinybench@6.2.2",
+        "chargytransparenzsoftware@1.4.7|tinybench@6.2.3",
         "chargytransparenzsoftware@1.4.7|tinyexec@1.3.1",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|vite@8.3.5",
@@ -32074,13 +30412,11 @@
       "ref": "chargytransparenzsoftware@1.4.7|vm-browserify@1.1.2"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|webpack-cli@7.3.0",
+      "ref": "chargytransparenzsoftware@1.4.7|webpack-cli@7.3.1",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@discoveryjs/json-ext@1.1.0",
         "chargytransparenzsoftware@1.4.7|commander@14.0.3",
-        "chargytransparenzsoftware@1.4.7|cross-spawn@7.0.6",
         "chargytransparenzsoftware@1.4.7|envinfo@7.21.0",
-        "chargytransparenzsoftware@1.4.7|import-local@3.2.0",
         "chargytransparenzsoftware@1.4.7|interpret@3.1.1",
         "chargytransparenzsoftware@1.4.7|js-yaml@4.3.2",
         "chargytransparenzsoftware@1.4.7|json5@2.2.3",
@@ -32111,13 +30447,13 @@
         "chargytransparenzsoftware@1.4.7|launch-editor@2.14.2",
         "chargytransparenzsoftware@1.4.7|open@11.0.4",
         "chargytransparenzsoftware@1.4.7|p-retry@8.0.1",
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
         "chargytransparenzsoftware@1.4.7|selfsigned@5.5.0",
         "chargytransparenzsoftware@1.4.7|serve-index@1.9.2",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|webpack-dev-middleware@8.6.0",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2",
-        "chargytransparenzsoftware@1.4.7|ws@8.22.0"
+        "chargytransparenzsoftware@1.4.7|ws@8.22.1"
       ]
     },
     {
@@ -32136,7 +30472,7 @@
         "chargytransparenzsoftware@1.4.7|graceful-fs@4.2.11",
         "chargytransparenzsoftware@1.4.7|mime-db@1.54.0",
         "chargytransparenzsoftware@1.4.7|minimizer-webpack-plugin@5.14.0",
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
         "chargytransparenzsoftware@1.4.7|tapable@2.3.3",
         "chargytransparenzsoftware@1.4.7|watchpack@2.6.3",
         "chargytransparenzsoftware@1.4.7|webpack-sources@3.7.0"
@@ -32195,7 +30531,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|normalize-package-data@8.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|hosted-git-info@9.0.3",
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5",
+        "chargytransparenzsoftware@1.4.7|semver@7.8.6",
         "chargytransparenzsoftware@1.4.7|validate-npm-package-license@3.0.4"
       ]
     },
@@ -32282,8 +30618,8 @@
       "ref": "chargytransparenzsoftware@1.4.7|file-type@22.3.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.6.0",
-        "chargytransparenzsoftware@1.4.7|strtok3@10.6.3",
-        "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
+        "chargytransparenzsoftware@1.4.7|strtok3@10.7.0",
+        "chargytransparenzsoftware@1.4.7|token-types@6.2.0",
         "chargytransparenzsoftware@1.4.7|uint8array-extras@1.6.0"
       ]
     },
@@ -32354,7 +30690,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|normalize-path@3.0.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+      "ref": "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@types/json-schema@7.0.15",
         "chargytransparenzsoftware@1.4.7|ajv-formats@3.0.1",
@@ -32420,7 +30756,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|semver@7.8.5"
+      "ref": "chargytransparenzsoftware@1.4.7|semver@7.8.6"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|brorand@1.1.0"
@@ -32461,7 +30797,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@eslint/object-schema@3.0.5",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|minimatch@10.2.6"
+        "chargytransparenzsoftware@1.4.7|minimatch@11.0.4"
       ]
     },
     {
@@ -32578,8 +30914,9 @@
       "ref": "chargytransparenzsoftware@1.4.7|json-stable-stringify-without-jsonify@1.0.1"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
+      "ref": "chargytransparenzsoftware@1.4.7|minimatch@11.0.4",
       "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|@isaacs/nonrecursive-glob-match@1.0.3",
         "chargytransparenzsoftware@1.4.7|brace-expansion@5.0.12"
       ]
     },
@@ -32753,8 +31090,8 @@
         "chargytransparenzsoftware@1.4.7|@typescript-eslint/types@8.72.1",
         "chargytransparenzsoftware@1.4.7|@typescript-eslint/visitor-keys@8.72.1",
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|minimatch@10.2.6",
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5",
+        "chargytransparenzsoftware@1.4.7|minimatch@11.0.4",
+        "chargytransparenzsoftware@1.4.7|semver@7.8.6",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|ts-api-utils@2.5.0",
         "chargytransparenzsoftware@1.4.7|typescript@6.0.3"
@@ -32786,10 +31123,10 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@5.0.5",
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/mocker@5.1.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jridgewell/trace-mapping@0.3.31",
-        "chargytransparenzsoftware@1.4.7|@vitest/spy@5.0.5",
+        "chargytransparenzsoftware@1.4.7|@vitest/spy@5.1.0",
         "chargytransparenzsoftware@1.4.7|estree-walker@3.0.3",
         "chargytransparenzsoftware@1.4.7|magic-string@1.4.5",
         "chargytransparenzsoftware@1.4.7|vite@8.3.5"
@@ -32817,7 +31154,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|std-env@4.3.0"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|tinybench@6.2.2"
+      "ref": "chargytransparenzsoftware@1.4.7|tinybench@6.2.3"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|tinyexec@1.3.1"
@@ -32830,7 +31167,7 @@
         "chargytransparenzsoftware@1.4.7|picomatch@4.0.7",
         "chargytransparenzsoftware@1.4.7|postcss@8.5.32",
         "chargytransparenzsoftware@1.4.7|rolldown@1.2.16",
-        "chargytransparenzsoftware@1.4.7|sass@1.107.0",
+        "chargytransparenzsoftware@1.4.7|sass@1.107.1",
         "chargytransparenzsoftware@1.4.7|terser@5.51.2",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17"
       ]
@@ -32843,13 +31180,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|envinfo@7.21.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|import-local@3.2.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0",
-        "chargytransparenzsoftware@1.4.7|resolve-cwd@3.0.0"
-      ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|interpret@3.1.1"
@@ -33100,13 +31430,13 @@
         "chargytransparenzsoftware@1.4.7|memfs@4.80.0",
         "chargytransparenzsoftware@1.4.7|mime-db@1.54.0",
         "chargytransparenzsoftware@1.4.7|range-parser@1.3.0",
-        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.1",
+        "chargytransparenzsoftware@1.4.7|schema-utils@4.8.2",
         "chargytransparenzsoftware@1.4.7|webpack@5.112.2",
-        "chargytransparenzsoftware@1.4.7|ws@8.22.0"
+        "chargytransparenzsoftware@1.4.7|ws@8.22.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|ws@8.22.0"
+      "ref": "chargytransparenzsoftware@1.4.7|ws@8.22.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@types/json-schema@7.0.15"
@@ -33145,10 +31475,10 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|browserslist@4.29.5",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|baseline-browser-mapping@2.11.34",
+        "chargytransparenzsoftware@1.4.7|baseline-browser-mapping@2.11.35",
         "chargytransparenzsoftware@1.4.7|caniuse-lite@1.0.30001820",
-        "chargytransparenzsoftware@1.4.7|electron-to-chromium@1.5.468",
-        "chargytransparenzsoftware@1.4.7|node-releases@2.0.62",
+        "chargytransparenzsoftware@1.4.7|electron-to-chromium@1.5.473",
+        "chargytransparenzsoftware@1.4.7|node-releases@2.0.63",
         "chargytransparenzsoftware@1.4.7|update-browserslist-db@1.3.4"
       ]
     },
@@ -33225,7 +31555,7 @@
         "chargytransparenzsoftware@1.4.7|make-fetch-happen@14.0.3",
         "chargytransparenzsoftware@1.4.7|nopt@8.1.0",
         "chargytransparenzsoftware@1.4.7|proc-log@5.0.0",
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5",
+        "chargytransparenzsoftware@1.4.7|semver@7.8.6",
         "chargytransparenzsoftware@1.4.7|tar@7.5.22",
         "chargytransparenzsoftware@1.4.7|tinyglobby@0.2.17",
         "chargytransparenzsoftware@1.4.7|node-gyp@11.5.0|which@5.0.0"
@@ -33293,18 +31623,18 @@
       "ref": "chargytransparenzsoftware@1.4.7|@tokenizer/inflate@0.6.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|debug@4.4.3",
-        "chargytransparenzsoftware@1.4.7|strtok3@10.6.3",
-        "chargytransparenzsoftware@1.4.7|token-types@6.1.2"
+        "chargytransparenzsoftware@1.4.7|strtok3@10.7.0",
+        "chargytransparenzsoftware@1.4.7|token-types@6.2.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|strtok3@10.6.3",
+      "ref": "chargytransparenzsoftware@1.4.7|strtok3@10.7.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|token-types@6.1.2",
+      "ref": "chargytransparenzsoftware@1.4.7|token-types@6.2.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@borewit/text-codec@0.2.3",
         "chargytransparenzsoftware@1.4.7|@tokenizer/token@0.3.0",
@@ -33422,6 +31752,9 @@
       "ref": "chargytransparenzsoftware@1.4.7|is-extglob@2.1.1"
     },
     {
+      "ref": "chargytransparenzsoftware@1.4.7|@isaacs/nonrecursive-glob-match@1.0.3"
+    },
+    {
       "ref": "chargytransparenzsoftware@1.4.7|brace-expansion@5.0.12",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|balanced-match@4.0.4"
@@ -33455,7 +31788,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|camel-case@4.1.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|pascal-case@3.1.2",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -33471,7 +31804,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|param-case@3.0.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|dot-case@3.0.4",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -33626,7 +31959,7 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@5.0.5"
+      "ref": "chargytransparenzsoftware@1.4.7|@vitest/spy@5.1.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|estree-walker@3.0.3",
@@ -33650,43 +31983,6 @@
         "chargytransparenzsoftware@1.4.7|@oxc-project/types@0.156.0",
         "chargytransparenzsoftware@1.4.7|@rolldown/binding-win32-x64-msvc@1.2.16",
         "chargytransparenzsoftware@1.4.7|@rolldown/pluginutils@1.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|find-up@4.1.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|find-up@4.1.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|locate-path@5.0.0",
-        "chargytransparenzsoftware@1.4.7|path-exists@4.0.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|locate-path@5.0.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|p-locate@4.1.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|p-locate@4.1.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|p-limit@2.3.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|pkg-dir@4.2.0|p-limit@2.3.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|p-try@2.2.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|resolve-cwd@3.0.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|resolve-from@5.0.0"
       ]
     },
     {
@@ -33971,7 +32267,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|pvtsutils@1.3.6",
         "chargytransparenzsoftware@1.4.7|reflect-metadata@0.2.2",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1",
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1",
         "chargytransparenzsoftware@1.4.7|tsyringe@4.10.0"
       ]
     },
@@ -33983,7 +32279,7 @@
         "chargytransparenzsoftware@1.4.7|bytestreamjs@2.0.1",
         "chargytransparenzsoftware@1.4.7|pvtsutils@1.3.6",
         "chargytransparenzsoftware@1.4.7|pvutils@1.2.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34008,7 +32304,7 @@
         "chargytransparenzsoftware@1.4.7|glob-to-regex.js@1.3.1",
         "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
         "chargytransparenzsoftware@1.4.7|tree-dump@1.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34079,16 +32375,16 @@
       "ref": "chargytransparenzsoftware@1.4.7|@webassemblyjs/utf8@1.13.2"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|baseline-browser-mapping@2.11.34"
+      "ref": "chargytransparenzsoftware@1.4.7|baseline-browser-mapping@2.11.35"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|caniuse-lite@1.0.30001820"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|electron-to-chromium@1.5.468"
+      "ref": "chargytransparenzsoftware@1.4.7|electron-to-chromium@1.5.473"
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|node-releases@2.0.62"
+      "ref": "chargytransparenzsoftware@1.4.7|node-releases@2.0.63"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|update-browserslist-db@1.3.4",
@@ -34175,7 +32471,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|node-abi@3.101.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5"
+        "chargytransparenzsoftware@1.4.7|semver@7.8.6"
       ]
     },
     {
@@ -34278,11 +32574,11 @@
       "ref": "chargytransparenzsoftware@1.4.7|pascal-case@3.1.2",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|no-case@3.0.4",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+      "ref": "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|source-map@0.6.1"
@@ -34291,7 +32587,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|dot-case@3.0.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|no-case@3.0.4",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34384,9 +32680,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@rolldown/pluginutils@1.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|resolve-from@5.0.0"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|is-plain-object@2.0.4",
@@ -34494,7 +32787,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509-attr@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34503,7 +32796,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34512,7 +32805,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34525,7 +32818,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509-attr@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34534,7 +32827,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34542,7 +32835,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@peculiar/utils@2.0.3",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34551,13 +32844,13 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/utils@2.0.3",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|pvtsutils@1.3.6",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34577,7 +32870,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|pvtsutils@1.3.6",
         "chargytransparenzsoftware@1.4.7|pvutils@1.2.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34592,7 +32885,7 @@
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-builtins@4.80.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-utils@4.80.0",
         "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34602,13 +32895,13 @@
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-builtins@4.80.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-utils@4.80.0",
         "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-builtins@4.80.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34617,7 +32910,7 @@
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-fsa@4.80.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-builtins@4.80.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-utils@4.80.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34625,7 +32918,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-builtins@4.80.0",
         "chargytransparenzsoftware@1.4.7|glob-to-regex.js@1.3.1",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34638,7 +32931,7 @@
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0",
         "chargytransparenzsoftware@1.4.7|glob-to-regex.js@1.3.1",
         "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34646,7 +32939,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-utils@4.80.0",
         "chargytransparenzsoftware@1.4.7|tree-dump@1.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34656,7 +32949,7 @@
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-node-utils@4.80.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/json-pack@17.67.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/util@17.67.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34670,7 +32963,7 @@
         "chargytransparenzsoftware@1.4.7|hyperdyperid@1.2.0",
         "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
         "chargytransparenzsoftware@1.4.7|tree-dump@1.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34678,26 +32971,26 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/buffers@17.67.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/codegen@17.67.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/base64@17.67.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/codegen@17.67.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/json-pointer@17.67.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/fs-snapshot@4.80.0|@jsonjoy.com/util@17.67.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34711,13 +33004,13 @@
         "chargytransparenzsoftware@1.4.7|hyperdyperid@1.2.0",
         "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
         "chargytransparenzsoftware@1.4.7|tree-dump@1.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/json-pack@1.21.0|@jsonjoy.com/buffers@1.2.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34725,31 +33018,31 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/util@1.9.0|@jsonjoy.com/buffers@1.2.1",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/codegen@1.0.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/util@1.9.0|@jsonjoy.com/buffers@1.2.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|glob-to-regex.js@1.3.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|thingies@2.6.1",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|tree-dump@1.1.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -34792,7 +33085,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@npmcli/fs@4.0.0",
         "chargytransparenzsoftware@1.4.7|fs-minipass@3.0.3",
-        "chargytransparenzsoftware@1.4.7|glob@10.5.0",
+        "chargytransparenzsoftware@1.4.7|cacache@19.0.1|glob@14.0.3",
         "chargytransparenzsoftware@1.4.7|lru-cache@10.4.3",
         "chargytransparenzsoftware@1.4.7|minipass-collect@2.0.1",
         "chargytransparenzsoftware@1.4.7|minipass-flush@1.0.7",
@@ -34803,6 +33096,24 @@
         "chargytransparenzsoftware@1.4.7|tar@7.5.22",
         "chargytransparenzsoftware@1.4.7|unique-filename@4.0.0"
       ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|cacache@19.0.1|glob@14.0.3",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|minimatch@11.0.4",
+        "chargytransparenzsoftware@1.4.7|minipass@7.1.3",
+        "chargytransparenzsoftware@1.4.7|cacache@19.0.1|path-scurry@3.0.0"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|cacache@19.0.1|path-scurry@3.0.0",
+      "dependsOn": [
+        "chargytransparenzsoftware@1.4.7|cacache@19.0.1|path-scurry@3.0.0|lru-cache@11.5.3",
+        "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
+      ]
+    },
+    {
+      "ref": "chargytransparenzsoftware@1.4.7|cacache@19.0.1|path-scurry@3.0.0|lru-cache@11.5.3"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|http-cache-semantics@4.3.0"
@@ -34955,7 +33266,7 @@
       "ref": "chargytransparenzsoftware@1.4.7|no-case@3.0.4",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|lower-case@2.0.2",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -35042,7 +33353,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -35053,7 +33364,7 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-rsa@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -35062,31 +33373,31 @@
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-schema@2.11.1",
         "chargytransparenzsoftware@1.4.7|@peculiar/asn1-x509@2.11.1",
         "chargytransparenzsoftware@1.4.7|asn1js@3.1.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@peculiar/utils@2.0.3",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/buffers@17.67.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/base64@1.1.2",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|@jsonjoy.com/codegen@1.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -35094,7 +33405,7 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/codegen@1.0.0",
         "chargytransparenzsoftware@1.4.7|@jsonjoy.com/util@1.9.0",
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -35137,7 +33448,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|@npmcli/fs@4.0.0",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|semver@7.8.5"
+        "chargytransparenzsoftware@1.4.7|semver@7.8.6"
       ]
     },
     {
@@ -35145,32 +33456,6 @@
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
       ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|foreground-child@3.3.1",
-        "chargytransparenzsoftware@1.4.7|jackspeak@3.4.3",
-        "chargytransparenzsoftware@1.4.7|glob@10.5.0|minimatch@9.0.9",
-        "chargytransparenzsoftware@1.4.7|minipass@7.1.3",
-        "chargytransparenzsoftware@1.4.7|package-json-from-dist@1.0.1",
-        "chargytransparenzsoftware@1.4.7|path-scurry@1.11.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0|minimatch@9.0.9",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|glob@10.5.0|brace-expansion@2.1.7"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0|brace-expansion@2.1.7",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|glob@10.5.0|balanced-match@1.0.2"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|glob@10.5.0|balanced-match@1.0.2"
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|minipass-collect@2.0.1",
@@ -35258,7 +33543,7 @@
     {
       "ref": "chargytransparenzsoftware@1.4.7|lower-case@2.0.2",
       "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|tslib@2.8.1"
+        "chargytransparenzsoftware@1.4.7|tslib@2.9.1"
       ]
     },
     {
@@ -35321,27 +33606,6 @@
       ]
     },
     {
-      "ref": "chargytransparenzsoftware@1.4.7|foreground-child@3.3.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|cross-spawn@7.0.6",
-        "chargytransparenzsoftware@1.4.7|signal-exit@4.1.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|jackspeak@3.4.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|@isaacs/cliui@8.0.2",
-        "chargytransparenzsoftware@1.4.7|@pkgjs/parseargs@0.11.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|path-scurry@1.11.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|lru-cache@10.4.3",
-        "chargytransparenzsoftware@1.4.7|minipass@7.1.3"
-      ]
-    },
-    {
       "ref": "chargytransparenzsoftware@1.4.7|unique-slug@5.0.0",
       "dependsOn": [
         "chargytransparenzsoftware@1.4.7|imurmurhash@0.1.4"
@@ -35363,120 +33627,6 @@
     },
     {
       "ref": "chargytransparenzsoftware@1.4.7|smart-buffer@4.2.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|signal-exit@4.1.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@isaacs/cliui@8.0.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|string-width@4.2.3",
-        "chargytransparenzsoftware@1.4.7|string-width@5.1.2",
-        "chargytransparenzsoftware@1.4.7|strip-ansi@6.0.1",
-        "chargytransparenzsoftware@1.4.7|strip-ansi@7.2.0",
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0",
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@8.1.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|@pkgjs/parseargs@0.11.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|p-try@2.2.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|string-width@4.2.3|emoji-regex@8.0.0",
-        "chargytransparenzsoftware@1.4.7|is-fullwidth-code-point@3.0.0",
-        "chargytransparenzsoftware@1.4.7|string-width@4.2.3|strip-ansi@6.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3|emoji-regex@8.0.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3|strip-ansi@6.0.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|string-width@4.2.3|ansi-regex@5.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|string-width@4.2.3|ansi-regex@5.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|string-width@5.1.2",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|eastasianwidth@0.2.0",
-        "chargytransparenzsoftware@1.4.7|emoji-regex@9.2.2",
-        "chargytransparenzsoftware@1.4.7|strip-ansi@7.2.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|strip-ansi@6.0.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|strip-ansi@6.0.1|ansi-regex@5.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|strip-ansi@6.0.1|ansi-regex@5.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|strip-ansi@7.2.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|ansi-regex@6.5.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|ansi-styles@4.3.0",
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|string-width@4.2.3",
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|strip-ansi@6.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|string-width@4.2.3",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|emoji-regex@8.0.0",
-        "chargytransparenzsoftware@1.4.7|is-fullwidth-code-point@3.0.0",
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|strip-ansi@6.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|strip-ansi@6.0.1",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|ansi-regex@5.0.1"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|emoji-regex@8.0.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@7.0.0|ansi-regex@5.0.1"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@8.1.0",
-      "dependsOn": [
-        "chargytransparenzsoftware@1.4.7|wrap-ansi@8.1.0|ansi-styles@6.2.3",
-        "chargytransparenzsoftware@1.4.7|string-width@5.1.2",
-        "chargytransparenzsoftware@1.4.7|strip-ansi@7.2.0"
-      ]
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|wrap-ansi@8.1.0|ansi-styles@6.2.3"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|is-fullwidth-code-point@3.0.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|eastasianwidth@0.2.0"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|emoji-regex@9.2.2"
-    },
-    {
-      "ref": "chargytransparenzsoftware@1.4.7|ansi-regex@6.5.0"
     }
   ]
 }
