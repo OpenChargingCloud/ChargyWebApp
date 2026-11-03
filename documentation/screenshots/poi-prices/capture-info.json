@@ -26,7 +26,7 @@
   ],
   "fixture": {
     "path": "tests/fixtures/POIPrices/session-with-price.chargy",
-    "sha256": "a34aa0d2d5dd5a52e998903f6c7d88dd03672c8bf1bc44b2b33340f47813cf96"
+    "sha256": "ba511f9755e311a4b1317075b22515e57182c48b76c8fc29e2961520536c7de0"
   },
   "checks": [
     "real Drag & Drop and explicit two-holder trust",

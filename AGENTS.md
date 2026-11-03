@@ -76,7 +76,7 @@ every subsequent envelope additionally require POI-authorized CPO document keys.
 
 For observed-version storage, rollback/fork rules, historical/current selection,
 live reopening or related management changes, also run
-`npm run docs:screenshots:poi-observations` and inspect all eight images in
+`npm run docs:screenshots:poi-observations` and inspect all nine images in
 `documentation/screenshots/poi-observed-versions/`. Update the observed-versions
 guide, fixture provenance and capture metadata. Never clear history automatically
 on a source change or anchor deletion. Independent fixture scenarios that reuse

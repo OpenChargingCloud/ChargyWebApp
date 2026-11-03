@@ -44,6 +44,7 @@ local checkouts, including uncommitted source, installed package integrity and
 runtime/type hashes. It also compares the shared Chargy trust modules and exact
 fixture bytes without normalizing signed input. Paths can be supplied with
 `--web`, `--desktop`, `--mobile` and `--occ`.
+OCCApp is included in source, fixture, provenance and shared-test comparisons.
 
 To compare actual Vitest results, pass `--test-results <directory>` containing
 `web-tests.json`, `desktop-tests.json`, `mobile-tests.json` and `occ-tests.json`.
@@ -53,7 +54,7 @@ scanner equivalence. Review platform adaptations and OCCApp-specific behavior
 separately; run app suites sequentially to avoid cross-app cryptography and
 image-decoding timeouts under load.
 
-### Comparison on 2 November 2026
+### Comparison on 3 November 2026
 
 The checked TypeScript source snapshots remained unchanged throughout the audit.
 All four apps resolved POI 0.2.0 and Core 0.18.0 with identical registry
@@ -61,19 +62,17 @@ integrity and installed JavaScript/declaration hashes.
 
 | App / checked revision | Passing tests | Skipped | Build |
 | --- | ---: | ---: | --- |
-| ChargyWebApp / `fc513cd` | 600 | 3 | Passed |
-| ChargyDesktopApp / `6100217` | 773 | 5 | Passed |
-| ChargyMobileApp / `bdc6881` | 602 | 3 | Passed |
-| OCCApp / `b36a345` | 164 | 3 | Passed |
+| ChargyWebApp / `d5284ad` | 600 | 3 | Passed |
+| ChargyDesktopApp / `a8acd82` | 773 | 5 | Passed |
+| ChargyMobileApp / `5dc1b3d` | 602 | 3 | Passed |
+| OCCApp / `775409a` | 444 | 3 | Passed |
 
-Web, Desktop and Mobile shared **105 byte-identical input files** across the
-eight TrustAnchor/POI fixture families and **265 cases in 20 shared test files**
-with matching results. Desktop's one explicitly recorded test-name change
-describes its process-start transport switch rather than Web's build switch.
-Source differences were reviewed separately: Electron's bounded IPC fetch,
-Mobile's resource imports and settings page, and platform-specific transport
-configuration. Initial concurrent runs hit timeouts; the unchanged suites all
-passed sequentially under their original timeout limits.
+All four apps share **105 byte-identical input files** across the eight
+TrustAnchor/POI fixture families and **265 cases in 20 selected common test files**
+with matching results. Available fixture provenance is identical too. Desktop's
+one explicitly recorded test-name change describes its process-start transport
+switch rather than Web's build switch. All suites and builds were rerun
+sequentially; source adaptations and actual UI behavior were reviewed separately.
 
 The Web and Cordova-browser completed-session captures exercised actual Drag &
 Drop, explicit local key decisions, station and meter checks, signature details,
@@ -83,18 +82,20 @@ accepted fixture keys. Its three trust checks, station verdict, meter-key
 association and two original reading signatures passed. Native Android/iOS
 camera plugins were not exercised on physical devices.
 
-OCCApp's rendered Chromium flow passed content-only TrustAnchor review, explicit
-approval, persistence after reload, withdrawal, and parsing the same completed
-session with two valid meter signatures. Its station-directory tests also check
-genuine station and CPO price signatures. This is **not full Chargy workflow
-parity**: OCCApp currently lacks the KeyStatement review with three separate
-validation states and raster fingerprints, the embedded POI-to-meter handoff and
-historical per-reading association, session-bound fixed prices/publication
-receipts, the persistent rollback/fork journal and verified trust succession,
-and the strict POI-authorized CPO live-update admission path. Its archive checks
-at the saved check time and its explicit association of transparency snapshots
-are separate from those stronger claims. Recheck these integration points when
-the OCCApp port advances; passing its own tests does not establish them.
+OCCApp now implements the previously missing KeyStatement review and fingerprints,
+embedded POI-to-meter handoff, historical reading association, session-bound
+prices/publication witnesses, persistent observations, succession and strict
+POI-authorized live admission. Its own browser/IndexedDB suites exercise those
+integration paths with genuine signed fixtures and explicit local decisions.
+
+The repeat comparison found two differences. The subsequent follow-up implements
+automatic invalidation/rechecking of open views after journal changes in Web,
+Desktop and Mobile. OCCApp still lacks UI controls for excluding/restoring bundled
+keys. See the
+[full comparison, reproductions and follow-up work](WWCP-POI-Four-App-Comparison.md)
+for evidence, platform limits and the distinction between shared contracts and
+application-level acceptance. The initial 2 November audit predates the OCCApp
+port and must not be used as the current capability matrix.
 
 ## Verification and scope
 

@@ -21,7 +21,7 @@
   ],
   "fixture": {
     "path": "tests/fixtures/POIHistory/archived-session.chargy",
-    "sha256": "763b6fc62e7574f948f90fc3e7ef947b6ddb35bff019d37db517c2d1d5fb5343"
+    "sha256": "0e45b67b16aa024aadde40159a0e0d84bbb4bc8c3805347e92c236883b7ee707"
   },
   "checks": [
     "real Drag & Drop",

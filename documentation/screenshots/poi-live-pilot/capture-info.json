@@ -23,7 +23,7 @@
   ],
   "fixture": {
     "path": "tests/fixtures/POILive/00-waiting.json",
-    "sha256": "2ea6f00b792bec43e09afa991520f62f2c7960230a88931c92589d3ff298bbdc"
+    "sha256": "33a4f295dd0ca7c8f676fecd2116f6d3020ae825d353fe57048d4b4ce35f5022"
   },
   "checks": [
     "real signed four-stage live series",

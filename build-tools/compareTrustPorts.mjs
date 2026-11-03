@@ -24,7 +24,8 @@ const walk = root => existsSync(root) ? readdirSync(root, { withFileTypes: true 
     entry.isDirectory() ? walk(path.join(root, entry.name)) : [path.join(root, entry.name)]) : [];
 const git = (root, args) => execFileSync('git', args, { cwd: root, encoding: 'utf8', windowsHide: true }).trim();
 const packages = ['@open-charging-cloud/wwcp-poi', '@open-charging-cloud/chargy-core', '@vanaheimr/cose', '@vanaheimr/metrological-cbor'];
-const report = { capturedAt: new Date().toISOString(), apps: {}, sharedChargySources: {}, fixtures: {}, tests: {} };
+const targets = ['desktop', 'mobile', 'occ'];
+const report = { capturedAt: new Date().toISOString(), apps: {}, sharedChargySources: {}, fixtures: {}, fixtureProvenance: {}, tests: {} };
 
 for (const [name, root] of Object.entries(roots)) {
     const pkg = json(path.join(root, 'package.json'));
@@ -32,6 +33,8 @@ for (const [name, root] of Object.entries(roots)) {
     const sourceFiles = walk(path.join(root, name === 'occ' ? 'src' : 'src/ts')).filter(file => file.endsWith('.ts'));
     report.apps[name] = {
         root, head: git(root, ['rev-parse', 'HEAD']), dirty: git(root, ['status', '--porcelain']),
+        vitest: existsSync(path.join(root, 'node_modules/vitest/package.json')) ?
+            json(path.join(root, 'node_modules/vitest/package.json')).version : null,
         // Includes untracked source files, so an in-progress OCCApp port is not mistaken for its last commit.
         sourceSnapshot: sha256(JSON.stringify(sourceFiles.sort().map(file => [relative(root, file), sha256(readFileSync(file))]))),
         packages: Object.fromEntries(packages.map(packageName => {
@@ -63,7 +66,7 @@ for (const [name, root] of Object.entries(roots)) {
 
 const sharedFiles = walk(path.join(roots.web, 'src/ts')).filter(file =>
     /(?:trust|anchor|poi|stationProof|sessionMeter|sessionPrice|historical|securityFingerprint|pricePublication|sessionPOI)/i.test(path.basename(file)) && file.endsWith('.ts'));
-for (const name of ['desktop', 'mobile']) {
+for (const name of targets) {
     const result = { identical: [], different: [], missing: [] };
     for (const file of sharedFiles) {
         const filename = relative(roots.web, file);
@@ -81,10 +84,11 @@ for (const name of ['desktop', 'mobile']) {
 const fixtureGroups = ['TrustAnchors', 'POISession', 'POIHistory', 'POIPrices', 'POILive', 'POIObservedVersions', 'POITrustTransitions', 'POIPublication'];
 for (const group of fixtureGroups) {
     const base = path.join(roots.web, 'tests/fixtures', group);
-    // Provenance and README differences are reported separately from original signed inputs.
+    // Documentation is not signed input. Compare provenance separately without normalizing bytes.
     const files = walk(base).filter(file => /\.(?:json|chargy|txt|png)$/i.test(file) && path.basename(file) !== 'provenance.json');
     report.fixtures[group] = {};
-    for (const name of ['desktop', 'mobile']) {
+    report.fixtureProvenance[group] = {};
+    for (const name of targets) {
         const result = { identical: 0, different: [], missing: [] };
         for (const file of files) {
             const filename = relative(roots.web, file), other = path.join(roots[name], filename);
@@ -93,12 +97,16 @@ for (const group of fixtureGroups) {
             else result.identical++;
         }
         report.fixtures[group][name] = result;
+        const provenance = path.join(base, 'provenance.json');
+        const otherProvenance = path.join(roots[name], relative(roots.web, provenance));
+        report.fixtureProvenance[group][name] = !existsSync(provenance) ? 'no reference provenance.json' :
+            !existsSync(otherProvenance) ? 'missing' : readFileSync(provenance).equals(readFileSync(otherProvenance)) ? 'identical' : 'different';
     }
 }
 
 const baselineSuites = report.tests.web?.suites.filter(suite =>
     /(?:trust|anchor|poi|stationProof|sessionMeter|sessionPrice|historical|securityFingerprint|pricePublication|roamingNetworks)/i.test(path.basename(suite.file))) ?? [];
-for (const name of ['desktop', 'mobile']) {
+for (const name of targets) {
     if (!report.tests[name]) continue;
     const results = new Map(report.tests[name].suites.map(suite => [path.basename(suite.file), suite]));
     report.tests[name].sharedContracts = baselineSuites.map(suite => {
