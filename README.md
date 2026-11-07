@@ -237,6 +237,37 @@ Authorization: Bearer <temporary-token>
 
 The `token` and `bearerToken` parameters may be used at the same time, even if that is redundant.
 
+#### HTTP Basic Auth (an easy way in, not the recommended one)
+
+For a backend that knows nothing but HTTP Basic Auth yet, e.g. the REST API of a test system, the user name and password may be written into the `verifyURL` itself:
+
+```
+https://chargy.charging.cloud?verifyURL=https%3A%2F%2Freader%3Asecret%40steve.example.org%2Fsteve%2Fapi%2Fv1%2Ftransactions%2F1%2Fsafe.xml
+```
+
+The WebApp removes `reader:secret@` from the URL, checks the remaining URL against `externalURLs.conf` and sends the credentials as
+
+```
+Authorization: Basic <base64(UTF-8 "user:password")>
+```
+
+Encode the whole `verifyURL` with `encodeURIComponent`. A `@`, `:` or `%` inside the password itself has to be percent-encoded *before*, as `%40`, `%3A` and `%25`. A user name with a colon is refused, because HTTP Basic Auth (RFC 7617) cuts user name and password at the first colon. Credentials and `bearerToken` cannot be combined, as both would set the `Authorization` header.
+
+**Chargy recommends `token` or `bearerToken` instead.** Basic Auth is meant only as a first step, until the backend can issue tokens:
+
+- **The credentials are long-lived.** A token can be valid for minutes and for one payload. A password usually is valid until someone changes it, and often for far more than this one payload. With the REST API of SteVe, for example, any user with an API password may use *every* API operation, including remote starts and resets, not only downloads.
+- **The link is the secret.** Whoever has the link has the password. Links are forwarded, printed as QR codes, pasted into tickets and chats, and kept in browser histories, bookmarks and the history of a messenger. Revoking such a link means changing the password, which breaks every other link and client using it.
+- **Server logs.** The deep link is a query parameter, so the web server delivering Chargy logs the credentials with every request, and so does any proxy in between.
+- **CORS gets harder.** The `Authorization` header makes the browser send a preflight `OPTIONS` request first, which the target has to answer without asking for credentials (see [CORS](#cors)).
+
+If you use it anyway, give the link its own user with the least rights the backend can give, never an administrator, and change its password regularly.
+
+What the WebApp does to limit the damage, for `token` and `bearerToken` as well:
+
+- Right after reading the deep link it removes `token`, `bearerToken` and the credentials of `verifyURL` from the address bar via `history.replaceState()`. A reload, a bookmark or the browser history then no longer contains them. A deep link with secrets therefore works only once; reload the original link to fetch the payload again.
+- The payload is downloaded with `referrerPolicy: "no-referrer"`, so the target does not learn the address of the page that held the deep link.
+- The credentials never appear in the file name or the source URL that Chargy shows for the loaded payload.
+
 The WebApp will only download external payloads from URL prefixes explicitly allowed by a local `externalURLs.conf` file served next to `index.html`. The same file governs the second thing that fetches URLs from outside this installation: the `https` transports of a [charge transparency live link](#charge-transparency-live-links).
 
 The file format is one rule per line:
@@ -271,15 +302,40 @@ Because `verifyURL` downloads are performed by the user's browser, the target AP
 Access-Control-Allow-Origin: https://chargy.charging.cloud
 ```
 
-When `bearerToken` is used, the target API must also allow the `Authorization` request header, for example:
+When `bearerToken` or [Basic Auth credentials](#http-basic-auth-an-easy-way-in-not-the-recommended-one) are used, the target API must also allow the `Authorization` request header, for example:
 
 ```
 Access-Control-Allow-Headers: Authorization
 ```
 
+The `Authorization` header makes the browser send a preflight `OPTIONS` request first, **without** the credentials. It has to be answered with a 2xx and the headers above; a backend that demands authentication for every request (SteVe's REST API, for example) answers it with 401 and the download fails. If the backend cannot be changed, a reverse proxy in front of it can answer the preflight itself and add the headers to the real answers. With nginx:
+
+```nginx
+location /api/v1/transactions/ {
+
+    # The preflight carries no credentials: answer it here, never at the backend.
+    if ($request_method = OPTIONS) {
+        add_header Access-Control-Allow-Origin   "https://chargy.charging.cloud" always;
+        add_header Access-Control-Allow-Methods  "GET, OPTIONS"                  always;
+        add_header Access-Control-Allow-Headers  "Authorization"                 always;
+        add_header Access-Control-Max-Age        "86400"                         always;
+        add_header Vary                          "Origin"                        always;
+        return 204;
+    }
+
+    # "always" also covers 401/404, so Chargy sees the status instead of a CORS error.
+    add_header Access-Control-Allow-Origin  "https://chargy.charging.cloud" always;
+    add_header Vary                         "Origin"                        always;
+
+    proxy_pass http://127.0.0.1:8080;
+}
+```
+
+`add_header` in a `location` replaces *all* `add_header` lines inherited from the `server` block (e.g. `Strict-Transport-Security`), so repeat those there. If the backend sends CORS headers of its own, remove them with `proxy_hide_header`, as a doubled `Access-Control-Allow-Origin` is rejected by the browser.
+
 A live link endpoint has to allow the WebApp origin the same way, and one that expects a custom header has to answer the browser's `OPTIONS` preflight as well — with a 2xx, no redirect, no authentication required, and every header named in `Access-Control-Allow-Headers`. An `Access-Control-Max-Age` keeps a ten-second poll from paying for a preflight every single time.
 
-The WebApp fetches external payloads without credentials, so APIs should not require cookies or browser authentication for these verification payload URLs. Prefer short-lived, unguessable URLs or backend-issued tokens when payloads are not public.
+The WebApp fetches external payloads without cookies (`credentials: "omit"`), so APIs should not require cookies or a browser login for these verification payload URLs. Prefer short-lived, unguessable URLs or backend-issued tokens when payloads are not public.
 
 Tokens passed in URLs can appear in browser history, server logs and referrer logs. They should therefore be short-lived, scoped to a single payload and invalidated after use whenever possible.
 

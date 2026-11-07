@@ -54,11 +54,14 @@ import {
     decodeUtf8      as decodeDeepLinkUtf8,
     findExternalURLRule,
     getDeepLinkFileName,
+    basicAuthorizationHeader,
     isWithinURLPrefixAfterQueryAppend,
     parseExternalURLConfig,
     parseExternalURLConfigMode,
     readResponseWithinLimit,
+    splitDeepLinkCredentials,
     withDeepLinkVerificationToken,
+    withoutDeepLinkSecrets,
     type ExternalURLRule
 }                                      from './deepLinks';
 import {
@@ -2076,15 +2079,26 @@ export class ChargyApp {
                                                 bearerToken:  string|null): Promise<void>
     {
 
+        // "https://user:password@host/..." - HTTP Basic Auth, meant only as an
+        // easy way in. From here on only the URL without the credentials is
+        // vetted, downloaded and shown; they go into the Authorization header.
+        const { url: vettedURL, basicAuth } = splitDeepLinkCredentials(verifyURL);
+
+        if (basicAuth   != null &&
+            bearerToken != null)
+        {
+            throw new Error("External verification URL credentials and bearerToken would both set the Authorization header.");
+        }
+
         const rules = await this.loadExternalURLRules();
-        const rule  = this.findExternalURLRule(verifyURL, rules);
+        const rule  = this.findExternalURLRule(vettedURL, rules);
 
         if (rule == null)
         {
             throw new Error("External verification URL is not allowed.");
         }
 
-        const downloadURL = this.withDeepLinkVerificationToken(verifyURL, token);
+        const downloadURL = this.withDeepLinkVerificationToken(vettedURL, token);
 
         if (!isWithinURLPrefixAfterQueryAppend(downloadURL.href, rule.prefix))
             throw new Error("External verification URL token merge moved URL outside the allowed prefix.");
@@ -2094,11 +2108,17 @@ export class ChargyApp {
         if (bearerToken != null)
             headers.set("Authorization", "Bearer " + bearerToken);
 
+        if (basicAuth != null)
+            headers.set("Authorization", basicAuthorizationHeader(basicAuth));
+
         const response = await fetch(downloadURL.href, {
-            cache:        "no-store",
-            credentials:  "omit",
-            headers:      headers,
-            redirect:     "follow"
+            cache:           "no-store",
+            credentials:     "omit",
+            headers:         headers,
+            redirect:        "follow",
+            // The payload server has no need to learn this page's address,
+            // which held the deep link and possibly its secrets.
+            referrerPolicy:  "no-referrer"
         });
 
         if (!response.ok)
@@ -2116,11 +2136,36 @@ export class ChargyApp {
         const data        = await this.readResponseWithinLimit(response, rule.maxPayloadBytes);
 
         await this.detectAndConvertContentFormat({
-            name:  this.getDeepLinkFileName(verifyURL, contentType),
+            name:  this.getDeepLinkFileName(vettedURL, contentType),
             path:  downloadURL.href,
             type:  contentType,
             data:  data
         });
+
+    }
+
+    /**
+     * Tokens and verifyURL credentials have been read by now; they should not
+     * stay in the address bar, the browser history or a bookmark of this page.
+     */
+    private removeDeepLinkSecretsFromAddressBar(): void
+    {
+
+        try
+        {
+
+            const cleanedURL = withoutDeepLinkSecrets(new URL(window.location.href));
+
+            if (cleanedURL != null)
+                window.history.replaceState(window.history.state, "", cleanedURL.href);
+
+        }
+        catch (exception)
+        {
+            // The download does not depend on it; only the address bar keeps
+            // the secrets, e.g. in a sandboxed document without a history.
+            console.warn("Could not remove deep-link secrets from the address bar:", exception);
+        }
 
     }
 
@@ -2131,6 +2176,8 @@ export class ChargyApp {
         const verifyURL   = this.getDeepLinkVerificationURL();
         const token       = this.getDeepLinkVerificationToken();
         const bearerToken = this.getDeepLinkVerificationBearerToken();
+
+        this.removeDeepLinkSecretsFromAddressBar();
 
         if (encodedData == null &&
             verifyURL    == null)

@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 
 import {
+    basicAuthorizationHeader,
     decodeBase64Url,
     decodeUtf8,
     findExternalURLRule,
@@ -10,7 +11,9 @@ import {
     parseExternalURLConfig,
     parseExternalURLConfigMode,
     readResponseWithinLimit,
-    withDeepLinkVerificationToken
+    splitDeepLinkCredentials,
+    withDeepLinkVerificationToken,
+    withoutDeepLinkSecrets
 } from "../src/ts/deepLinks";
 
 describe("Deep link helpers", () => {
@@ -155,6 +158,91 @@ describe("Deep link helpers", () => {
                 null
             ).href
         ).toBe("https://api.example.org/ctrs/12345.json?format=chargy");
+
+    });
+
+    test("separates Basic Auth credentials from a verifyURL", () => {
+
+        const { url, basicAuth } = splitDeepLinkCredentials(
+            new URL("https://reader:s3cr%40t%3Ax@steve.example.org/steve/api/v1/transactions/1/safe.xml")
+        );
+
+        // Percent-encoded "@" and ":" in the password come back as such.
+        expect(basicAuth).toEqual({ username: "reader", password: "s3cr@t:x" });
+        expect(url.href).toBe("https://steve.example.org/steve/api/v1/transactions/1/safe.xml");
+
+        // Only the URL without credentials can match a prefix.
+        const rules = parseExternalURLConfig("https://steve.example.org/steve/api/v1/transactions/ 200");
+
+        expect(findExternalURLRule(url, rules)).not.toBeNull();
+        expect(findExternalURLRule(new URL("https://reader:pw@steve.example.org/steve/api/v1/transactions/1/safe.xml"), rules)).toBeNull();
+
+    });
+
+    test("leaves a verifyURL without credentials as it is", () => {
+
+        const verifyURL = new URL("https://api.example.org/ctrs/12345.json?format=chargy");
+        const { url, basicAuth } = splitDeepLinkCredentials(verifyURL);
+
+        expect(basicAuth).toBeNull();
+        expect(url.href).toBe(verifyURL.href);
+        expect(url).not.toBe(verifyURL);
+
+    });
+
+    test("accepts a password without a user name, but no colon in the user name", () => {
+
+        expect(splitDeepLinkCredentials(new URL("https://:pw@api.example.org/a.xml")).basicAuth)
+            .toEqual({ username: "", password: "pw" });
+
+        expect(() => splitDeepLinkCredentials(new URL("https://a%3Ab:pw@api.example.org/a.xml")))
+            .toThrow("must not contain a colon");
+
+        expect(() => splitDeepLinkCredentials(new URL("https://reader:%E0%A4%A@api.example.org/a.xml")))
+            .toThrow("not validly percent-encoded");
+
+    });
+
+    test("encodes the Basic Auth header as UTF-8 (RFC 7617 examples)", () => {
+
+        expect(basicAuthorizationHeader({ username: "Aladdin", password: "open sesame" }))
+            .toBe("Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==");
+
+        expect(basicAuthorizationHeader({ username: "test", password: "123£" }))
+            .toBe("Basic dGVzdDoxMjPCow==");
+
+    });
+
+    test("removes deep-link secrets from the page address", () => {
+
+        const pageURL = new URL(
+            "https://chargy.example.org/?verifyURL=" +
+            encodeURIComponent("https://reader:pw@steve.example.org/steve/api/v1/transactions/1/safe.xml") +
+            "&token=abc&bearerToken=xyz&lang=de#top"
+        );
+
+        const cleanedURL = withoutDeepLinkSecrets(pageURL);
+
+        expect(cleanedURL).not.toBeNull();
+        expect(cleanedURL?.searchParams.get("verifyURL")).toBe("https://steve.example.org/steve/api/v1/transactions/1/safe.xml");
+        expect(cleanedURL?.searchParams.has("token")).toBe(false);
+        expect(cleanedURL?.searchParams.has("bearerToken")).toBe(false);
+        expect(cleanedURL?.searchParams.get("lang")).toBe("de");
+        expect(cleanedURL?.hash).toBe("#top");
+        expect(cleanedURL?.href).not.toContain("pw");
+
+        // The legacy spelling is cleaned the same way.
+        expect(withoutDeepLinkSecrets(new URL("https://chargy.example.org/?verifyUrl=" + encodeURIComponent("https://u:p@h.example.org/a.xml")))?.searchParams.get("verifyUrl"))
+            .toBe("https://h.example.org/a.xml");
+
+    });
+
+    test("keeps a page address without deep-link secrets", () => {
+
+        expect(withoutDeepLinkSecrets(new URL("https://chargy.example.org/"))).toBeNull();
+        expect(withoutDeepLinkSecrets(new URL("https://chargy.example.org/?verify=eyJ9"))).toBeNull();
+        expect(withoutDeepLinkSecrets(new URL("https://chargy.example.org/?verifyURL=" + encodeURIComponent("https://h.example.org/a.xml")))).toBeNull();
+        expect(withoutDeepLinkSecrets(new URL("https://chargy.example.org/?verifyURL=not-a-url"))).toBeNull();
 
     });
 

@@ -165,6 +165,151 @@ export function withDeepLinkVerificationToken(verifyURL: URL,
 
 }
 
+/**
+ * HTTP Basic Auth credentials that arrived as "user:password@" inside a
+ * deep-link verifyURL.
+ *
+ * This is meant as an easy way in - for a test system, or a backend that
+ * knows nothing else yet. The credentials are long-lived and travel inside a
+ * link that can be forwarded, printed as a QR code or stored in a browser
+ * history, so short-lived, payload-scoped "token" or "bearerToken" values are
+ * what Chargy recommends.
+ */
+export type DeepLinkBasicAuth = {
+    username:  string;
+    password:  string;
+};
+
+/**
+ * Separates the credentials of a verifyURL from the URL itself.
+ *
+ * fetch() refuses a URL that carries credentials, and a URL with
+ * "user:password@" would never match an allowed prefix either. The returned
+ * URL is therefore the one to vet, download and show; the credentials only go
+ * into the Authorization header.
+ */
+export function splitDeepLinkCredentials(verifyURL: URL): { url: URL, basicAuth: DeepLinkBasicAuth|null }
+{
+
+    const url = new URL(verifyURL.href);
+
+    if (url.username === "" &&
+        url.password === "")
+    {
+        return { url, basicAuth: null };
+    }
+
+    let username: string;
+    let password: string;
+
+    try
+    {
+        username = decodeURIComponent(url.username);
+        password = decodeURIComponent(url.password);
+    }
+    catch
+    {
+        throw new Error("External verification URL credentials are not validly percent-encoded.");
+    }
+
+    // RFC 7617 separates user-id and password at the first colon, so a user
+    // name with a colon would reach the server as a different user.
+    if (username.includes(":"))
+        throw new Error("External verification URL user name must not contain a colon.");
+
+    url.username = "";
+    url.password = "";
+
+    return {
+        url,
+        basicAuth: { username, password }
+    };
+
+}
+
+/**
+ * The Authorization header value of HTTP Basic Auth (RFC 7617), with user
+ * name and password encoded as UTF-8 - btoa() alone would throw on anything
+ * beyond Latin-1.
+ */
+export function basicAuthorizationHeader(credentials: DeepLinkBasicAuth): string
+{
+
+    const bytes = new TextEncoder().encode(credentials.username + ":" + credentials.password);
+    let binary  = "";
+
+    for (const byte of bytes)
+        binary += String.fromCharCode(byte);
+
+    return "Basic " + btoa(binary);
+
+}
+
+/**
+ * The address of this page without the secrets of a deep link, or null when
+ * it carries none.
+ *
+ * "token" and "bearerToken" are removed, and the credentials inside a
+ * "verifyURL" (or "verifyUrl") are stripped from it. Everything else stays, so
+ * a link without secrets still works after a reload. Chargy writes the result
+ * back with history.replaceState() once it has read the parameters, so the
+ * secrets do not stay in the address bar, the browser history or a bookmark.
+ */
+export function withoutDeepLinkSecrets(pageURL: URL): URL|null
+{
+
+    const cleanedURL = new URL(pageURL.href);
+    const parameters = cleanedURL.searchParams;
+    let   changed    = false;
+
+    for (const secretParameter of [ "token", "bearerToken" ])
+    {
+        if (parameters.has(secretParameter))
+        {
+            parameters.delete(secretParameter);
+            changed = true;
+        }
+    }
+
+    for (const verifyURLParameter of [ "verifyURL", "verifyUrl" ])
+    {
+
+        const value = parameters.get(verifyURLParameter);
+
+        if (value == null)
+            continue;
+
+        let verifyURL: URL;
+
+        try
+        {
+            verifyURL = new URL(value);
+        }
+        catch
+        {
+            continue;
+        }
+
+        if (verifyURL.username === "" &&
+            verifyURL.password === "")
+        {
+            continue;
+        }
+
+        verifyURL.username = "";
+        verifyURL.password = "";
+
+        parameters.set(verifyURLParameter, verifyURL.href);
+        changed = true;
+
+    }
+
+    return changed
+               ? cleanedURL
+               : null;
+
+}
+
 export function decodeBase64Url(base64Value: string): Uint8Array
 {
 
