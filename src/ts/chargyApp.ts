@@ -2146,7 +2146,9 @@ export class ChargyApp {
 
     /**
      * Tokens and verifyURL credentials have been read by now; they should not
-     * stay in the address bar, the browser history or a bookmark of this page.
+     * stay in the address bar, the back/forward entry or a later bookmark of
+     * this page. The global browser history and the server log keep the
+     * original address regardless.
      */
     private removeDeepLinkSecretsFromAddressBar(): void
     {

@@ -264,7 +264,9 @@ If you use it anyway, give the link its own user with the least rights the backe
 
 What the WebApp does to limit the damage, for `token` and `bearerToken` as well:
 
-- Right after reading the deep link it removes `token`, `bearerToken` and the credentials of `verifyURL` from the address bar via `history.replaceState()`. A reload, a bookmark or the browser history then no longer contains them. A deep link with secrets therefore works only once; reload the original link to fetch the payload again.
+- Right after reading the deep link it removes `token`, `bearerToken` and the credentials of `verifyURL` from the address bar via `history.replaceState()`. The address bar, the back/forward entry of this tab and a bookmark or reload made afterwards then no longer contain them. A deep link with secrets therefore works only once; open the original link again to fetch the payload again.
+
+  This cleans up only what happens *after* the page was loaded. The original link has already reached the web server delivering Chargy and any proxy in between, and their access logs keep it. Browsers usually record the original address in their global history and in the suggestions of the address bar when the page loads, and `replaceState()` does not remove that entry. Neither does it reach copies of the link in the clipboard, chats, mails or tickets.
 - The payload is downloaded with `referrerPolicy: "no-referrer"`, so the target does not learn the address of the page that held the deep link.
 - The credentials never appear in the file name or the source URL that Chargy shows for the loaded payload.
 

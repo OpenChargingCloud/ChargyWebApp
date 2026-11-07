@@ -253,7 +253,10 @@ export function basicAuthorizationHeader(credentials: DeepLinkBasicAuth): string
  * "verifyURL" (or "verifyUrl") are stripped from it. Everything else stays, so
  * a link without secrets still works after a reload. Chargy writes the result
  * back with history.replaceState() once it has read the parameters, so the
- * secrets do not stay in the address bar, the browser history or a bookmark.
+ * secrets do not stay in the address bar, the back/forward entry of the tab or
+ * a later bookmark. The global browser history usually recorded the original
+ * address on load already, and the server log of the installation has it too;
+ * neither can be reached from here.
  */
 export function withoutDeepLinkSecrets(pageURL: URL): URL|null
 {
