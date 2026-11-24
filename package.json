@@ -4,8 +4,8 @@
   "description": "Chargy ist eine Transparenzsoftware für das Eichrecht in der Elektromobilität womit Endkunden die korrekte Messung und Abrechnung von Ladevorgängen überprüfen können.",
   "author": "GraphDefined GmbH <achim.friedland@graphdefined.com>",
   "license": "AGPL-3.0-or-later",
-  "homepage": "https://github.com/OpenChargingCloud/ChargyDesktopApp",
-  "repository": "https://github.com/OpenChargingCloud/ChargyDesktopApp",
+  "homepage": "https://github.com/OpenChargingCloud/ChargyWebApp",
+  "repository": "https://github.com/OpenChargingCloud/ChargyWebApp",
   "main": "build/chargyWebApp-bundle.js",
   "type": "module",
   "engines": {

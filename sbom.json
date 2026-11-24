@@ -3,9 +3,9 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
   "version": 1,
-  "serialNumber": "urn:uuid:2da07330-79ac-4492-beb1-891d684504dd",
+  "serialNumber": "urn:uuid:88835c44-b91e-4313-9942-65b035c1d29a",
   "metadata": {
-    "timestamp": "2026-11-03T01:45:13.621Z",
+    "timestamp": "2026-11-24T19:41:08.976Z",
     "tools": {
       "components": [
         {
@@ -110,20 +110,20 @@
           }
         }
       ],
-      "purl": "pkg:npm/chargytransparenzsoftware@1.4.7?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FOpenChargingCloud%2FChargyDesktopApp.git",
+      "purl": "pkg:npm/chargytransparenzsoftware@1.4.7?vcs_url=git%2Bhttps%3A%2F%2Fgithub.com%2FOpenChargingCloud%2FChargyWebApp.git",
       "externalReferences": [
         {
-          "url": "git+https://github.com/OpenChargingCloud/ChargyDesktopApp.git",
+          "url": "git+https://github.com/OpenChargingCloud/ChargyWebApp.git",
           "type": "vcs",
           "comment": "as detected from PackageJson property \"repository.url\""
         },
         {
-          "url": "https://github.com/OpenChargingCloud/ChargyDesktopApp",
+          "url": "https://github.com/OpenChargingCloud/ChargyWebApp",
           "type": "website",
           "comment": "as detected from PackageJson property \"homepage\""
         },
         {
-          "url": "https://github.com/OpenChargingCloud/ChargyDesktopApp/issues",
+          "url": "https://github.com/OpenChargingCloud/ChargyWebApp/issues",
           "type": "issue-tracker",
           "comment": "as detected from PackageJson property \"bugs.url\""
         }
