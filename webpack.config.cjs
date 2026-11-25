@@ -4,6 +4,7 @@ const HtmlWebpackPlugin    = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin    = require('copy-webpack-plugin');
 const MinimizerPlugin      = require('minimizer-webpack-plugin');
+const packageJson          = require('./package.json');
 const packageLock          = require('./package-lock.json');
 
 const modeArgIndex = process.argv.indexOf('--mode');
@@ -88,6 +89,46 @@ const chargyCoreIntegrity    = chargyCorePackage?.integrity ?? '';
 const chargyCoreSHA512       = chargyCoreIntegrity.startsWith('sha512-')
   ? Buffer.from(chargyCoreIntegrity.substring('sha512-'.length), 'base64').toString('hex')
   : '';
+
+const pickVersionMap = (source, names) =>
+  Object.fromEntries(
+    names
+      .filter(name => typeof source?.[name] === 'string')
+      .map(name => [ name, source[name] ])
+  );
+
+// Inject only the version metadata displayed on the About screen at build time,
+// avoiding an extra runtime fetch and keeping the full package.json out of build/.
+const aboutPackageMetadata = {
+  version: packageJson.version,
+  dependencies: pickVersionMap(packageJson.dependencies, [
+    '@fortawesome/fontawesome-free',
+    '@open-charging-cloud/totp',
+    '@vanaheimr/cose',
+    '@vanaheimr/metrological-cbor',
+    '@noble/hashes',
+    'uuid',
+    'path-browserify',
+    'stream-browserify',
+    'stream-http',
+    'url',
+    'vm-browserify',
+    'elliptic',
+    'moment',
+    'asn1.js',
+    'buffer',
+    'base32-decode',
+    'leaflet',
+    'leaflet.awesome-markers',
+    'chart.js',
+    'decimal.js'
+  ]),
+  devDependencies: pickVersionMap(packageJson.devDependencies, [
+    'sass',
+    'typescript',
+    'webpack'
+  ])
+};
 
 /**
  * pdfjs-dist 6.2.108 uses private fields inside dynamic WASM imports. Terser
@@ -203,14 +244,20 @@ module.exports = {
   },
   output: {
     path:                          path.resolve(__dirname, 'build'),
-    filename:                      'chargyWebApp-bundle.js',
-    // Remove stale numeric worker chunks created before chunkIds became stable.
+    filename:                      mode === 'production'
+                                     ? 'chargyWebApp-bundle.[contenthash:12].js'
+                                     : 'chargyWebApp-bundle.js',
+    chunkFilename:                 mode === 'production'
+                                     ? '[name].[contenthash:12].chargyWebApp-bundle.js'
+                                     : '[name].chargyWebApp-bundle.js',
+    // Remove stale chunks from earlier builds.
     clean:                         true,
     devtoolModuleFilenameTemplate: sourceMapModuleName
   },
   plugins: [
     new webpack.DefinePlugin({
       __CHARGY_CORE_SHA512__:                      JSON.stringify(chargyCoreSHA512),
+      __CHARGY_PACKAGE_METADATA__:                 JSON.stringify(aboutPackageMetadata),
       __CHARGY_ALLOW_INSECURE_TRANSPORTS__:        JSON.stringify(allowInsecureTransports),
       __CHARGY_ALLOW_PRIVATE_NETWORK_TRANSPORTS__: JSON.stringify(allowPrivateNetworkTransports)
     }),
@@ -223,8 +270,8 @@ module.exports = {
       scriptSrc
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/chargy.css',
-      chunkFilename: '[id].css'
+      filename:      mode === 'production' ? 'css/chargy.[contenthash:12].css' : 'css/chargy.css',
+      chunkFilename: mode === 'production' ? 'css/[name].[contenthash:12].css' : 'css/[id].css'
     }),
     new CopyWebpackPlugin({
       patterns: [
@@ -244,10 +291,6 @@ module.exports = {
         {
           from:     path.resolve(__dirname, 'static/externalURLs.conf'),
           to:       path.resolve(__dirname, 'build/externalURLs.conf')
-        },
-        {
-          from:     path.resolve(__dirname, 'package.json'),
-          to:       path.resolve(__dirname, 'build/package.json')
         }
       ]
     })

@@ -153,6 +153,13 @@ import {
     makeKeyboardActivatable,
     trapFocusInDialog
 }                                      from './dialogA11y';
+import {
+    buildVersionInfoURL,
+    collectApplicationIntegrityAssets,
+    computeApplicationSHA512,
+    formatSHA512Groups,
+    hashesMatch
+}                                      from './applicationIntegrity';
 // import {
 //     normalizePublicKeys,
 //     tryParseStandalonePublicKeys
@@ -835,7 +842,6 @@ export class ChargyApp {
 
         this.loadI18n();
         void this.updateQRCodeScannerAvailability();
-        void this.loadPackageJSON();
 
         //#endregion
 
@@ -1019,6 +1025,7 @@ export class ChargyApp {
                                                         );
 
         this.setUILanguage(this.UILanguage, false);
+        this.loadPackageMetadata();
         this.setupLanguageSelector();
         this.setupAccessibleKeyboardNavigation();
 
@@ -1947,18 +1954,12 @@ export class ChargyApp {
 
     //#endregion
 
-    //#region (private) loadPackageJSON()
+    //#region (private) loadPackageMetadata()
 
-    private async loadPackageJSON(): Promise<void> {
+    private loadPackageMetadata(): void {
         try {
 
-            const response = await fetch('package.json');
-
-            if (!response.ok)
-                throw new Error('Network response was not ok');
-
-            const data: unknown = await response.json();
-            Object.assign(this.packageJson, parsePackageMetadata(data));
+            Object.assign(this.packageJson, parsePackageMetadata(__CHARGY_PACKAGE_METADATA__));
 
             const asString = (txt: string | undefined): string => txt ?? "";
 
@@ -1978,7 +1979,7 @@ export class ChargyApp {
                 (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).textContent = this.appVersion;
                 (this.openSourceLibsDiv.querySelector("#chargyCoreVersion")      as HTMLSpanElement).textContent = corePackageJson.version;
                  this.chargyCoreHashTextDiv. textContent = `SHA512-Hashwert der Chargy Core v${corePackageJson.version}:`;
-                 this.chargyCoreHashValueDiv.textContent = __CHARGY_CORE_SHA512__.match(/.{1,8}/g)?.join(" ") ?? "";
+                 this.chargyCoreHashValueDiv.textContent = formatSHA512Groups(__CHARGY_CORE_SHA512__);
 
             if (this.packageJson.devDependencies)
             {
@@ -2021,7 +2022,7 @@ export class ChargyApp {
             //#endregion
 
         } catch (error) {
-            console.error('There has been a problem with fetching "package.json":', error);
+            console.error("Failed to initialize build package metadata:", error);
         }
     }
 
@@ -3260,75 +3261,39 @@ export class ChargyApp {
     private async calcApplicationHash(): Promise<void>
     {
 
-        const files = [
-            'index.html',
-            'css/chargy.css',
-            'chargyWebApp-bundle.js',
-            'package.json'
-        ];
+        const files = collectApplicationIntegrityAssets(document, window.location.href);
 
         try
         {
 
-            const hashes        = await Promise.all(files.map(async url => chargyLib.hashFile(url)));
-            const combinedHash  = await crypto.subtle.digest('SHA-512', chargyLib.ConcatenateBuffers(hashes));
+            this.applicationHash                      = await computeApplicationSHA512(files);
+            this.applicationHashValueDiv.textContent  = formatSHA512Groups(this.applicationHash);
+            this.equalityCheckDiv.textContent         = "false";
 
-            this.applicationHash                      = chargyLib.buf2hex(combinedHash);
-            this.applicationHashValueDiv.textContent  = this.applicationHash.match(/.{1,8}/g)?.join(" ") ?? "";
+            if (this.appVersion === "")
+                return;
 
-            const getApplicationHashSignaturesHTTPRequest = new XMLHttpRequest();
-            getApplicationHashSignaturesHTTPRequest.open(
-                "GET",
-                this.versionsURL + "/" + this.appVersion,
-                true
-            );
-            getApplicationHashSignaturesHTTPRequest.setRequestHeader('Accept', 'application/json');
+            const response = await fetch(buildVersionInfoURL(this.versionsURL, this.appVersion), {
+                headers:     { Accept: "application/json" },
+                credentials: "omit"
+            });
 
-            getApplicationHashSignaturesHTTPRequest.onreadystatechange = (): void => {
+            if (response.ok)
+            {
+                try
+                {
+                    const body       = await response.json() as IApplicationHashSignaturesResponse;
+                    const version    = body.versions.find(versionInfo => versionInfo.version === this.appVersion);
+                    const _package   = version?.packages.find(packageInfo => packageInfo.name === "webpack") ?? version?.packages[0];
+                    const remoteHash = _package?.cryptoHashes[0]?.SHA512;
 
-                // 0 UNSENT | 1 OPENED | 2 HEADERS_RECEIVED | 3 LOADING | 4 DONE
-                if (getApplicationHashSignaturesHTTPRequest.readyState === XMLHttpRequest.DONE) {
-                    this.equalityCheckDiv.textContent = "false";
-
-                    switch (getApplicationHashSignaturesHTTPRequest.status)
-                    {
-
-                        case 200: // HTTP 200 - OK
-                            try
-                            {
-                                const response = JSON.parse(getApplicationHashSignaturesHTTPRequest.responseText) as IApplicationHashSignaturesResponse;
-                                const version  = response.versions.find(versionInfo => versionInfo.version === this.appVersion);
-                                const _package = version?.packages.find(packageInfo => packageInfo.name === "webpack") ?? version?.packages[0];
-                                const remoteHash = _package?.cryptoHashes[0]?.SHA512;
-
-                                const normalizeHash = (hash: string): string => hash
-                                    .replace(/^0x/i, "")
-                                    .replace(/\s/g, "")
-                                    .toLowerCase();
-
-                                const hashesAreEqual = remoteHash !== undefined &&
-                                                       normalizeHash(remoteHash) === normalizeHash(this.applicationHash);
-
-                                this.equalityCheckDiv.textContent = hashesAreEqual.toString();
-                            }
-                            catch (_exception)
-                            {
-                                // Keep the explicit false result for malformed responses.
-                            }
-                        break;
-
-                        case 401: // HTTP 401 - Unauthorized
-                            {
-                                // Keep the explicit false result for unauthorized requests.
-                            }
-                        break;
-
-                    }
+                    this.equalityCheckDiv.textContent = hashesMatch(this.applicationHash, remoteHash).toString();
                 }
-
+                catch (_exception)
+                {
+                    // Keep the explicit false result for malformed responses.
+                }
             }
-
-            getApplicationHashSignaturesHTTPRequest.send();
 
         } catch (error) {
             console.error("An error occurred:", error);

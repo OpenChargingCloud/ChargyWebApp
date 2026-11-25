@@ -8,6 +8,7 @@ declare module "*.jsonl?raw" {
 declare module "leaflet.awesome-markers";
 
 declare const __CHARGY_CORE_SHA512__: string;
+declare const __CHARGY_PACKAGE_METADATA__: unknown;
 declare const __CHARGY_ALLOW_INSECURE_TRANSPORTS__: boolean;
 declare const __CHARGY_ALLOW_PRIVATE_NETWORK_TRANSPORTS__: boolean;
 

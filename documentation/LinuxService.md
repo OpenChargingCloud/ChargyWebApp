@@ -58,9 +58,30 @@ server {
         try_files $uri $uri/ /index.html;
     }
 
-    location ~* \.(js|css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf)$ {
+    # Always revalidate the entry document and runtime URL allowlist so clients
+    # immediately pick up new deployments and matching content-hashed bundles,
+    # keeping self-integrity hashing consistent across updates.
+    location = /index.html {
+        add_header Cache-Control "no-cache";
+    }
+
+    location = /externalURLs.conf {
+        add_header Cache-Control "no-cache";
+    }
+
+    # Production builds emit content-hashed JS and CSS bundles
+    # (e.g. chargyWebApp-bundle.<hash>.js, css/chargy.<hash>.css), which can be
+    # cached immutably without risking stale code after an update.
+    location ~* \.[0-9a-f]{8,}\.(js|css)$ {
         try_files $uri =404;
-        expires 30d;
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Unhashed static assets (fonts, images, vendor stylesheets).
+    location ~* \.(css|png|jpg|jpeg|gif|svg|woff|woff2|ttf|otf)$ {
+        try_files $uri =404;
+        expires 7d;
         add_header Cache-Control "public";
     }
 }
