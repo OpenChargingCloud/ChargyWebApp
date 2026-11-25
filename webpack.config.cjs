@@ -74,6 +74,14 @@ const liveLinkConnectSrc = [ "'self'", 'https:', 'wss:' ].
                              concat(allowInsecureTransports ? [ 'http:', 'ws:' ] : []).
                              join(' ');
 
+/**
+ * Production builds enforce a strict script-src without 'unsafe-inline' or
+ * 'unsafe-eval'. Development builds keep 'unsafe-eval' for webpack tooling.
+ */
+const scriptSrc = mode === 'production'
+  ? "'self'"
+  : "'self' 'unsafe-eval'";
+
 const chargyCorePackageName  = '@open-charging-cloud/chargy-core';
 const chargyCorePackage      = packageLock.packages?.[`node_modules/${chargyCorePackageName}`];
 const chargyCoreIntegrity    = chargyCorePackage?.integrity ?? '';
@@ -211,7 +219,8 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template:    'src/index.html',
-      connectSrc:  liveLinkConnectSrc
+      connectSrc:  liveLinkConnectSrc,
+      scriptSrc
     }),
     new MiniCssExtractPlugin({
       filename: 'css/chargy.css',

@@ -147,6 +147,12 @@ import {
     setIconContent,
     setLocalizedContent
 }                                      from './safeDOM';
+import {
+    focusDialogOnOpen,
+    isElementVisible,
+    makeKeyboardActivatable,
+    trapFocusInDialog
+}                                      from './dialogA11y';
 // import {
 //     normalizePublicKeys,
 //     tryParseStandalonePublicKeys
@@ -621,6 +627,7 @@ export class ChargyApp {
     private inputDetectionGeneration = 0;
     private qrCodeScannerEmbeddedStatement: StoredTrustAnchorData | null = null;
     private qrCodeScannerHistoricalReference = false;
+    private activeOverlayTrigger: HTMLElement | null = null;
 
     //#region Data
 
@@ -856,12 +863,12 @@ export class ChargyApp {
         this.errorTextDiv                             = document.getElementById('errorText')                                as HTMLDivElement;
 
         this.applicationHashDiv                       = document.getElementById('applicationHash')                          as HTMLDivElement;
-        this.applicationHashValueDiv                  = this.applicationHashDiv.querySelector("#value")                     as HTMLDivElement;
+        this.applicationHashValueDiv                  = this.applicationHashDiv.querySelector(".hashValue")                 as HTMLDivElement;
         this.equalityCheckDiv                         = this.applicationHashDiv.querySelector("#equalityCheck")              as HTMLDivElement;
 
         this.chargyCoreHashDiv                        = document.getElementById('chargyCoreHash')                           as HTMLDivElement;
-        this.chargyCoreHashTextDiv                    = this.chargyCoreHashDiv. querySelector("#text")                      as HTMLDivElement;
-        this.chargyCoreHashValueDiv                   = this.chargyCoreHashDiv. querySelector("#value")                     as HTMLDivElement;
+        this.chargyCoreHashTextDiv                    = this.chargyCoreHashDiv. querySelector(".hashLabel")                 as HTMLDivElement;
+        this.chargyCoreHashValueDiv                   = this.chargyCoreHashDiv. querySelector(".hashValue")                 as HTMLDivElement;
 
         this.feedbackDiv                              = document.getElementById('feedback')                                 as HTMLDivElement;
         this.feedbackMethodsDiv                       = this.feedbackDiv.       querySelector("#feedbackMethods")           as HTMLDivElement;
@@ -932,19 +939,19 @@ export class ChargyApp {
         this.chargingTariffDetailsDiv                 = document.getElementById('chargingTariffDetails')                    as HTMLDivElement;
         this.chargingTariffDetailsLeftButton          = this.chargingTariffDetailsDiv.querySelector(".overlayLeftButton")   as HTMLButtonElement;
         this.chargingTariffDetailsLeftButton.onclick  = ():void => {
-                                                            this.chargingTariffDetailsDiv.style.display = 'none';
+                                                            this.closeModalOverlay(this.chargingTariffDetailsDiv);
                                                         }
 
         this.chargingPeriodDetailsDiv                 = document.getElementById('chargingPeriodDetails')                    as HTMLDivElement;
         this.chargingPeriodDetailsLeftButton          = this.chargingPeriodDetailsDiv.querySelector(".overlayLeftButton")   as HTMLButtonElement;
         this.chargingPeriodDetailsLeftButton.onclick  = ():void => {
-                                                            this.chargingPeriodDetailsDiv.style.display = 'none';
+                                                            this.closeModalOverlay(this.chargingPeriodDetailsDiv);
                                                         }
 
         this.measurementsDetailsDiv                   = document.getElementById('measurementsDetails')                      as HTMLDivElement;
         this.measurementsDetailsLeftButton            = this.measurementsDetailsDiv.querySelector(".overlayLeftButton")     as HTMLButtonElement;
         this.measurementsDetailsLeftButton.onclick    = ():void => {
-                                                            this.measurementsDetailsDiv.style.display = 'none';
+                                                            this.closeModalOverlay(this.measurementsDetailsDiv);
                                                         }
 
         this.issueTrackerDiv                          = document.getElementById('issueTracker')                             as HTMLDivElement;
@@ -955,13 +962,13 @@ export class ChargyApp {
         this.sendIssueButton                          = this.issueTrackerDiv.   querySelector("#sendIssueButton")           as HTMLButtonElement;
         this.issueTrackerLeftButton                   = this.issueTrackerDiv.   querySelector(".overlayLeftButton")         as HTMLButtonElement;
         this.issueTrackerLeftButton.onclick           = ():void => {
-                                                            this.issueTrackerDiv.style.display = 'none';
+                                                            this.closeModalOverlay(this.issueTrackerDiv);
                                                         }
 
         this.pkiDetailsDiv                            = document.getElementById('pkiDetails')                               as HTMLDivElement;
         this.pkiDetailsLeftButton                     = this.pkiDetailsDiv.querySelector(".overlayLeftButton")              as HTMLButtonElement;
         this.pkiDetailsLeftButton.onclick             = ():void => {
-                                                            this.pkiDetailsDiv.style.display = 'none';
+                                                            this.closeModalOverlay(this.pkiDetailsDiv);
                                                         }
 
         this.liveLinkTrustDialogDiv                   = document.getElementById('liveLinkTrustDialog')                     as HTMLDivElement;
@@ -1013,6 +1020,7 @@ export class ChargyApp {
 
         this.setUILanguage(this.UILanguage, false);
         this.setupLanguageSelector();
+        this.setupAccessibleKeyboardNavigation();
 
 
         //#region OnWindowResize
@@ -1153,7 +1161,7 @@ export class ChargyApp {
                     if (sendIssue.readyState == 4) {
 
                         if (sendIssue.status == 201) { // HTTP 201 - Created
-                            (document.getElementById('issueTracker') as HTMLDivElement).style.display  = 'none';
+                            this.closeModalOverlay(this.issueTrackerDiv);
                             //ToDo: Show thank you for your issue!
                         }
 
@@ -1469,7 +1477,7 @@ export class ChargyApp {
 
         //#region Modify external links to be opened in the external web browser
 
-        const linkButtons  = document.getElementsByClassName('linkButton') as HTMLCollectionOf<HTMLButtonElement>;
+        const linkButtons  = document.querySelectorAll<HTMLButtonElement>('button.linkButton[href]');
 
         for (const linkButton of linkButtons) {
 
@@ -1732,6 +1740,88 @@ export class ChargyApp {
 
     }
 
+    private getModalOverlays(): HTMLDivElement[] {
+        return [
+            this.qrCodeScannerDiv,
+            this.liveLinkTrustDialogDiv,
+            this.issueTrackerDiv,
+            this.measurementsDetailsDiv,
+            this.chargingPeriodDetailsDiv,
+            this.chargingTariffDetailsDiv,
+            this.pkiDetailsDiv
+        ];
+    }
+
+    private getVisibleModalOverlay(): HTMLDivElement | null {
+        for (const overlay of this.getModalOverlays())
+        {
+            if (isElementVisible(overlay))
+                return overlay;
+        }
+        return null;
+    }
+
+    private openModalOverlay(overlay: HTMLDivElement): void {
+
+        const active = document.activeElement;
+        if (active instanceof HTMLElement && !this.getModalOverlays().some(modal => modal.contains(active)))
+            this.activeOverlayTrigger = active;
+
+        overlay.style.display = "block";
+        focusDialogOnOpen(overlay);
+
+    }
+
+    private closeModalOverlay(overlay: HTMLDivElement): void {
+
+        overlay.style.display = "none";
+
+        const trigger = this.activeOverlayTrigger;
+        if (trigger !== null && trigger.isConnected && this.getVisibleModalOverlay() === null)
+        {
+            this.activeOverlayTrigger = null;
+            trigger.focus();
+        }
+
+    }
+
+    private setupAccessibleKeyboardNavigation(): void {
+
+        document.addEventListener("keydown", (event: KeyboardEvent) => {
+
+            const visibleOverlay = this.getVisibleModalOverlay();
+            if (visibleOverlay !== null)
+            {
+                if (event.key === "Escape")
+                {
+                    event.preventDefault();
+                    if (visibleOverlay === this.qrCodeScannerDiv)
+                        this.closeQRCodeScanner();
+                    else if (visibleOverlay === this.liveLinkTrustDialogDiv)
+                        this.resolveLiveLinkTrust();
+                    else
+                        this.closeModalOverlay(visibleOverlay);
+                    return;
+                }
+
+                if (event.key === "Tab")
+                    trapFocusInDialog(visibleOverlay, event);
+
+                return;
+            }
+
+            if (event.key === "Escape" && this.languageMenuDiv.classList.contains("open"))
+            {
+                event.preventDefault();
+                this.languageMenuDiv.classList.remove("open");
+                this.languageButton.setAttribute("aria-expanded", "false");
+                this.languageButton.focus();
+            }
+
+        });
+
+    }
+
     private setUILanguage(language: SupportedLanguage,
                           persist: boolean = true): void {
 
@@ -1764,6 +1854,13 @@ export class ChargyApp {
             const key = element.dataset["i18nTitleKey"];
             if (key != null)
                 element.title = this.chargy.GetLocalizedMessage(key);
+        }
+
+        for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-i18n-aria-label-key]")))
+        {
+            const key = element.dataset["i18nAriaLabelKey"];
+            if (key != null)
+                element.setAttribute("aria-label", this.chargy.GetLocalizedMessage(key));
         }
 
         for (const element of Array.from(document.querySelectorAll<HTMLInputElement>("[data-i18n-placeholder-key]")))
@@ -1913,7 +2010,7 @@ export class ChargyApp {
                 (this.openSourceLibsDiv.querySelector("#isURLSuperb")            as HTMLSpanElement).textContent = packageVersion("is-url-superb");
                 (this.openSourceLibsDiv.querySelector("#jsQR")                   as HTMLSpanElement).textContent = packageVersion("jsqr");
                 (this.openSourceLibsDiv.querySelector("#asn1JS")                 as HTMLSpanElement).textContent = packageVersion("asn1.js");
-                (this.openSourceLibsDiv.querySelector("#buffer")                 as HTMLSpanElement).textContent = packageVersion("buffer");
+                (this.openSourceLibsDiv.querySelector("#bufferVersion")          as HTMLSpanElement).textContent = packageVersion("buffer");
                 (this.openSourceLibsDiv.querySelector("#base32Decode")           as HTMLSpanElement).textContent = packageVersion("base32-decode");
                 (this.openSourceLibsDiv.querySelector("#leafletJS")              as HTMLSpanElement).textContent = packageVersion("leaflet");
                 (this.openSourceLibsDiv.querySelector("#leafletAwesomeMarkers")  as HTMLSpanElement).textContent = packageVersion("leaflet.awesome-markers");
@@ -2261,9 +2358,9 @@ export class ChargyApp {
             this.showIssueTrackerButton.style.display = "block";
 
             this.showIssueTrackerButton.onclick = (): void => {
-                this.issueTrackerDiv.style.display    = 'block';
                 this.privacyStatement.style.display   = "none";
                 this.issueTrackerText.scrollTop       = 0;
+                this.openModalOverlay(this.issueTrackerDiv);
             }
         }
         else
@@ -2652,7 +2749,7 @@ export class ChargyApp {
 
             this.qrCodeScannerStream             = stream;
             this.qrCodeScannerVideo.srcObject    = stream;
-            this.qrCodeScannerDiv.style.display  = "block";
+            this.openModalOverlay(this.qrCodeScannerDiv);
 
             await this.qrCodeScannerVideo.play();
 
@@ -2675,7 +2772,7 @@ export class ChargyApp {
     private closeQRCodeScanner(): void
     {
         this.stopQRCodeScannerCamera();
-        this.qrCodeScannerDiv.style.display = "none";
+        this.closeModalOverlay(this.qrCodeScannerDiv);
         this.qrCodeScannerIsProcessing      = false;
         this.qrCodeScannerLastText          = null;
         this.qrCodeScannerLastURL           = null;
@@ -2849,8 +2946,8 @@ export class ChargyApp {
         const generation = ++this.qrCodeScannerPreviewGeneration;
         this.qrCodeScannerTrustAnchor = preview;
         this.stopQRCodeScannerCamera();
-        this.qrCodeScannerDiv.style.display = "block";
         this.qrCodeScannerDiv.classList.add("showingTrustAnchor");
+        this.openModalOverlay(this.qrCodeScannerDiv);
         const intro = this.qrCodeScannerDiv.querySelector<HTMLElement>(".headline .intro");
         if (intro !== null) {
             intro.dataset["i18nKey"] = "trustAnchorPreviewTitle";
@@ -4716,7 +4813,7 @@ export class ChargyApp {
 
         }
 
-        this.liveLinkTrustDialogDiv.style.display = 'block';
+        this.openModalOverlay(this.liveLinkTrustDialogDiv);
 
         return new Promise(resolve => {
             this.liveLinkTrustResolve = resolve;
@@ -4732,7 +4829,7 @@ export class ChargyApp {
 
         this.liveLinkTrustResolve                 = null;
         this.liveLinkTrustDecisions               = null;
-        this.liveLinkTrustDialogDiv.style.display = 'none';
+        this.closeModalOverlay(this.liveLinkTrustDialogDiv);
 
         resolve?.(decisions);
 
@@ -4900,9 +4997,11 @@ export class ChargyApp {
                           expiry.toLocaleDateString(this.UILanguage));
 
             const deleteButton      = rowDiv.appendChild(document.createElement('button'));
+            deleteButton.type       = "button";
             deleteButton.className  = "delete";
             setIconContent(deleteButton, "fas fa-trash-alt");
             deleteButton.title      = this.chargy.GetLocalizedMessage("deleteLabel");
+            deleteButton.setAttribute("aria-label", this.chargy.GetLocalizedMessage("deleteLabel"));
             deleteButton.onclick    = (): void => {
 
                 // Salt and hash identify the entry; a plain origin to delete by
@@ -5502,6 +5601,7 @@ export class ChargyApp {
             {
 
                 const chargingSessionDiv    = createDiv(chargingSessionsDiv, "chargingSession");
+                makeKeyboardActivatable(chargingSessionDiv);
                 chargingSession.ctr         = CTR;
                 chargingSession.GUI         = chargingSessionDiv;
                 chargingSessionDiv.onclick  = (ev: MouseEvent): void => {
@@ -7623,6 +7723,7 @@ export class ChargyApp {
                             measurementValue.measurement  = measurement;
 
                             const measurementValueDiv     = createDiv(measurementRowsDiv, "measurementValue");
+                            makeKeyboardActivatable(measurementValueDiv);
                             measurementValueDiv.onclick   = (): void => {
                                 this.showMeasurementCryptoDetails(measurementValue);
                             };
@@ -7993,14 +8094,14 @@ export class ChargyApp {
 
         //#region Show data and result on overlay
 
-        this.chargingTariffDetailsDiv.style.display = 'block';
+        this.openModalOverlay(this.chargingTariffDetailsDiv);
 
         //#endregion
 
         //#region Footer
 
-        const footerDiv                 = this.measurementsDetailsDiv.querySelector('.footer')        as HTMLDivElement;
-        const signatureCheckDiv         = footerDiv.      querySelector('#signatureCheck')            as HTMLDivElement;
+        const footerDiv                 = this.chargingTariffDetailsDiv.querySelector('.footer')        as HTMLDivElement;
+        const signatureCheckDiv         = footerDiv.      querySelector('.signatureCheck')                as HTMLDivElement;
 
         signatureCheckDiv.replaceChildren();
 
@@ -8017,7 +8118,7 @@ export class ChargyApp {
 
         //#region Headline
 
-        const headlineDiv               = this.chargingTariffDetailsDiv.querySelector('.headline')  as HTMLDivElement;
+        const headlineDiv               = this.chargingPeriodDetailsDiv.querySelector('.headline')  as HTMLDivElement;
         const errorDiv                  = headlineDiv.    querySelector('.error')                   as HTMLDivElement;
         const introDiv                  = headlineDiv.    querySelector('.intro')                   as HTMLDivElement;
         errorDiv.replaceChildren();
@@ -8027,14 +8128,14 @@ export class ChargyApp {
 
         //#region Show data and result on overlay
 
-        this.chargingPeriodDetailsDiv.style.display = 'block';
+        this.openModalOverlay(this.chargingPeriodDetailsDiv);
 
         //#endregion
 
         //#region Footer
 
-        const footerDiv                 = this.measurementsDetailsDiv.querySelector('.footer')                    as HTMLDivElement;
-        const signatureCheckDiv         = footerDiv.      querySelector('#signatureCheck')            as HTMLDivElement;
+        const footerDiv                 = this.chargingPeriodDetailsDiv.querySelector('.footer')          as HTMLDivElement;
+        const signatureCheckDiv         = footerDiv.      querySelector('.signatureCheck')                as HTMLDivElement;
 
         signatureCheckDiv.replaceChildren();
 
@@ -8082,7 +8183,7 @@ export class ChargyApp {
 
         //#region Show data and result on overlay
 
-        this.measurementsDetailsDiv.style.display = 'block';
+        this.openModalOverlay(this.measurementsDetailsDiv);
 
         const dataDiv                   = this.measurementsDetailsDiv.querySelector('.data')                      as HTMLDivElement;
         const cryptoDataDiv             = dataDiv.        querySelector('#cryptoData')                as HTMLDivElement;
@@ -8143,7 +8244,7 @@ export class ChargyApp {
 
         //#region Show data and result on overlay
 
-        this.pkiDetailsDiv.style.display = 'block';
+        this.openModalOverlay(this.pkiDetailsDiv);
 
         //#endregion
 

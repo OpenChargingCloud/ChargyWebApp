@@ -30,11 +30,16 @@ class FakeElement implements FakeNode {
     public href = '';
     public target = '';
     public rel = '';
+    public readonly attributes: Record<string, string> = {};
     public readonly children: FakeNode[] = [];
     private ownText = '';
 
     public constructor(tagName: string) {
         this.tagName = tagName.toLowerCase();
+    }
+
+    public setAttribute(name: string, value: string): void {
+        this.attributes[name] = value;
     }
 
     public get textContent(): string {
@@ -141,6 +146,7 @@ describe('safeDOM helpers', () => {
         const text = target.children[1] as FakeText;
         expect(icon.tagName).toBe('i');
         expect(icon.className).toBe('fas fa-times-circle');
+        expect(icon.attributes['aria-hidden']).toBe('true');
         expect(text.kind).toBe('text');
         expect(text.textContent).toBe(' ' + xssPayload);
     });

@@ -437,12 +437,16 @@ body {
                         }
 
                         .linkButton {
+                            display:            inline-block;
                             border:             0;
                             border-radius:      4px;
                             padding:            3px 7px;
                             background-color:   #b9dbf5;
+                            color:              inherit;
                             font-size:          75%;
                             text-align:         left;
+                            text-decoration:    none;
+                            cursor:             pointer;
                         }
 
                         .linkButton:hover {
@@ -455,7 +459,7 @@ body {
 
                             margin:             1em 0 1em 0;
 
-                            #value {
+                            .hashValue {
                                 font-family:        monospace;
                                 font-size:          110%;
                                 margin-top:         3px;
@@ -489,12 +493,16 @@ body {
                             display:            none;
                             margin:             1em 0 1em 0;
 
-                            #value {
+                            .hashValue {
                                 font-family:        monospace;
                                 font-size:          110%;
                                 margin-top:         3px;
                             }
 
+                        }
+
+                        .fundingLogo {
+                            text-align:         center;
                         }
 
                         #TOSP {
@@ -676,7 +684,7 @@ body {
 
                             display:            none;
 
-                            #text {
+                            .trustedOriginsHeading {
                                 margin-bottom:      10px;
                             }
 
@@ -2848,7 +2856,7 @@ body {
 
                 .footer {
 
-                    #signatureCheck {
+                    .signatureCheck {
 
                         margin:         4vh 0 2vh 0;
                         text-align:     center;
@@ -2883,7 +2891,7 @@ body {
 
                 .footer {
 
-                    #signatureCheck {
+                    .signatureCheck {
 
                         margin:         4vh 0 2vh 0;
                         text-align:     center;
@@ -3132,8 +3140,10 @@ body {
 
             .overlayText {
 
-                #headline {
+                .headline {
                     padding:                8px 8px 0px 8px;
+                    margin:                 0;
+                    font-size:              inherit;
                 }
 
                 form {
@@ -3142,7 +3152,15 @@ body {
                     padding:            5px 20px 20px 20px;
 
                     .label {
+                        display:            block;
                         margin:             15px 0px 5px 0px;
+                    }
+
+                    label.checkboxOption {
+                        display:            inline-flex;
+                        align-items:        baseline;
+                        gap:                6px;
+                        cursor:             pointer;
                     }
 
                     input[type="checkbox"] {
@@ -3605,4 +3623,28 @@ body {
     .poiPublicationReceipt { border-top: 1px solid #c4d4df; margin-top: 10px; padding-top: 6px; }
     .poiPublicationReceipts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 12px; }
     .securityFingerprint { max-width: 220px; }
+}
+
+
+// WCAG 2.1 AA / BITV 2.0 keyboard focus visibility and reduced motion
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible {
+    outline:            2px solid #0b5cab;
+    outline-offset:     2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration:        0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration:       0.01ms !important;
+        scroll-behavior:           auto !important;
+    }
 }

@@ -59,6 +59,7 @@ export function createIcon(iconClassName: string): HTMLElement {
 
     const icon = document.createElement("i");
     icon.className = iconClassName;
+    icon.setAttribute("aria-hidden", "true");
     return icon;
 
 }

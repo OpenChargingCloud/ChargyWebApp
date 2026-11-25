@@ -15,7 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<html>
+<html lang="de">
 
     <head>
 
@@ -30,9 +30,11 @@
 
         <meta http-equiv="Content-Security-Policy" content="
             default-src 'self';
+            base-uri 'self';
+            object-src 'none';
             connect-src <%= htmlWebpackPlugin.options.connectSrc %>;
             img-src 'self' data: blob: https:;
-            script-src 'self' 'unsafe-inline' 'unsafe-eval';
+            script-src <%= htmlWebpackPlugin.options.scriptSrc %>;
             style-src 'self' 'unsafe-inline';
         ">
 <!-- connect-src is written by the build: "'self' https: wss:", plus "http:
@@ -56,7 +58,8 @@
                  https://open.charging.cloud/chargy/
                  https://raw.githubusercontent.com/OpenChargingCloud/ChargyDesktopApp/master/; -->
 <!-- style-src 'unsafe-inline' required for leaflet and markers! -->
-<!-- script-src 'unsafe-eval' only required for faster WebPack during development! -->
+<!-- script-src is "'self'" in production builds (no 'unsafe-inline' or 'unsafe-eval')
+     and "'self' 'unsafe-eval'" in development builds for webpack tooling. -->
 
         <!--<link rel="icon"       href="/favicon.png"                 type="image/png" />-->
         <link rel="stylesheet" href="css/leaflet.css"                 type="text/css" />
@@ -69,32 +72,32 @@
 
         <div id="app">
 
-            <div id="headline">
+            <div id="headline" role="banner">
                 <div id="logo"><span data-i18n-key="appHeadline">Chargy - Transparenzsoftware für die Elektromobilität</span></div>
                 <div id="windowButtons">
                     <div id="languageSelector">
-                        <button id="languageButton" aria-haspopup="true" aria-expanded="false" title="Sprache auswählen">
+                        <button id="languageButton" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Sprache auswählen" title="Sprache auswählen" data-i18n-aria-label-key="selectLanguageLabel" data-i18n-title-key="selectLanguageLabel">
                             <img id="languageFlag" class="languageFlag" src="images/flags/en.svg" alt="" aria-hidden="true">
                         </button>
                         <div id="languageMenu" role="menu">
-                            <button data-language="de" role="menuitem">
+                            <button type="button" data-language="de" role="menuitem">
                                 <img class="languageFlag" src="images/flags/de.svg" alt="" aria-hidden="true">
                                 <span>Deutsch</span>
                             </button>
-                            <button data-language="en" role="menuitem">
+                            <button type="button" data-language="en" role="menuitem">
                                 <img class="languageFlag" src="images/flags/en.svg" alt="" aria-hidden="true">
                                 <span>English</span>
                             </button>
                         </div>
                     </div>
-                    <button id="updateAvailableButton"><i class="fas fa-exclamation-circle"></i></button>
-                    <button id="settingsButton"       ><i class="fas fa-cog"                ></i></button>
-                    <button id="aboutButton"          ><i class="far fa-question-circle"   ></i></button>
-                    <button id="fullScreenButton"     ><i class="fas fa-expand"            ></i></button>
+                    <button id="updateAvailableButton" type="button" aria-label="Update verfügbar" title="Update verfügbar" data-i18n-aria-label-key="updateAvailableLabel" data-i18n-title-key="updateAvailableLabel"><i class="fas fa-exclamation-circle" aria-hidden="true"></i></button>
+                    <button id="settingsButton"        type="button" aria-label="Einstellungen" title="Einstellungen" data-i18n-aria-label-key="settingsLabel" data-i18n-title-key="settingsLabel"><i class="fas fa-cog" aria-hidden="true"></i></button>
+                    <button id="aboutButton"           type="button" aria-label="Über Chargy" title="Über Chargy" data-i18n-aria-label-key="aboutLabel" data-i18n-title-key="aboutLabel"><i class="far fa-question-circle" aria-hidden="true"></i></button>
+                    <button id="fullScreenButton"      type="button" aria-label="Vollbild umschalten" title="Vollbild umschalten" data-i18n-aria-label-key="fullscreenToggleLabel" data-i18n-title-key="fullscreenToggleLabel"><i class="fas fa-expand" aria-hidden="true"></i></button>
                 </div>
             </div>
 
-            <div id="verifyframe">
+            <div id="verifyframe" role="main">
 
                 <div id="leftbar">
 
@@ -107,14 +110,14 @@
                                         über die Zwischenablage einfügen oder Drag'n'Drop verwenden...</div>
 
                             <div id="buttonsDiv">
-                                <button id="fileInputButton"><i class="far fa-folder-open"></i><br /><span data-i18n-key="recordsLabel">Datensätze</span><br /><span data-i18n-key="loadLabel">laden</span></button>
+                                <button id="fileInputButton" type="button"><i class="far fa-folder-open" aria-hidden="true"></i><br /><span data-i18n-key="recordsLabel">Datensätze</span><br /><span data-i18n-key="loadLabel">laden</span></button>
                                 <input id="fileInput" type="file" multiple accept=".chargy,.xml,.json,.pem,.txt,.pdf,.zip,.tar,.gz,.bz2,.png,.jpg,.jpeg,.gif,.webp,.bmp,.svg,application/xml,application/json,text/plain,application/pdf,application/zip,application/gzip,application/x-bzip2,application/x-tar,image/*" />
-                                <button id="qrScanButton" disabled><i class="fas fa-qrcode"></i><br /><span data-i18n-key="qrCodeLabel">QR-Code</span><br /><span data-i18n-key="scanLabel">scannen</span></button>
-                                <button id="pasteButton"><i class="fas fa-paste"></i><br /><span data-i18n-key="recordsLabel">Datensätze</span><br /><span data-i18n-key="pasteLabel">einfügen</span></button>
+                                <button id="qrScanButton" type="button" disabled><i class="fas fa-qrcode" aria-hidden="true"></i><br /><span data-i18n-key="qrCodeLabel">QR-Code</span><br /><span data-i18n-key="scanLabel">scannen</span></button>
+                                <button id="pasteButton" type="button"><i class="fas fa-paste" aria-hidden="true"></i><br /><span data-i18n-key="recordsLabel">Datensätze</span><br /><span data-i18n-key="pasteLabel">einfügen</span></button>
                             </div>
 
                             <div id="loadingErrors">
-                                <div id="errorText"></div>
+                                <div id="errorText" role="alert" aria-live="assertive"></div>
                             </div>
 
                         </div>
@@ -138,135 +141,135 @@
 
                                 <div class="lib">
                                     <div class="name">Chargy WebApp <span id="chargyVersion"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/blob/master/LICENSE">Copyright &copy; 2018-2026 GraphDefined GmbH<br />AGPL v3 License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2018-2026 GraphDefined GmbH<br />AGPL v3 License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">Chargy Core <span id="chargyCoreVersion"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyCore.TS/blob/master/LICENSE">Copyright &copy; 2018-2026 GraphDefined GmbH<br />AGPL v3 License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/OpenChargingCloud/ChargyCore.TS/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2018-2026 GraphDefined GmbH<br />AGPL v3 License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">@open-charging-cloud/totp <span id="totp"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/OpenChargingCloud/TOTP.TS/blob/master/LICENSE">Copyright &copy; 2024-2026 GraphDefined GmbH<br />Apache License v2.0</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/OpenChargingCloud/TOTP.TS/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2024-2026 GraphDefined GmbH<br />Apache License v2.0</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">@vanaheimr/cose <span id="vanaheimrCOSE"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/Vanaheimr/COSE.TS">Copyright &copy; 2026 GraphDefined GmbH<br />Apache License v2.0</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/Vanaheimr/COSE.TS" target="_blank" rel="noopener noreferrer">Copyright &copy; 2026 GraphDefined GmbH<br />Apache License v2.0</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">@vanaheimr/metrological-cbor <span id="vanaheimrMetrologicalCBOR"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/Vanaheimr/MetrologicalCBOR.TS">Copyright &copy; 2026 GraphDefined GmbH<br />Apache License v2.0</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/Vanaheimr/MetrologicalCBOR.TS" target="_blank" rel="noopener noreferrer">Copyright &copy; 2026 GraphDefined GmbH<br />Apache License v2.0</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">TypeScript <span id="typeScript"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt">Copyright &copy; Microsoft Corporation<br />Apache License v2.0</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt" target="_blank" rel="noopener noreferrer">Copyright &copy; Microsoft Corporation<br />Apache License v2.0</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">SASS <span id="SASS"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/sass/dart-sass/blob/main/LICENSE">Copyright &copy; 2016, Google Inc.<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/sass/dart-sass/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2016, Google Inc.<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">moment <span id="momentJS"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/moment/moment/blob/develop/LICENSE">Copyright &copy; JS Foundation and other contributors<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/moment/moment/blob/develop/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; JS Foundation and other contributors<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">elliptic <span id="elliptic"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/indutny/elliptic">Copyright &copy; Fedor Indutny, 2014<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/indutny/elliptic" target="_blank" rel="noopener noreferrer">Copyright &copy; Fedor Indutny, 2014<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">@noble/curves <span id="nobleCurves"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/paulmillr/noble-curves/blob/main/LICENSE">Copyright &copy; 2022 Paul Miller<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/paulmillr/noble-curves/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2022 Paul Miller<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">@noble/hashes <span id="nobleHashes"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/paulmillr/noble-hashes/blob/main/LICENSE">Copyright &copy; 2022 Paul Miller<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/paulmillr/noble-hashes/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2022 Paul Miller<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">@noble/post-quantum <span id="noblePostQuantum"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/paulmillr/noble-post-quantum/blob/main/LICENSE">Copyright &copy; 2024 Paul Miller<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/paulmillr/noble-post-quantum/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2024 Paul Miller<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">secp224k1 1.0.0</div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo/blob/master/LICENSE">Copyright &copy; Craig OConnor, Achim Friedland<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; Craig OConnor, Achim Friedland<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">pdfjs-dist <span id="pdfjsdist"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/mozilla/pdfjs-dist/blob/master/LICENSE">Copyright &copy; Mozilla<br />Apache v2.0 License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/mozilla/pdfjs-dist/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; Mozilla<br />Apache v2.0 License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">seek-bzip <span id="seekBzip"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/cscott/seek-bzip/blob/master/LICENSE">Copyright &copy; C. Scott Ananian<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/cscott/seek-bzip/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; C. Scott Ananian<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">File Type <span id="fileType"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/sindresorhus/file-type/blob/main/license">Copyright &copy; Sindre Sorhus<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/sindresorhus/file-type/blob/main/license" target="_blank" rel="noopener noreferrer">Copyright &copy; Sindre Sorhus<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">is-url-superb <span id="isURLSuperb"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/sindresorhus/is-url-superb/blob/main/license">Copyright &copy; Sindre Sorhus<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/sindresorhus/is-url-superb/blob/main/license" target="_blank" rel="noopener noreferrer">Copyright &copy; Sindre Sorhus<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">jsQR <span id="jsQR"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/cozmo/jsQR/blob/master/LICENSE">Copyright &copy; Cosmo Wolfe<br />Apache License v2.0</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/cozmo/jsQR/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; Cosmo Wolfe<br />Apache License v2.0</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">asn1.js <span id="asn1JS"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/PeculiarVentures/ASN1.js/blob/master/LICENSE">Copyright &copy; 2015-2019, Peculiar Ventures<br />BSD License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/PeculiarVentures/ASN1.js/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2015-2019, Peculiar Ventures<br />BSD License</a></div>
                                 </div>
                                 <div class="lib">
-                                    <div class="name">buffer <span id="buffer"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/feross/buffer/blob/master/LICENSE">Copyright &copy; Feross Aboukhadijeh, and other contributors<br />MIT License</button></div>
+                                    <div class="name">buffer <span id="bufferVersion"></span></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/feross/buffer/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; Feross Aboukhadijeh, and other contributors<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">uuid <span id="uuid"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/uuidjs/uuid/blob/main/LICENSE.md">Copyright &copy; 2010-2020 Robert Kieffer and other contributors<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/uuidjs/uuid/blob/main/LICENSE.md" target="_blank" rel="noopener noreferrer">Copyright &copy; 2010-2020 Robert Kieffer and other contributors<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">path-browserify <span id="pathBrowserify"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/browserify/path-browserify/blob/master/LICENSE">Copyright &copy; 2013 James Halliday<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/browserify/path-browserify/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2013 James Halliday<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">stream-browserify <span id="streamBrowserify"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/browserify/stream-browserify/blob/master/LICENSE">Copyright &copy; James Halliday<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/browserify/stream-browserify/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; James Halliday<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">stream-http <span id="streamHTTP"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/jhiesey/stream-http/blob/master/LICENSE">Copyright &copy; 2015 John Hiesey<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/jhiesey/stream-http/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2015 John Hiesey<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">url <span id="url"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/defunctzombie/node-url/blob/master/LICENSE">Copyright &copy; 2014 Joyent, Inc. and other Node contributors<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/defunctzombie/node-url/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2014 Joyent, Inc. and other Node contributors<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">vm-browserify <span id="vmBrowserify"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/browserify/vm-browserify/blob/master/LICENSE">Copyright &copy; James Halliday<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/browserify/vm-browserify/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; James Halliday<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">base32-decode <span id="base32Decode"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/LinusU/base32-decode">Copyright &copy; Linus Unnebäck<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/LinusU/base32-decode" target="_blank" rel="noopener noreferrer">Copyright &copy; Linus Unnebäck<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">leaflet <span id="leafletJS"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/Leaflet/Leaflet/blob/master/LICENSE">Copyright &copy; 2010-2022, Vladimir Agafonkin<br />Copyright &copy; 2010-2011, CloudMade<br />BSD 2-Clause License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/Leaflet/Leaflet/blob/master/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2010-2022, Vladimir Agafonkin<br />Copyright &copy; 2010-2011, CloudMade<br />BSD 2-Clause License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">leaflet Awesome Markers <span id="leafletAwesomeMarkers"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/lennardv2/Leaflet.awesome-markers/blob/2.0/develop/LICENSE">Copyright &copy; 2013 L. Voogdt<br />BSD 2-Clause License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/lennardv2/Leaflet.awesome-markers/blob/2.0/develop/LICENSE" target="_blank" rel="noopener noreferrer">Copyright &copy; 2013 L. Voogdt<br />BSD 2-Clause License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">chart.js <span id="chartJS"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/chartjs/Chart.js/blob/master/LICENSE.md">Copyright &copy; 2014-2024 Chart.js Contributors<br />Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/chartjs/Chart.js/blob/master/LICENSE.md" target="_blank" rel="noopener noreferrer">Copyright &copy; 2014-2024 Chart.js Contributors<br />Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">decimal.js <span id="decimalJS"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/MikeMcl/decimal.js/blob/master/LICENCE.md">Copyright &copy; 2022 Michael Mclaughlin<br />MIT License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/MikeMcl/decimal.js/blob/master/LICENCE.md" target="_blank" rel="noopener noreferrer">Copyright &copy; 2022 Michael Mclaughlin<br />MIT License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">FontAwesome <span id="fontAwesome"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://fontawesome.com/license/free">Copyright &copy; 2022 Fonticons, Inc.<br />Font Awesome Free License</button></div>
+                                    <div class="license"><a class="linkButton" href="https://fontawesome.com/license/free" target="_blank" rel="noopener noreferrer">Copyright &copy; 2022 Fonticons, Inc.<br />Font Awesome Free License</a></div>
                                 </div>
                                 <div class="lib">
                                     <div class="name">Webpack <span id="webpack"></span></div>
-                                    <div class="license"><button class="linkButton" href="https://github.com/webpack/webpack/blob/main/LICENSE">Copyright JS Foundation and other contributors</button></div>
+                                    <div class="license"><a class="linkButton" href="https://github.com/webpack/webpack/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">Copyright JS Foundation and other contributors</a></div>
                                 </div>
 
                             </div>
@@ -275,46 +278,46 @@
                                 Die SHA256/512-Hash-Funktionen werden durch die Crypto API des Web Browsers realisiert.
                             </p>
                             <p>
-                                <span data-i18n-key="aboutECCIntro">Elliptische Kurven Kryptographie wird durch</span> <button class="linkButton" href="https://github.com/indutny/elliptic">elliptic</button> <span data-i18n-key="aboutECCAnd">und einer angepassten Implementierung der</span> <button class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo">secp224k1-Kurve</button> <span data-i18n-key="aboutECCOutro">realisiert.
+                                <span data-i18n-key="aboutECCIntro">Elliptische Kurven Kryptographie wird durch</span> <a class="linkButton" href="https://github.com/indutny/elliptic" target="_blank" rel="noopener noreferrer">elliptic</a> <span data-i18n-key="aboutECCAnd">und einer angepassten Implementierung der</span> <a class="linkButton" href="https://github.com/CraigglesO/elliptic-curve-signature-algo" target="_blank" rel="noopener noreferrer">secp224k1-Kurve</a> <span data-i18n-key="aboutECCOutro">realisiert.
                                 Hierbei kommen je nach Verfahren und Ladestations- bzw. Smart-Meter-Hersteller unterschiedliche elliptische Kurven zum Einsatz.</span>
                             </p>
                             <p>
-                                <span data-i18n-key="aboutDocumentation">Weitere Details zu den internen Datenstrukturen und Abläufen von Chargy gibt es auf</span> <button class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/tree/master/documentation">GitHub</button>.
+                                <span data-i18n-key="aboutDocumentation">Weitere Details zu den internen Datenstrukturen und Abläufen von Chargy gibt es auf</span> <a class="linkButton" href="https://github.com/OpenChargingCloud/ChargyWebApp/tree/master/documentation" target="_blank" rel="noopener noreferrer">GitHub</a>.
                             </p>
 
                             <div id="applicationHash">
-                                <div id="text" data-i18n-key="applicationHashLabel">SHA-512 Hashwert dieser Software:</div>
-                                <div id="value"><span style="font-style: italic" data-i18n-key="isBeingCalculated">Wird berechnet...</span></div>
+                                <div class="hashLabel" data-i18n-key="applicationHashLabel">SHA-512 Hashwert dieser Software:</div>
+                                <div class="hashValue"><span style="font-style: italic" data-i18n-key="isBeingCalculated">Wird berechnet...</span></div>
                                 <div id="equalityCheck"></div>
                                 <div id="sigHead"></div>
                                 <div id="signatures"></div>
                             </div>
 
                             <div id="chargyCoreHash">
-                                <div id="text" data-i18n-key="chargyCoreHashLabel">SHA-512 Hashwert der Chargy Core v<span id="version"></span>:</div>
-                                <div id="value"></div>
+                                <div class="hashLabel" data-i18n-key="chargyCoreHashLabel">SHA-512 Hashwert der Chargy Core v<span id="version"></span>:</div>
+                                <div class="hashValue"></div>
                             </div>
 
                             <div id="applicationSignatures">
-                                <div id="text" data-i18n-key="applicationSignaturesLabel">Digitale Signaturen dieser Software:</div>
-                                <div id="value"><span style="font-style: italic" data-i18n-key="areBeingCalculated">Werden berechnet...</span></div>
+                                <div class="hashLabel" data-i18n-key="applicationSignaturesLabel">Digitale Signaturen dieser Software:</div>
+                                <div class="hashValue"><span style="font-style: italic" data-i18n-key="areBeingCalculated">Werden berechnet...</span></div>
                             </div>
 
                             <div id="funding">
                                 <p>
                                     <span data-i18n-key="fundingIntro">Dieses Open-Source-Projekt wird teilweise durch den</span>
-                                    <button class="linkButton" href="https://nlnet.nl/commonsfund/">NGI Zero Commons Fund</button>
+                                    <a class="linkButton" href="https://nlnet.nl/commonsfund/" target="_blank" rel="noopener noreferrer">NGI Zero Commons Fund</a>
                                     <span data-i18n-key="fundingAsPartOf">im Rahmen unseres</span>
-                                    <button class="linkButton" href="https://nlnet.nl/project/EVQI/" data-i18n-key="fundingEVQIProjectLabel">EVQI-Projekts</button><span data-i18n-key="fundingProjectOutro"> gefördert</span>.
+                                    <a class="linkButton" href="https://nlnet.nl/project/EVQI/" target="_blank" rel="noopener noreferrer" data-i18n-key="fundingEVQIProjectLabel">EVQI-Projekts</a><span data-i18n-key="fundingProjectOutro"> gefördert</span>.
                                 </p>
                                 <p>
                                     <span data-i18n-key="fundingSupportIntro">Wir schätzen auch jede zusätzliche Finanzierung und langfristige Unterstützung für die Chargy-Familie, zum Beispiel über</span>
-                                    <button class="linkButton" href="https://github.com/sponsors/GraphDefined">GitHub Sponsors</button>,
+                                    <a class="linkButton" href="https://github.com/sponsors/GraphDefined" target="_blank" rel="noopener noreferrer">GitHub Sponsors</a>,
                                     <span data-i18n-key="fundingSupportOutro">da es uns hilft, das Projekt nachhaltig, unabhängig und nützlich für die gesamte E-Mobilitäts-Community weiterzuentwickeln.</span>
                                 </p>
-                                <center>
-                                    <img src="images/NGI0_tag.svg" height="30">
-                                </center>
+                                <div class="fundingLogo">
+                                    <img src="images/NGI0_tag.svg" height="30" alt="NGI Zero Commons Fund">
+                                </div>
                             </div>
 
                             <div id="TOSP">
@@ -337,28 +340,28 @@
                             <h1 data-i18n-key="settingsLabel">Einstellungen</h1>
 
                             <div id="settingsMenu">
-                                <button id="settingsTrustManagementEntry" class="settingsEntry">
-                                    <i class="fas fa-shield-halved"></i>
+                                <button id="settingsTrustManagementEntry" type="button" class="settingsEntry">
+                                    <i class="fas fa-shield-halved" aria-hidden="true"></i>
                                     <div class="text">
                                         <div class="title" data-i18n-key="trustManagementTitle">Trust Management</div>
                                         <div class="description" data-i18n-key="trustManagementDescription">Trust Anchors und mitgelieferte Public Keys verwalten.</div>
                                     </div>
-                                    <i class="fas fa-chevron-right"></i>
+                                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
                                 </button>
-                                <button id="settingsTrustedOriginsEntry" class="settingsEntry">
-                                    <i class="fas fa-satellite-dish"></i>
+                                <button id="settingsTrustedOriginsEntry" type="button" class="settingsEntry">
+                                    <i class="fas fa-satellite-dish" aria-hidden="true"></i>
                                     <div class="text">
                                         <div class="title" data-i18n-key="settingsTrustedOriginsTitle">Server f&uuml;r Live-Daten</div>
                                         <div class="description" data-i18n-key="settingsTrustedOriginsDescription">Welchen Servern das Nachladen laufender Ladevorg&auml;nge erlaubt oder verboten wurde.</div>
                                     </div>
-                                    <i class="fas fa-chevron-right"></i>
+                                    <i class="fas fa-chevron-right" aria-hidden="true"></i>
                                 </button>
                             </div>
 
                             <div id="settingsTrustManagement" class="trustManagement" hidden></div>
 
                             <div id="settingsTrustedOrigins">
-                                <div id="text" data-i18n-key="trustedOriginsLabel">F&uuml;r das Nachladen von Live-Daten gemerkte Entscheidungen:</div>
+                                <div class="trustedOriginsHeading" data-i18n-key="trustedOriginsLabel">F&uuml;r das Nachladen von Live-Daten gemerkte Entscheidungen:</div>
                                 <div id="trustedOriginsList"></div>
                                 <div id="noTrustedOrigins" data-i18n-key="noTrustedOriginsLabel">Bisher wurde keine Entscheidung gemerkt.</div>
                                 <div id="trustRetention">
@@ -366,7 +369,7 @@
                                         <input type="checkbox" id="trustRetentionEnabled">
                                         <span data-i18n-key="trustRetentionTitle">Ungenutzte Entscheidungen vergessen nach</span>
                                     </label>
-                                    <input type="number" id="trustRetentionMonths" min="1" max="120" step="1" value="6">
+                                    <input type="number" id="trustRetentionMonths" min="1" max="120" step="1" value="6" aria-label="Aufbewahrungsdauer in Monaten" data-i18n-aria-label-key="trustRetentionMonthsAriaLabel">
                                     <span data-i18n-key="trustRetentionMonthsLabel">Monaten</span>
                                     <div class="description" data-i18n-key="trustRetentionDescription">Jede Nutzung verl&auml;ngert die Frist &mdash; nur Entscheidungen, die so lange nicht gebraucht wurden, verfallen und werden beim n&auml;chsten Mal erneut erfragt. Das r&auml;umt auch Eintr&auml;ge f&uuml;r Server auf, die ein Betreiber l&auml;ngst abgeschaltet hat.</div>
                                 </div>
@@ -428,9 +431,9 @@
                         <div id="invalidDataSetsScreen"></div>
 
                         <div id="inputButtons">
-                            <button id="backButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                            <button id="backButton" type="button" aria-label="Zurück" title="Zurück" data-i18n-aria-label-key="backLabel" data-i18n-title-key="backLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
                             <div id="exportButtonDiv">
-                                <button id="exportButton"><i class="fas fa-download"></i> <span data-i18n-key="exportLabel">Exportieren</span></button>
+                                <button id="exportButton" type="button"><i class="fas fa-download" aria-hidden="true"></i> <span data-i18n-key="exportLabel">Exportieren</span></button>
                             </div>
                         </div>
 
@@ -445,14 +448,14 @@
                     <div id="detailedInfos">
                     </div>
 
-                    <div id="feedback">
+                    <div id="feedback" role="contentinfo">
                         <span data-i18n-key="feedbackQuestion">Falsche Daten, falsche Signaturen oder sonstige Fragen?</span><br />
                         <span data-i18n-key="feedbackContact">Treten Sie mit uns in Kontakt:</span>
                         <div id="feedbackMethods">
-                            <button id="showIssueTracker"><i class="far fa-comments"></i><span data-i18n-key="reportIssueLabel">Mängel melden</span></button>
-                            <a      id="eMail"   href="mailto:..."><i class="far fa-envelope"></i></a>
-                            <a      id="hotline" href="tel:..."><i class="fas fa-phone fa-rotate-90"></i></a>
-                            <button id="showImprint"><i class="fas fa-info-circle"></i><span data-i18n-key="imprintLabel">Impressum</span></button>
+                            <button id="showIssueTracker" type="button"><i class="far fa-comments" aria-hidden="true"></i><span data-i18n-key="reportIssueLabel">Mängel melden</span></button>
+                            <a      id="eMail"   href="mailto:..." aria-label="E-Mail-Kontakt" title="E-Mail-Kontakt" data-i18n-aria-label-key="emailContactLabel" data-i18n-title-key="emailContactLabel"><i class="far fa-envelope" aria-hidden="true"></i></a>
+                            <a      id="hotline" href="tel:..." aria-label="Telefon-Hotline" title="Telefon-Hotline" data-i18n-aria-label-key="phoneContactLabel" data-i18n-title-key="phoneContactLabel"><i class="fas fa-phone fa-rotate-90" aria-hidden="true"></i></a>
+                            <button id="showImprint" type="button"><i class="fas fa-info-circle" aria-hidden="true"></i><span data-i18n-key="imprintLabel">Impressum</span></button>
                         </div>
                     </div>
 
@@ -460,14 +463,14 @@
 
             </div>
 
-            <div id="chargingTariffDetails" class="overlay">
+            <div id="chargingTariffDetails" class="overlay" role="dialog" aria-modal="true" aria-labelledby="chargingTariffDetailsTitle" tabindex="-1">
                 <div class="overlayText">
 
                     <div class="headline">
 
-                        <div class="error"></div>
+                        <div class="error" role="alert"></div>
 
-                        <div class="intro">
+                        <div id="chargingTariffDetailsTitle" class="intro">
                             <span data-i18n-key="tariffInformations">Tariff informations:</span>
                         </div>
 
@@ -480,25 +483,25 @@
 
                     <div class="footer">
 
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
 
-                        <div id="signatureCheck"></div>
+                        <div id="chargingTariffSignatureCheck" class="signatureCheck"></div>
 
-                        <button class="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+                        <button type="button" class="overlayRightButton" aria-label="Weiter" title="Weiter" data-i18n-aria-label-key="nextLabel" data-i18n-title-key="nextLabel"><i class="fas fa-arrow-alt-circle-right" aria-hidden="true"></i></button>
 
                     </div>
 
                 </div>
             </div>
 
-            <div id="chargingPeriodDetails" class="overlay">
+            <div id="chargingPeriodDetails" class="overlay" role="dialog" aria-modal="true" aria-labelledby="chargingPeriodDetailsTitle" tabindex="-1">
                 <div class="overlayText">
 
                     <div class="headline">
 
-                        <div class="error"></div>
+                        <div class="error" role="alert"></div>
 
-                        <div class="intro">
+                        <div id="chargingPeriodDetailsTitle" class="intro">
                             <span data-i18n-key="chargingPeriod">Charging Period</span>
                         </div>
 
@@ -511,25 +514,25 @@
 
                     <div class="footer">
 
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
 
-                        <div id="signatureCheck"></div>
+                        <div id="chargingPeriodSignatureCheck" class="signatureCheck"></div>
 
-                        <button class="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+                        <button type="button" class="overlayRightButton" aria-label="Weiter" title="Weiter" data-i18n-aria-label-key="nextLabel" data-i18n-title-key="nextLabel"><i class="fas fa-arrow-alt-circle-right" aria-hidden="true"></i></button>
 
                     </div>
 
                 </div>
             </div>
 
-            <div id="measurementsDetails" class="overlay">
+            <div id="measurementsDetails" class="overlay" role="dialog" aria-modal="true" aria-labelledby="measurementsDetailsTitle" tabindex="-1">
                 <div class="overlayText">
 
                     <div class="headline">
 
-                        <div class="error"></div>
+                        <div class="error" role="alert"></div>
 
-                        <div class="intro">
+                        <div id="measurementsDetailsTitle" class="intro">
                             <span data-i18n-key="signatureRelevantDataIntro">Folgende Daten des Ladevorgangs sind <span class="important">mess- und eichrechtsrelevant</span> und damit gemäß</span> <span id="cryptoAlgorithm"></span> <span data-i18n-key="signatureRelevantDataOutro">Teil der digitalen Signatur:</span>
                         </div>
 
@@ -572,48 +575,48 @@
 
                     <div class="footer">
 
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
 
-                        <div id="signatureCheck"></div>
+                        <div id="signatureCheck" class="signatureCheck"></div>
 
-                        <button class="overlayRightButton"><i class="fas fa-arrow-alt-circle-right"></i></button>
+                        <button type="button" class="overlayRightButton" aria-label="Weiter" title="Weiter" data-i18n-aria-label-key="nextLabel" data-i18n-title-key="nextLabel"><i class="fas fa-arrow-alt-circle-right" aria-hidden="true"></i></button>
 
                     </div>
 
                 </div>
             </div>
 
-            <div id="issueTracker" class="overlay">
+            <div id="issueTracker" class="overlay" role="dialog" aria-modal="true" aria-labelledby="issueTrackerTitle" tabindex="-1">
                 <div class="overlayText">
 
-                    <div id="headline" data-i18n-key="issueTrackerHeadline">
+                    <h2 id="issueTrackerTitle" class="headline" data-i18n-key="issueTrackerHeadline">
                         Sie wollen einen oder mehrere Mängel melden?
-                    </div>
+                    </h2>
 
                     <form id="newIssueForm">
 
-                        <div class="label" data-i18n-key="issueCategoriesLabel">Bitte wählen sie eine oder mehrere Kategorien...</div>
-                        <input type="checkbox" id="invalidCTR"                value="invalidCTR"> <span data-i18n-key="issueInvalidCTR">Transparenzdatensatz konnte nicht geladen werden</span><br>
-                        <input type="checkbox" id="InvalidStationData"        value="InvalidStationData"> <span data-i18n-key="issueInvalidStationData">Falsche Daten zu einer Ladestation</span><br>
-                        <input type="checkbox" id="invalidSignatures"         value="invalidSignatures"> <span data-i18n-key="issueInvalidSignatures">Signatur(en) im Transparenzdatensatz sind ungültig</span><br>
-                        <input type="checkbox" id="invalidCertificates"       value="invalidCertificates"> <span data-i18n-key="issueInvalidCertificates">Fehler bei der Überprüfung von digitalen Zertifikaten</span><br>
-                        <input type="checkbox" id="transparencenySoftwareBug" value="transparencenySoftwareBug"> <span data-i18n-key="issueSoftwareBug">Allgemeiner Fehler in der Transparenzsoftware</span><br>
-                        <input type="checkbox" id="DSGVO"                     value="DSGVO"> <span data-i18n-key="issueDSGVO">Anfrage nach der Datenschutz-Grundverordnung (DSGVO)</span><br>
-                        <input type="checkbox" id="BITV"                      value="BITV"> <span data-i18n-key="issueBITV">Anfrage bezüglich barrierefreier Informationstechnik (BITV 2.0, EU Direktive 2016/2102)</span><br>
+                        <div class="label" id="issueCategoriesHeading" data-i18n-key="issueCategoriesLabel">Bitte wählen sie eine oder mehrere Kategorien...</div>
+                        <label class="checkboxOption" for="invalidCTR"><input type="checkbox" id="invalidCTR" value="invalidCTR"> <span data-i18n-key="issueInvalidCTR">Transparenzdatensatz konnte nicht geladen werden</span></label><br>
+                        <label class="checkboxOption" for="InvalidStationData"><input type="checkbox" id="InvalidStationData" value="InvalidStationData"> <span data-i18n-key="issueInvalidStationData">Falsche Daten zu einer Ladestation</span></label><br>
+                        <label class="checkboxOption" for="invalidSignatures"><input type="checkbox" id="invalidSignatures" value="invalidSignatures"> <span data-i18n-key="issueInvalidSignatures">Signatur(en) im Transparenzdatensatz sind ungültig</span></label><br>
+                        <label class="checkboxOption" for="invalidCertificates"><input type="checkbox" id="invalidCertificates" value="invalidCertificates"> <span data-i18n-key="issueInvalidCertificates">Fehler bei der Überprüfung von digitalen Zertifikaten</span></label><br>
+                        <label class="checkboxOption" for="transparencenySoftwareBug"><input type="checkbox" id="transparencenySoftwareBug" value="transparencenySoftwareBug"> <span data-i18n-key="issueSoftwareBug">Allgemeiner Fehler in der Transparenzsoftware</span></label><br>
+                        <label class="checkboxOption" for="DSGVO"><input type="checkbox" id="DSGVO" value="DSGVO"> <span data-i18n-key="issueDSGVO">Anfrage nach der Datenschutz-Grundverordnung (DSGVO)</span></label><br>
+                        <label class="checkboxOption" for="BITV"><input type="checkbox" id="BITV" value="BITV"> <span data-i18n-key="issueBITV">Anfrage bezüglich barrierefreier Informationstechnik (BITV 2.0, EU Direktive 2016/2102)</span></label><br>
 
-                        <div class="label" data-i18n-key="issueDescriptionLabel">Bitte beschreiben Sie die aufgetretenen Fehler oder Probleme ein wenig genauer...</div>
+                        <label class="label" for="issueDescription" data-i18n-key="issueDescriptionLabel">Bitte beschreiben Sie die aufgetretenen Fehler oder Probleme ein wenig genauer...</label>
                         <textarea id="issueDescription"></textarea>
 
-                        <div class="label" data-i18n-key="issueIncludeCTRLabel">Sollen die Daten Ihres Ladevorgangs zur einfacheren Klärung des Problems mit übermittelt werden?</div>
+                        <label class="label" for="includeCTR" data-i18n-key="issueIncludeCTRLabel">Sollen die Daten Ihres Ladevorgangs zur einfacheren Klärung des Problems mit übermittelt werden?</label>
                         <select id="includeCTR">
                             <option value="yes" data-i18n-key="yesLabel">ja</option>
                             <option value="no" selected data-i18n-key="noLabel">nein</option>
                         </select>
 
                         <div class="label" data-i18n-key="issueContactLabel">Ihre Kontaktdaten, falls Rückfragen notwendig sein sollten...</div>
-                        <input type="text" id="issueName"  placeholder="Ihr Name" data-i18n-placeholder-key="issueNamePlaceholder"><br />
-                        <input type="text" id="issuePhone" placeholder="Ihre Telefonnummer" data-i18n-placeholder-key="issuePhonePlaceholder"><br />
-                        <input type="text" id="issueEMail" placeholder="Ihre E-Mail Adresse" data-i18n-placeholder-key="issueEMailPlaceholder"><br />
+                        <input type="text"  id="issueName"  autocomplete="name"  placeholder="Ihr Name"            aria-label="Ihr Name"            data-i18n-placeholder-key="issueNamePlaceholder"  data-i18n-aria-label-key="issueNameLabel"><br />
+                        <input type="tel"   id="issuePhone" autocomplete="tel"   placeholder="Ihre Telefonnummer"  aria-label="Ihre Telefonnummer"  data-i18n-placeholder-key="issuePhonePlaceholder" data-i18n-aria-label-key="issuePhoneLabel"><br />
+                        <input type="email" id="issueEMail" autocomplete="email" placeholder="Ihre E-Mail Adresse" aria-label="Ihre E-Mail-Adresse" data-i18n-placeholder-key="issueEMailPlaceholder" data-i18n-aria-label-key="issueEMailLabel"><br />
 
                         <div id="privacyStatement">
                             <h1>Datenschutzerklärung für diesen Mängelmelder</h1>
@@ -661,25 +664,25 @@
                         </div>
 
                         <div id="sendIssueBox">
-                            <input id="privacyStatementAccepted" type="checkbox" name="privacyStatementAccepted"><button id="showPrivacyStatement" data-i18n-key="privacyStatementLabel">Datenschutzerklärung</button> <span data-i18n-key="privacyStatementAcceptedLabel">gelesen und akzeptiert?</span><br />
-                            <button id="sendIssueButton" disabled data-i18n-key="reportIssueLabel">Mängel melden</button>
+                            <input id="privacyStatementAccepted" type="checkbox" name="privacyStatementAccepted"><button id="showPrivacyStatement" type="button" data-i18n-key="privacyStatementLabel">Datenschutzerklärung</button> <label for="privacyStatementAccepted" data-i18n-key="privacyStatementAcceptedLabel">gelesen und akzeptiert?</label><br />
+                            <button id="sendIssueButton" type="submit" disabled data-i18n-key="reportIssueLabel">Mängel melden</button>
                         </div>
 
                     </form>
 
                     <div class="footer">
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
                     </div>
 
                 </div>
             </div>
 
-            <div id="qrCodeScanner" class="overlay">
+            <div id="qrCodeScanner" class="overlay" role="dialog" aria-modal="true" aria-labelledby="qrCodeScannerTitle" tabindex="-1">
                 <div class="overlayText">
 
                     <div class="headline">
-                        <div class="error"></div>
-                        <div class="intro" data-i18n-key="scanQRCodeLabel">QR-Code scannen</div>
+                        <div class="error" role="alert"></div>
+                        <div id="qrCodeScannerTitle" class="intro" data-i18n-key="scanQRCodeLabel">QR-Code scannen</div>
                     </div>
 
                     <div class="data">
@@ -698,9 +701,9 @@
                                 <pre id="qrCodeScannerResultText"></pre>
                             </div>
                             <div id="qrCodeScannerURLActions">
-                                <button id="qrCodeScannerOpenURLButton"><i class="fas fa-external-link-alt"></i> <span data-i18n-key="openURLLabel">URL öffnen</span></button>
+                                <button id="qrCodeScannerOpenURLButton" type="button"><i class="fas fa-external-link-alt" aria-hidden="true"></i> <span data-i18n-key="openURLLabel">URL öffnen</span></button>
                             </div>
-                            <button id="qrCodeScannerRescanButton"><i class="fas fa-rotate-right"></i> <span data-i18n-key="rescanLabel">Erneut scannen</span></button>
+                            <button id="qrCodeScannerRescanButton" type="button"><i class="fas fa-rotate-right" aria-hidden="true"></i> <span data-i18n-key="rescanLabel">Erneut scannen</span></button>
                         </div>
                     </div>
 
@@ -708,17 +711,17 @@
 
                     <div class="footer">
                         <div id="qrCodeScannerTrustAnchorActions" hidden></div>
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
                     </div>
 
                 </div>
             </div>
 
-            <div id="liveLinkTrustDialog" class="overlay">
+            <div id="liveLinkTrustDialog" class="overlay" role="dialog" aria-modal="true" aria-labelledby="liveLinkTrustTitle" tabindex="-1">
                 <div class="overlayText">
                     <div class="headline">
-                        <div class="error"></div>
-                        <div class="intro" data-i18n-key="liveLinkTrustTitle">Live-Daten laden?</div>
+                        <div class="error" role="alert"></div>
+                        <div id="liveLinkTrustTitle" class="intro" data-i18n-key="liveLinkTrustTitle">Live-Daten laden?</div>
                     </div>
                     <div class="data">
                         <div id="liveLinkTrustDocument"></div>
@@ -728,18 +731,18 @@
                     </div>
                     <div class="spacer"></div>
                     <div class="footer">
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
                     </div>
                 </div>
             </div>
-            <div id="pkiDetails" class="overlay">
+            <div id="pkiDetails" class="overlay" role="dialog" aria-modal="true" aria-labelledby="pkiDetailsTitle" tabindex="-1">
                 <div class="overlayText">
 
                     <div class="headline">
 
-                        <div class="error"></div>
+                        <div class="error" role="alert"></div>
 
-                        <div class="intro">
+                        <div id="pkiDetailsTitle" class="intro">
                             Public Key Infrastructure
                         </div>
 
@@ -753,7 +756,7 @@
                     </div>
 
                     <div class="footer">
-                        <button class="overlayLeftButton"><i class="fas fa-arrow-alt-circle-left"></i></button>
+                        <button type="button" class="overlayLeftButton" aria-label="Dialog schließen" title="Dialog schließen" data-i18n-aria-label-key="closeDialogLabel" data-i18n-title-key="closeDialogLabel"><i class="fas fa-arrow-alt-circle-left" aria-hidden="true"></i></button>
                     </div>
 
                 </div>
