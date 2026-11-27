@@ -67,6 +67,10 @@ jobs:
         if: ${{ matrix.leg == 'ubuntu-node-26' }}
         run: npx playwright install --with-deps chromium
 
+      - name: Verify production CSP, accessibility, integrity and i18n in browser
+        if: ${{ matrix.leg == 'ubuntu-node-26' }}
+        run: npm run verify:browser:run
+
       - name: Capture current TrustAnchor documentation screenshots
         if: ${{ matrix.leg == 'ubuntu-node-26' }}
         run: npm run docs:screenshots:capture -- --output-dir artifacts/documentation-screenshots

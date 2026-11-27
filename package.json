@@ -26,6 +26,8 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test:typecheck": "tsc -p tests/tsconfig.json --noEmit",
     "compare:trust-ports": "node build-tools/compareTrustPorts.mjs",
+    "verify:browser:run": "node build-tools/verifyProductionBrowser.mjs",
+    "verify:browser": "npm run bundle:production && npm run verify:browser:run",
     "verify": "npm run typecheck && npm run test:typecheck && npm run lint && npm test && npm run build:production",
     "docs:screenshots": "npm run bundle:production && npm run docs:screenshots:capture",
     "docs:screenshots:capture": "node build-tools/captureTrustScreenshots.mjs",
