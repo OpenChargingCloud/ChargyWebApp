@@ -160,6 +160,10 @@ import {
     formatSHA512Groups,
     hashesMatch
 }                                      from './applicationIntegrity';
+import {
+    formatDuration,
+    formatTimeOfDay
+}                                      from './i18nFormat';
 // import {
 //     normalizePublicKeys,
 //     tryParseStandalonePublicKeys
@@ -1848,6 +1852,7 @@ export class ChargyApp {
     private applyTranslations(): void {
 
         document.documentElement.lang = this.UILanguage;
+        document.title = this.chargy.GetLocalizedMessage("appHeadline");
 
         for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-i18n-key]")))
         {
@@ -1855,6 +1860,9 @@ export class ChargyApp {
             if (key != null)
                 setLocalizedContent(element, this.chargy.GetLocalizedMessage(key));
         }
+
+        this.chargyCoreHashTextDiv.textContent =
+            this.chargy.GetLocalizedMessage("chargyCoreHashLabel").replace("{version}", corePackageJson.version);
 
         for (const element of Array.from(document.querySelectorAll<HTMLElement>("[data-i18n-title-key]")))
         {
@@ -1905,6 +1913,12 @@ export class ChargyApp {
         }
 
         this.trustManagement.refresh();
+
+        if (this.settingsScreenDiv.style.display !== "none" &&
+            this.settingsTrustedOriginsDiv.style.display !== "none")
+        {
+            this.refreshTrustedOriginsList();
+        }
 
         if (this.currentChargeTransparencyRecord != null &&
             this.chargingSessionScreenDiv.style.display !== "none")
@@ -1978,7 +1992,6 @@ export class ChargyApp {
 
                 (this.openSourceLibsDiv.querySelector("#chargyVersion")          as HTMLSpanElement).textContent = this.appVersion;
                 (this.openSourceLibsDiv.querySelector("#chargyCoreVersion")      as HTMLSpanElement).textContent = corePackageJson.version;
-                 this.chargyCoreHashTextDiv. textContent = `SHA512-Hashwert der Chargy Core v${corePackageJson.version}:`;
                  this.chargyCoreHashValueDiv.textContent = formatSHA512Groups(__CHARGY_CORE_SHA512__);
 
             if (this.packageJson.devDependencies)
@@ -3312,7 +3325,7 @@ export class ChargyApp {
     {
 
         if (app == null || version == null || _package == null || signature == null)
-            return { valid: false, label: "Ungültige Signatur!" };
+            return { valid: false, label: this.chargy.GetLocalizedMessage("invalidSignatureLabel") };
 
         try {
 
@@ -3904,7 +3917,7 @@ export class ChargyApp {
                 "fas fa-chart-pie",
                 [
                     elapsed > 0
-                        ? "Ladedauer " + this.formatChargingDuration(elapsed)
+                        ? this.chargy.GetLocalizedMessage("chargingDurationLabel") + " " + this.formatChargingDuration(elapsed)
                         : "",
                     chargyLib.measurementName2human(measurement.name) + " " +
                         parseFloat(energy.toFixed(10)).toString() + " kWh"
@@ -3947,11 +3960,13 @@ export class ChargyApp {
         if (typeof latitude  === "number" && Number.isFinite(latitude)  && Math.abs(latitude)  <= 90 &&
             typeof longitude === "number" && Number.isFinite(longitude) && Math.abs(longitude) <= 180)
         {
+            const positionText = this.chargy.GetLocalizedMessage("positionLabel") + " " + latitude.toString() + ", " + longitude.toString();
+
             this.appendLiveLinkInfoRow(
                 tableDiv,
                 "locationInfos",
                 "fas fa-map-marker-alt",
-                "Position " + latitude.toString() + ", " + longitude.toString()
+                positionText
             );
 
             // This marker represents the station's location, independently of
@@ -3959,7 +3974,7 @@ export class ChargyApp {
             const marker = L.marker([latitude, longitude]);
             const popup  = document.createElement('div');
             popup.textContent = this.chargy.GetLocalizedText(chargingStation?.description) ??
-                                chargingStation?.["@id"] ?? "Position " + latitude.toString() + ", " + longitude.toString();
+                                chargingStation?.["@id"] ?? positionText;
             marker.bindPopup(popup).addTo(this.map);
             this.markers.push(marker);
 
@@ -5458,8 +5473,8 @@ export class ChargyApp {
                 const labelInfo = typeof urlInfo === "string"
                                       ? ""
                                       : [
-                                            urlInfo.priority != null ? "Priorität " + urlInfo.priority.toString() : "",
-                                            urlInfo.weight   != null ? "Gewicht "   + urlInfo.weight.  toString() : ""
+                                            urlInfo.priority != null ? this.chargy.GetLocalizedMessage("priorityLabel") + " " + urlInfo.priority.toString() : "",
+                                            urlInfo.weight   != null ? this.chargy.GetLocalizedMessage("weightLabel")   + " " + urlInfo.weight.  toString() : ""
                                         ].filter(value => value !== "").join(", ");
 
                 transportDiv.appendChild(this.createLiveLinkAnchor(url, labelInfo !== "" ? url + " (" + labelInfo + ")" : url));
@@ -5607,8 +5622,7 @@ export class ChargyApp {
 
                             dateText += " - " +
                                         (Math.floor(duration.asDays()) > 0 ? endUTC.format("dddd") + " " : "") +
-                                        endUTC.format('HH:mm:ss') +
-                                        " Uhr";
+                                        formatTimeOfDay(endUTC.format('HH:mm:ss'), this.UILanguage);
 
                         }
 
@@ -5651,7 +5665,7 @@ export class ChargyApp {
                     {
 
                         productDiv.appendChild(document.createTextNode(
-                            "Ladedauer " +
+                            this.chargy.GetLocalizedMessage("chargingDurationLabel") + " " +
                             this.formatChargingDuration(
                                 chargyLib.parseUTC(chargingSession.end).  valueOf() -
                                 chargyLib.parseUTC(chargingSession.begin).valueOf()
@@ -5670,7 +5684,7 @@ export class ChargyApp {
                                     break;
 
                                 case "Informative":
-                                    appendRelevanceBadge(productDiv, "informativ");
+                                    appendRelevanceBadge(productDiv, this.chargy.GetLocalizedMessage("informativeLabel"));
                                     break;
 
                                 default:
@@ -5742,7 +5756,7 @@ export class ChargyApp {
                                             break;
 
                                         case "Informative":
-                                            appendRelevanceBadge(productDiv, "informativ");
+                                            appendRelevanceBadge(productDiv, this.chargy.GetLocalizedMessage("informativeLabel"));
                                             break;
 
                                         default:
@@ -5790,14 +5804,9 @@ export class ChargyApp {
 
                             const parkingBegin = chargyLib.parseUTC(chargingSession.parking[0]?.begin ?? "-");
                             const parkingEnd   = chargyLib.parseUTC(lastParking.end);
-                            const duration     = this.moment.duration(parkingEnd.valueOf() - parkingBegin.valueOf());
-
-                            let parkingDurationText = "Parkdauer ";
-                            if      (Math.floor(duration.asDays())    > 1) parkingDurationText += duration.days().toString()    + " Tage " + duration.hours().toString()   + " Std. " + duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-                            else if (Math.floor(duration.asDays())    > 0) parkingDurationText += duration.days().toString()    + " Tag "  + duration.hours().toString()   + " Std. " + duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-                            else if (Math.floor(duration.asHours())   > 0) parkingDurationText += duration.hours().toString()   + " Std. " + duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-                            else if (Math.floor(duration.asMinutes()) > 0) parkingDurationText += duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-                            else if (Math.floor(duration.asSeconds()) > 0) parkingDurationText += duration.seconds().toString();
+                            const parkingDurationText =
+                                this.chargy.GetLocalizedMessage("parkingDurationLabel") + " " +
+                                formatDuration(parkingEnd.valueOf() - parkingBegin.valueOf(), this.UILanguage, "compact");
 
                             parkingDiv.appendChild(document.createTextNode(parkingDurationText));
 
@@ -5813,7 +5822,7 @@ export class ChargyApp {
                                         break;
 
                                     case "Informative":
-                                        appendRelevanceBadge(parkingDiv, "informativ");
+                                        appendRelevanceBadge(parkingDiv, this.chargy.GetLocalizedMessage("informativeLabel"));
                                         break;
 
                                     default:
@@ -6498,17 +6507,7 @@ export class ChargyApp {
 
     private formatChargingDuration(milliseconds: number): string
     {
-
-        const duration = this.moment.duration(milliseconds);
-
-        if (Math.floor(duration.asDays())    > 1) return duration.days().toString()    + " Tage "    + duration.hours().toString()   + " Std. " + duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-        if (Math.floor(duration.asDays())    > 0) return duration.days().toString()    + " Tag "     + duration.hours().toString()   + " Std. " + duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-        if (Math.floor(duration.asHours())   > 0) return duration.hours().toString()   + " Std. "    + duration.minutes().toString() + " Min. " + duration.seconds().toString() + " Sek.";
-        if (Math.floor(duration.asMinutes()) > 0) return duration.minutes().toString() + " Minuten " + duration.seconds().toString() + " Sekunden";
-        if (Math.floor(duration.asSeconds()) > 0) return duration.seconds().toString() + " Sekunden";
-
-        return "";
-
+        return formatDuration(milliseconds, this.UILanguage, "long");
     }
 
     private formatChargingProgressTimestamp(timestamp: number): string
@@ -7696,7 +7695,7 @@ export class ChargyApp {
                             //#region Show the timestamp
 
                             createDiv(measurementValueDiv, "timestamp",
-                                      chargyLib.parseUTC(measurementValue.timestamp).format('HH:mm:ss') + " Uhr");
+                                      formatTimeOfDay(chargyLib.parseUTC(measurementValue.timestamp).format('HH:mm:ss'), this.UILanguage));
 
                             //#endregion
 
@@ -7867,7 +7866,7 @@ export class ChargyApp {
 
                             const verificationStatusDiv = createDiv(measurementValueDiv, "verificationStatus");
                             let statusIconClass: string | null = "fas fa-times-circle";
-                            let statusLabel = "Ungültige Signatur";
+                            let statusLabel = this.chargy.GetLocalizedMessage("Invalid signature");
 
                             if (measurementValue.result)
                                 switch (measurementValue.result.status)
